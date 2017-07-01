@@ -1,0 +1,67 @@
+/* global describe, expect, test, jest */
+const Maybe = require('../Maybe');
+
+describe('data.Maybe', () => {
+  test('It should implement static Applicative', () => {
+    expect(Maybe.of(1) instanceof Maybe).toBe(true);
+  });
+
+  test('It should implement instance Applicative', () => {
+    expect(Maybe.of(1).of(1) instanceof Maybe).toBe(true);
+  });
+
+  describe('Functor', () => {
+    test('It should call the transform if the instance is a Just', () => {
+      const transform = jest.fn();
+
+      Maybe.of('text').map(transform);
+
+      expect(transform.mock.calls[0]).toEqual(['text']);
+    });
+
+    test('It should not call the transform if the instance is a Nothing', () => {
+      const transform = jest.fn();
+
+      Maybe.Nothing.map(transform);
+
+      expect(transform.mock.calls[0]).toBeFalsy();
+    });
+  });
+
+  describe('Chain', () => {
+    test('It should call the transform if the instance is a Just', () => {
+      const result = Maybe.of('text').chain(x => x.toUpperCase());
+
+      expect(result).toBe('TEXT');
+    });
+
+    test('It should not call the transform if the instance is a Nothing', () => {
+      const result = Maybe.Nothing.map(x => x.toUpperCase());
+
+      expect(result).toBe(Maybe.Nothing);
+    });
+  });
+
+  describe('#fromNullable(value)', () => {
+    test('It should return Nothing if it gets null | undefined', () => {
+      expect(Maybe.fromNullable()).toBe(Maybe.Nothing);
+      expect(Maybe.fromNullable(null)).toBe(Maybe.Nothing);
+      expect(Maybe.fromNullable(undefined)).toBe(Maybe.Nothing);
+    });
+
+    test('It should return Nothing if it gets null | undefined', () => {
+      expect(Maybe.fromNullable(0)).toEqual(Maybe.Just(0));
+      expect(Maybe.fromNullable('')).toEqual(Maybe.Just(''));
+    });
+  });
+
+  describe('#getOrElse(value)', () => {
+    test('It should return the value if the instance is a Nothing', () => {
+      expect(Maybe.Nothing.getOrElse('foo')).toBe('foo');
+    });
+
+    test('It should return the inner value if the instance is a Just', () => {
+      expect(Maybe.Just('bar').getOrElse('foo')).toBe('bar');
+    });
+  });
+});
