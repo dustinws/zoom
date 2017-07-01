@@ -1,5 +1,5 @@
 /* global describe, expect, test */
-const constant = require('../constant');
+import constant from '../constant';
 
 describe('lambda.constant(value)', () => {
   test('It should return a function', () => {

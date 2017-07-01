@@ -1,4 +1,4 @@
-const curryN = require('./curryN');
+import curryN from './curryN';
 
 /**
  * Create a curried function from a regular function.
@@ -6,5 +6,6 @@ const curryN = require('./curryN');
  * @param  {Function} func
  * @return {Function}
  */
-module.exports = func =>
-  curryN(func.length, func);
+export default function curry(func) {
+  return curryN(func.length, func);
+}

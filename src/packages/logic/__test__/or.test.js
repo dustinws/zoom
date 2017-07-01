@@ -1,5 +1,5 @@
 /* global describe, expect, test */
-const or = require('../or');
+import or from '../or';
 
 describe('core.or(left, right)', () => {
   test('It should be curried', () => {

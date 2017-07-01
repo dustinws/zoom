@@ -1,1 +1,2 @@
-exports.add = require('./add');
+// eslint-disable-next-line import/prefer-default-export
+export { default as add } from './add';

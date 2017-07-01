@@ -4,5 +4,6 @@
  * @param  {Any} constantValue
  * @return {Function}
  */
-module.exports = constantValue => () =>
-  constantValue;
+export default function constant(value) {
+  return () => value;
+}

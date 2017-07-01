@@ -1,5 +1,5 @@
 /* global describe, expect, test */
-const { union } = require('..');
+import { union } from '..';
 
 describe('ADT#union(type, ...params)', () => {
   test('It should attach the case classes to the returned object', () => {

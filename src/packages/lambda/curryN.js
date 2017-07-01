@@ -1,4 +1,4 @@
-const __ = require('./__');
+import __ from './__';
 
 /**
  * Create a curried function with the given arity.
@@ -7,8 +7,8 @@ const __ = require('./__');
  * @param  {Function} func
  * @return {Function}
  */
-module.exports = (arity, func) =>
-  function curried(...as) {
+function curryN(arity, func) {
+  return function curried(...as) {
     if (as.length >= arity && as.indexOf(__) < 0) {
       return func(...as);
     }
@@ -16,3 +16,6 @@ module.exports = (arity, func) =>
       // eslint-disable-next-line no-confusing-arrow
       curried(...as.map(x => x === __ ? bs.shift() : x).concat(bs));
   };
+}
+
+export default curryN(2, curryN);

@@ -1,5 +1,5 @@
 /* global describe, expect, test */
-const and = require('../and');
+import and from '../and';
 
 describe('core.and(left, right)', () => {
   test('It should be curried', () => {

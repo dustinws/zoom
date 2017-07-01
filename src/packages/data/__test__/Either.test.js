@@ -1,5 +1,5 @@
 /* global describe, expect, test, jest */
-const Either = require('../Either');
+import Either from '../Either';
 
 describe('data.Either', () => {
   test('It should implement static Applicative', () => {

@@ -1,22 +1,21 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.tag = tag;
+exports.union = union;
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-/**
- * The ADT namespace.
- *
- * @type {Object}
- */
-var ADT = module.exports = {};
 
 /**
  * The tag used to get an object's type.
  *
  * @type {Symbol}
  */
-ADT.symbol = Symbol('ADT.tag');
+var symbol = exports.symbol = Symbol('ADT.tag');
 
 /**
  * Create a tagged abstract data type.
@@ -25,7 +24,7 @@ ADT.symbol = Symbol('ADT.tag');
  * @param  {Any[]} ...params
  * @return {Function}
  */
-ADT.tag = function (type) {
+function tag(type) {
   for (var _len = arguments.length, params = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
     params[_key - 1] = arguments[_key];
   }
@@ -50,7 +49,7 @@ ADT.tag = function (type) {
     });
 
     // Tag the type.
-    this[ADT.symbol] = type;
+    this[symbol] = type;
   });
 
   // Retrieve the constructor and send the temporary object to GC.
@@ -58,7 +57,7 @@ ADT.tag = function (type) {
   tmp = null;
 
   return Adt;
-};
+}
 
 /**
  * Create a set of union types that all inherit from the returned
@@ -68,16 +67,16 @@ ADT.tag = function (type) {
  * @param  {Object} childTypes
  * @return {Function}
  */
-ADT.union = function (parentType, childTypes) {
+function union(parentType, childTypes) {
   // Create the parent type.
-  var Parent = ADT.tag(parentType);
+  var Parent = tag(parentType);
 
   Object.keys(childTypes).forEach(function (childType) {
     // Get any params defined for the child.
     var params = childTypes[childType];
 
     // Tag the child object.
-    var Child = ADT.tag.apply(ADT, [childType].concat(_toConsumableArray(params)));
+    var Child = tag.apply(undefined, [childType].concat(_toConsumableArray(params)));
 
     // Inherit from the parent type.
     Child.prototype = Object.create(Parent.prototype);
@@ -98,4 +97,4 @@ ADT.union = function (parentType, childTypes) {
   });
 
   return Parent;
-};
+}

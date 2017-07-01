@@ -1,5 +1,5 @@
 /* global describe, expect, test, jest */
-const Maybe = require('../Maybe');
+import Maybe from '../Maybe';
 
 describe('data.Maybe', () => {
   test('It should implement static Applicative', () => {

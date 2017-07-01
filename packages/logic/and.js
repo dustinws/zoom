@@ -1,6 +1,14 @@
 'use strict';
 
-var curry = require('../lambda/curry');
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _curry = require('../lambda/curry');
+
+var _curry2 = _interopRequireDefault(_curry);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * A curried wrapper around the logical && operator.
@@ -9,6 +17,7 @@ var curry = require('../lambda/curry');
  * @param  {Any} right
  * @return {Any}
  */
-module.exports = curry(function (left, right) {
+exports.default = (0, _curry2.default)(function (left, right) {
   return left && right;
 });
+module.exports = exports['default'];

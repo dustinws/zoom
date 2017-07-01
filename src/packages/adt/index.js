@@ -1,16 +1,9 @@
 /**
- * The ADT namespace.
- *
- * @type {Object}
- */
-const ADT = module.exports = {};
-
-/**
  * The tag used to get an object's type.
  *
  * @type {Symbol}
  */
-ADT.symbol = Symbol('ADT.tag');
+export const symbol = Symbol('ADT.tag');
 
 /**
  * Create a tagged abstract data type.
@@ -19,7 +12,7 @@ ADT.symbol = Symbol('ADT.tag');
  * @param  {Any[]} ...params
  * @return {Function}
  */
-ADT.tag = (type, ...params) => {
+export function tag(type, ...params) {
   // Store the constructor on a temporary object so that
   // the constructor name will correctly match the type.
   let tmp = {
@@ -36,7 +29,7 @@ ADT.tag = (type, ...params) => {
       });
 
       // Tag the type.
-      this[ADT.symbol] = type;
+      this[symbol] = type;
     },
   };
 
@@ -45,7 +38,7 @@ ADT.tag = (type, ...params) => {
   tmp = null;
 
   return Adt;
-};
+}
 
 /**
  * Create a set of union types that all inherit from the returned
@@ -55,16 +48,16 @@ ADT.tag = (type, ...params) => {
  * @param  {Object} childTypes
  * @return {Function}
  */
-ADT.union = (parentType, childTypes) => {
+export function union(parentType, childTypes) {
   // Create the parent type.
-  const Parent = ADT.tag(parentType);
+  const Parent = tag(parentType);
 
   Object.keys(childTypes).forEach((childType) => {
     // Get any params defined for the child.
     const params = childTypes[childType];
 
     // Tag the child object.
-    const Child = ADT.tag(childType, ...params);
+    const Child = tag(childType, ...params);
 
     // Inherit from the parent type.
     Child.prototype = Object.create(Parent.prototype);
@@ -81,4 +74,4 @@ ADT.union = (parentType, childTypes) => {
   });
 
   return Parent;
-};
+}

@@ -1,12 +1,12 @@
-const { union } = require('../adt');
-const constant = require('../lambda/constant');
+import { union } from '../adt';
+import constant from '../lambda/constant';
 
 /**
  * The Maybe super class.
  *
  * @type {Function}
  */
-const Maybe = module.exports = union('Maybe', {
+const Maybe = union('Maybe', {
   Just: ['value'],
   Nothing: [],
 });
@@ -85,3 +85,5 @@ Maybe.fromNullable = (value) => {
   }
   return Maybe.Just.of(value);
 };
+
+export default Maybe;

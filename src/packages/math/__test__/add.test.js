@@ -1,5 +1,5 @@
 /* global describe, expect, test */
-const add = require('../add');
+import add from '../add';
 
 describe('math.add(left, right)', () => {
   test('It should be curried', () => {

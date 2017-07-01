@@ -1,2 +1,2 @@
-exports.and = require('./and');
-exports.or = require('./or');
+export { default as and } from './and';
+export { default as or } from './or';

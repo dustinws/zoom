@@ -1,16 +1,23 @@
 'use strict';
 
-var _require = require('../adt'),
-    union = _require.union;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var constant = require('../lambda/constant');
+var _adt = require('../adt');
+
+var _constant = require('../lambda/constant');
+
+var _constant2 = _interopRequireDefault(_constant);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * The Either super class.
  *
  * @type {Function}
  */
-var Either = module.exports = union('Either', {
+var Either = (0, _adt.union)('Either', {
   Right: ['value'],
   Left: ['value']
 });
@@ -51,7 +58,7 @@ Either.prototype.of = Either.Right.prototype.of = function of(value) {
  */
 Either.prototype.chain = function chain(transform) {
   return this.cata({
-    Left: constant(this),
+    Left: (0, _constant2.default)(this),
     Right: transform
   });
 };
@@ -85,3 +92,6 @@ Either.try = function (func) {
     }
   };
 };
+
+exports.default = Either;
+module.exports = exports['default'];

@@ -1,16 +1,23 @@
 'use strict';
 
-var _require = require('../adt'),
-    union = _require.union;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var constant = require('../lambda/constant');
+var _adt = require('../adt');
+
+var _constant = require('../lambda/constant');
+
+var _constant2 = _interopRequireDefault(_constant);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * The Maybe super class.
  *
  * @type {Function}
  */
-var Maybe = module.exports = union('Maybe', {
+var Maybe = (0, _adt.union)('Maybe', {
   Just: ['value'],
   Nothing: []
 });
@@ -29,7 +36,7 @@ Maybe.of = Maybe.Just.of = Maybe.Just;
  * @param  {T} value
  * @return {Maybe<T>}
  */
-Maybe.Nothing.of = constant(Maybe.Nothing);
+Maybe.Nothing.of = (0, _constant2.default)(Maybe.Nothing);
 
 /**
  * Implement Applicative
@@ -49,7 +56,7 @@ Maybe.prototype.of = Maybe.Just.prototype.of = function of(value) {
  */
 Maybe.prototype.chain = function chain(transform) {
   return this.cata({
-    Nothing: constant(this),
+    Nothing: (0, _constant2.default)(this),
     Just: transform
   });
 };
@@ -76,8 +83,8 @@ Maybe.prototype.map = function map(transform) {
  */
 Maybe.prototype.getOrElse = function getOrElse(value) {
   return this.cata({
-    Nothing: constant(value),
-    Just: constant(this.value)
+    Nothing: (0, _constant2.default)(value),
+    Just: (0, _constant2.default)(this.value)
   });
 };
 
@@ -93,3 +100,6 @@ Maybe.fromNullable = function (value) {
   }
   return Maybe.Just.of(value);
 };
+
+exports.default = Maybe;
+module.exports = exports['default'];

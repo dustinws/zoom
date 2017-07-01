@@ -1,6 +1,6 @@
 /* global describe, expect, test */
-const __ = require('../__');
-const curry = require('../curry');
+import __ from '../__';
+import curry from '../curry';
 
 describe('lambda.curry(function)', () => {
   test('It should create a curried function by guessing the arity', () => {

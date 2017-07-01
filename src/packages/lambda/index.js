@@ -1,4 +1,4 @@
-exports.__ = require('./__');
-exports.constant = require('./constant');
-exports.curry = require('./curry');
-exports.curryN = require('./curryN');
+export { default as __ } from './__';
+export { default as constant } from './constant';
+export { default as curry } from './curry';
+export { default as curryN } from './curryN';

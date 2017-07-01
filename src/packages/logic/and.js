@@ -1,4 +1,4 @@
-const curry = require('../lambda/curry');
+import curry from '../lambda/curry';
 
 /**
  * A curried wrapper around the logical && operator.
@@ -7,5 +7,4 @@ const curry = require('../lambda/curry');
  * @param  {Any} right
  * @return {Any}
  */
-module.exports = curry((left, right) =>
-  left && right);
+export default curry((left, right) => left && right);

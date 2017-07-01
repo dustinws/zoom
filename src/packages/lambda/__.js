@@ -4,4 +4,4 @@
  *
  * @type {Symbol}
  */
-module.exports = Symbol('@@functional/placeholder');
+export default Symbol('@@functional/placeholder');

@@ -1,12 +1,12 @@
-const { union } = require('../adt');
-const constant = require('../lambda/constant');
+import { union } from '../adt';
+import constant from '../lambda/constant';
 
 /**
  * The Either super class.
  *
  * @type {Function}
  */
-const Either = module.exports = union('Either', {
+const Either = union('Either', {
   Right: ['value'],
   Left: ['value'],
 });
@@ -75,3 +75,5 @@ Either.try = func => (...args) => {
     return Either.Left(error);
   }
 };
+
+export default Either;
