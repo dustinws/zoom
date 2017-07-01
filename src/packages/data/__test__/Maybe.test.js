@@ -44,14 +44,14 @@ describe('data.Maybe', () => {
 
   describe('#fromNullable(value)', () => {
     test('It should return Nothing if it gets null | undefined', () => {
-      expect(Maybe.fromNullable()).toBe(Maybe.Nothing);
-      expect(Maybe.fromNullable(null)).toBe(Maybe.Nothing);
-      expect(Maybe.fromNullable(undefined)).toBe(Maybe.Nothing);
+      expect(Maybe.fromNullable().isNothing()).toBe(true);
+      expect(Maybe.fromNullable(null).isNothing()).toBe(true);
+      expect(Maybe.fromNullable(undefined).isNothing()).toBe(true);
     });
 
-    test('It should return Nothing if it gets null | undefined', () => {
-      expect(Maybe.fromNullable(0)).toEqual(Maybe.Just(0));
-      expect(Maybe.fromNullable('')).toEqual(Maybe.Just(''));
+    test('It should return Just if the value exists', () => {
+      expect(Maybe.fromNullable(0).isJust()).toBe(true);
+      expect(Maybe.fromNullable('').isJust()).toBe(true);
     });
   });
 
@@ -62,6 +62,26 @@ describe('data.Maybe', () => {
 
     test('It should return the inner value if the instance is a Just', () => {
       expect(Maybe.Just('bar').getOrElse('foo')).toBe('bar');
+    });
+  });
+
+  describe('#isNothing', () => {
+    test('It should return true if the instance is a Nothing', () => {
+      expect(Maybe.Nothing.isNothing()).toBe(true);
+    });
+
+    test('It should return false if the instance is a Just', () => {
+      expect(Maybe.Just().isNothing()).toBe(false);
+    });
+  });
+
+  describe('#isJust', () => {
+    test('It should return true if the instance is a Just', () => {
+      expect(Maybe.Just().isJust()).toBe(true);
+    });
+
+    test('It should return false if the instance is a Nothing', () => {
+      expect(Maybe.Nothing.isJust()).toBe(false);
     });
   });
 });
