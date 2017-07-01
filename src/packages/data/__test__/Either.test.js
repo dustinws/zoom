@@ -38,7 +38,7 @@ describe('data.Either', () => {
     test('It should not call the transform if the instance is a Nothing', () => {
       const result = Either.Left('text').map(x => x.toUpperCase());
 
-      expect(result).toEqual(Either.Left('text'));
+      expect(result.isLeft()).toBe(true);
     });
   });
 
@@ -48,7 +48,7 @@ describe('data.Either', () => {
 
       const result = fromJson('{ "foo": "bar" }');
 
-      expect(result).toEqual(Either.Right({ foo: 'bar' }));
+      expect(result.isRight()).toBe(true);
     });
 
     test('It should return Left if it was not successful', () => {
@@ -57,6 +57,26 @@ describe('data.Either', () => {
       const result = fromJson('...');
 
       expect(result instanceof Either.Left).toBe(true);
+    });
+  });
+
+  describe('#isLeft', () => {
+    test('It should return true if the instance is a Left', () => {
+      expect(Either.Left().isLeft()).toBe(true);
+    });
+
+    test('It should return false if the instance is a Right', () => {
+      expect(Either.Right().isLeft()).toBe(false);
+    });
+  });
+
+  describe('#isRight', () => {
+    test('It should return true if the instance is a Right', () => {
+      expect(Either.Right().isRight()).toBe(true);
+    });
+
+    test('It should return false if the instance is a Left', () => {
+      expect(Either.Left().isRight()).toBe(false);
     });
   });
 });
