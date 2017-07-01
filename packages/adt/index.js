@@ -50,6 +50,15 @@ function tag(type) {
 
     // Tag the type.
     this[symbol] = type;
+
+    var paramList = params.map(function (p) {
+      return _this[p];
+    });
+    this.toString = function toString() {
+      return '' + type + (!params.length ? '' : '(' + paramList.map(function (x) {
+        return x.toString();
+      }).join(', ') + ')');
+    };
   });
 
   // Retrieve the constructor and send the temporary object to GC.

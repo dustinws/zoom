@@ -89,6 +89,24 @@ Maybe.prototype.getOrElse = function getOrElse(value) {
 };
 
 /**
+ * Determine if an instance is an instance of Just
+ *
+ * @return {Boolean}
+ */
+Maybe.prototype.isJust = function isJust() {
+  return this instanceof Maybe.Just;
+};
+
+/**
+ * Determine if an instance is an instance of Nothing
+ *
+ * @return {Boolean}
+ */
+Maybe.prototype.isNothing = function isNothing() {
+  return this === Maybe.Nothing;
+};
+
+/**
  * Create a Maybe from a potentially null value.
  *
  * @param  {T} value

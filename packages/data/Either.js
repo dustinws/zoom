@@ -78,6 +78,24 @@ Either.prototype.map = function map(transform) {
 };
 
 /**
+ * Determine if an instance is an instance of Left
+ *
+ * @return {Boolean}
+ */
+Either.prototype.isLeft = function isLeft() {
+  return this instanceof Either.Left;
+};
+
+/**
+ * Determine if an instance is an instance of Right
+ *
+ * @return {Boolean}
+ */
+Either.prototype.isRight = function isRight() {
+  return this instanceof Either.Right;
+};
+
+/**
  * Create a Either from a potentially null value.
  *
  * @param  {Function} func
