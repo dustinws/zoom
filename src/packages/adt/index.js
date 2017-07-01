@@ -30,6 +30,11 @@ export function tag(type, ...params) {
 
       // Tag the type.
       this[symbol] = type;
+
+      const paramList = params.map(p => this[p]);
+      this.toString = function toString() {
+        return `${type}${!params.length ? '' : `(${paramList.map(x => x.toString()).join(', ')})`}`;
+      };
     },
   };
 
