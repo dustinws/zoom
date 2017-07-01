@@ -26,5 +26,14 @@
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.6.1",
     "jest": "^20.0.4"
-  }
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dustinws/zoom.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dustinws/zoom/issues"
+  },
+  "homepage": "https://github.com/dustinws/zoom#readme"
 }
