@@ -51,8 +51,17 @@ Tuple.prototype.map = function map(transform) {
  * @param  {Function} transform
  * @return {Tuple}
  */
-Tuple.prototype.mapLeft = function map(transform) {
+Tuple.prototype.mapLeft = function mapLeft(transform) {
   return Tuple(transform(this.left), this.right);
+};
+
+/**
+ * Represent the tuple as a string value.
+ *
+ * @return {String}
+ */
+Tuple.prototype.toString = function toString() {
+  return `(${this.left.toString()}, ${this.right.toString()})`;
 };
 
 export default Tuple;

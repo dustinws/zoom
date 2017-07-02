@@ -1,0 +1,26 @@
+{
+  "name": "@dustinws/zoom",
+  "description": "Helpful abstractions for functional programming in javascript.",
+  "main": "dist/zoom.min.js",
+  "authors": [
+    "Dustin <dustinws@protonmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/dustinws/zoom",
+  "ignore": [
+    ".git",
+    "coverage",
+    "docs",
+    "node_modules",
+    "packages",
+    "src",
+    ".babelrc",
+    ".eslintignore",
+    ".eslintrc.json",
+    ".gitignore",
+    ".npmignore",
+    ".nvmrc",
+    "bower.json",
+    "webpack.config.js"
+  ]
+}

@@ -4,10 +4,11 @@
   "description": "Helpful abstractions for functional programming in javascript.",
   "main": "index.js",
   "scripts": {
-    "build": "babel -d . --ignore **/*.test.js src",
+    "build:node": "babel -d . --ignore **/*.test.js src",
+    "build:browser": "webpack",
     "lint": "eslint .",
-    "prepublish": "npm run lint && npm run test && npm run build && npm run docs",
-    "preversion": "npm run lint && npm run test && npm run build",
+    "prepublish": "npm run lint && npm run test && rm -rf packages && rm -rf dist && npm run build:node && npm run build:browser",
+    "preversion": "npm run lint && npm run test && rm -rf packages && rm -rf dist && npm run build:node && npm run build:browser",
     "release:patch": "npm run version:patch && npm publish",
     "release:minor": "npm run version:minor && npm publish",
     "release:major": "npm run version:major && npm publish",
@@ -22,13 +23,17 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-es2015": "^6.24.1",
+    "bower": "^1.8.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-loader": "^1.8.0",
     "eslint-plugin-import": "^2.6.1",
     "jest": "^20.0.4",
-    "jsdoc": "^3.4.3"
+    "jsdoc": "^3.4.3",
+    "webpack": "^3.0.0"
   },
   "dependencies": {},
   "repository": {

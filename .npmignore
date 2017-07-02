@@ -1,0 +1,14 @@
+.git
+coverage
+dist
+docs
+src
+
+.babelrc
+.eslintignore
+.eslintrc.json
+.gitignore
+.npmignore
+.nvmrc
+bower.json
+webpack.config.json

@@ -12,6 +12,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
+/**
+ * Create a curried function with the given arity.
+ *
+ * @param  {Number} arity
+ * @param  {Function} func
+ * @return {Function}
+ */
 function curryN(arity, func) {
   return function curried() {
     for (var _len = arguments.length, as = Array(_len), _key = 0; _key < _len; _key++) {
@@ -26,9 +33,12 @@ function curryN(arity, func) {
         bs[_key2] = arguments[_key2];
       }
 
-      return curried.apply(undefined, _toConsumableArray(as.map(function (x) {
-        return x === _2.default ? bs.shift() : x;
-      }).concat(bs)));
+      return (
+        // eslint-disable-next-line no-confusing-arrow
+        curried.apply(undefined, _toConsumableArray(as.map(function (x) {
+          return x === _2.default ? bs.shift() : x;
+        }).concat(bs)))
+      );
     };
   };
 }

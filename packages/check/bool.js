@@ -10,6 +10,20 @@ var _isType3 = _interopRequireDefault(_isType2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * @memberof module:check
+ * @description Ensure a value is an Boolean. Returns a Validation.
+ * @since v1.14.0
+ * @function bool
+ * @example
+ * import { bool } from '@dustinws/zoom/packages/check';
+ *
+ * bool(true).isSuccess() // true
+ * bool('').isSuccess() // false
+ *
+ * @param {Any} value The value to be checked
+ * @return {Validation}
+ */
 var bool = (0, _isType3.default)('Boolean');
 
 exports.default = bool;

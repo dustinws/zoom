@@ -10,6 +10,13 @@ var _curry2 = _interopRequireDefault(_curry);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * A curried wrapper around the logical && operator.
+ *
+ * @param  {Any} left
+ * @param  {Any} right
+ * @return {Any}
+ */
 exports.default = (0, _curry2.default)(function (left, right) {
   return left && right;
 });

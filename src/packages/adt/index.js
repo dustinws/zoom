@@ -53,20 +53,19 @@ function tag(type, ...params) {
       params.forEach((param, idx) => {
         this[param] = args[idx];
       });
-
-      // Tag the type.
-      this[symbol] = type;
-
-      const paramList = params.map(p => this[p]);
-      this.toString = function toString() {
-        return `${type}${!params.length ? '' : `(${paramList.map(x => x.toString()).join(', ')})`}`;
-      };
     },
   };
 
   // Retrieve the constructor and send the temporary object to GC.
   const Adt = tmp[type];
   tmp = null;
+
+  Adt.prototype[symbol] = type;
+
+  Adt.prototype.toString = function toString() {
+    const paramsList = params.map(param => this[param].toString()).join(', ');
+    return `${this[symbol]}${paramsList && `(${paramsList})`}`;
+  };
 
   return Adt;
 }

@@ -14,6 +14,25 @@ var _curryN2 = _interopRequireDefault(_curryN);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * @memberof module:check
+ * @description Guard a function's input / output types. Acts as a no-op,
+ * but will log the TypeError to the console in development.
+ * @since v1.14.0
+ * @function guard
+ * @example
+ * import { guard, number } from '@dustinws/zoom/packages/check';
+ *
+ * const add = guard([number, number, number], (a, b) => a + b);
+ *
+ * add(1, 3) // 4
+ * add(1, '3') // 13 (logs TypeError outside of production)
+ *
+ * @param {Array<Function>} Input / output contracts
+ * @param {Function} The function to validate
+ * @param {...Any} args
+ * @return {Validation}
+ */
 var guard = function guard(contracts, func) {
   for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
     args[_key - 2] = arguments[_key];
@@ -25,8 +44,9 @@ var guard = function guard(contracts, func) {
     return returnType(func.apply(undefined, args));
   }).cata({
     Failure: function Failure(error) {
+      /* istanbul ignore next */
       if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'testing') {
-        console.log('[CheckError]', error);
+        console.log('[CheckError]', error); // eslint-disable-line no-console
       }
       return func.apply(undefined, args);
     },

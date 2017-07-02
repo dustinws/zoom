@@ -12,21 +12,50 @@ var _constant2 = _interopRequireDefault(_constant);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * The Either super class.
+ *
+ * @type {Function}
+ */
 var Either = (0, _adt.union)('Either', {
   Right: ['value'],
   Left: ['value']
 });
 
+/**
+ * Implement Static Applicative for Right
+ *
+ * @param  {T} value
+ * @return {Either<T>}
+ */
 Either.of = Either.Right.of = Either.Right;
 
+/**
+ * Implement Static Applicative for Left
+ *
+ * @param  {T} value
+ * @return {Either<T>}
+ */
 Either.Left.of = Either.Left.prototype.of = function of(value) {
   return Either.Left(value);
 };
 
+/**
+ * Implement Applicative
+ *
+ * @param  {T} value
+ * @return {Either<T>}
+ */
 Either.prototype.of = Either.Right.prototype.of = function of(value) {
   return Either.Right(value);
 };
 
+/**
+ * Implement Chain
+ *
+ * @param  {Function} transform
+ * @return {Either}
+ */
 Either.prototype.chain = function chain(transform) {
   return this.cata({
     Left: (0, _constant2.default)(this),
@@ -34,6 +63,12 @@ Either.prototype.chain = function chain(transform) {
   });
 };
 
+/**
+ * Implement Functor
+ *
+ * @param  {Function} transform
+ * @return {Either}
+ */
 Either.prototype.map = function map(transform) {
   var _this = this;
 
@@ -42,14 +77,30 @@ Either.prototype.map = function map(transform) {
   });
 };
 
+/**
+ * Determine if an instance is an instance of Left
+ *
+ * @return {Boolean}
+ */
 Either.prototype.isLeft = function isLeft() {
   return this instanceof Either.Left;
 };
 
+/**
+ * Determine if an instance is an instance of Right
+ *
+ * @return {Boolean}
+ */
 Either.prototype.isRight = function isRight() {
   return this instanceof Either.Right;
 };
 
+/**
+ * Create a Either from a potentially null value.
+ *
+ * @param  {Function} func
+ * @return {Function}
+ */
 Either.try = function (func) {
   return function () {
     try {
