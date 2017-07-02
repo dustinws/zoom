@@ -6,7 +6,7 @@
   "scripts": {
     "build:node": "babel -d . --ignore **/*.test.js src",
     "build:browser": "webpack",
-    "docs": "jsdoc -t ./node_modules/docdash -d docs -r src",
+    "docs": "jsdoc -t ./node_modules/docdash -R ./README.md -d docs -r src",
     "lint": "eslint .",
     "tdd": "NODE_ENV=testing jest --watch",
     "test": "NODE_ENV=testing jest --coverage"
