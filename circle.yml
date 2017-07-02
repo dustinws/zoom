@@ -14,7 +14,7 @@ test:
 
 compile:
   override:
-    - npm run build
+    - npm run build:node && npm build:browser
 
 deployment:
   feature:
