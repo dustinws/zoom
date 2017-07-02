@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>data/List.js - Documentation</title>
+    <title>check/tupleOf.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">data/List.js</h1>
+    <h1 class="page-title">check/tupleOf.js</h1>
     
 
     
@@ -37,64 +37,43 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import curry from '../core/curry';
-import complement from '../core/complement';
-
-const List = {};
-
-/**
- * Turn multiple values into an array.
- *
- * @param  {Any[]} ...args
- * @return {Any[]}
- */
-List.of = (...args) => args;
+            <pre class="prettyprint source linenums"><code>import array from './array';
+import { curry } from '../core';
+import Validation from '../data/Validation';
 
 /**
- * Turn a list into a single value.
+ * @memberof module:check
+ * @description Validate a co-product indexed by numbers.
+ * @since v1.14.0
+ * @function tupleOf
+ * @example
+ * import { tupleOf, number, string } from '@dustinws/zoom/packages/check';
  *
- * @param  {Function} fn
- * @param  {Any} seed
- * @param  {Any[]} list
- * @return {Any}
- */
-List.fold = curry((fn, seed, list) =>
-  list.reduce(fn, seed));
-
-/**
- * Apply a function to each element in an array and return a new
- * array with the results.
+ * const user = tupleOf([number, string]);
  *
- * @param  {Function} fn
- * @param  {Any[]} list
- * @return {Any[]}
- */
-List.map = curry((fn, list) =>
-  list.map(x => fn(x)));
-
-/**
- * Return a new array that only contains values that the predicate
- * returned a truthy response for.
+ * user(['1', 'dustin']).isSuccess() // true
+ * user([1, 'dustin']).isSuccess() // false
+ * user(['dustin']).isSuccess() // false
  *
- * @param  {Function} fn
- * @param  {Any[]} list
- * @return {Any[]}
+ * @param {Object} contracts An array of contracts
+ * @param {Object} value The array to validate
+ * @return {Validation}
  */
-List.filter = curry((fn, list) =>
-  list.filter(x => fn(x)));
+export default curry((contracts, value) =>
+  array(contracts)
+    .chain(() => array(value))
+    .chain(() => {
+      if (contracts.length !== value.length) {
+        return Validation.Failure(new TypeError('Invalid Product Length.'));
+      }
+      const validation = value.reduce((result, item, idx) =>
+        result.chain(() => contracts[idx](value[idx])), Validation.empty());
 
-/**
- * Return a new array that only contains values that the predicate
- * returned a falsy response for.
- *
- * @param  {Function} fn
- * @param  {Any[]} list
- * @return {Any[]}
- */
-List.reject = curry((fn, list) =>
-  list.filter(complement(x => fn(x))));
-
-export default List;
+      return validation.cata({
+        Failure: Validation.Failure,
+        Success: () => Validation.Success(value),
+      });
+    }));
 </code></pre>
         </article>
     </section>

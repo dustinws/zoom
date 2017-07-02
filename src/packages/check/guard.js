@@ -15,10 +15,10 @@ import curryN from '../core/curryN';
  * add(1, 3) // 4
  * add(1, '3') // 13 (logs TypeError outside of production)
  *
- * @param {Array<Function>} Input / output contracts
- * @param {Function} The function to validate
- * @param {...Any} args
- * @return {Validation}
+ * @param {Array<Function>} contracts  Input / output contracts
+ * @param {Function} func The function to validate
+ * @param {...Any} args Arguments to apply the func with
+ * @return {Any}
  */
 const guard = (contracts, func, ...args) => {
   const returnType = contracts[contracts.length - 1];

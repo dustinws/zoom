@@ -28,10 +28,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * add(1, 3) // 4
  * add(1, '3') // 13 (logs TypeError outside of production)
  *
- * @param {Array<Function>} Input / output contracts
- * @param {Function} The function to validate
- * @param {...Any} args
- * @return {Validation}
+ * @param {Array<Function>} contracts  Input / output contracts
+ * @param {Function} func The function to validate
+ * @param {...Any} args Arguments to apply the func with
+ * @return {Any}
  */
 var guard = function guard(contracts, func) {
   for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {

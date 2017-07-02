@@ -28,7 +28,10 @@ const symbol = Symbol('ADT.tag');
  *
  * const Point2D = tag('Point2D', 'x', 'y');
  *
- * const point = Point2D(0, 0);
+ * const point = Point2D(10, 15);
+ *
+ * point.x // 10
+ * point.y // 15
  *
  * point instanceof Point2D // true
  * point[symbol] // 'Point2D'
