@@ -15,7 +15,7 @@ var _curryN2 = _interopRequireDefault(_curryN);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * @memberof module:check
+ * @memberof module:Zoom.Check
  * @description Guard a function's input / output types. Acts as a no-op,
  * but will log the TypeError to the console in development.
  * @since v1.14.0

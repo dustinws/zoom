@@ -17,7 +17,7 @@ var _Validation2 = _interopRequireDefault(_Validation);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * @memberof module:check
+ * @memberof module:Zoom.Check
  * @description Ensure each value in an array satisfies a contract.
  * @since v1.14.0
  * @function arrayOf

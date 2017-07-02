@@ -24,6 +24,31 @@ const List = {};
 List.of = (...args) => args;
 
 /**
+ * @description Run a function for each item in an array. Returns the array.
+ * Does not provide an index.
+ * @memberof module:Zoom.Data.List
+ * @since v1.0.0
+ * @function each
+ * @example
+ * import { List } from '@dustinws/zoom/packages/data';
+ *
+ * List.each(console.log, [1, 2, 3]);
+ * // 1
+ * // 2
+ * // 3
+ *
+ * @param  {Function} func The function to run
+ * @param  {Array<Any>} array The array to use
+ * @return {Array<Any>}
+ */
+List.each = curry((func, array) => {
+  for (let i = 0; i < array.length; i += 1) {
+    func(array[i]);
+  }
+  return array;
+});
+
+/**
  * @description Turn a list into a single value.
  * @memberof module:Zoom.Data.List
  * @since v1.0.0
@@ -41,8 +66,13 @@ List.of = (...args) => args;
  * @param  {Array<Any>} list
  * @return {Any}
  */
-List.fold = curry((fn, seed, list) =>
-  list.reduce(fn, seed));
+List.fold = curry((fn, seed, list) => {
+  let result = seed;
+  List.each((item) => {
+    result = fn(result, item);
+  }, list);
+  return result;
+});
 
 /**
  * @description Apply a function to each element in a list and return
@@ -63,7 +93,11 @@ List.fold = curry((fn, seed, list) =>
  * @return {Array<Any>}
  */
 List.map = curry((fn, list) =>
-  list.map(x => fn(x)));
+  List.fold((results, item) => {
+    results.push(fn(item));
+
+    return results;
+  }, [], list));
 
 /**
  * @description Apply a predicate to each element in an array and
@@ -85,7 +119,13 @@ List.map = curry((fn, list) =>
  * @return {Array<Any>}
  */
 List.filter = curry((fn, list) =>
-  list.filter(x => fn(x)));
+  List.fold((results, item) => {
+    if (fn(item)) {
+      results.push(item);
+    }
+
+    return results;
+  }, [], list));
 
 /**
  * @description Apply a predicate to each element in an array and

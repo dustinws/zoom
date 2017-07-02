@@ -4,6 +4,7 @@
  */
 
 export { default as Either } from './Either';
+export { default as List } from './List';
 export { default as Maybe } from './Maybe';
 export { default as Result } from './Result';
 export { default as Task } from './Task';

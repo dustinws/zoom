@@ -12,7 +12,7 @@ var _List2 = _interopRequireDefault(_List);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * @memberof module:core
+ * @memberof module:Zoom.Core
  * @description Create a left to right function composition.
  * @since v1.0.0
  * @function pipe

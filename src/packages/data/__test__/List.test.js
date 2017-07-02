@@ -8,6 +8,25 @@ describe('data.List', () => {
     });
   });
 
+  describe('List.each', () => {
+    test('It should call the function on each element of the array', () => {
+      let count = 0;
+      const nums = [1, 2, 3, 4, 5];
+
+      List.each(() => { count += 1; }, nums);
+
+      expect(count).toBe(5);
+    });
+
+    test('It should return the array it was given', () => {
+      const nums = [1, 2, 3, 4, 5];
+
+      const result = List.each(() => {}, nums);
+
+      expect(result).toBe(nums);
+    });
+  });
+
   describe('List.fold', () => {
     test('It should call the function with the accumulator and next item, for each item', () => {
       const add = (a, b) => a + b;

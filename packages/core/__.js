@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 /**
- * @memberof module:core
+ * @memberof module:Zoom.Core
  * @description The functional placeholder used to add arguments
  * in a different order than the function originally declared.
  * @since v1.0.0

@@ -11,13 +11,22 @@ var _curry2 = _interopRequireDefault(_curry);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * A curried wrapper around the addition computation.
+ * @description A curried wrapper around the + operator.
+ * @memberof module:Zoom.Math
+ * @function add
+ * @since v1.0.0
+ * @example
+ * import { add } from '@dustinws/zoom/packages/math';
  *
- * @param  {Number} left
- * @param  {Number} right
+ * add(3, 2); // 5
+ *
+ * @param  {Number} left The first value
+ * @param  {Number} right The second value
  * @return {Number}
  */
-exports.default = (0, _curry2.default)(function (left, right) {
-  return left + right;
+var add = (0, _curry2.default)(function (left, right) {
+  return Number(left) + Number(right);
 });
+
+exports.default = add;
 module.exports = exports['default'];

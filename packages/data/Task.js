@@ -6,16 +6,36 @@ Object.defineProperty(exports, "__esModule", {
 
 var _adt = require('../adt');
 
+var _curry = require('../core/curry');
+
+var _curry2 = _interopRequireDefault(_curry);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /**
- * The Task data type.
+ * @class Task
+ * @memberof module:Zoom.Data
  */
 var Task = (0, _adt.tag)('Task', 'fork');
 
+/*
+ |------------------------------------------------------------------------------
+ | Static Members
+ |------------------------------------------------------------------------------
+ */
+
 /**
- * Implement Static Applicative
+ * @description Create a new Task with the given value.
+ * @memberof module:Zoom.Data.Task
+ * @since v1.0.0
+ * @function of
+ * @example
+ * import { Task } from '@dustinws/zoom/packages/data';
  *
- * @param  {B} value
- * @return {Task<A, B>}
+ * Task.of(1); // Task(null, 1)
+ *
+ * @param  {Any} value The value to put in the Task
+ * @return {Task}
  */
 Task.of = function (value) {
   return Task(function (_, resolve) {
@@ -24,10 +44,17 @@ Task.of = function (value) {
 };
 
 /**
- * Implement Static Applicative for rejections
+ * @description Create a rejected Task with the given value.
+ * @memberof module:Zoom.Data.Task
+ * @since v1.0.0
+ * @function reject
+ * @example
+ * import { Task } from '@dustinws/zoom/packages/data';
  *
- * @param  {B} value
- * @return {Task<A, B>}
+ * Task.reject(1); // Task(1, null)
+ *
+ * @param  {Any} value The value to put in the Task
+ * @return {Task}
  */
 Task.reject = function (value) {
   return Task(function (reject) {
@@ -36,82 +63,115 @@ Task.reject = function (value) {
 };
 
 /**
- * Implement Applicative
+ * @description Run a function that returns a nested task and flatten
+ * the result into a single task.
+ * @memberof module:Zoom.Data.Task
+ * @since v1.0.0
+ * @function chain
+ * @example
+ * import { Task } from '@dustinws/zoom/packages/data';
  *
- * @param  {B} value
- * @return {Task<A, B>}
- */
-Task.prototype.of = function of(value) {
-  return Task.of(value);
-};
-
-/**
- * Implement Chain
+ * Task.chain(Task.lift(n => n + 1), Task.of(1)); // Task(null, 2)
  *
- * @param  {Function} transform
- * @return {Task<A, C>}
+ * @param  {Function} transform The function to run.
+ * @param  {Task} task The task
+ * @return {Task}
  */
-Task.prototype.chain = function chain(transform) {
-  var _this = this;
-
+Task.chain = (0, _curry2.default)(function (transform, task) {
   return Task(function (reject, resolve) {
-    return _this.fork(reject, function (value) {
+    return task.fork(reject, function (value) {
       return transform(value).fork(reject, resolve);
     });
   });
-};
+});
 
 /**
- * Implement Functor
+ * @description Run a function on a value contained in a Task.
+ * @memberof module:Zoom.Data.Task
+ * @since v1.0.0
+ * @function map
+ * @example
+ * import { Task } from '@dustinws/zoom/packages/data';
  *
- * @param  {Function} transform
- * @return {Task<A, C>}
- */
-Task.prototype.map = function map(transform) {
-  return this.chain(function (x) {
-    return Task.of(transform(x));
-  });
-};
-
-/**
- * Convert a Task instance to a Promise. This will fork the Task.
+ * Task.map(x => x + x, Task.of(1)) // Task(null, 2)
  *
- * @param  {Function}
- * @return {Promise}
- */
-Task.prototype.toPromise = function toPromise() {
-  var _this2 = this;
-
-  var Promise = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : global.Promise;
-
-  return new Promise(function (resolve, reject) {
-    return _this2.fork(reject, resolve);
-  });
-};
-
-/**
- * Allow the consumer to handle a potential rejection and return
- * a new valid Task.
- *
- * @param  {Function} transform
+ * @param  {Function} transform The function to run.
+ * @param  {Task} task The task
  * @return {Task}
  */
-Task.prototype.recover = function recover(transform) {
-  var _this3 = this;
+Task.map = (0, _curry2.default)(function (transform, task) {
+  return Task.chain(function (x) {
+    return Task.of(transform(x));
+  }, task);
+});
 
+/**
+ * @description Convert a Task to a Promise. This implicitely calls "fork"
+ * @memberof module:Zoom.Data.Task
+ * @since v1.0.0
+ * @function toPromise
+ * @example
+ * import { Task } from '@dustinws/zoom/packages/data';
+ * import Promise from 'bluebird';
+ *
+ * Task.toPromise(Task.of(1)); // Promise(1)
+ * Task.toPromise(Task.of(1), Promise) // Bluebird(1)
+ *
+ * @param  {Task} task The task to convert
+ * @param  {Function} [Promise=global.Promise] The promise constructor
+ * @return {Promise}
+ */
+Task.toPromise = function (task) {
+  var Promise = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : global.Promise;
+  return new Promise(function (resolve, reject) {
+    return task.fork(reject, resolve);
+  });
+};
+
+/**
+ * @description Define a function to run if the Task is rejected, which will
+ * accept the error and return a new, valid Task.
+ * @memberof module:Zoom.Data.Task
+ * @since v1.0.0
+ * @function recover
+ * @example
+ * import { Task } from '@dustinws/zoom/packages/data';
+ *
+ * const rejected = Task.reject(1); // Task(1, null)
+ * Task.recover(err => Task.of('Recovered!'), rejected); // Task(null, 'Recovered!')
+ *
+ * @param  {Function} transform The function to run.
+ * @param  {Task} task The task
+ * @return {Task}
+ */
+Task.recover = function (transform, task) {
   return Task(function (reject, resolve) {
-    return _this3.fork(function (error) {
+    return task.fork(function (error) {
       return transform(error).fork(reject, resolve);
     }, resolve);
   });
 };
 
 /**
- * Run multiple tasks at the same time. Resolve with an array of the
- * resolved values, or reject with the first error to occurr.
+ * @description Run many Tasks in parallel. If any Task rejects, it will
+ * reject the top level Task immediately.
+ * @memberof module:Zoom.Data.Task
+ * @since v1.0.0
+ * @function parallel
+ * @example
+ * import { Task } from '@dustinws/zoom/packages/data';
  *
- * @param  {Array<Task<A, B>>} tasks
- * @return {Task<A, B>}
+ * const tasks = Task
+ *   .parallel([
+ *     Task.of(1),
+ *     Task.of(2),
+ *   ])
+ *   .map((results) => {
+ *     results; // [1, 2]
+ *   });
+ *
+ * @param  {Array<Task>} tasks The tasks to run.
+ * @return {Task}
  */
 Task.parallel = function (tasks) {
   return Task(function (reject, resolve) {
@@ -139,9 +199,19 @@ Task.parallel = function (tasks) {
 };
 
 /**
- * Lift a regular function into a Task
+ * @description Convert a regular function into a function that returns
+ * a task.
+ * @memberof module:Zoom.Data.Task
+ * @since v1.0.0
+ * @function lift
+ * @example
+ * import { Task } from '@dustinws/zoom/packages/data';
  *
- * @param  {Function} func
+ * const addTask = Task.lift((a, b) => a + b);
+ *
+ * addTask(1, 4); // Task(null, 5)
+ *
+ * @param  {Function} transform The function to convert.
  * @return {Function}
  */
 Task.lift = function (func) {
@@ -157,9 +227,20 @@ Task.lift = function (func) {
 };
 
 /**
- * Lift a node style function into a Task
+ * @description Convert a node style callback into a function that returns
+ * a task.
+ * @memberof module:Zoom.Data.Task
+ * @since v1.0.0
+ * @function liftNode
+ * @example
+ * import fs from 'fs';
+ * import { Task } from '@dustinws/zoom/packages/data';
  *
- * @param  {Function} func
+ * const readFile = Task.liftNode(fs.readFile);
+ *
+ * readFile('foo.js'); // Task(Error, Buffer)
+ *
+ * @param  {Function} func The function to convert.
  * @return {Function}
  */
 Task.liftNode = function (func) {
@@ -177,6 +258,81 @@ Task.liftNode = function (func) {
       }]));
     });
   };
+};
+
+/*
+ |------------------------------------------------------------------------------
+ | Instance Members
+ |------------------------------------------------------------------------------
+ */
+
+/**
+* @description Run a function that returns a nested task and flatten
+* the result into a single task.
+* @memberof module:Zoom.Data.Task
+* @since v1.0.0
+* @example
+* import { Task } from '@dustinws/zoom/packages/data';
+*
+* Task.of(1).chain(x => Task.of(x + x)); // Task(null, 2)
+*
+* @param  {Function} transform The function to run.
+* @return {Task}
+*/
+Task.prototype.chain = function chain(transform) {
+  return Task.chain(transform, this);
+};
+
+/**
+* @description Run a function on a value contained in a Task.
+* @memberof module:Zoom.Data.Task
+* @since v1.0.0
+* @example
+* import { Task } from '@dustinws/zoom/packages/data';
+*
+* Task.of(1).map(x => x + x); // Task(null, 2)
+*
+* @param  {Function} transform The function to run.
+* @return {Task}
+*/
+Task.prototype.map = function map(transform) {
+  return Task.map(transform, this);
+};
+
+/**
+* @description Convert a Task to a Promise. This implicitely calls "fork"
+* @memberof module:Zoom.Data.Task
+* @since v1.0.0
+* @example
+* import { Task } from '@dustinws/zoom/packages/data';
+*
+* Task.of(1).toPromise(); // Promise(1)
+*
+* @param  {Function} [Promise=global.Promise] The promise constructor
+* @return {Promise}
+*/
+Task.prototype.toPromise = function toPromise() {
+  var Promise = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : global.Promise;
+
+  return Task.toPromise(this, Promise);
+};
+
+/**
+* @description Define a function to run if the Task is rejected, which will
+* accept the error and return a new, valid Task.
+* @memberof module:Zoom.Data.Task
+* @since v1.0.0
+* @example
+* import { Task } from '@dustinws/zoom/packages/data';
+*
+* const rejected = Task.reject(1); // Task(1, null)
+* rejected.recover(err => Task.of('Recovered!')); // Task(null, 'Recovered!')
+*
+* @param  {Function} transform The function to run.
+* @return {Task}
+*/
+Task.prototype.recover = function recover(transform) {
+  return Task.recover(transform, this);
 };
 
 exports.default = Task;

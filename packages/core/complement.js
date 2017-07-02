@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = complement;
 /**
- * @memberof module:core
+ * @memberof module:Zoom.Core
  * @description Given a function that returns a truthy / falsy value,
  * return a new function that returns the the opposite truthy / falsy value.
  * @since v1.0.0

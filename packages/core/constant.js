@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = constant;
 /**
- * @memberof module:core
+ * @memberof module:Zoom.Core
  * @description Create a function that always returns the initial value.
  * @since v1.0.0
  * @function constant

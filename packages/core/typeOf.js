@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = typeOf;
 /**
- * @memberof module:core
+ * @memberof module:Zoom.Core
  * @description Get the [[class]] of any native object.
  * @since v1.0.0
  * @function typeOf

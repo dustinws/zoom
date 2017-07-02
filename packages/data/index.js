@@ -13,6 +13,15 @@ Object.defineProperty(exports, 'Either', {
   }
 });
 
+var _List = require('./List');
+
+Object.defineProperty(exports, 'List', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_List).default;
+  }
+});
+
 var _Maybe = require('./Maybe');
 
 Object.defineProperty(exports, 'Maybe', {

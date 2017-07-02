@@ -11,7 +11,7 @@ var _isType3 = _interopRequireDefault(_isType2);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * @memberof module:check
+ * @memberof module:Zoom.Check
  * @description Ensure a value is a number. Returns a Validation.
  * @since v1.14.0
  * @function number
