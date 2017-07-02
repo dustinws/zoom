@@ -21,6 +21,7 @@
     ".npmignore",
     ".nvmrc",
     "bower.json",
+    "circle.yml",
     "webpack.config.js"
   ]
 }

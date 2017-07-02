@@ -11,4 +11,5 @@ src
 .npmignore
 .nvmrc
 bower.json
+circle.yml
 webpack.config.json
