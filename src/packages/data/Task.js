@@ -15,6 +15,15 @@ Task.of = value =>
   Task((_, resolve) => resolve(value));
 
 /**
+ * Implement Static Applicative for rejections
+ *
+ * @param  {B} value
+ * @return {Task<A, B>}
+ */
+Task.reject = value =>
+  Task(reject => reject(value));
+
+/**
  * Implement Applicative
  *
  * @param  {B} value
@@ -48,10 +57,26 @@ Task.prototype.map = function map(transform) {
 
 /**
  * Convert a Task instance to a Promise. This will fork the Task.
+ *
+ * @param  {Function}
+ * @return {Promise}
  */
-Task.prototype.toPromise = function toPromise() {
+Task.prototype.toPromise = function toPromise(Promise = global.Promise) {
   return new Promise((resolve, reject) =>
     this.fork(reject, resolve));
+};
+
+/**
+ * Allow the consumer to handle a potential rejection and return
+ * a new valid Task.
+ *
+ * @param  {Function} transform
+ * @return {Task}
+ */
+Task.prototype.recover = function recover(transform) {
+  return Task((reject, resolve) =>
+    this.fork(error =>
+      transform(error).fork(reject, resolve), resolve));
 };
 
 /**
@@ -103,9 +128,10 @@ Task.lift = func => (...args) =>
 Task.liftNode = func => (...args) =>
   Task((reject, resolve) =>
     func(...args, (error, data) => {
-      if (error) return reject(error);
+      if (error) {
+        return reject(error);
+      }
       return resolve(data);
     }));
 
 export default Task;
-

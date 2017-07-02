@@ -102,4 +102,23 @@ describe('data.Task', () => {
         expect(error).toBe('error');
       });
   });
+
+  test('Task#reject', () => {
+    return Task
+      .reject('some-error')
+      .toPromise()
+      .catch((error) => {
+        expect(error).toBe('some-error');
+      });
+  });
+
+  test('Task#recover', () => {
+    return Task
+      .reject('some-value')
+      .recover(Task.of)
+      .toPromise()
+      .then((value) => {
+        expect(value).toBe('some-value');
+      });
+  });
 });

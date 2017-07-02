@@ -24,6 +24,18 @@ Task.of = function (value) {
 };
 
 /**
+ * Implement Static Applicative for rejections
+ *
+ * @param  {B} value
+ * @return {Task<A, B>}
+ */
+Task.reject = function (value) {
+  return Task(function (reject) {
+    return reject(value);
+  });
+};
+
+/**
  * Implement Applicative
  *
  * @param  {B} value
@@ -63,12 +75,34 @@ Task.prototype.map = function map(transform) {
 
 /**
  * Convert a Task instance to a Promise. This will fork the Task.
+ *
+ * @param  {Function}
+ * @return {Promise}
  */
 Task.prototype.toPromise = function toPromise() {
   var _this2 = this;
 
+  var Promise = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : global.Promise;
+
   return new Promise(function (resolve, reject) {
     return _this2.fork(reject, resolve);
+  });
+};
+
+/**
+ * Allow the consumer to handle a potential rejection and return
+ * a new valid Task.
+ *
+ * @param  {Function} transform
+ * @return {Task}
+ */
+Task.prototype.recover = function recover(transform) {
+  var _this3 = this;
+
+  return Task(function (reject, resolve) {
+    return _this3.fork(function (error) {
+      return transform(error).fork(reject, resolve);
+    }, resolve);
   });
 };
 
@@ -136,7 +170,9 @@ Task.liftNode = function (func) {
 
     return Task(function (reject, resolve) {
       return func.apply(undefined, args.concat([function (error, data) {
-        if (error) return reject(error);
+        if (error) {
+          return reject(error);
+        }
         return resolve(data);
       }]));
     });
