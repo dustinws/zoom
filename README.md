@@ -9,7 +9,7 @@
 `$ npm install --save @dustinws/zoom`
 
 ##### bower
-`$ bower --save install @dustinws/zoom`
+`$ bower --save install zoom`
 
 ### Documentation
 

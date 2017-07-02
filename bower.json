@@ -1,7 +1,7 @@
 {
-  "name": "@dustinws/zoom",
+  "name": "zoom",
   "description": "Helpful abstractions for functional programming in javascript.",
-  "main": "dist/zoom.min.js",
+  "main": "index.js",
   "authors": [
     "Dustin <dustinws@protonmail.com>"
   ],
