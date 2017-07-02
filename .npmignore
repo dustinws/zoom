@@ -12,4 +12,4 @@ src
 .nvmrc
 bower.json
 circle.yml
-webpack.config.json
+webpack.config.js
