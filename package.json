@@ -1,6 +1,6 @@
 {
   "name": "@dustinws/zoom",
-  "version": "1.13.0",
+  "version": "1.14.0",
   "description": "Helpful abstractions for functional programming in javascript.",
   "main": "index.js",
   "scripts": {
@@ -11,8 +11,8 @@
     "release:patch": "npm run version:patch && npm publish",
     "release:minor": "npm run version:minor && npm publish",
     "release:major": "npm run version:major && npm publish",
-    "tdd": "jest --watch",
-    "test": "jest --coverage",
+    "tdd": "NODE_ENV=testing jest --watch",
+    "test": "NODE_ENV=testing jest --coverage",
     "version:patch": "npm --no-git-tag-version version patch",
     "version:minor": "npm --no-git-tag-version version minor",
     "version:major": "npm --no-git-tag-version version major"
