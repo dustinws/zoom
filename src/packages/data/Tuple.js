@@ -10,8 +10,9 @@ const Tuple = tag('Tuple', 'left', 'right');
 /**
  * Implement Applicative
  *
- * @param  {A, B}
- * @return {Tuple<A, B>}
+ * @param  {Any}
+ * @param  {Any}
+ * @return {Tuple}
  */
 Tuple.of = (a, b) =>
   Tuple(a, b);
@@ -19,7 +20,7 @@ Tuple.of = (a, b) =>
 /**
  * Get the first element in a tuple.
  *
- * @param  {Tuple<A, B>}
+ * @param  {Tuple}
  * @return {A}
  */
 Tuple.fst = tuple =>
@@ -28,7 +29,7 @@ Tuple.fst = tuple =>
 /**
  * Get the second element in a tuple.
  *
- * @param  {Tuple<A, B>}
+ * @param  {Tuple}
  * @return {B}
  */
 Tuple.snd = tuple =>

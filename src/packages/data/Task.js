@@ -83,7 +83,7 @@ Task.prototype.recover = function recover(transform) {
  * Run multiple tasks at the same time. Resolve with an array of the
  * resolved values, or reject with the first error to occurr.
  *
- * @param  {Task<A, B>[]} tasks
+ * @param  {Array<Task<A, B>>} tasks
  * @return {Task<A, B>}
  */
 Task.parallel = tasks =>
