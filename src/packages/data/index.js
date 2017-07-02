@@ -1,3 +1,8 @@
+/**
+ * @namespace Data
+ * @memberof module:Zoom
+ */
+
 export { default as Either } from './Either';
 export { default as Maybe } from './Maybe';
 export { default as Result } from './Result';

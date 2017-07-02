@@ -1,5 +1,6 @@
 /**
- * @module check
+ * @class Check
+ * @memberof module:Zoom
  */
 
 export { default as array } from './array';

@@ -1,10 +1,23 @@
 import __ from './__';
 
 /**
- * Create a curried function with the given arity.
+ * @memberof module:Zoom.Core
+ * @description Convert a non-curried function with the given arity to
+ * a curried function. This includes compatibility with "core.__".
+ * @since v1.0.0
+ * @function curryN
+ * @example
+ * import { curryN } from '@dustinws/zoom/packages/core';
  *
- * @param  {Number} arity
- * @param  {Function} func
+ * const add = curryN(2, (a, b) => a + b);
+ *
+ * add(1, 4); // 5
+ * add(1)(4); // 5
+ * add(1); // [Function]
+ * add(1)(); // [Function]
+ *
+ * @param  {Number} arity The number of arguments the function expects
+ * @param  {Function} func The function to curry
  * @return {Function}
  */
 function curryN(arity, func) {

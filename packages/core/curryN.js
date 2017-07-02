@@ -13,10 +13,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 /**
- * Create a curried function with the given arity.
+ * @memberof module:core
+ * @description Convert a non-curried function with the given arity to
+ * a curried function. This includes compatibility with "core.__".
+ * @since v1.0.0
+ * @function curryN
+ * @example
+ * import { curryN } from '@dustinws/zoom/packages/core';
  *
- * @param  {Number} arity
- * @param  {Function} func
+ * const add = curryN(2, (a, b) => a + b);
+ *
+ * add(1, 4); // 5
+ * add(1)(4); // 5
+ * add(1); // [Function]
+ * add(1)(); // [Function]
+ *
+ * @param  {Number} arity The number of arguments the function expects
+ * @param  {Function} func The function to curry
  * @return {Function}
  */
 function curryN(arity, func) {

@@ -3,7 +3,7 @@ import { curry } from '../core';
 import Validation from '../data/Validation';
 
 /**
- * @memberof module:check
+ * @memberof module:Zoom.Check
  * @description Validate a co-product indexed by numbers.
  * @since v1.14.0
  * @function tupleOf

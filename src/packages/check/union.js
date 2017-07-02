@@ -1,7 +1,7 @@
 import Validation from '../data/Validation';
 
 /**
- * @memberof module:check
+ * @memberof module:Zoom.Check
  * @description Create a contract that succeeds if any of it's inner contracts
  * succeeds.
  * @since v1.14.0

@@ -1,58 +1,178 @@
-/* global describe, expect, test, jest */
+/* global describe, expect, test */
 import Result from '../Result';
 
 describe('data.Result', () => {
-  test('It should implement static Applicative', () => {
-    expect(Result.of(1) instanceof Result).toBe(true);
-  });
-
-  test('It should implement instance Applicative', () => {
-    expect(Result.of(1).of(1) instanceof Result).toBe(true);
-  });
-
-  describe('Functor', () => {
-    test('It should call the transform if the instance is a Ok', () => {
-      const transform = jest.fn();
-      Result.of('text').map(transform);
-      expect(transform.mock.calls[0]).toEqual(['text']);
-    });
-
-    test('It should not call the transform if the instance is a Err', () => {
-      const transform = jest.fn();
-      Result.Err.of('text').map(transform);
-      expect(transform.mock.calls[0]).toBeFalsy();
+  describe('Result.of', () => {
+    test('It should return an instance of Result', () => {
+      expect(Result.of(1) instanceof Result).toBe(true);
     });
   });
 
-  describe('Chain', () => {
-    test('It should call the transform if the instance is an Ok', () => {
-      const result = Result.of('text').chain(x => x.toUpperCase());
+  describe('Result.map', () => {
+    test('It should apply the transform if the instance is a Ok', () => {
+      const transform = x => x.toUpperCase();
+      const either = Result.of('text');
+
+      const result = Result.map(transform, either);
+
+      expect(Result.isOk(result)).toBe(true);
+      expect(result.value).toEqual('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Err', () => {
+      const transform = x => x.toUpperCase();
+      const either = Result.Err.of('text');
+
+      const result = Result.map(transform, either);
+
+      expect(Result.isErr(result)).toBe(true);
+      expect(result.value).toEqual('text');
+    });
+  });
+
+  describe('Result.ap', () => {
+    test('It should apply the transform if the instance is a Ok', () => {
+      const either = Result.of('text');
+      const apply = Result.of(x => x.toUpperCase());
+
+      const result = Result.ap(apply, either);
+
+      expect(Result.isOk(result)).toBe(true);
+      expect(result.value).toEqual('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Err', () => {
+      const either = Result.Err.of('text');
+      const apply = Result.of(x => x.toUpperCase());
+
+      const result = Result.ap(apply, either);
+
+      expect(Result.isErr(result)).toBe(true);
+      expect(result.value).toEqual('text');
+    });
+  });
+
+  describe('Result.chain', () => {
+    test('It should apply the transform if the instance is a Ok', () => {
+      const transform = x => x.toUpperCase();
+      const either = Result.of('text');
+
+      const result = Result.chain(transform, either);
+
       expect(result).toBe('TEXT');
     });
 
-    test('It should not call the transform if the instance is an Err', () => {
-      const result = Result.Err('text').map(x => x.toUpperCase());
-      expect(result.isErr()).toBe(true);
+    test('It should ignore the transform if the instance is a Err', () => {
+      const transform = x => x.toUpperCase();
+      const either = Result.Err.of('text');
+
+      const result = Result.chain(transform, either);
+
+      expect(result).toBe(either);
     });
   });
 
-  describe('#isErr', () => {
+  describe('Result.isErr', () => {
     test('It should return true if the instance is a Err', () => {
-      expect(Result.Err().isErr()).toBe(true);
+      expect(Result.isErr(Result.Err.of())).toBe(true);
     });
 
     test('It should return false if the instance is a Ok', () => {
-      expect(Result.Ok().isErr()).toBe(false);
+      expect(Result.isErr(Result.Ok.of())).toBe(false);
     });
   });
 
-  describe('#isOk', () => {
+  describe('Result.isOk', () => {
     test('It should return true if the instance is a Ok', () => {
-      expect(Result.Ok().isOk()).toBe(true);
+      expect(Result.isOk(Result.Ok.of())).toBe(true);
     });
 
     test('It should return false if the instance is a Err', () => {
-      expect(Result.Err().isOk()).toBe(false);
+      expect(Result.isOk(Result.Err.of())).toBe(false);
+    });
+  });
+
+  describe('Result#of', () => {
+    test('It should return an instance of Result', () => {
+      expect(Result.of(1).isOk()).toBe(true);
+      expect(Result.Ok.of().of().isOk()).toBe(true);
+      expect(Result.Err.of().of().isErr()).toBe(true);
+    });
+  });
+
+  describe('Result#map', () => {
+    test('It should apply the transform if the instance is a Ok', () => {
+      const result = Result
+        .Ok.of('text')
+        .map(x => x.toUpperCase());
+
+      expect(Result.isOk(result)).toBe(true);
+      expect(result.value).toEqual('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Err', () => {
+      const result = Result
+        .Err.of('text')
+        .map(x => x.toUpperCase());
+
+      expect(Result.isErr(result)).toBe(true);
+      expect(result.value).toEqual('text');
+    });
+  });
+
+  describe('Result#ap', () => {
+    test('It should apply the transform if the instance is a Ok', () => {
+      const result = Result
+        .Ok.of('text')
+        .ap(Result.of(x => x.toUpperCase()));
+
+      expect(Result.isOk(result)).toBe(true);
+      expect(result.value).toBe('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Err', () => {
+      const result = Result
+        .Err.of('text')
+        .ap(Result.of(x => x.toUpperCase()));
+
+      expect(Result.isErr(result)).toBe(true);
+      expect(result.value).toBe('text');
+    });
+  });
+
+  describe('Result#chain', () => {
+    test('It should apply the transform if the instance is a Ok', () => {
+      const result = Result.Ok.of('text');
+      const value = result.chain(x => x.toUpperCase());
+
+      expect(value).toBe('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Err', () => {
+      const result = Result.Err.of('text');
+      const value = result.chain(x => x.toUpperCase());
+
+      expect(value).toBe(result);
+    });
+  });
+
+  describe('Result#isErr', () => {
+    test('It should return true if the instance is a Err', () => {
+      expect(Result.Err.of().isErr()).toBe(true);
+    });
+
+    test('It should return false if the instance is a Ok', () => {
+      expect(Result.Ok.of().isErr()).toBe(false);
+    });
+  });
+
+  describe('Result#isOk', () => {
+    test('It should return true if the instance is a Ok', () => {
+      expect(Result.Ok.of().isOk()).toBe(true);
+    });
+
+    test('It should return false if the instance is a Err', () => {
+      expect(Result.Err.of().isOk()).toBe(false);
     });
   });
 });

@@ -1,46 +1,102 @@
-/* global describe, expect, test, jest */
+/* global describe, expect, test */
 import Either from '../Either';
 
 describe('data.Either', () => {
-  test('It should implement static Applicative', () => {
-    expect(Either.of(1) instanceof Either).toBe(true);
-  });
-
-  test('It should implement instance Applicative', () => {
-    expect(Either.of(1).of(1) instanceof Either).toBe(true);
-  });
-
-  describe('Functor', () => {
-    test('It should call the transform if the instance is a Right', () => {
-      const transform = jest.fn();
-      Either.of('text').map(transform);
-      expect(transform.mock.calls[0]).toEqual(['text']);
-    });
-
-    test('It should not call the transform if the instance is a Left', () => {
-      const transform = jest.fn();
-      Either.Left.of('text').map(transform);
-      expect(transform.mock.calls[0]).toBeFalsy();
+  describe('Either.of', () => {
+    test('It should return an instance of Either', () => {
+      expect(Either.of(1) instanceof Either).toBe(true);
     });
   });
 
-  describe('Chain', () => {
-    test('It should call the transform if the instance is a Just', () => {
-      const result = Either.of('text').chain(x => x.toUpperCase());
+  describe('Either.map', () => {
+    test('It should apply the transform if the instance is a Right', () => {
+      const transform = x => x.toUpperCase();
+      const either = Either.of('text');
+
+      const result = Either.map(transform, either);
+
+      expect(Either.isRight(result)).toBe(true);
+      expect(result.value).toEqual('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Left', () => {
+      const transform = x => x.toUpperCase();
+      const either = Either.Left.of('text');
+
+      const result = Either.map(transform, either);
+
+      expect(Either.isLeft(result)).toBe(true);
+      expect(result.value).toEqual('text');
+    });
+  });
+
+  describe('Either.ap', () => {
+    test('It should apply the transform if the instance is a Right', () => {
+      const either = Either.of('text');
+      const apply = Either.of(x => x.toUpperCase());
+
+      const result = Either.ap(apply, either);
+
+      expect(Either.isRight(result)).toBe(true);
+      expect(result.value).toEqual('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Left', () => {
+      const either = Either.Left.of('text');
+      const apply = Either.of(x => x.toUpperCase());
+
+      const result = Either.ap(apply, either);
+
+      expect(Either.isLeft(result)).toBe(true);
+      expect(result.value).toEqual('text');
+    });
+  });
+
+  describe('Either.chain', () => {
+    test('It should apply the transform if the instance is a Right', () => {
+      const transform = x => x.toUpperCase();
+      const either = Either.of('text');
+
+      const result = Either.chain(transform, either);
+
       expect(result).toBe('TEXT');
     });
 
-    test('It should not call the transform if the instance is a Nothing', () => {
-      const result = Either.Left('text').map(x => x.toUpperCase());
-      expect(result.isLeft()).toBe(true);
+    test('It should ignore the transform if the instance is a Left', () => {
+      const transform = x => x.toUpperCase();
+      const either = Either.Left.of('text');
+
+      const result = Either.chain(transform, either);
+
+      expect(result).toBe(either);
     });
   });
 
-  describe('#try(value)', () => {
+  describe('Either.isLeft', () => {
+    test('It should return true if the instance is a Left', () => {
+      expect(Either.isLeft(Either.Left.of())).toBe(true);
+    });
+
+    test('It should return false if the instance is a Right', () => {
+      expect(Either.isLeft(Either.Right.of())).toBe(false);
+    });
+  });
+
+  describe('Either.isRight', () => {
+    test('It should return true if the instance is a Right', () => {
+      expect(Either.isRight(Either.Right.of())).toBe(true);
+    });
+
+    test('It should return false if the instance is a Left', () => {
+      expect(Either.isRight(Either.Left.of())).toBe(false);
+    });
+  });
+
+  describe('Either.try', () => {
     test('It should a Right if the function was successful', () => {
       const fromJson = Either.try(JSON.parse);
       const result = fromJson('{ "foo": "bar" }');
-      expect(result.isRight()).toBe(true);
+      expect(Either.isRight(result)).toBe(true);
     });
 
     test('It should return Left if it was not successful', () => {
@@ -50,23 +106,87 @@ describe('data.Either', () => {
     });
   });
 
-  describe('#isLeft', () => {
-    test('It should return true if the instance is a Left', () => {
-      expect(Either.Left().isLeft()).toBe(true);
-    });
-
-    test('It should return false if the instance is a Right', () => {
-      expect(Either.Right().isLeft()).toBe(false);
+  describe('Either#of', () => {
+    test('It should return an instance of Either', () => {
+      expect(Either.of().of(1).isRight()).toBe(true);
+      expect(Either.Right.of().of(1).isRight()).toBe(true);
+      expect(Either.Left.of().of(1).isLeft()).toBe(true);
     });
   });
 
-  describe('#isRight', () => {
+  describe('Either#map', () => {
+    test('It should apply the transform if the instance is a Right', () => {
+      const result = Either
+        .Right.of('text')
+        .map(x => x.toUpperCase());
+
+      expect(Either.isRight(result)).toBe(true);
+      expect(result.value).toEqual('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Left', () => {
+      const result = Either
+        .Left.of('text')
+        .map(x => x.toUpperCase());
+
+      expect(Either.isLeft(result)).toBe(true);
+      expect(result.value).toEqual('text');
+    });
+  });
+
+  describe('Either#ap', () => {
+    test('It should apply the transform if the instance is a Right', () => {
+      const result = Either
+        .Right.of('text')
+        .ap(Either.of(x => x.toUpperCase()));
+
+      expect(Either.isRight(result)).toBe(true);
+      expect(result.value).toBe('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Left', () => {
+      const result = Either
+        .Left.of('text')
+        .ap(Either.of(x => x.toUpperCase()));
+
+      expect(Either.isLeft(result)).toBe(true);
+      expect(result.value).toBe('text');
+    });
+  });
+
+  describe('Either#chain', () => {
+    test('It should apply the transform if the instance is a Right', () => {
+      const result = Either.Right.of('text');
+      const value = result.chain(x => x.toUpperCase());
+
+      expect(value).toBe('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Left', () => {
+      const result = Either.Left.of('text');
+      const value = result.chain(x => x.toUpperCase());
+
+      expect(value).toBe(result);
+    });
+  });
+
+  describe('Either#isLeft', () => {
+    test('It should return true if the instance is a Left', () => {
+      expect(Either.Left.of().isLeft()).toBe(true);
+    });
+
+    test('It should return false if the instance is a Right', () => {
+      expect(Either.Right.of().isLeft()).toBe(false);
+    });
+  });
+
+  describe('Either#isRight', () => {
     test('It should return true if the instance is a Right', () => {
-      expect(Either.Right().isRight()).toBe(true);
+      expect(Either.Right.of().isRight()).toBe(true);
     });
 
     test('It should return false if the instance is a Left', () => {
-      expect(Either.Left().isRight()).toBe(false);
+      expect(Either.Left.of().isRight()).toBe(false);
     });
   });
 });

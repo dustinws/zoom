@@ -1,10 +1,21 @@
 import curry from '../core/curry';
 
 /**
- * A curried wrapper around the logical && operator.
+ * @description A curried wrapper around the logical && operator.
+ * @memberof module:Zoom.Logic
+ * @function and
+ * @since v1.0.0
+ * @example
+ * import { and } from '@dustinws/zoom/packages/logic';
  *
- * @param  {Any} left
- * @param  {Any} right
+ * and(false, true); // false
+ * and(true, false); // false
+ * and(true, true); // true
+ *
+ * @param  {Any} left The first value
+ * @param  {Any} right The second value
  * @return {Any}
  */
-export default curry((left, right) => left && right);
+const and = curry((left, right) => left && right);
+
+export default and;

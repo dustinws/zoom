@@ -1,130 +1,416 @@
+import __ from '../core/__';
 import { union } from '../adt';
+import curry from '../core/curry';
+import compose from '../core/compose';
 import constant from '../core/constant';
 
 /**
- * The Validation super class.
- *
- * @type {Function}
+ * @class Validation
+ * @memberof module:Zoom.Data
  */
 const Validation = union('Validation', {
   Success: ['value'],
   Failure: ['value'],
 });
 
-/**
- * Implement Static Applicative for Success
- *
- * @param  {T} value
- * @return {Validation<T>}
+const Success = Validation.Success;
+const Failure = Validation.Failure;
+
+/*
+ |------------------------------------------------------------------------------
+ | Static Members
+ |------------------------------------------------------------------------------
  */
-Validation.of = Validation.Success.of = Validation.Success;
 
 /**
- * Implement Static Applicative for Failure
+ * @description Lift a value into a successful 'Success' context.
+ * @memberof module:Zoom.Data.Validation
+ * @function of
+ * @since v1.0.0
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
  *
- * @param  {T} value
- * @return {Validation<T>}
- */
-Validation.Failure.of = Validation.Failure.prototype.of = function of(value) {
-  return Validation.Failure(value);
-};
-
-/**
- * Implement Applicative
+ * const valid = Validation.of(1);
  *
- * @param  {T} value
- * @return {Validation<T>}
- */
-Validation.prototype.of = Validation.Success.prototype.of = function of(value) {
-  return Validation.Success(value);
-};
-
-/**
- * Implement Chain
+ * valid.toString() // 'Success(1)'
  *
- * @param  {Function} transform
+ * @param  {Any} value The value to put in the Validation
  * @return {Validation}
  */
-Validation.prototype.chain = function chain(transform) {
-  return this.cata({
-    Failure: constant(this),
+Validation.of = function of(value) {
+  return Success(value);
+};
+
+/**
+ * @description Lift a value into a successful 'Success' context.
+ * @memberof module:Zoom.Data.Validation
+ * @function
+ * @since v1.0.0
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
+ *
+ * const valid = Validation.Success.of(1);
+ *
+ * valid.toString() // 'Success(1)'
+ *
+ * @param  {Any} value The value to put in the Validation
+ * @return {Validation}
+ */
+Success.of = function of(value) {
+  return Success(value);
+};
+
+/**
+ * @description Lift a value into an unsuccessful 'Failure' context.
+ * @memberof module:Zoom.Data.Validation
+ * @function
+ * @since v1.0.0
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
+ *
+ * const valid = Validation.Failure.of(1);
+ *
+ * valid.toString() // 'Failure(1)'
+ *
+ * @param  {Any} value The value to put in the Validation
+ * @return {Validation}
+ */
+Failure.of = function of(value) {
+  return Failure(value);
+};
+
+/**
+ * @description Apply a transformation to the Validation if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Success' to 'Failure' instance and stop
+ * subsequent transformations from being applied.
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.0.0
+ * @function chain
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
+ *
+ * const valid = Validation.Success.of('yay!');
+ * const invalid = Validation.Failure.of('nay!');
+ *
+ * const toUpper = x => Validation.Success.of(x.toUpperCase());
+ *
+ * Validation.chain(toUpper, valid); // Success('YAY!');
+ * Validation.chain(toUpper, invalid); // Failure('nay!');
+ *
+ * @param  {Function} transform The transformation to apply to the inner value
+ * @param  {Validation} validation The transformation to apply to the inner value
+ * @return {Validation}
+ */
+Validation.chain = curry((transform, validation) =>
+  validation.cata({
+    Failure: constant(validation),
     Success: transform,
-  });
-};
+  }));
 
 /**
- * Implement Functor
+ * @description Apply a transformation to the Validation if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.0.0
+ * @function map
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
  *
- * @param  {Function} transform
+ * const valid = Validation.Success.of('yay!');
+ * const failure = Validation.Failure.of('nay!');
+ *
+ * const toUpper = x => x.toUpperCase();
+ *
+ * Validation.map(toUpper, valid); // Success('YAY!');
+ * Validation.map(toUpper, invalid); // Failure('nay!');
+ *
+ * @param  {Function} transform The transformation to apply to the inner value
+ * @param  {Validation} validation The validation
  * @return {Validation}
  */
-Validation.prototype.map = function map(transform) {
-  return this.chain(x => this.of(transform(x)));
-};
+Validation.map = curry((transform, validation) =>
+  Validation.chain(compose(Validation.of, transform), validation));
 
 /**
- * Determine if an instance is an instance of Failure
+ * @description Apply a transformation to the Validation if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.0.0
+ * @function ap
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
  *
- * @return {Boolean}
- */
-Validation.prototype.isFailure = function isFailure() {
-  return this instanceof Validation.Failure;
-};
-
-/**
- * Determine if an instance is an instance of Success
+ * const valid = Validation.Success.of('yay!');
+ * const failure = Validation.Failure.of('nay!');
  *
- * @return {Boolean}
- */
-Validation.prototype.isSuccess = function isSuccess() {
-  return this instanceof Validation.Success;
-};
-
-/**
- * Implement Semigroup
+ * const toUpper = Validation.of(x => x.toUpperCase());
  *
- * @param  {Validation} other
+ * Validation.ap(toUpper, valid); // Success('YAY!');
+ * Validation.ap(toUpper, invalid); // Failure('nay!');
+ *
+ * @param  {Validation} left The validation containing a function to run on the value
+ * @param  {Validation} right The validation containing a value
  * @return {Validation}
  */
-Validation.prototype.concat = function concat(other) {
-  return this.cata({
+Validation.ap = curry((left, right) =>
+  Validation.chain(Validation.map(__, right), left));
+
+/**
+ * @description Determine if an Validation is an instance of Failure
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.0.0
+ * @function isFailure
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
+ *
+ * Validation.isFailure(Validation.Failure.of(1)); // true
+ * Validation.isFailure(Validation.Success.of(1)); // false
+ *
+ * @param  {Validation} validation The validation to query
+ * @return {Boolean}
+ */
+Validation.isFailure = validation => validation instanceof Validation.Failure;
+
+/**
+ * @description Determine if an Validation is an instance of Success
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.0.0
+ * @function isSuccess
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
+ *
+ * Validation.isSuccess(Validation.Success.of(1)); // true
+ * Validation.isSuccess(Validation.Failure.of(1)); // false
+ *
+ * @param  {Validation} validation The validation to query
+ * @return {Boolean}
+ */
+Validation.isSuccess = validation => validation instanceof Validation.Success;
+
+/**
+ * @description Combine two validations into one with a bias towards Failures.
+ * If both values are the same type (both Failures, etc..) then their values
+ * will be concatenated and a single instance of that type will be returned.
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.0.0
+ * @function concat
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
+ *
+ * const failure = Validation.Failure.of(['fail!']);
+ * const success = Validation.Success.of(['win!']);
+ *
+ * Validation.concat(failure, success); // failure
+ * Validation.concat(success, failure); // failure
+ * Validation.concat(failure, failure); // Failure(['fail!', 'fail!'])
+ * Validation.concat(success, success); // Success(['win!', 'win!'])
+ *
+ * @param  {Validation} left The first validation
+ * @param  {Validation} right The second validation
+ * @return {Validation}
+ */
+Validation.concat = curry((left, right) =>
+  left.cata({
     Failure: value =>
-      other.cata({
-        Success: constant(this),
+      right.cata({
+        Success: constant(left),
         Failure: x => Validation.Failure(value.concat(x)),
       }),
 
     Success: value =>
-      other.cata({
+      right.cata({
         Success: x => Validation.Success(value.concat(x)),
-        Failure: constant(other),
+        Failure: constant(right),
       }),
-  });
-};
+  }));
 
 /**
- * Implement Monoid
+ * @description Create an empty Validation. Used as the "identity" element
+ * for the Validation monoid.
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.0.0
+ * @function empty
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
+ *
+ * Validation.empty(); // Success([])
  *
  * @return {Validation}
  */
 Validation.empty = () =>
   Validation.Success([]);
 
-/**
- * Given an object where each value is a function that accecpts the same
- * object-under-validation. The functions do not need to store any values
- * in the success cases, since the object-under-validation will be returned
- * if no failures are present. Each function can return it's own error
- * that will be added to an array of errors in the final Failure.
- *
- * @param  {Object} cases
- * @return {Function}
+
+/*
+ |------------------------------------------------------------------------------
+ | Instance Members
+ |------------------------------------------------------------------------------
  */
-Validation.combine = cases => value =>
-  Object
-    .keys(cases)
-    .reduce((result, nextCase) =>
-      result.concat(cases[nextCase](value[nextCase])), Validation.empty())
-    .map(() => value);
+
+/**
+ * @description Lift a value into a successful 'Success' context.
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.0.0
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
+ *
+ * const valid = Validation.();
+ *
+ * valid.of(1); // Success(1)
+ *
+ * @param  {Any} value The value to put in the Validation
+ * @return {Validation}
+ */
+Success.prototype.of = function of(value) {
+  return Success.of(value);
+};
+
+/**
+ * @description Lift a value into an unsuccessful 'Failure' context.
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.0.0
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
+ *
+ * const invalid = Validation.();
+ *
+ * invalid.of(1); // Failure(1)
+ *
+ * @param  {Any} value The value to put in the Validation
+ * @return {Validation}
+ */
+Failure.prototype.of = function of(value) {
+  return Failure.of(value);
+};
+
+/**
+ * @description Apply a transformation to the Validation if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Success' to 'Failure' instance and stop
+ * subsequent transformations from being applied.
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.0.0
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
+ *
+ * const valid = Validation.Success.of('yay!');
+ * const invalid = Validation.Failure.of('nay!');
+ *
+ * const toUpper = x => Validation.Success.of(x.toUpperCase());
+ *
+ * valid.chain(toUpper); // Success('YAY!');
+ * invalid.chain(toUpper); // Failure('nay!');
+ *
+ * @param  {Function} transform The transformation to apply to the inner value
+ * @return {Validation}
+ */
+Validation.prototype.chain = function chain(transform) {
+  return Validation.chain(transform, this);
+};
+
+/**
+ * @description Apply a transformation to the Validation if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.0.0
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
+ *
+ * const valid = Validation.Success.of('yay!');
+ * const failure = Validation.Failure.of('nay!');
+ *
+ * const toUpper = x => x.toUpperCase();
+ *
+ * valid.map(toUpper); // Success('YAY!');
+ * invalid.map(toUpper); // Failure('nay!');
+ *
+ * @param  {Function} transform The transformation to apply to the inner value
+ * @return {Validation}
+ */
+Validation.prototype.map = function map(transform) {
+  return Validation.map(transform, this);
+};
+
+/**
+ * @description Apply a transformation to the Validation if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.0.0
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
+ *
+ * const valid = Validation.Success.of('yay!');
+ * const failure = Validation.Failure.of('nay!');
+ *
+ * const toUpper = Validation.of(x => x.toUpperCase());
+ *
+ * valid.ap(toUpper); // Success('YAY!');
+ * invalid.ap(toUpper); // Failure('nay!');
+ *
+ * @param  {Validation} apply A validation containing a function to run on the value
+ * @return {Validation}
+ */
+Validation.prototype.ap = function ap(apply) {
+  return Validation.ap(apply, this);
+};
+
+/**
+ * @description Determine if an Validation is an instance of Failure
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.0.0
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
+ *
+ * Validation.Failure.of(1).isFailure(); // true
+ * Validation.Success.of(1).isFailure(); // false
+ *
+ * @param  {Validation} validation The validation to query
+ * @return {Boolean}
+ */
+Validation.prototype.isFailure = function isFailure() {
+  return Validation.isFailure(this);
+};
+
+/**
+ * @description Determine if an Validation is an instance of Success
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.0.0
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
+ *
+ * Validation.Success.of(1).isSuccess(); // true
+ * Validation.Failure.of(1).isSuccess(); // false
+ *
+ * @param  {Validation} validation The validation to query
+ * @return {Boolean}
+ */
+Validation.prototype.isSuccess = function isSuccess() {
+  return Validation.isSuccess(this);
+};
+
+/**
+ * @description Combine two validations into one with a bias towards Failures.
+ * If both values are the same type (both Failures, etc..) then their values
+ * will be concatenated and a single instance of that type will be returned.
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.0.0
+ * @example
+ * import { Validation } from '@dustinws/zoom/packages/data';
+ *
+ * const failure = Validation.Failure.of(['fail!']);
+ * const success = Validation.Success.of(['win!']);
+ *
+ * success.concat(failure); // failure
+ * failure.concat(success); // failure
+ * failure.concat(failure); // Failure(['fail!', 'fail!'])
+ * success.concat(success); // Success(['win!', 'win!'])
+ *
+ * @param  {Validation} other The validation to join with
+ * @return {Validation}
+ */
+Validation.prototype.concat = function concat(other) {
+  return Validation.concat(other, this);
+};
 
 export default Validation;

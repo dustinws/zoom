@@ -3,7 +3,7 @@ import { curry } from '../core';
 import Validation from '../data/Validation';
 
 /**
- * @memberof module:check
+ * @memberof module:Zoom.Check
  * @description Ensure each value in an array satisfies a contract.
  * @since v1.14.0
  * @function arrayOf

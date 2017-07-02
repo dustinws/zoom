@@ -1,7 +1,7 @@
 import _isType from './_isType';
 
 /**
- * @memberof module:check
+ * @memberof module:Zoom.Check
  * @description Ensure a value is an Function. Returns a Validation.
  * @since v1.14.0
  * @function func

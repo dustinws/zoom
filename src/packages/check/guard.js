@@ -2,7 +2,7 @@ import tupleOf from './tupleOf';
 import curryN from '../core/curryN';
 
 /**
- * @memberof module:check
+ * @memberof module:Zoom.Check
  * @description Guard a function's input / output types. Acts as a no-op,
  * but will log the TypeError to the console in development.
  * @since v1.14.0

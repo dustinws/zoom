@@ -1,3 +1,8 @@
+/**
+ * @class Core
+ * @memberof module:Zoom
+ */
+
 export { default as __ } from './__';
 export { default as complement } from './complement';
 export { default as constant } from './constant';
