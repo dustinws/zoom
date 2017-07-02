@@ -1,4 +1,4 @@
-import curry from '../lambda/curry';
+import curry from '../core/curry';
 
 /**
  * A curried wrapper around the addition computation.

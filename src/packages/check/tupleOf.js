@@ -1,5 +1,5 @@
 import array from './array';
-import { curry } from '../lambda';
+import { curry } from '../core';
 import Validation from '../data/Validation';
 
 export default curry((contracts, value) =>

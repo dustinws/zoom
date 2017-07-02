@@ -1,5 +1,5 @@
 import { union } from '../adt';
-import constant from '../lambda/constant';
+import constant from '../core/constant';
 
 /**
  * The Maybe super class.
