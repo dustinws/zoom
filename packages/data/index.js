@@ -40,6 +40,15 @@ Object.defineProperty(exports, 'Task', {
   }
 });
 
+var _Tuple = require('./Tuple');
+
+Object.defineProperty(exports, 'Tuple', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_Tuple).default;
+  }
+});
+
 var _Validation = require('./Validation');
 
 Object.defineProperty(exports, 'Validation', {
