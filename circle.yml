@@ -1,3 +1,23 @@
 machine:
   node:
-    version: 6.9.3
+    version: 8.0.0
+
+dependencies:
+  pre:
+    - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
+test:
+  override:
+    - rm -rf $CIRCLE_ARTIFACTS/coverage
+    - npm run lint
+    - npm run test
+    - cp -r coverage $CIRCLE_ARTIFACTS
+
+compile:
+  override:
+    - npm run build
+
+deployment:
+  feature:
+    branch: master
+    commands:
+      - npm publish

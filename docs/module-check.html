@@ -1,41 +1,129 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>JSDoc: Module: check</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Documentation Module: check</title>
 
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.simplex.css">
+
 </head>
 
 <body>
 
-<div id="main">
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Documentation</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-ADT.html">ADT</a></li><li><a href="module-check.html">check</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#curryN">curryN</a></li><li><a href="global.html#Either">Either</a></li><li><a href="global.html#Maybe">Maybe</a></li><li><a href="global.html#Result">Result</a></li><li><a href="global.html#Task">Task</a></li><li><a href="global.html#Tuple">Tuple</a></li><li><a href="global.html#Validation">Validation</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
 
-    <h1 class="page-title">Module: check</h1>
-
-    
-
+</div>
+</div>
 
 
+<div class="container" id="toc-content">
+<div class="row">
 
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	<h1 class="page-title">Module: check</h1>
 <section>
 
 <header>
     
-        
-    
 </header>
+
 
 <article>
     <div class="container-overview">
     
         
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
 
         
     
@@ -47,7 +135,7 @@
 
     
 
-     
+    
 
     
 
@@ -56,33 +144,32 @@
     
         <h3 class="subsection-title">Methods</h3>
 
-        
+        <dl>
             
+<hr>
+<dt>
+    <h4 class="name" id=".array"><span class="type-signature">&lt;static> </span>array(value)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Ensure a value is an array. Returns a Validation.
+    </div>
+    
 
     
 
-    <h4 class="name" id=".array"><span class="type-signature">(static) </span>array<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="global.html#Validation">Validation</a>}</span></h4>
-
     
 
-
-
-<div class="description">
-    Ensure a value is an array. Returns a Validation.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
     
+    
+        <h5>Parameters:</h5>
+        
 
-<table class="params">
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -113,6 +200,7 @@
 <span class="param-type">Any</span>
 
 
+
             
             </td>
 
@@ -127,31 +215,24 @@
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
-
     
 
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.14.0</li></ul></dd>
-    
+	
 
-    
+	
+	<dt class="tag-since method-doc-label method-doc-details-label">Since:</dt>
+	<dd class="tag-since">
+		<ul class="dummy">
+			<li>v1.14.0</li>
+		</ul>
+	</dd>
+	
 
-    
-
-    
-
-    
-
-    
-
-    
+	
 
     
 
@@ -161,35 +242,42 @@
 
     
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="check_array.js.html">check/array.js</a>, <a href="check_array.js.html#line3">line 3</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 
 
 <dl>
@@ -201,48 +289,51 @@
 <span class="param-type"><a href="global.html#Validation">Validation</a></span>
 
 
+
     </dd>
 </dl>
 
-    
 
+        
 
-    <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { array } from '@dustinws/zoom/packages/check';
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import { array } from &#x27;@dustinws/zoom/packages/check&#x27;;
 
 array([]).isSuccess() // true
-array('').isSuccess() // false</code></pre>
+array(&#x27;&#x27;).isSuccess() // false</pre>
 
 
+    
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id=".arrayOf"><span class="type-signature">&lt;static> </span>arrayOf(contract, value)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Ensure each value in an array satisfies a contract.
+    </div>
+    
 
     
 
-    <h4 class="name" id=".arrayOf"><span class="type-signature">(static) </span>arrayOf<span class="signature">(contract, value)</span><span class="type-signature"> &rarr; {<a href="global.html#Validation">Validation</a>}</span></h4>
-
     
 
-
-
-<div class="description">
-    Ensure each value in an array satisfies a contract.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
     
+    
+        <h5>Parameters:</h5>
+        
 
-<table class="params">
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -273,6 +364,7 @@ array('').isSuccess() // false</code></pre>
 <span class="param-type">function</span>
 
 
+
             
             </td>
 
@@ -296,6 +388,7 @@ array('').isSuccess() // false</code></pre>
 <span class="param-type">Array.&lt;Any></span>
 
 
+
             
             </td>
 
@@ -310,31 +403,24 @@ array('').isSuccess() // false</code></pre>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
-
     
 
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.14.0</li></ul></dd>
-    
+	
 
-    
+	
+	<dt class="tag-since method-doc-label method-doc-details-label">Since:</dt>
+	<dd class="tag-since">
+		<ul class="dummy">
+			<li>v1.14.0</li>
+		</ul>
+	</dd>
+	
 
-    
-
-    
-
-    
-
-    
-
-    
+	
 
     
 
@@ -344,35 +430,42 @@ array('').isSuccess() // false</code></pre>
 
     
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="check_arrayOf.js.html">check/arrayOf.js</a>, <a href="check_arrayOf.js.html#line5">line 5</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 
 
 <dl>
@@ -384,48 +477,51 @@ array('').isSuccess() // false</code></pre>
 <span class="param-type"><a href="global.html#Validation">Validation</a></span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import { arrayOf, string } from &#x27;@dustinws/zoom/packages/check&#x27;;
+
+arrayOf(string, [&#x27;foo&#x27;]).isSuccess() // true
+arrayOf(string, [23221]).isSuccess() // false</pre>
 
 
-    <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { arrayOf, string } from '@dustinws/zoom/packages/check';
-
-arrayOf(string, ['foo']).isSuccess() // true
-arrayOf(string, [23221]).isSuccess() // false</code></pre>
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id=".bool"><span class="type-signature">&lt;static> </span>bool(value)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Ensure a value is an Boolean. Returns a Validation.
+    </div>
+    
 
     
 
-    <h4 class="name" id=".bool"><span class="type-signature">(static) </span>bool<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="global.html#Validation">Validation</a>}</span></h4>
-
     
 
-
-
-<div class="description">
-    Ensure a value is an Boolean. Returns a Validation.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
     
+    
+        <h5>Parameters:</h5>
+        
 
-<table class="params">
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -456,6 +552,7 @@ arrayOf(string, [23221]).isSuccess() // false</code></pre>
 <span class="param-type">Any</span>
 
 
+
             
             </td>
 
@@ -470,31 +567,24 @@ arrayOf(string, [23221]).isSuccess() // false</code></pre>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
-
     
 
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.14.0</li></ul></dd>
-    
+	
 
-    
+	
+	<dt class="tag-since method-doc-label method-doc-details-label">Since:</dt>
+	<dd class="tag-since">
+		<ul class="dummy">
+			<li>v1.14.0</li>
+		</ul>
+	</dd>
+	
 
-    
-
-    
-
-    
-
-    
-
-    
+	
 
     
 
@@ -504,35 +594,42 @@ arrayOf(string, [23221]).isSuccess() // false</code></pre>
 
     
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="check_bool.js.html">check/bool.js</a>, <a href="check_bool.js.html#line3">line 3</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 
 
 <dl>
@@ -544,48 +641,51 @@ arrayOf(string, [23221]).isSuccess() // false</code></pre>
 <span class="param-type"><a href="global.html#Validation">Validation</a></span>
 
 
+
     </dd>
 </dl>
 
-    
 
+        
 
-    <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { bool } from '@dustinws/zoom/packages/check';
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import { bool } from &#x27;@dustinws/zoom/packages/check&#x27;;
 
 bool(true).isSuccess() // true
-bool('').isSuccess() // false</code></pre>
+bool(&#x27;&#x27;).isSuccess() // false</pre>
 
 
+    
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id=".func"><span class="type-signature">&lt;static> </span>func(value)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Ensure a value is an Function. Returns a Validation.
+    </div>
+    
 
     
 
-    <h4 class="name" id=".func"><span class="type-signature">(static) </span>func<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="global.html#Validation">Validation</a>}</span></h4>
-
     
 
-
-
-<div class="description">
-    Ensure a value is an Function. Returns a Validation.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
     
+    
+        <h5>Parameters:</h5>
+        
 
-<table class="params">
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -616,6 +716,7 @@ bool('').isSuccess() // false</code></pre>
 <span class="param-type">Any</span>
 
 
+
             
             </td>
 
@@ -630,31 +731,24 @@ bool('').isSuccess() // false</code></pre>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
-
     
 
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.14.0</li></ul></dd>
-    
+	
 
-    
+	
+	<dt class="tag-since method-doc-label method-doc-details-label">Since:</dt>
+	<dd class="tag-since">
+		<ul class="dummy">
+			<li>v1.14.0</li>
+		</ul>
+	</dd>
+	
 
-    
-
-    
-
-    
-
-    
-
-    
+	
 
     
 
@@ -664,35 +758,42 @@ bool('').isSuccess() // false</code></pre>
 
     
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="check_func.js.html">check/func.js</a>, <a href="check_func.js.html#line3">line 3</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 
 
 <dl>
@@ -704,49 +805,52 @@ bool('').isSuccess() // false</code></pre>
 <span class="param-type"><a href="global.html#Validation">Validation</a></span>
 
 
+
     </dd>
 </dl>
 
-    
 
+        
 
-    <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { func } from '@dustinws/zoom/packages/check';
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import { func } from &#x27;@dustinws/zoom/packages/check&#x27;;
 
 func(function(){}).isSuccess() // true
-func('').isSuccess() // false</code></pre>
+func(&#x27;&#x27;).isSuccess() // false</pre>
 
 
+    
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id=".guard"><span class="type-signature">&lt;static> </span>guard(Input, The, args)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id=".guard"><span class="type-signature">(static) </span>guard<span class="signature">(Input, The, &hellip;args)</span><span class="type-signature"> &rarr; {<a href="global.html#Validation">Validation</a>}</span></h4>
-
-    
-
-
-
-<div class="description">
-    Guard a function's input / output types. Acts as a no-op,
+    <div class="description">
+        Guard a function's input / output types. Acts as a no-op,
 but will log the TypeError to the console in development.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -756,7 +860,7 @@ but will log the TypeError to the console in development.
         <th>Type</th>
 
         
-        <th>Attributes</th>
+        <th>Argument</th>
         
 
         
@@ -777,6 +881,7 @@ but will log the TypeError to the console in development.
             
                 
 <span class="param-type">Array.&lt;function()></span>
+
 
 
             
@@ -810,6 +915,7 @@ but will log the TypeError to the console in development.
 <span class="param-type">function</span>
 
 
+
             
             </td>
 
@@ -841,6 +947,7 @@ but will log the TypeError to the console in development.
 <span class="param-type">Any</span>
 
 
+
             
             </td>
 
@@ -865,31 +972,24 @@ but will log the TypeError to the console in development.
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
-
     
 
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.14.0</li></ul></dd>
-    
+	
 
-    
+	
+	<dt class="tag-since method-doc-label method-doc-details-label">Since:</dt>
+	<dd class="tag-since">
+		<ul class="dummy">
+			<li>v1.14.0</li>
+		</ul>
+	</dd>
+	
 
-    
-
-    
-
-    
-
-    
-
-    
+	
 
     
 
@@ -899,35 +999,42 @@ but will log the TypeError to the console in development.
 
     
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="check_guard.js.html">check/guard.js</a>, <a href="check_guard.js.html#line4">line 4</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 
 
 <dl>
@@ -939,50 +1046,53 @@ but will log the TypeError to the console in development.
 <span class="param-type"><a href="global.html#Validation">Validation</a></span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import { guard, number } from &#x27;@dustinws/zoom/packages/check&#x27;;
 
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { guard, number } from '@dustinws/zoom/packages/check';
-
-const add = guard([number, number, number], (a, b) => a + b);
+const add = guard([number, number, number], (a, b) =&gt; a + b);
 
 add(1, 3) // 4
-add(1, '3') // 13 (logs TypeError outside of production)</code></pre>
+add(1, &#x27;3&#x27;) // 13 (logs TypeError outside of production)</pre>
 
 
+    
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id=".nil"><span class="type-signature">&lt;static> </span>nil(value)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Ensure a value is a null. Returns a Validation.
+    </div>
+    
 
     
 
-    <h4 class="name" id=".nil"><span class="type-signature">(static) </span>nil<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="global.html#Validation">Validation</a>}</span></h4>
-
     
 
-
-
-<div class="description">
-    Ensure a value is a null. Returns a Validation.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
     
+    
+        <h5>Parameters:</h5>
+        
 
-<table class="params">
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -1013,6 +1123,7 @@ add(1, '3') // 13 (logs TypeError outside of production)</code></pre>
 <span class="param-type">Any</span>
 
 
+
             
             </td>
 
@@ -1027,31 +1138,24 @@ add(1, '3') // 13 (logs TypeError outside of production)</code></pre>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
-
     
 
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.14.0</li></ul></dd>
-    
+	
 
-    
+	
+	<dt class="tag-since method-doc-label method-doc-details-label">Since:</dt>
+	<dd class="tag-since">
+		<ul class="dummy">
+			<li>v1.14.0</li>
+		</ul>
+	</dd>
+	
 
-    
-
-    
-
-    
-
-    
-
-    
+	
 
     
 
@@ -1061,35 +1165,42 @@ add(1, '3') // 13 (logs TypeError outside of production)</code></pre>
 
     
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="check_nil.js.html">check/nil.js</a>, <a href="check_nil.js.html#line3">line 3</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 
 
 <dl>
@@ -1101,48 +1212,51 @@ add(1, '3') // 13 (logs TypeError outside of production)</code></pre>
 <span class="param-type"><a href="global.html#Validation">Validation</a></span>
 
 
+
     </dd>
 </dl>
 
-    
 
+        
 
-    <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { nil } from '@dustinws/zoom/packages/check';
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import { nil } from &#x27;@dustinws/zoom/packages/check&#x27;;
 
 nil(null).isSuccess() // true
-nil('').isSuccess() // false</code></pre>
+nil(&#x27;&#x27;).isSuccess() // false</pre>
 
 
+    
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id=".number"><span class="type-signature">&lt;static> </span>number(value)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Ensure a value is a number. Returns a Validation.
+    </div>
+    
 
     
 
-    <h4 class="name" id=".number"><span class="type-signature">(static) </span>number<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="global.html#Validation">Validation</a>}</span></h4>
-
     
 
-
-
-<div class="description">
-    Ensure a value is a number. Returns a Validation.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
     
+    
+        <h5>Parameters:</h5>
+        
 
-<table class="params">
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -1173,6 +1287,7 @@ nil('').isSuccess() // false</code></pre>
 <span class="param-type">Any</span>
 
 
+
             
             </td>
 
@@ -1187,31 +1302,24 @@ nil('').isSuccess() // false</code></pre>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
-
     
 
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.14.0</li></ul></dd>
-    
+	
 
-    
+	
+	<dt class="tag-since method-doc-label method-doc-details-label">Since:</dt>
+	<dd class="tag-since">
+		<ul class="dummy">
+			<li>v1.14.0</li>
+		</ul>
+	</dd>
+	
 
-    
-
-    
-
-    
-
-    
-
-    
+	
 
     
 
@@ -1221,35 +1329,42 @@ nil('').isSuccess() // false</code></pre>
 
     
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="check_number.js.html">check/number.js</a>, <a href="check_number.js.html#line3">line 3</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 
 
 <dl>
@@ -1261,48 +1376,51 @@ nil('').isSuccess() // false</code></pre>
 <span class="param-type"><a href="global.html#Validation">Validation</a></span>
 
 
+
     </dd>
 </dl>
 
-    
 
+        
 
-    <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { number } from '@dustinws/zoom/packages/check';
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import { number } from &#x27;@dustinws/zoom/packages/check&#x27;;
 
 number(32).isSuccess() // true
-number('').isSuccess() // false</code></pre>
+number(&#x27;&#x27;).isSuccess() // false</pre>
 
 
+    
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id=".object"><span class="type-signature">&lt;static> </span>object(value)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Ensure a value is an object. Returns a Validation.
+    </div>
+    
 
     
 
-    <h4 class="name" id=".object"><span class="type-signature">(static) </span>object<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="global.html#Validation">Validation</a>}</span></h4>
-
     
 
-
-
-<div class="description">
-    Ensure a value is an object. Returns a Validation.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
     
+    
+        <h5>Parameters:</h5>
+        
 
-<table class="params">
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -1333,6 +1451,7 @@ number('').isSuccess() // false</code></pre>
 <span class="param-type">Any</span>
 
 
+
             
             </td>
 
@@ -1347,31 +1466,24 @@ number('').isSuccess() // false</code></pre>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
-
     
 
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.14.0</li></ul></dd>
-    
+	
 
-    
+	
+	<dt class="tag-since method-doc-label method-doc-details-label">Since:</dt>
+	<dd class="tag-since">
+		<ul class="dummy">
+			<li>v1.14.0</li>
+		</ul>
+	</dd>
+	
 
-    
-
-    
-
-    
-
-    
-
-    
+	
 
     
 
@@ -1381,35 +1493,42 @@ number('').isSuccess() // false</code></pre>
 
     
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="check_object.js.html">check/object.js</a>, <a href="check_object.js.html#line3">line 3</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 
 
 <dl>
@@ -1421,48 +1540,51 @@ number('').isSuccess() // false</code></pre>
 <span class="param-type"><a href="global.html#Validation">Validation</a></span>
 
 
+
     </dd>
 </dl>
 
-    
 
+        
 
-    <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { object } from '@dustinws/zoom/packages/check';
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import { object } from &#x27;@dustinws/zoom/packages/check&#x27;;
 
 object({}).isSuccess() // true
-object('').isSuccess() // false</code></pre>
+object(&#x27;&#x27;).isSuccess() // false</pre>
 
 
+    
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id=".objectOf"><span class="type-signature">&lt;static> </span>objectOf(contract, value)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Ensure each value in an object satisfies a contract.
+    </div>
+    
 
     
 
-    <h4 class="name" id=".objectOf"><span class="type-signature">(static) </span>objectOf<span class="signature">(contract, value)</span><span class="type-signature"> &rarr; {<a href="global.html#Validation">Validation</a>}</span></h4>
-
     
 
-
-
-<div class="description">
-    Ensure each value in an object satisfies a contract.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
     
+    
+        <h5>Parameters:</h5>
+        
 
-<table class="params">
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -1493,6 +1615,7 @@ object('').isSuccess() // false</code></pre>
 <span class="param-type">Object</span>
 
 
+
             
             </td>
 
@@ -1516,6 +1639,7 @@ object('').isSuccess() // false</code></pre>
 <span class="param-type">Object</span>
 
 
+
             
             </td>
 
@@ -1530,31 +1654,24 @@ object('').isSuccess() // false</code></pre>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
-
     
 
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.14.0</li></ul></dd>
-    
+	
 
-    
+	
+	<dt class="tag-since method-doc-label method-doc-details-label">Since:</dt>
+	<dd class="tag-since">
+		<ul class="dummy">
+			<li>v1.14.0</li>
+		</ul>
+	</dd>
+	
 
-    
-
-    
-
-    
-
-    
-
-    
+	
 
     
 
@@ -1564,35 +1681,42 @@ object('').isSuccess() // false</code></pre>
 
     
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="check_objectOf.js.html">check/objectOf.js</a>, <a href="check_objectOf.js.html#line5">line 5</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 
 
 <dl>
@@ -1604,48 +1728,51 @@ object('').isSuccess() // false</code></pre>
 <span class="param-type"><a href="global.html#Validation">Validation</a></span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import { objectOf, string } from &#x27;@dustinws/zoom/packages/check&#x27;;
+
+objectOf(string, { a: &#x27;1&#x27; }).isSuccess() // true
+objectOf(string, { a: 1 }).isSuccess() // false</pre>
 
 
-    <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { objectOf, string } from '@dustinws/zoom/packages/check';
-
-objectOf(string, { a: '1' }).isSuccess() // true
-objectOf(string, { a: 1 }).isSuccess() // false</code></pre>
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id=".string"><span class="type-signature">&lt;static> </span>string(value)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Ensure a value is a string. Returns a Validation.
+    </div>
+    
 
     
 
-    <h4 class="name" id=".string"><span class="type-signature">(static) </span>string<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="global.html#Validation">Validation</a>}</span></h4>
-
     
 
-
-
-<div class="description">
-    Ensure a value is a string. Returns a Validation.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
     
+    
+        <h5>Parameters:</h5>
+        
 
-<table class="params">
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -1676,6 +1803,7 @@ objectOf(string, { a: 1 }).isSuccess() // false</code></pre>
 <span class="param-type">Any</span>
 
 
+
             
             </td>
 
@@ -1690,31 +1818,24 @@ objectOf(string, { a: 1 }).isSuccess() // false</code></pre>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
-
     
 
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.14.0</li></ul></dd>
-    
+	
 
-    
+	
+	<dt class="tag-since method-doc-label method-doc-details-label">Since:</dt>
+	<dd class="tag-since">
+		<ul class="dummy">
+			<li>v1.14.0</li>
+		</ul>
+	</dd>
+	
 
-    
-
-    
-
-    
-
-    
-
-    
+	
 
     
 
@@ -1724,35 +1845,42 @@ objectOf(string, { a: 1 }).isSuccess() // false</code></pre>
 
     
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="check_string.js.html">check/string.js</a>, <a href="check_string.js.html#line3">line 3</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 
 
 <dl>
@@ -1764,48 +1892,51 @@ objectOf(string, { a: 1 }).isSuccess() // false</code></pre>
 <span class="param-type"><a href="global.html#Validation">Validation</a></span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import { string } from &#x27;@dustinws/zoom/packages/check&#x27;;
+
+string(&#x27;&#x27;).isSuccess() // true
+string(32).isSuccess() // false</pre>
 
 
-    <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { string } from '@dustinws/zoom/packages/check';
-
-string('').isSuccess() // true
-string(32).isSuccess() // false</code></pre>
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id=".undef"><span class="type-signature">&lt;static> </span>undef(value)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Ensure a value is undefined. Returns a Validation.
+    </div>
+    
 
     
 
-    <h4 class="name" id=".undef"><span class="type-signature">(static) </span>undef<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="global.html#Validation">Validation</a>}</span></h4>
-
     
 
-
-
-<div class="description">
-    Ensure a value is undefined. Returns a Validation.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
     
+    
+        <h5>Parameters:</h5>
+        
 
-<table class="params">
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -1836,6 +1967,7 @@ string(32).isSuccess() // false</code></pre>
 <span class="param-type">Any</span>
 
 
+
             
             </td>
 
@@ -1850,31 +1982,24 @@ string(32).isSuccess() // false</code></pre>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
-
     
 
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.14.0</li></ul></dd>
-    
+	
 
-    
+	
+	<dt class="tag-since method-doc-label method-doc-details-label">Since:</dt>
+	<dd class="tag-since">
+		<ul class="dummy">
+			<li>v1.14.0</li>
+		</ul>
+	</dd>
+	
 
-    
-
-    
-
-    
-
-    
-
-    
+	
 
     
 
@@ -1884,35 +2009,42 @@ string(32).isSuccess() // false</code></pre>
 
     
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="check_undef.js.html">check/undef.js</a>, <a href="check_undef.js.html#line3">line 3</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 
 
 <dl>
@@ -1924,22 +2056,26 @@ string(32).isSuccess() // false</code></pre>
 <span class="param-type"><a href="global.html#Validation">Validation</a></span>
 
 
+
     </dd>
 </dl>
 
-    
 
+        
 
-    <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { undef } from '@dustinws/zoom/packages/check';
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import { undef } from &#x27;@dustinws/zoom/packages/check&#x27;;
 
 undef(32).isSuccess() // true
-undef('').isSuccess() // false</code></pre>
+undef(&#x27;&#x27;).isSuccess() // false</pre>
 
 
+    
+</dd>
 
-        
+        </dl>
     
 
     
@@ -1952,19 +2088,132 @@ undef('').isSuccess() // false</code></pre>
 
 
 
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
 </div>
 
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ADT.html">ADT</a></li><li><a href="module-check.html">check</a></li></ul><h3>Global</h3><ul><li><a href="global.html#curryN">curryN</a></li><li><a href="global.html#Either">Either</a></li><li><a href="global.html#Maybe">Maybe</a></li><li><a href="global.html#Result">Result</a></li><li><a href="global.html#Task">Task</a></li><li><a href="global.html#Tuple">Tuple</a></li><li><a href="global.html#Validation">Validation</a></li></ul>
-</nav>
 
-<br class="clear">
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun Jul 02 2017 01:39:59 GMT-0400 (EDT)
+
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
+	
+		on 2017-07-02T02:58:48-04:00
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
 </footer>
 
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : false,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
 </body>
 </html>

@@ -1,38 +1,84 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>JSDoc: Module: ADT</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Documentation Module: ADT</title>
 
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.simplex.css">
+
 </head>
 
 <body>
 
-<div id="main">
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Documentation</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-ADT.html">ADT</a></li><li><a href="module-check.html">check</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#curryN">curryN</a></li><li><a href="global.html#Either">Either</a></li><li><a href="global.html#Maybe">Maybe</a></li><li><a href="global.html#Result">Result</a></li><li><a href="global.html#Task">Task</a></li><li><a href="global.html#Tuple">Tuple</a></li><li><a href="global.html#Validation">Validation</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
 
-    <h1 class="page-title">Module: ADT</h1>
-
-    
-
+</div>
+</div>
 
 
+<div class="container" id="toc-content">
+<div class="row">
 
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	<h1 class="page-title">Module: ADT</h1>
 <section>
 
 <header>
     
-        
-            
-        
-    
 </header>
+
 
 <article>
     <div class="container-overview">
@@ -42,23 +88,14 @@
         
 
         
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -68,49 +105,26 @@
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adt_index.js.html">adt/index.js</a>, <a href="adt_index.js.html#line1">line 1</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         
@@ -123,60 +137,57 @@
 
     
 
-     
+    
 
     
 
     
         <h3 class="subsection-title">Members</h3>
 
-        
+        <dl>
             
-<h4 class="name" id=".symbol"><span class="type-signature">(static, constant) </span>symbol<span class="type-signature"> :Symbol</span></h4>
+<hr>
+<dt class="name" id=".symbol">
+    <h4 id=".symbol"><span class="type-signature">&lt;static, constant> </span>symbol<span class="type-signature"> :Symbol</span></h4>
 
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        The tag used to get an object's type.
+    </div>
+    
 
-
-
-<div class="description">
-    The tag used to get an object's type.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
 <span class="param-type">Symbol</span>
 
 
-        </li>
-    </ul>
 
+            </li>
+        </ul>
+    
 
-
-
-
+    
 <dl class="details">
-
     
 
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.0.0</li></ul></dd>
-    
+	
 
-    
+	
+	<dt class="tag-since method-doc-label method-doc-details-label">Since:</dt>
+	<dd class="tag-since">
+		<ul class="dummy">
+			<li>v1.0.0</li>
+		</ul>
+	</dd>
+	
 
-    
-
-    
-
-    
-
-    
-
-    
+	
 
     
 
@@ -186,68 +197,74 @@
 
     
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adt_index.js.html">adt/index.js</a>, <a href="adt_index.js.html#line18">line 18</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
 </dl>
 
 
-
-
-
-    <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { symbol } from '@dustinws/zoom/packages/adt';
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import { symbol } from &#x27;@dustinws/zoom/packages/adt&#x27;;
 
 const obj = {
-  [symbol]: 'MyType',
-};</code></pre>
+  [symbol]: &#x27;MyType&#x27;,
+};</pre>
 
 
+    
+</dd>
 
-        
+        </dl>
     
 
     
         <h3 class="subsection-title">Methods</h3>
 
-        
+        <dl>
             
+<hr>
+<dt>
+    <h4 class="name" id=".tag"><span class="type-signature">&lt;static> </span>tag(type, params)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id=".tag"><span class="type-signature">(static) </span>tag<span class="signature">(type, &hellip;params)</span><span class="type-signature"> &rarr; {function}</span></h4>
-
-    
-
-
-
-<div class="description">
-    Create a tagged abstract data type. Tags the object with the
+    <div class="description">
+        Create a tagged abstract data type. Tags the object with the
 "ADT.symbol" value, and creates a "toString" method.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -257,7 +274,7 @@ const obj = {
         <th>Type</th>
 
         
-        <th>Attributes</th>
+        <th>Argument</th>
         
 
         
@@ -278,6 +295,7 @@ const obj = {
             
                 
 <span class="param-type">String</span>
+
 
 
             
@@ -311,6 +329,7 @@ const obj = {
 <span class="param-type">String</span>
 
 
+
             
             </td>
 
@@ -335,31 +354,24 @@ const obj = {
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
-
     
 
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.0.0</li></ul></dd>
-    
+	
 
-    
+	
+	<dt class="tag-since method-doc-label method-doc-details-label">Since:</dt>
+	<dd class="tag-since">
+		<ul class="dummy">
+			<li>v1.0.0</li>
+		</ul>
+	</dd>
+	
 
-    
-
-    
-
-    
-
-    
-
-    
+	
 
     
 
@@ -369,35 +381,42 @@ const obj = {
 
     
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adt_index.js.html">adt/index.js</a>, <a href="adt_index.js.html#line41">line 41</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 
 
 <dl>
@@ -409,59 +428,62 @@ const obj = {
 <span class="param-type">function</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import { tag, symbol } from &#x27;@dustinws/zoom/packages/adt&#x27;;
 
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { tag, symbol } from '@dustinws/zoom/packages/adt';
-
-const Point2D = tag('Point2D', 'x', 'y');
+const Point2D = tag(&#x27;Point2D&#x27;, &#x27;x&#x27;, &#x27;y&#x27;);
 
 const point = Point2D(0, 0);
 
 point instanceof Point2D // true
-point[symbol] // 'Point2D'
-point.toString() // 'Point2D(0, 0)'</code></pre>
+point[symbol] // &#x27;Point2D&#x27;
+point.toString() // &#x27;Point2D(0, 0)&#x27;</pre>
 
 
+    
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id=".union"><span class="type-signature">&lt;static> </span>union(parentType, childTypes)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id=".union"><span class="type-signature">(static) </span>union<span class="signature">(parentType, childTypes)</span><span class="type-signature"> &rarr; {function}</span></h4>
-
-    
-
-
-
-<div class="description">
-    Create a set of union types that all inherit from the returned
+    <div class="description">
+        Create a set of union types that all inherit from the returned
 parent type. Adds a ".cata" method that acts as a switch between
 the types. Instead of passing a type and a list of parameter names
 like in "ADT.tag", an object is passed where the keys are the child
 type names and the values are their associated parameter list.
 If a type has no params (an empty array), an instance will be eagerly
 created to act as a singleton.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -492,6 +514,7 @@ created to act as a singleton.
 <span class="param-type">String</span>
 
 
+
             
             </td>
 
@@ -515,6 +538,7 @@ created to act as a singleton.
 <span class="param-type">Object</span>
 
 
+
             
             </td>
 
@@ -529,31 +553,24 @@ created to act as a singleton.
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
-
     
 
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.0.0</li></ul></dd>
-    
+	
 
-    
+	
+	<dt class="tag-since method-doc-label method-doc-details-label">Since:</dt>
+	<dd class="tag-since">
+		<ul class="dummy">
+			<li>v1.0.0</li>
+		</ul>
+	</dd>
+	
 
-    
-
-    
-
-    
-
-    
-
-    
+	
 
     
 
@@ -563,35 +580,42 @@ created to act as a singleton.
 
     
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adt_index.js.html">adt/index.js</a>, <a href="adt_index.js.html#line120">line 120</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 
 
 <dl>
@@ -603,18 +627,20 @@ created to act as a singleton.
 <span class="param-type">function</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import { union } from &#x27;@dustinws/zoom/packages/adt&#x27;;
 
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { union } from '@dustinws/zoom/packages/adt';
-
-const Maybe = union('Maybe', {
-  Just: ['value'],
+const Maybe = union(&#x27;Maybe&#x27;, {
+  Just: [&#x27;value&#x27;],
   Nothing: [],
 });
 
@@ -630,7 +656,7 @@ Maybe.prototype.getOrElse = function getOrElse(defaultValue) {
   });
 };
 
-const justFoo = Maybe.Just('foo');
+const justFoo = Maybe.Just(&#x27;foo&#x27;);
 const nothing = Maybe.Nothing;
 
 justFoo instanceof Maybe // true
@@ -638,12 +664,14 @@ justFoo instanceof Maybe.Just // true
 
 nothing instanceof Maybe // true
 
-justFoo.getOrElse('bar'); // 'foo'
-nothing.getOrElse('bar'); // 'bar'</code></pre>
+justFoo.getOrElse(&#x27;bar&#x27;); // &#x27;foo&#x27;
+nothing.getOrElse(&#x27;bar&#x27;); // &#x27;bar&#x27;</pre>
 
 
+    
+</dd>
 
-        
+        </dl>
     
 
     
@@ -656,19 +684,132 @@ nothing.getOrElse('bar'); // 'bar'</code></pre>
 
 
 
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
 </div>
 
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ADT.html">ADT</a></li><li><a href="module-check.html">check</a></li></ul><h3>Global</h3><ul><li><a href="global.html#curryN">curryN</a></li><li><a href="global.html#Either">Either</a></li><li><a href="global.html#Maybe">Maybe</a></li><li><a href="global.html#Result">Result</a></li><li><a href="global.html#Task">Task</a></li><li><a href="global.html#Tuple">Tuple</a></li><li><a href="global.html#Validation">Validation</a></li></ul>
-</nav>
 
-<br class="clear">
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun Jul 02 2017 01:39:59 GMT-0400 (EDT)
+
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
+	
+		on 2017-07-02T02:58:48-04:00
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
 </footer>
 
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : false,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
 </body>
 </html>
