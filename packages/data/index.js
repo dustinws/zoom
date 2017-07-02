@@ -4,6 +4,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _Either = require('./Either');
+
+Object.defineProperty(exports, 'Either', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_Either).default;
+  }
+});
+
 var _Maybe = require('./Maybe');
 
 Object.defineProperty(exports, 'Maybe', {
@@ -28,6 +37,15 @@ Object.defineProperty(exports, 'Task', {
   enumerable: true,
   get: function get() {
     return _interopRequireDefault(_Task).default;
+  }
+});
+
+var _Validation = require('./Validation');
+
+Object.defineProperty(exports, 'Validation', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_Validation).default;
   }
 });
 

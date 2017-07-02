@@ -18,26 +18,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @type {Function}
  */
 var Result = (0, _adt.union)('Result', {
-  Success: ['value'],
-  Failure: ['value']
+  Ok: ['value'],
+  Err: ['value']
 });
 
 /**
- * Implement Static Applicative for Success
+ * Implement Static Applicative for Ok
  *
  * @param  {T} value
  * @return {Result<T>}
  */
-Result.of = Result.Success.of = Result.Success;
+Result.of = Result.Ok.of = Result.Ok;
 
 /**
- * Implement Static Applicative for Failure
+ * Implement Static Applicative for Err
  *
  * @param  {T} value
  * @return {Result<T>}
  */
-Result.Failure.of = Result.Failure.prototype.of = function of(value) {
-  return Result.Failure(value);
+Result.Err.of = Result.Err.prototype.of = function of(value) {
+  return Result.Err(value);
 };
 
 /**
@@ -46,8 +46,8 @@ Result.Failure.of = Result.Failure.prototype.of = function of(value) {
  * @param  {T} value
  * @return {Result<T>}
  */
-Result.prototype.of = Result.Success.prototype.of = function of(value) {
-  return Result.Success(value);
+Result.prototype.of = Result.Ok.prototype.of = function of(value) {
+  return Result.Ok(value);
 };
 
 /**
@@ -58,8 +58,8 @@ Result.prototype.of = Result.Success.prototype.of = function of(value) {
  */
 Result.prototype.chain = function chain(transform) {
   return this.cata({
-    Failure: (0, _constant2.default)(this),
-    Success: transform
+    Err: (0, _constant2.default)(this),
+    Ok: transform
   });
 };
 
@@ -78,96 +78,21 @@ Result.prototype.map = function map(transform) {
 };
 
 /**
- * Determine if an instance is an instance of Failure
+ * Determine if an instance is an instance of Err
  *
  * @return {Boolean}
  */
-Result.prototype.isFailure = function isFailure() {
-  return this instanceof Result.Failure;
+Result.prototype.isErr = function isErr() {
+  return this instanceof Result.Err;
 };
 
 /**
- * Determine if an instance is an instance of Success
+ * Determine if an instance is an instance of Ok
  *
  * @return {Boolean}
  */
-Result.prototype.isSuccess = function isSuccess() {
-  return this instanceof Result.Success;
-};
-
-/**
- * Implement Semigroup
- *
- * @param  {Result} other
- * @return {Result}
- */
-Result.prototype.concat = function concat(other) {
-  var _this2 = this;
-
-  return this.cata({
-    Failure: function Failure(value) {
-      return other.cata({
-        Success: (0, _constant2.default)(_this2),
-        Failure: function Failure(x) {
-          return Result.Failure(value.concat(x));
-        }
-      });
-    },
-
-    Success: function Success(value) {
-      return other.cata({
-        Success: function Success(x) {
-          return Result.Success(value.concat(x));
-        },
-        Failure: (0, _constant2.default)(other)
-      });
-    }
-  });
-};
-
-/**
- * Implement Monoid
- *
- * @return {Result}
- */
-Result.empty = function () {
-  return Result.Success([]);
-};
-
-/**
- * Create a Result from a potentially null value.
- *
- * @param  {Function} func
- * @return {Function}
- */
-Result.try = function (func) {
-  return function () {
-    try {
-      return Result.Success(func.apply(undefined, arguments));
-    } catch (error) {
-      return Result.Failure(error);
-    }
-  };
-};
-
-/**
- * Given an object where each value is a function that accecpts the same
- * object-under-validation. The functions do not need to store any values
- * in the success cases, since the object-under-validation will be returned
- * if no failures are present. Each function can return it's own error
- * that will be added to an array of errors in the final Failure.
- *
- * @param  {Object} cases
- * @return {Function}
- */
-Result.combine = function (cases) {
-  return function (value) {
-    return Object.keys(cases).reduce(function (result, nextCase) {
-      return result.concat(cases[nextCase](value[nextCase]));
-    }, Result.empty()).map(function () {
-      return value;
-    });
-  };
+Result.prototype.isOk = function isOk() {
+  return this instanceof Result.Ok;
 };
 
 exports.default = Result;
