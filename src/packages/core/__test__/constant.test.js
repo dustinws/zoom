@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import constant from '../constant';
 
-describe('lambda.constant(value)', () => {
+describe('core.constant(value)', () => {
   test('It should return a function', () => {
     expect(typeof constant(1)).toBe('function');
   });

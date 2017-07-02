@@ -2,7 +2,7 @@
 import __ from '../__';
 import curry from '../curry';
 
-describe('lambda.curry(function)', () => {
+describe('core.curry(function)', () => {
   test('It should create a curried function by guessing the arity', () => {
     const add = curry((a, b) => a + b);
 

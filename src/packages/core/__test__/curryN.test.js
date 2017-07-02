@@ -2,7 +2,7 @@
 import __ from '../__';
 import curryN from '../curryN';
 
-describe('lambda.curryN(arity, function)', () => {
+describe('core.curryN(arity, function)', () => {
   test('It should create a curried function from a regular one with the provided arity', () => {
     const add = curryN(2, (a, b) => a + b);
 
