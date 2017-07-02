@@ -6,7 +6,7 @@
   "scripts": {
     "build": "babel -d . --ignore **/*.test.js src",
     "lint": "eslint .",
-    "prepublish": "npm run lint && npm run test && npm run build",
+    "prepublish": "npm run lint && npm run test && npm run build && npm run docs",
     "preversion": "npm run lint && npm run test && npm run build",
     "release:patch": "npm run version:patch && npm publish",
     "release:minor": "npm run version:minor && npm publish",
@@ -27,7 +27,8 @@
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.6.1",
-    "jest": "^20.0.4"
+    "jest": "^20.0.4",
+    "jsdoc": "^3.4.3"
   },
   "dependencies": {},
   "repository": {

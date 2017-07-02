@@ -2,6 +2,21 @@ import object from './object';
 import { curry } from '../core';
 import Validation from '../data/Validation';
 
+/**
+ * @memberof module:check
+ * @description Ensure each value in an object satisfies a contract.
+ * @since v1.14.0
+ * @function objectOf
+ * @example
+ * import { objectOf, string } from '@dustinws/zoom/packages/check';
+ *
+ * objectOf(string, { a: '1' }).isSuccess() // true
+ * objectOf(string, { a: 1 }).isSuccess() // false
+ *
+ * @param {Object} contract The contract to verify
+ * @param {Object} value The array to validate
+ * @return {Validation}
+ */
 export default curry((contract, value) =>
   object(value).chain(() => {
     const validation = Object

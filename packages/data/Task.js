@@ -6,51 +6,24 @@ Object.defineProperty(exports, "__esModule", {
 
 var _adt = require('../adt');
 
-/**
- * The Task data type.
- */
 var Task = (0, _adt.tag)('Task', 'fork');
 
-/**
- * Implement Static Applicative
- *
- * @param  {B} value
- * @return {Task<A, B>}
- */
 Task.of = function (value) {
   return Task(function (_, resolve) {
     return resolve(value);
   });
 };
 
-/**
- * Implement Static Applicative for rejections
- *
- * @param  {B} value
- * @return {Task<A, B>}
- */
 Task.reject = function (value) {
   return Task(function (reject) {
     return reject(value);
   });
 };
 
-/**
- * Implement Applicative
- *
- * @param  {B} value
- * @return {Task<A, B>}
- */
 Task.prototype.of = function of(value) {
   return Task.of(value);
 };
 
-/**
- * Implement Chain
- *
- * @param  {Function} transform
- * @return {Task<A, C>}
- */
 Task.prototype.chain = function chain(transform) {
   var _this = this;
 
@@ -61,24 +34,12 @@ Task.prototype.chain = function chain(transform) {
   });
 };
 
-/**
- * Implement Functor
- *
- * @param  {Function} transform
- * @return {Task<A, C>}
- */
 Task.prototype.map = function map(transform) {
   return this.chain(function (x) {
     return Task.of(transform(x));
   });
 };
 
-/**
- * Convert a Task instance to a Promise. This will fork the Task.
- *
- * @param  {Function}
- * @return {Promise}
- */
 Task.prototype.toPromise = function toPromise() {
   var _this2 = this;
 
@@ -89,13 +50,6 @@ Task.prototype.toPromise = function toPromise() {
   });
 };
 
-/**
- * Allow the consumer to handle a potential rejection and return
- * a new valid Task.
- *
- * @param  {Function} transform
- * @return {Task}
- */
 Task.prototype.recover = function recover(transform) {
   var _this3 = this;
 
@@ -106,44 +60,24 @@ Task.prototype.recover = function recover(transform) {
   });
 };
 
-/**
- * Run multiple tasks at the same time. Resolve with an array of the
- * resolved values, or reject with the first error to occurr.
- *
- * @param  {Task<A, B>[]} tasks
- * @return {Task<A, B>}
- */
 Task.parallel = function (tasks) {
   return Task(function (reject, resolve) {
-    // The number of pending tasks.
     var remaining = tasks.length;
 
-    // Create the results array.
     var results = Array(tasks.length);
 
-    // Fork each task
     tasks.forEach(function (task, idx) {
       task.fork(reject, function (value) {
-        // Decrement the pending count
         remaining -= 1;
 
-        // Store the value in the results array at the same
-        // index the task was in.
         results[idx] = value;
 
-        // Resolve if all tasks are done.
         if (remaining === 0) resolve(results);
       });
     });
   });
 };
 
-/**
- * Lift a regular function into a Task
- *
- * @param  {Function} func
- * @return {Function}
- */
 Task.lift = function (func) {
   return function () {
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
@@ -156,12 +90,6 @@ Task.lift = function (func) {
   };
 };
 
-/**
- * Lift a node style function into a Task
- *
- * @param  {Function} func
- * @return {Function}
- */
 Task.liftNode = function (func) {
   return function () {
     for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {

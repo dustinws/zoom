@@ -1,3 +1,7 @@
+/**
+ * @module check
+ */
+
 export { default as array } from './array';
 export { default as arrayOf } from './arrayOf';
 export { default as bool } from './bool';

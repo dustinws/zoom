@@ -10,5 +10,7 @@ var _isType3 = _interopRequireDefault(_isType2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = (0, _isType3.default)('Undefined');
+var undef = (0, _isType3.default)('Undefined');
+
+exports.default = undef;
 module.exports = exports['default'];

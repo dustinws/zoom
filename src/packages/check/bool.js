@@ -1,3 +1,19 @@
 import _isType from './_isType';
 
-export default _isType('Boolean');
+/**
+ * @memberof module:check
+ * @description Ensure a value is an Boolean. Returns a Validation.
+ * @since v1.14.0
+ * @function bool
+ * @example
+ * import { bool } from '@dustinws/zoom/packages/check';
+ *
+ * bool(true).isSuccess() // true
+ * bool('').isSuccess() // false
+ *
+ * @param {Any} value The value to be checked
+ * @return {Validation}
+ */
+const bool = _isType('Boolean');
+
+export default bool;

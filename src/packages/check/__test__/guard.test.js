@@ -10,7 +10,7 @@ describe('check.guard', () => {
   });
 
   test('It should return a Failure for other values', () => {
-    expect(add(1, '') instanceof TypeError).toBe(true);
-    expect(add('', 1) instanceof TypeError).toBe(true);
+    expect(add(1, '')).toBe('1');
+    expect(add('', 1)).toBe('1');
   });
 });

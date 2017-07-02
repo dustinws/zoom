@@ -8,7 +8,7 @@ var _array = require('./array');
 
 var _array2 = _interopRequireDefault(_array);
 
-var _lambda = require('../lambda');
+var _core = require('../core');
 
 var _Validation = require('../data/Validation');
 
@@ -16,7 +16,7 @@ var _Validation2 = _interopRequireDefault(_Validation);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = (0, _lambda.curry)(function (contracts, value) {
+exports.default = (0, _core.curry)(function (contracts, value) {
   return (0, _array2.default)(contracts).chain(function () {
     return (0, _array2.default)(value);
   }).chain(function () {

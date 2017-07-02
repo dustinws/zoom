@@ -1,38 +1,44 @@
 /**
  * @module ADT
+ * @description Helpers for creating abstract data types.
  */
 
 /**
- * The tag used to get an object's type.
- *
+ * @memberof module:ADT
+ * @description The tag used to get an object's type.
  * @since v1.0.0
  * @type {Symbol}
  * @example
+ * import { symbol } from '@dustinws/zoom/packages/adt';
+ *
  * const obj = {
- *   [ADT.symbol]: 'MyType',
+ *   [symbol]: 'MyType',
  * };
  */
-export const symbol = Symbol('ADT.tag');
+const symbol = Symbol('ADT.tag');
 
 /**
- * Create a tagged abstract data type. Tags the object with the
+ * @memberof module:ADT
+ * @description Create a tagged abstract data type. Tags the object with the
  * "ADT.symbol" value, and creates a "toString" method.
  *
  * @since v1.0.0
  * @example
+ * import { tag, symbol } from '@dustinws/zoom/packages/adt';
+ *
  * const Point2D = tag('Point2D', 'x', 'y');
  *
  * const point = Point2D(0, 0);
  *
  * point instanceof Point2D // true
- * point[ADT.symbol] // 'Point2D'
+ * point[symbol] // 'Point2D'
  * point.toString() // 'Point2D(0, 0)'
  *
- * @param  {String} type
- * @param  {...String} params
+ * @param  {String} type The name of the type
+ * @param  {...String} params Parameter names
  * @return {Function}
  */
-export function tag(type, ...params) {
+function tag(type, ...params) {
   // Store the constructor on a temporary object so that
   // the constructor name will correctly match the type.
   let tmp = {
@@ -66,7 +72,8 @@ export function tag(type, ...params) {
 }
 
 /**
- * Create a set of union types that all inherit from the returned
+ * @memberof module:ADT
+ * @description Create a set of union types that all inherit from the returned
  * parent type. Adds a ".cata" method that acts as a switch between
  * the types. Instead of passing a type and a list of parameter names
  * like in "ADT.tag", an object is passed where the keys are the child
@@ -76,6 +83,8 @@ export function tag(type, ...params) {
  *
  * @since v1.0.0
  * @example
+ * import { union } from '@dustinws/zoom/packages/adt';
+ *
  * const Maybe = union('Maybe', {
  *   Just: ['value'],
  *   Nothing: [],
@@ -83,9 +92,13 @@ export function tag(type, ...params) {
  *
  * Maybe.prototype.getOrElse = function getOrElse(defaultValue) {
  *   return this.cata({
- *     Just: value => value,
+ *     Just(value) {
+ *       return value;
+ *     },
  *
- *     Nothing: () => defaultValue,
+ *     Nothing() {
+ *       return defaultValue;
+ *     },
  *   });
  * };
  *
@@ -100,11 +113,11 @@ export function tag(type, ...params) {
  * justFoo.getOrElse('bar'); // 'foo'
  * nothing.getOrElse('bar'); // 'bar'
  *
- * @param  {String} parentType
- * @param  {Object} childTypes
+ * @param  {String} parentType The name of the super type
+ * @param  {Object} childTypes An object of case types and their param names
  * @return {Function}
  */
-export function union(parentType, childTypes) {
+function union(parentType, childTypes) {
   // Create the parent type.
   const Parent = tag(parentType);
 
@@ -131,3 +144,9 @@ export function union(parentType, childTypes) {
 
   return Parent;
 }
+
+export {
+  tag,
+  union,
+  symbol,
+};

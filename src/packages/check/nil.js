@@ -1,3 +1,19 @@
 import _isType from './_isType';
 
-export default _isType('Null');
+/**
+ * @memberof module:check
+ * @description Ensure a value is a null. Returns a Validation.
+ * @since v1.14.0
+ * @function nil
+ * @example
+ * import { nil } from '@dustinws/zoom/packages/check';
+ *
+ * nil(null).isSuccess() // true
+ * nil('').isSuccess() // false
+ *
+ * @param {Any} value The value to be checked
+ * @return {Validation}
+ */
+const nil = _isType('Null');
+
+export default nil;
