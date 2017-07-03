@@ -212,16 +212,17 @@ List.fold = curry((fn, seed, list) => {
 });
 
 /**
- * @description Return the index of an item in an array. If the item
- * is not present, -1 will be returned.
+ * @description Determine which index a value resides at inside of an
+ * array. Returns a Maybe for the index, where Nothing indicates the
+ * value is not present in the array.
  * @memberof module:Zoom.Data.List
  * @since v1.15.0
  * @function indexOf
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
  *
- * List.indexOf(1, [1]); // 0
- * List.indexOf(2, [1]); // -1
+ * List.indexOf(1, [1]); // Just(0)
+ * List.indexOf(2, [1]); // Nothing
  *
  * @param  {Any} value The value to detect
  * @param  {Array<Any>} list The list to query
