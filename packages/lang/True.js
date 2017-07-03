@@ -12,7 +12,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /**
  * @description A constant for the value "true"
- * @memberof module:Zoom.Core
+ * @memberof module:Zoom.Lang
  * @since v2.0.0
  * @function True
  * @example

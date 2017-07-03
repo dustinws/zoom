@@ -1,4 +1,4 @@
-import typeOf from '../core/typeOf';
+import typeOf from '../lang/typeOf';
 import Validation from '../data/Validation';
 
 export default function isType(expectedType) {

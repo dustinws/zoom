@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = isType;
 
-var _typeOf = require('../core/typeOf');
+var _typeOf = require('../lang/typeOf');
 
 var _typeOf2 = _interopRequireDefault(_typeOf);
 
