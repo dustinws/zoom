@@ -27,7 +27,7 @@ var Tuple = (0, _adt.tag)('Tuple', 'left', 'right');
 /**
  * @description Create a two element tuple.
  * @memberof module:Zoom.Data.Tuple
- * @since v1.0.0
+ * @since v1.15.0
  * @function of
  * @example
  * import { Tuple } from '@dustinws/zoom/packages/data';
@@ -45,7 +45,7 @@ Tuple.of = function (a, b) {
 /**
  * @description Get the first element of a Tuple
  * @memberof module:Zoom.Data.Tuple
- * @since v1.0.0
+ * @since v1.15.0
  * @function fst
  * @example
  * import { Tuple } from '@dustinws/zoom/packages/data';
@@ -64,7 +64,7 @@ Tuple.fst = function (tuple) {
 /**
  * @description Get the second element of a Tuple
  * @memberof module:Zoom.Data.Tuple
- * @since v1.0.0
+ * @since v1.15.0
  * @function snd
  * @example
  * import { Tuple } from '@dustinws/zoom/packages/data';
@@ -84,7 +84,7 @@ Tuple.snd = function (tuple) {
  * @description Apply a function to the second element of a tuple
  * and return a new, modified tuple.
  * @memberof module:Zoom.Data.Tuple
- * @since v1.0.0
+ * @since v1.15.0
  * @function map
  * @example
  * import { Tuple } from '@dustinws/zoom/packages/data';
@@ -105,7 +105,7 @@ Tuple.map = (0, _curry2.default)(function (transform, tuple) {
  * @description Apply a function to the first element of a tuple
  * and return a new, modified tuple.
  * @memberof module:Zoom.Data.Tuple
- * @since v1.0.0
+ * @since v1.15.0
  * @function mapLeft
  * @example
  * import { Tuple } from '@dustinws/zoom/packages/data';
@@ -131,7 +131,7 @@ Tuple.mapLeft = (0, _curry2.default)(function (transform, tuple) {
 /**
 * @description Create a two element tuple. The instance version of "Tuple.of"
 * @memberof module:Zoom.Data.Tuple
-* @since v1.0.0
+* @since v1.15.0
 * @example
 * import { Tuple } from '@dustinws/zoom/packages/data';
 *
@@ -150,7 +150,7 @@ Tuple.prototype.of = function of(left, right) {
 /**
 * @description Get the first element of a Tuple. Instance version of "Tuple.fst"
 * @memberof module:Zoom.Data.Tuple
-* @since v1.0.0
+* @since v1.15.0
 * @example
 * import { Tuple } from '@dustinws/zoom/packages/data';
 *
@@ -165,7 +165,7 @@ Tuple.prototype.fst = function fst() {
 /**
 * @description Get the second element of a Tuple. Instance version of "Tuple.snd"
 * @memberof module:Zoom.Data.Tuple
-* @since v1.0.0
+* @since v1.15.0
 * @example
 * import { Tuple } from '@dustinws/zoom/packages/data';
 *
@@ -181,7 +181,7 @@ Tuple.prototype.snd = function snd() {
 * @description Apply a function to the second element of a tuple
 * and return a new, modified tuple. Instance version of "Tuple.map"
 * @memberof module:Zoom.Data.Tuple
-* @since v1.0.0
+* @since v1.15.0
 * @example
 * import { Tuple } from '@dustinws/zoom/packages/data';
 *
@@ -200,7 +200,7 @@ Tuple.prototype.map = function map(transform) {
 * @description Apply a function to the first element of a tuple
 * and return a new, modified tuple. Instance version of "Tuple.mapLeft"
 * @memberof module:Zoom.Data.Tuple
-* @since v1.0.0
+* @since v1.15.0
 * @example
 * import { Tuple } from '@dustinws/zoom/packages/data';
 *
@@ -219,7 +219,7 @@ Tuple.prototype.mapLeft = function mapLeft(transform) {
 /**
 * @description Get the string representation of the tuple.
 * @memberof module:Zoom.Data.Tuple
-* @since v1.0.0
+* @since v1.15.0
 * @example
 * import { Tuple } from '@dustinws/zoom/packages/data';
 *

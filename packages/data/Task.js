@@ -27,7 +27,7 @@ var Task = (0, _adt.tag)('Task', 'fork');
 /**
  * @description Create a new Task with the given value.
  * @memberof module:Zoom.Data.Task
- * @since v1.0.0
+ * @since v1.15.0
  * @function of
  * @example
  * import { Task } from '@dustinws/zoom/packages/data';
@@ -46,7 +46,7 @@ Task.of = function (value) {
 /**
  * @description Create a rejected Task with the given value.
  * @memberof module:Zoom.Data.Task
- * @since v1.0.0
+ * @since v1.15.0
  * @function reject
  * @example
  * import { Task } from '@dustinws/zoom/packages/data';
@@ -66,7 +66,7 @@ Task.reject = function (value) {
  * @description Run a function that returns a nested task and flatten
  * the result into a single task.
  * @memberof module:Zoom.Data.Task
- * @since v1.0.0
+ * @since v1.15.0
  * @function chain
  * @example
  * import { Task } from '@dustinws/zoom/packages/data';
@@ -88,7 +88,7 @@ Task.chain = (0, _curry2.default)(function (transform, task) {
 /**
  * @description Run a function on a value contained in a Task.
  * @memberof module:Zoom.Data.Task
- * @since v1.0.0
+ * @since v1.15.0
  * @function map
  * @example
  * import { Task } from '@dustinws/zoom/packages/data';
@@ -108,7 +108,7 @@ Task.map = (0, _curry2.default)(function (transform, task) {
 /**
  * @description Convert a Task to a Promise. This implicitely calls "fork"
  * @memberof module:Zoom.Data.Task
- * @since v1.0.0
+ * @since v1.15.0
  * @function toPromise
  * @example
  * import { Task } from '@dustinws/zoom/packages/data';
@@ -132,7 +132,7 @@ Task.toPromise = function (task) {
  * @description Define a function to run if the Task is rejected, which will
  * accept the error and return a new, valid Task.
  * @memberof module:Zoom.Data.Task
- * @since v1.0.0
+ * @since v1.15.0
  * @function recover
  * @example
  * import { Task } from '@dustinws/zoom/packages/data';
@@ -156,7 +156,7 @@ Task.recover = function (transform, task) {
  * @description Run many Tasks in parallel. If any Task rejects, it will
  * reject the top level Task immediately.
  * @memberof module:Zoom.Data.Task
- * @since v1.0.0
+ * @since v1.15.0
  * @function parallel
  * @example
  * import { Task } from '@dustinws/zoom/packages/data';
@@ -202,7 +202,7 @@ Task.parallel = function (tasks) {
  * @description Convert a regular function into a function that returns
  * a task.
  * @memberof module:Zoom.Data.Task
- * @since v1.0.0
+ * @since v1.15.0
  * @function lift
  * @example
  * import { Task } from '@dustinws/zoom/packages/data';
@@ -230,7 +230,7 @@ Task.lift = function (func) {
  * @description Convert a node style callback into a function that returns
  * a task.
  * @memberof module:Zoom.Data.Task
- * @since v1.0.0
+ * @since v1.15.0
  * @function liftNode
  * @example
  * import fs from 'fs';
@@ -270,7 +270,7 @@ Task.liftNode = function (func) {
 * @description Run a function that returns a nested task and flatten
 * the result into a single task.
 * @memberof module:Zoom.Data.Task
-* @since v1.0.0
+* @since v1.15.0
 * @example
 * import { Task } from '@dustinws/zoom/packages/data';
 *
@@ -286,7 +286,7 @@ Task.prototype.chain = function chain(transform) {
 /**
 * @description Run a function on a value contained in a Task.
 * @memberof module:Zoom.Data.Task
-* @since v1.0.0
+* @since v1.15.0
 * @example
 * import { Task } from '@dustinws/zoom/packages/data';
 *
@@ -302,7 +302,7 @@ Task.prototype.map = function map(transform) {
 /**
 * @description Convert a Task to a Promise. This implicitely calls "fork"
 * @memberof module:Zoom.Data.Task
-* @since v1.0.0
+* @since v1.15.0
 * @example
 * import { Task } from '@dustinws/zoom/packages/data';
 *
@@ -321,7 +321,7 @@ Task.prototype.toPromise = function toPromise() {
 * @description Define a function to run if the Task is rejected, which will
 * accept the error and return a new, valid Task.
 * @memberof module:Zoom.Data.Task
-* @since v1.0.0
+* @since v1.15.0
 * @example
 * import { Task } from '@dustinws/zoom/packages/data';
 *

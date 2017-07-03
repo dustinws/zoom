@@ -27,7 +27,7 @@ const Err = Result.Err;
  * @description Lift a value into a successful 'Ok' context.
  * @memberof module:Zoom.Data.Result
  * @function of
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Result } from '@dustinws/zoom/packages/data';
  *
@@ -46,7 +46,7 @@ Result.of = function of(value) {
  * @description Lift a value into a successful 'Ok' context.
  * @memberof module:Zoom.Data.Result
  * @function
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Result } from '@dustinws/zoom/packages/data';
  *
@@ -65,7 +65,7 @@ Ok.of = function of(value) {
  * @description Lift a value into an unsuccessful 'Err' context.
  * @memberof module:Zoom.Data.Result
  * @function
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Result } from '@dustinws/zoom/packages/data';
  *
@@ -86,7 +86,7 @@ Err.of = function of(value) {
  * This is how you can switch from a 'Ok' to 'Err' instance and stop
  * subsequent transformations from being applied.
  * @memberof module:Zoom.Data.Result
- * @since v1.0.0
+ * @since v1.15.0
  * @function chain
  * @example
  * import { Result } from '@dustinws/zoom/packages/data';
@@ -113,7 +113,7 @@ Result.chain = curry((transform, result) =>
  * @description Apply a transformation to the Result if it is an instance
  * of "Ok". Otherwise, ignore the transformation and return the instance.
  * @memberof module:Zoom.Data.Result
- * @since v1.0.0
+ * @since v1.15.0
  * @function map
  * @example
  * import { Result } from '@dustinws/zoom/packages/data';
@@ -137,7 +137,7 @@ Result.map = curry((transform, result) =>
  * @description Apply a transformation to the Result if it is an instance
  * of "Ok". Otherwise, ignore the transformation and return the instance.
  * @memberof module:Zoom.Data.Result
- * @since v1.0.0
+ * @since v1.15.0
  * @function ap
  * @example
  * import { Result } from '@dustinws/zoom/packages/data';
@@ -160,7 +160,7 @@ Result.ap = curry((left, right) =>
 /**
  * @description Determine if an Result is an instance of Err
  * @memberof module:Zoom.Data.Result
- * @since v1.0.0
+ * @since v1.15.0
  * @function isErr
  * @example
  * import { Result } from '@dustinws/zoom/packages/data';
@@ -176,7 +176,7 @@ Result.isErr = result => result instanceof Result.Err;
 /**
  * @description Determine if an Result is an instance of Ok
  * @memberof module:Zoom.Data.Result
- * @since v1.0.0
+ * @since v1.15.0
  * @function isOk
  * @example
  * import { Result } from '@dustinws/zoom/packages/data';
@@ -199,7 +199,7 @@ Result.isOk = result => result instanceof Result.Ok;
 /**
  * @description Lift a value into a successful 'Ok' context.
  * @memberof module:Zoom.Data.Result
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Result } from '@dustinws/zoom/packages/data';
  *
@@ -217,7 +217,7 @@ Ok.prototype.of = function of(value) {
 /**
 * @description Lift a value into an unsuccessful 'Err' context.
 * @memberof module:Zoom.Data.Result
-* @since v1.0.0
+* @since v1.15.0
 * @example
 * import { Result } from '@dustinws/zoom/packages/data';
 *
@@ -238,7 +238,7 @@ Err.prototype.of = function of(value) {
 * This is how you can switch from a 'Ok' to 'Err' instance and stop
 * subsequent transformations from being applied.
 * @memberof module:Zoom.Data.Result
-* @since v1.0.0
+* @since v1.15.0
 * @example
 * import { Result } from '@dustinws/zoom/packages/data';
 *
@@ -261,7 +261,7 @@ Result.prototype.chain = function chain(transform) {
 * @description Apply a transformation to the Result if it is an instance
 * of "Ok". Otherwise, ignore the transformation and return the instance.
 * @memberof module:Zoom.Data.Result
-* @since v1.0.0
+* @since v1.15.0
 * @example
 * import { Result } from '@dustinws/zoom/packages/data';
 *
@@ -284,7 +284,7 @@ Result.prototype.map = function map(transform) {
 * @description Apply a transformation to the Result if it is an instance
 * of "Ok". Otherwise, ignore the transformation and return the instance.
 * @memberof module:Zoom.Data.Result
-* @since v1.0.0
+* @since v1.15.0
 * @example
 * import { Result } from '@dustinws/zoom/packages/data';
 *
@@ -306,7 +306,7 @@ Result.prototype.ap = function ap(apply) {
 /**
 * @description Determine if an Result is an instance of Err
 * @memberof module:Zoom.Data.Result
-* @since v1.0.0
+* @since v1.15.0
 * @example
 * import { Result } from '@dustinws/zoom/packages/data';
 *
@@ -322,7 +322,7 @@ Result.prototype.isErr = function isErr() {
 /**
 * @description Determine if an Result is an instance of Ok
 * @memberof module:Zoom.Data.Result
-* @since v1.0.0
+* @since v1.15.0
 * @example
 * import { Result } from '@dustinws/zoom/packages/data';
 *

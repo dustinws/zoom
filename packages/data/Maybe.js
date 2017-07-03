@@ -46,7 +46,7 @@ var Nothing = Maybe.Nothing;
  * @description Lift a value into a successful 'Just' context.
  * @memberof module:Zoom.Data.Maybe
  * @function of
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Maybe } from '@dustinws/zoom/packages/data';
  *
@@ -65,7 +65,7 @@ Maybe.of = function of(value) {
  * @description Lift a value into a successful 'Just' context.
  * @memberof module:Zoom.Data.Maybe
  * @function
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Maybe } from '@dustinws/zoom/packages/data';
  *
@@ -85,7 +85,7 @@ Just.of = function of(value) {
  * passed will be ignored.
  * @memberof module:Zoom.Data.Maybe
  * @function
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Maybe } from '@dustinws/zoom/packages/data';
  *
@@ -106,7 +106,7 @@ Nothing.of = function of() {
  * This is how you can switch from a 'Just' to 'Nothing' instance and stop
  * subsequent transformations from being applied.
  * @memberof module:Zoom.Data.Maybe
- * @since v1.0.0
+ * @since v1.15.0
  * @function chain
  * @example
  * import { Maybe } from '@dustinws/zoom/packages/data';
@@ -134,7 +134,7 @@ Maybe.chain = (0, _curry2.default)(function (transform, maybe) {
  * @description Apply a transformation to the Maybe if it is an instance
  * of "Just". Otherwise, ignore the transformation and return the instance.
  * @memberof module:Zoom.Data.Maybe
- * @since v1.0.0
+ * @since v1.15.0
  * @function map
  * @example
  * import { Maybe } from '@dustinws/zoom/packages/data';
@@ -159,7 +159,7 @@ Maybe.map = (0, _curry2.default)(function (transform, maybe) {
  * @description Apply a transformation to the Maybe if it is an instance
  * of "Just". Otherwise, ignore the transformation and return the instance.
  * @memberof module:Zoom.Data.Maybe
- * @since v1.0.0
+ * @since v1.15.0
  * @function ap
  * @example
  * import { Maybe } from '@dustinws/zoom/packages/data';
@@ -183,7 +183,7 @@ Maybe.ap = (0, _curry2.default)(function (left, right) {
 /**
  * @description Determine if an Maybe is an instance of Nothing
  * @memberof module:Zoom.Data.Maybe
- * @since v1.0.0
+ * @since v1.15.0
  * @function isNothing
  * @example
  * import { Maybe } from '@dustinws/zoom/packages/data';
@@ -201,7 +201,7 @@ Maybe.isNothing = function (maybe) {
 /**
  * @description Determine if an Maybe is an instance of Just
  * @memberof module:Zoom.Data.Maybe
- * @since v1.0.0
+ * @since v1.15.0
  * @function isJust
  * @example
  * import { Maybe } from '@dustinws/zoom/packages/data';
@@ -218,7 +218,7 @@ Maybe.isJust = function (maybe) {
 
 /**
  * @description Create a maybe from a potentially null value.
- * @since v1.0.0
+ * @since v1.15.0
  * @memberof module:Zoom.Data.Maybe
  * @function fromNullable
  * @example
@@ -248,7 +248,7 @@ Maybe.fromNullable = function (value) {
 /**
  * @description Lift a value into a successful 'Just' context.
  * @memberof module:Zoom.Data.Maybe
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Maybe } from '@dustinws/zoom/packages/data';
  *
@@ -269,7 +269,7 @@ Just.prototype.of = function of(value) {
  * This is how you can switch from a 'Just' to 'Nothing' instance and stop
  * subsequent transformations from being applied.
  * @memberof module:Zoom.Data.Maybe
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Maybe } from '@dustinws/zoom/packages/data';
  *
@@ -292,7 +292,7 @@ Maybe.prototype.chain = function chain(transform) {
  * @description Apply a transformation to the Maybe if it is an instance
  * of "Just". Otherwise, ignore the transformation and return the instance.
  * @memberof module:Zoom.Data.Maybe
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Maybe } from '@dustinws/zoom/packages/data';
  *
@@ -315,7 +315,7 @@ Maybe.prototype.map = function map(transform) {
  * @description Apply a transformation to the Maybe if it is an instance
  * of "Just". Otherwise, ignore the transformation and return the instance.
  * @memberof module:Zoom.Data.Maybe
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Maybe } from '@dustinws/zoom/packages/data';
  *
@@ -337,7 +337,7 @@ Maybe.prototype.ap = function ap(transform) {
 /**
  * @description Determine if an Maybe is an instance of Nothing
  * @memberof module:Zoom.Data.Maybe
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Maybe } from '@dustinws/zoom/packages/data';
  *
@@ -353,7 +353,7 @@ Maybe.prototype.isNothing = function isNothing() {
 /**
  * @description Determine if an Maybe is an instance of Just
  * @memberof module:Zoom.Data.Maybe
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Maybe } from '@dustinws/zoom/packages/data';
  *

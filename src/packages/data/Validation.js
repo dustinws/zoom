@@ -26,7 +26,7 @@ const Failure = Validation.Failure;
  * @description Lift a value into a successful 'Success' context.
  * @memberof module:Zoom.Data.Validation
  * @function of
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
  *
@@ -45,7 +45,7 @@ Validation.of = function of(value) {
  * @description Lift a value into a successful 'Success' context.
  * @memberof module:Zoom.Data.Validation
  * @function
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
  *
@@ -64,7 +64,7 @@ Success.of = function of(value) {
  * @description Lift a value into an unsuccessful 'Failure' context.
  * @memberof module:Zoom.Data.Validation
  * @function
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
  *
@@ -85,7 +85,7 @@ Failure.of = function of(value) {
  * This is how you can switch from a 'Success' to 'Failure' instance and stop
  * subsequent transformations from being applied.
  * @memberof module:Zoom.Data.Validation
- * @since v1.0.0
+ * @since v1.15.0
  * @function chain
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
@@ -112,7 +112,7 @@ Validation.chain = curry((transform, validation) =>
  * @description Apply a transformation to the Validation if it is an instance
  * of "Success". Otherwise, ignore the transformation and return the instance.
  * @memberof module:Zoom.Data.Validation
- * @since v1.0.0
+ * @since v1.15.0
  * @function map
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
@@ -136,7 +136,7 @@ Validation.map = curry((transform, validation) =>
  * @description Apply a transformation to the Validation if it is an instance
  * of "Success". Otherwise, ignore the transformation and return the instance.
  * @memberof module:Zoom.Data.Validation
- * @since v1.0.0
+ * @since v1.15.0
  * @function ap
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
@@ -159,7 +159,7 @@ Validation.ap = curry((left, right) =>
 /**
  * @description Determine if an Validation is an instance of Failure
  * @memberof module:Zoom.Data.Validation
- * @since v1.0.0
+ * @since v1.15.0
  * @function isFailure
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
@@ -175,7 +175,7 @@ Validation.isFailure = validation => validation instanceof Validation.Failure;
 /**
  * @description Determine if an Validation is an instance of Success
  * @memberof module:Zoom.Data.Validation
- * @since v1.0.0
+ * @since v1.15.0
  * @function isSuccess
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
@@ -193,7 +193,7 @@ Validation.isSuccess = validation => validation instanceof Validation.Success;
  * If both values are the same type (both Failures, etc..) then their values
  * will be concatenated and a single instance of that type will be returned.
  * @memberof module:Zoom.Data.Validation
- * @since v1.0.0
+ * @since v1.15.0
  * @function concat
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
@@ -229,7 +229,7 @@ Validation.concat = curry((left, right) =>
  * @description Create an empty Validation. Used as the "identity" element
  * for the Validation monoid.
  * @memberof module:Zoom.Data.Validation
- * @since v1.0.0
+ * @since v1.15.0
  * @function empty
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
@@ -251,7 +251,7 @@ Validation.empty = () =>
 /**
  * @description Lift a value into a successful 'Success' context.
  * @memberof module:Zoom.Data.Validation
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
  *
@@ -269,7 +269,7 @@ Success.prototype.of = function of(value) {
 /**
  * @description Lift a value into an unsuccessful 'Failure' context.
  * @memberof module:Zoom.Data.Validation
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
  *
@@ -290,7 +290,7 @@ Failure.prototype.of = function of(value) {
  * This is how you can switch from a 'Success' to 'Failure' instance and stop
  * subsequent transformations from being applied.
  * @memberof module:Zoom.Data.Validation
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
  *
@@ -313,7 +313,7 @@ Validation.prototype.chain = function chain(transform) {
  * @description Apply a transformation to the Validation if it is an instance
  * of "Success". Otherwise, ignore the transformation and return the instance.
  * @memberof module:Zoom.Data.Validation
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
  *
@@ -336,7 +336,7 @@ Validation.prototype.map = function map(transform) {
  * @description Apply a transformation to the Validation if it is an instance
  * of "Success". Otherwise, ignore the transformation and return the instance.
  * @memberof module:Zoom.Data.Validation
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
  *
@@ -358,7 +358,7 @@ Validation.prototype.ap = function ap(apply) {
 /**
  * @description Determine if an Validation is an instance of Failure
  * @memberof module:Zoom.Data.Validation
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
  *
@@ -375,7 +375,7 @@ Validation.prototype.isFailure = function isFailure() {
 /**
  * @description Determine if an Validation is an instance of Success
  * @memberof module:Zoom.Data.Validation
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
  *
@@ -394,7 +394,7 @@ Validation.prototype.isSuccess = function isSuccess() {
  * If both values are the same type (both Failures, etc..) then their values
  * will be concatenated and a single instance of that type will be returned.
  * @memberof module:Zoom.Data.Validation
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Validation } from '@dustinws/zoom/packages/data';
  *

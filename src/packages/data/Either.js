@@ -26,7 +26,7 @@ const Left = Either.Left;
  * @description Lift a value into a successful 'Right' context.
  * @memberof module:Zoom.Data.Either
  * @function of
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Either } from '@dustinws/zoom/packages/data';
  *
@@ -45,7 +45,7 @@ Either.of = function of(value) {
  * @description Lift a value into a successful 'Right' context.
  * @memberof module:Zoom.Data.Either
  * @function
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Either } from '@dustinws/zoom/packages/data';
  *
@@ -64,7 +64,7 @@ Right.of = function of(value) {
  * @description Lift a value into an unsuccessful 'Left' context.
  * @memberof module:Zoom.Data.Either
  * @function
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Either } from '@dustinws/zoom/packages/data';
  *
@@ -85,7 +85,7 @@ Left.of = function of(value) {
  * This is how you can switch from a 'Right' to 'Left' instance and stop
  * subsequent transformations from being applied.
  * @memberof module:Zoom.Data.Either
- * @since v1.0.0
+ * @since v1.15.0
  * @function chain
  * @example
  * import { Either } from '@dustinws/zoom/packages/data';
@@ -112,7 +112,7 @@ Either.chain = curry((transform, either) =>
  * @description Apply a transformation to the Either if it is an instance
  * of "Right". Otherwise, ignore the transformation and return the instance.
  * @memberof module:Zoom.Data.Either
- * @since v1.0.0
+ * @since v1.15.0
  * @function map
  * @example
  * import { Either } from '@dustinws/zoom/packages/data';
@@ -136,7 +136,7 @@ Either.map = curry((transform, either) =>
  * @description Apply a transformation to the Either if it is an instance
  * of "Right". Otherwise, ignore the transformation and return the instance.
  * @memberof module:Zoom.Data.Either
- * @since v1.0.0
+ * @since v1.15.0
  * @function ap
  * @example
  * import { Either } from '@dustinws/zoom/packages/data';
@@ -159,7 +159,7 @@ Either.ap = curry((left, right) =>
 /**
  * @description Determine if an Either is an instance of Left
  * @memberof module:Zoom.Data.Either
- * @since v1.0.0
+ * @since v1.15.0
  * @function isLeft
  * @example
  * import { Either } from '@dustinws/zoom/packages/data';
@@ -175,7 +175,7 @@ Either.isLeft = either => either instanceof Either.Left;
 /**
  * @description Determine if an Either is an instance of Right
  * @memberof module:Zoom.Data.Either
- * @since v1.0.0
+ * @since v1.15.0
  * @function isRight
  * @example
  * import { Either } from '@dustinws/zoom/packages/data';
@@ -191,7 +191,7 @@ Either.isRight = either => either instanceof Either.Right;
 /**
  * @description Create a function that returns a Right when it is successful
  * and returns a Left when it throws.
- * @since v1.0.0
+ * @since v1.15.0
  * @memberof module:Zoom.Data.Either
  * @function try
  * @example
@@ -223,7 +223,7 @@ Either.try = func => (...args) => {
 /**
  * @description Lift a value into a successful 'Right' context.
  * @memberof module:Zoom.Data.Either
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Either } from '@dustinws/zoom/packages/data';
  *
@@ -241,7 +241,7 @@ Right.prototype.of = function of(value) {
 /**
  * @description Lift a value into an unsuccessful 'Left' context.
  * @memberof module:Zoom.Data.Either
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Either } from '@dustinws/zoom/packages/data';
  *
@@ -262,7 +262,7 @@ Left.prototype.of = function of(value) {
  * This is how you can switch from a 'Right' to 'Left' instance and stop
  * subsequent transformations from being applied.
  * @memberof module:Zoom.Data.Either
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Either } from '@dustinws/zoom/packages/data';
  *
@@ -285,7 +285,7 @@ Either.prototype.chain = function chain(transform) {
  * @description Apply a transformation to the Either if it is an instance
  * of "Right". Otherwise, ignore the transformation and return the instance.
  * @memberof module:Zoom.Data.Either
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Either } from '@dustinws/zoom/packages/data';
  *
@@ -308,7 +308,7 @@ Either.prototype.map = function map(transform) {
  * @description Apply a transformation to the Either if it is an instance
  * of "Right". Otherwise, ignore the transformation and return the instance.
  * @memberof module:Zoom.Data.Either
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Either } from '@dustinws/zoom/packages/data';
  *
@@ -330,7 +330,7 @@ Either.prototype.ap = function ap(apply) {
 /**
  * @description Determine if an Either is an instance of Left
  * @memberof module:Zoom.Data.Either
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Either } from '@dustinws/zoom/packages/data';
  *
@@ -346,7 +346,7 @@ Either.prototype.isLeft = function isLeft() {
 /**
  * @description Determine if an Either is an instance of Right
  * @memberof module:Zoom.Data.Either
- * @since v1.0.0
+ * @since v1.15.0
  * @example
  * import { Either } from '@dustinws/zoom/packages/data';
  *

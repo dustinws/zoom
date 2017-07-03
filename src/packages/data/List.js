@@ -12,7 +12,7 @@ const List = {};
 /**
  * @description Turn multiple values into an array.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function of
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -27,7 +27,7 @@ List.of = (...items) => items;
 /**
  * @description Determine if an array is empty.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function isEmpty
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -44,7 +44,7 @@ List.isEmpty = array =>
 /**
  * @description Return the identity element of the List monoid.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function empty
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -62,7 +62,7 @@ List.empty = () => [];
 /**
  * @description Concatenate two arrays together.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function concat
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -77,7 +77,7 @@ List.concat = curry((left, right) => left.concat(right));
  * @description Map a function over an array and flatten
  * the results by one level.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function chain
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -92,7 +92,7 @@ List.chain = curry((func, array) =>
 /**
  * @description Get the first element of a potentially empty array.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function head
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -109,7 +109,7 @@ List.head = array =>
 /**
  * @description Get the last element of a potentially empty array.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function last
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -127,7 +127,7 @@ List.last = array =>
 /**
  * @description Get all elements except the last one.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function init
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -145,7 +145,7 @@ List.init = array =>
 /**
  * @description Return a new array that does not include the first element.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function tail
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -164,7 +164,7 @@ List.tail = array =>
  * @description Run a function for each item in an array. Returns the array.
  * Does not provide an index.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function each
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -188,7 +188,7 @@ List.each = curry((func, array) => {
 /**
  * @description Turn a list into a single value.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function fold
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -215,7 +215,7 @@ List.fold = curry((fn, seed, list) => {
  * @description Return the index of an item in an array. If the item
  * is not present, -1 will be returned.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function indexOf
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -236,7 +236,7 @@ List.indexOf = curry((value, list) => {
 /**
  * @description Determine if an item is present in an array.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function includes
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -255,7 +255,7 @@ List.includes = curry((value, array) =>
  * @description Apply a function to each element in a list and return
  * the results in a new array.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function map
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -281,7 +281,7 @@ List.map = curry((fn, list) =>
  * return a new array containing all of the values the predicate
  * returned a truthy response for.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function filter
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -309,7 +309,7 @@ List.filter = curry((fn, list) =>
  * return a new array containing all of the values the predicate
  * returned a falsy response for.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function reject
  * @example
  * import { List } from '@dustinws/zoom/packages/data';

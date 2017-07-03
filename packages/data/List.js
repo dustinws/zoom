@@ -28,7 +28,7 @@ var List = {};
 /**
  * @description Turn multiple values into an array.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function of
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -49,7 +49,7 @@ List.of = function () {
 /**
  * @description Determine if an array is empty.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function isEmpty
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -67,7 +67,7 @@ List.isEmpty = function (array) {
 /**
  * @description Return the identity element of the List monoid.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function empty
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -87,7 +87,7 @@ List.empty = function () {
 /**
  * @description Concatenate two arrays together.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function concat
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -104,7 +104,7 @@ List.concat = (0, _curry2.default)(function (left, right) {
  * @description Map a function over an array and flatten
  * the results by one level.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function chain
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -120,7 +120,7 @@ List.chain = (0, _curry2.default)(function (func, array) {
 /**
  * @description Get the first element of a potentially empty array.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function head
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -138,7 +138,7 @@ List.head = function (array) {
 /**
  * @description Get the last element of a potentially empty array.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function last
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -157,7 +157,7 @@ List.last = function (array) {
 /**
  * @description Get all elements except the last one.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function init
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -176,7 +176,7 @@ List.init = function (array) {
 /**
  * @description Return a new array that does not include the first element.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function tail
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -196,7 +196,7 @@ List.tail = function (array) {
  * @description Run a function for each item in an array. Returns the array.
  * Does not provide an index.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function each
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -220,7 +220,7 @@ List.each = (0, _curry2.default)(function (func, array) {
 /**
  * @description Turn a list into a single value.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function fold
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -247,7 +247,7 @@ List.fold = (0, _curry2.default)(function (fn, seed, list) {
  * @description Return the index of an item in an array. If the item
  * is not present, -1 will be returned.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function indexOf
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -268,7 +268,7 @@ List.indexOf = (0, _curry2.default)(function (value, list) {
 /**
  * @description Determine if an item is present in an array.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function includes
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -288,7 +288,7 @@ List.includes = (0, _curry2.default)(function (value, array) {
  * @description Apply a function to each element in a list and return
  * the results in a new array.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function map
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -315,7 +315,7 @@ List.map = (0, _curry2.default)(function (fn, list) {
  * return a new array containing all of the values the predicate
  * returned a truthy response for.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function filter
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
@@ -344,7 +344,7 @@ List.filter = (0, _curry2.default)(function (fn, list) {
  * return a new array containing all of the values the predicate
  * returned a falsy response for.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function reject
  * @example
  * import { List } from '@dustinws/zoom/packages/data';

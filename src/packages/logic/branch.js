@@ -6,8 +6,8 @@ import curryN from '../core/curryN';
  * called with the same arguments. If it returns falsy, the third function
  * will be called with the same arguments.
  * @memberof module:Zoom.Logic
- * @function or
- * @since v1.0.0
+ * @function branch
+ * @since v1.15.0
  * @example
  * import { prop, pipe } from '@dustinws/zoom/packages/core';
  * import { branch, eq } from '@dustinws/zoom/packages/logic';

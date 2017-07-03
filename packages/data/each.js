@@ -14,7 +14,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @description Run a function for each item in an array. Returns the array.
  * Does not provide an index.
  * @memberof module:Zoom.Data.List
- * @since v1.0.0
+ * @since v1.15.0
  * @function each
  * @example
  * import { List } from '@dustinws/zoom/packages/data';
