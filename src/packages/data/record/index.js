@@ -1,13 +1,28 @@
 /**
  * @class Record
  * @memberof module:Zoom.Data
+ * @description
+ * This module contains functions for object interactions. It is a static object
+ * and is not an actual class. The class tag was used in the documentation
+ * for namespacing and formatting.
  */
 
-export { default as entries } from './entries';
-export { default as fromPairs } from './fromPairs';
-export { default as has } from './has';
-export { default as keys } from './keys';
-export { default as map } from './map';
-export { default as matches } from './matches';
-export { default as size } from './size';
-export { default as values } from './values';
+import entries from './entries';
+import fromPairs from './fromPairs';
+import has from './has';
+import keys from './keys';
+import map from './map';
+import matches from './matches';
+import size from './size';
+import values from './values';
+
+export default{
+  entries,
+  fromPairs,
+  has,
+  keys,
+  map,
+  matches,
+  size,
+  values,
+};

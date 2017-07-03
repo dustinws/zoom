@@ -1,6 +1,6 @@
 {
   "name": "@dustinws/zoom",
-  "version": "1.16.0",
+  "version": "1.17.0",
   "description": "Helpful abstractions for functional programming in javascript.",
   "main": "index.js",
   "scripts": {

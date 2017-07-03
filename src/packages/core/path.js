@@ -1,6 +1,6 @@
 import curry from './curry';
 import prop from './prop';
-import List from '../data/List';
+import fold from '../data/list/fold';
 import Maybe from '../data/Maybe';
 
 /**
@@ -21,7 +21,7 @@ import Maybe from '../data/Maybe';
  * @return {Maybe<Any>}
  */
 function path(crumbs, object) {
-  return List.fold((a, b) => a.chain(prop(b)), Maybe.Just(object), crumbs);
+  return fold((a, b) => a.chain(prop(b)), Maybe.Just(object), crumbs);
 }
 
 export default curry(path);

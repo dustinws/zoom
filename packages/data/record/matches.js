@@ -23,10 +23,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @since v1.16.0
  * @function matches
  * @example
- * import { Record } from '@dustinws/zoom/packages/data';
+ * // matches :: { String: * } -> { String: * } -> Bool
+ * import { matches } from '@dustinws/zoom/packages/data/record';
  *
- * Record.matches({ name: 'barry' }, { name: 'barry', age: 31 }) // true
- * Record.matches({ name: 'barry' }, { name: 'jake', age: 26 }) // false
+ * matches({ name: 'barry' }, { name: 'barry', age: 31 }) // true
+ * matches({ name: 'barry' }, { name: 'jake', age: 26 }) // false
  *
  * @param  {Object} query The query object
  * @param  {Object} object The object to query

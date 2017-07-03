@@ -1,4 +1,4 @@
-import List from '../List';
+import fold from '../list/fold';
 
 /**
  * @description Turn an array of [key, value] tuples into an object
@@ -6,17 +6,19 @@ import List from '../List';
  * @since v1.16.0
  * @function fromPairs
  * @example
- * import { Record } from '@dustinws/zoom/packages/data';
+ * // fromPairs :: [[String, a]] -> { String: a }
+ * import { fromPairs } from '@dustinws/zoom/packages/data/record';
  *
- * Record.fromPairs([['a', 1], ['b', 2]]) // { a: 1, b: 2 }
+ * fromPairs([['a', 1], ['b', 2]]) // { a: 1, b: 2 }
  *
  * @param  {Array<Array<mixed>>} tuples The list of [key, value] tuples
  * @return {Object}
  */
-const fromPairs = tuples =>
-  List.fold((result, [key, value]) => {
+function fromPairs(tuples) {
+  return fold((result, [key, value]) => {
     result[key] = value; // eslint-disable-line no-param-reassign
     return result;
   }, {}, tuples);
+}
 
 export default fromPairs;

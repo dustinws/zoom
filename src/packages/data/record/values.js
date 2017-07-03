@@ -1,5 +1,5 @@
 import keys from './keys';
-import List from '../List';
+import map from '../list/map';
 
 /**
  * @description Get an object's values in an array.
@@ -7,6 +7,7 @@ import List from '../List';
  * @since v1.16.0
  * @function values
  * @example
+ * // values :: { String: a } -> [a]
  * import { Record } from '@dustinws/zoom/packages/data';
  *
  * Record.values({ a: 1, b: 2 }) // [1, 2]
@@ -14,7 +15,8 @@ import List from '../List';
  * @param  {Object} object The object to query
  * @return {Array<String>}
  */
-const values = object =>
-  List.map(x => object[x], keys(object));
+function values(object) {
+  return map(x => object[x], keys(object));
+}
 
 export default values;

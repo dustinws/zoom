@@ -6,74 +6,55 @@ Object.defineProperty(exports, "__esModule", {
 
 var _entries = require('./entries');
 
-Object.defineProperty(exports, 'entries', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_entries).default;
-  }
-});
+var _entries2 = _interopRequireDefault(_entries);
 
 var _fromPairs = require('./fromPairs');
 
-Object.defineProperty(exports, 'fromPairs', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_fromPairs).default;
-  }
-});
+var _fromPairs2 = _interopRequireDefault(_fromPairs);
 
 var _has = require('./has');
 
-Object.defineProperty(exports, 'has', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_has).default;
-  }
-});
+var _has2 = _interopRequireDefault(_has);
 
 var _keys = require('./keys');
 
-Object.defineProperty(exports, 'keys', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_keys).default;
-  }
-});
+var _keys2 = _interopRequireDefault(_keys);
 
 var _map = require('./map');
 
-Object.defineProperty(exports, 'map', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_map).default;
-  }
-});
+var _map2 = _interopRequireDefault(_map);
 
 var _matches = require('./matches');
 
-Object.defineProperty(exports, 'matches', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_matches).default;
-  }
-});
+var _matches2 = _interopRequireDefault(_matches);
 
 var _size = require('./size');
 
-Object.defineProperty(exports, 'size', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_size).default;
-  }
-});
+var _size2 = _interopRequireDefault(_size);
 
 var _values = require('./values');
 
-Object.defineProperty(exports, 'values', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_values).default;
-  }
-});
+var _values2 = _interopRequireDefault(_values);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @class Record
+ * @memberof module:Zoom.Data
+ * @description
+ * This module contains functions for object interactions. It is a static object
+ * and is not an actual class. The class tag was used in the documentation
+ * for namespacing and formatting.
+ */
+
+exports.default = {
+  entries: _entries2.default,
+  fromPairs: _fromPairs2.default,
+  has: _has2.default,
+  keys: _keys2.default,
+  map: _map2.default,
+  matches: _matches2.default,
+  size: _size2.default,
+  values: _values2.default
+};
+module.exports = exports['default'];

@@ -7,16 +7,18 @@ import curry from '../../core/curry';
  * @since v1.16.0
  * @function has
  * @example
- * import { Record } from '@dustinws/zoom/packages/data';
+ * // has :: String -> { String: * } -> Bool
+ * import { has } from '@dustinws/zoom/packages/data/record';
  *
- * Record.has('a', { a: 1 }) // true
- * Record.has('b', { a: 1 }) // false
+ * has('a', { a: 1 }) // true
+ * has('b', { a: 1 }) // false
  *
  * @param  {String} key The key to lookup
  * @param  {Object} object The object to query
  * @return {Boolean}
  */
-const has = curry((key, object) =>
-  object[key] !== null && object[key] !== undefined);
+function has(key, object) {
+  return object[key] !== null && object[key] !== undefined;
+}
 
-export default has;
+export default curry(has);

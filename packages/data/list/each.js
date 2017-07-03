@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _curry = require('../core/curry');
+var _curry = require('../../core/curry');
 
 var _curry2 = _interopRequireDefault(_curry);
 
@@ -17,9 +17,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @since v1.15.0
  * @function each
  * @example
- * import { List } from '@dustinws/zoom/packages/data';
+ * // each :: (a -> *) -> [a] -> [a]
+ * import { each } from '@dustinws/zoom/packages/data/list';
  *
- * List.each(console.log, [1, 2, 3]);
+ * each(console.log, [1, 2, 3]);
  * // 1
  * // 2
  * // 3

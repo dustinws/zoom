@@ -6,13 +6,16 @@ import keys from './keys';
  * @since v1.16.0
  * @function size
  * @example
- * import { Record } from '@dustinws/zoom/packages/data';
+ * // size :: { String: * } -> Int
+ * import { size } from '@dustinws/zoom/packages/data/record';
  *
- * Record.size({ a: 1 }) // 1
+ * size({ a: 1 }) // 1
  *
  * @param  {Object} object The object to query
  * @return {Number}
  */
-const size = object => keys(object).length;
+function size(object) {
+  return keys(object).length;
+}
 
 export default size;

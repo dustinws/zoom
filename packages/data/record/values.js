@@ -8,9 +8,9 @@ var _keys = require('./keys');
 
 var _keys2 = _interopRequireDefault(_keys);
 
-var _List = require('../List');
+var _map = require('../list/map');
 
-var _List2 = _interopRequireDefault(_List);
+var _map2 = _interopRequireDefault(_map);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20,6 +20,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @since v1.16.0
  * @function values
  * @example
+ * // values :: { String: a } -> [a]
  * import { Record } from '@dustinws/zoom/packages/data';
  *
  * Record.values({ a: 1, b: 2 }) // [1, 2]
@@ -27,11 +28,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param  {Object} object The object to query
  * @return {Array<String>}
  */
-var values = function values(object) {
-  return _List2.default.map(function (x) {
+function values(object) {
+  return (0, _map2.default)(function (x) {
     return object[x];
   }, (0, _keys2.default)(object));
-};
+}
 
 exports.default = values;
 module.exports = exports['default'];

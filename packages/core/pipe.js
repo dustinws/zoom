@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = pipe;
 
-var _List = require('../data/List');
+var _fold = require('../data/list/fold');
 
-var _List2 = _interopRequireDefault(_List);
+var _fold2 = _interopRequireDefault(_fold);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40,7 +40,7 @@ function pipe() {
         tail = fns.slice(1);
 
 
-    return _List2.default.fold(function (a, b) {
+    return (0, _fold2.default)(function (a, b) {
       return b(a);
     }, head.apply(undefined, arguments), tail);
   };

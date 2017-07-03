@@ -1,4 +1,4 @@
-import curry from '../core/curry';
+import curry from '../../core/curry';
 
 /**
  * @description Run a function for each item in an array. Returns the array.
@@ -7,9 +7,10 @@ import curry from '../core/curry';
  * @since v1.15.0
  * @function each
  * @example
- * import { List } from '@dustinws/zoom/packages/data';
+ * // each :: (a -> *) -> [a] -> [a]
+ * import { each } from '@dustinws/zoom/packages/data/list';
  *
- * List.each(console.log, [1, 2, 3]);
+ * each(console.log, [1, 2, 3]);
  * // 1
  * // 2
  * // 3

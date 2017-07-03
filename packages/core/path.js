@@ -12,9 +12,9 @@ var _prop = require('./prop');
 
 var _prop2 = _interopRequireDefault(_prop);
 
-var _List = require('../data/List');
+var _fold = require('../data/list/fold');
 
-var _List2 = _interopRequireDefault(_List);
+var _fold2 = _interopRequireDefault(_fold);
 
 var _Maybe = require('../data/Maybe');
 
@@ -40,7 +40,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @return {Maybe<Any>}
  */
 function path(crumbs, object) {
-  return _List2.default.fold(function (a, b) {
+  return (0, _fold2.default)(function (a, b) {
     return a.chain((0, _prop2.default)(b));
   }, _Maybe2.default.Just(object), crumbs);
 }

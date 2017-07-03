@@ -8,9 +8,17 @@ var _curry = require('../../core/curry');
 
 var _curry2 = _interopRequireDefault(_curry);
 
+var _pipe = require('../../core/pipe');
+
+var _pipe2 = _interopRequireDefault(_pipe);
+
 var _keys = require('./keys');
 
 var _keys2 = _interopRequireDefault(_keys);
+
+var _fold = require('../list/fold');
+
+var _fold2 = _interopRequireDefault(_fold);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22,20 +30,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @since v1.16.0
  * @function map
  * @example
- * import { Record } from '@dustinws/zoom/packages/data';
+ * // map :: (a -> b) -> { String: a } -> { String: b }
+ * import { map } from '@dustinws/zoom/packages/data/record';
  *
- * Record.map(n => n + 1, { a: 1 }) // { a: 2 }
+ * map(n => n + 1, { a: 1 }) // { a: 2 }
  *
  * @param  {Function} transform The function to apply
  * @param  {Object} object The object transform
  * @return {Object}
  */
-var map = (0, _curry2.default)(function (transform, object) {
-  return (0, _keys2.default)(object).reduce(function (result, key) {
-    result[key] = transform(object[key]); // eslint-disable-line no-param-reassign
-    return result;
-  }, {});
-});
+function map(transform, object) {
+  return (0, _pipe2.default)(_keys2.default, (0, _fold2.default)(function (result, key) {
+    // eslint-disable-next-line no-param-reassign
+    result[key] = transform(object[key]);
 
-exports.default = map;
+    return result;
+  }, {}))(object);
+}
+
+exports.default = (0, _curry2.default)(map);
 module.exports = exports['default'];

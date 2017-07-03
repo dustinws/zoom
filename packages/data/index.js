@@ -13,12 +13,12 @@ Object.defineProperty(exports, 'Either', {
   }
 });
 
-var _List = require('./List');
+var _list = require('./list');
 
 Object.defineProperty(exports, 'List', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_List).default;
+    return _interopRequireDefault(_list).default;
   }
 });
 
@@ -28,6 +28,15 @@ Object.defineProperty(exports, 'Maybe', {
   enumerable: true,
   get: function get() {
     return _interopRequireDefault(_Maybe).default;
+  }
+});
+
+var _record = require('./record');
+
+Object.defineProperty(exports, 'Record', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_record).default;
   }
 });
 

@@ -1,4 +1,4 @@
-import List from '../data/List';
+import fold from '../data/list/fold';
 
 /**
  * @memberof module:Zoom.Core
@@ -23,7 +23,6 @@ export default function pipe(...fns) {
   return (...args) => {
     const [head, ...tail] = fns;
 
-    return List.fold((a, b) =>
-      b(a), head(...args), tail);
+    return fold((a, b) => b(a), head(...args), tail);
   };
 }

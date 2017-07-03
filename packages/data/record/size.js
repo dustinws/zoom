@@ -16,16 +16,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @since v1.16.0
  * @function size
  * @example
- * import { Record } from '@dustinws/zoom/packages/data';
+ * // size :: { String: * } -> Int
+ * import { size } from '@dustinws/zoom/packages/data/record';
  *
- * Record.size({ a: 1 }) // 1
+ * size({ a: 1 }) // 1
  *
  * @param  {Object} object The object to query
  * @return {Number}
  */
-var size = function size(object) {
+function size(object) {
   return (0, _keys2.default)(object).length;
-};
+}
 
 exports.default = size;
 module.exports = exports['default'];

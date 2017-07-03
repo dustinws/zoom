@@ -1,5 +1,7 @@
 import curry from '../../core/curry';
+import pipe from '../../core/pipe';
 import keys from './keys';
+import fold from '../list/fold';
 
 /**
  * @description Create a new object where each value is the result of calling
@@ -9,18 +11,22 @@ import keys from './keys';
  * @since v1.16.0
  * @function map
  * @example
- * import { Record } from '@dustinws/zoom/packages/data';
+ * // map :: (a -> b) -> { String: a } -> { String: b }
+ * import { map } from '@dustinws/zoom/packages/data/record';
  *
- * Record.map(n => n + 1, { a: 1 }) // { a: 2 }
+ * map(n => n + 1, { a: 1 }) // { a: 2 }
  *
  * @param  {Function} transform The function to apply
  * @param  {Object} object The object transform
  * @return {Object}
  */
-const map = curry((transform, object) =>
-  keys(object).reduce((result, key) => {
-    result[key] = transform(object[key]); // eslint-disable-line no-param-reassign
-    return result;
-  }, {}));
+function map(transform, object) {
+  return pipe(keys, fold((result, key) => {
+    // eslint-disable-next-line no-param-reassign
+    result[key] = transform(object[key]);
 
-export default map;
+    return result;
+  }, {}))(object);
+}
+
+export default curry(map);
