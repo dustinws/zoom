@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Clean existing build files
-if [ -d dist/node ]; then
-  echo "Removing 'dist/node' files..."
-  rm -rf dist/node
-  echo "Removed 'dist/node' files."
+if [ -d build/node ]; then
+  echo "Removing 'build/node' files..."
+  rm -rf build/node
+  echo "Removed 'build/node' files."
 fi
 
 # Build source files with babel.
