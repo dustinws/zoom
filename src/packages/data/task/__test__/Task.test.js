@@ -15,6 +15,26 @@ describe('Zoom.Data.Task', () => {
     });
   });
 
+  describe('Task.fork', () => {
+    test('Successful forks', () => {
+      return new Promise((resolve, reject) => {
+        Task.fork(reject, resolve, Task.of('Wassup?'));
+      })
+        .then((result) => {
+          expect(result).toBe('Wassup?');
+        });
+    });
+
+    test('Unsuccessful forks', () => {
+      return new Promise((resolve, reject) => {
+        Task.fork(reject, resolve, Task.reject('Wassup?'));
+      })
+        .catch((result) => {
+          expect(result).toBe('Wassup?');
+        });
+    });
+  });
+
   describe('Task.map', () => {
     test('It should call the function with the inner value.', () => {
       const task = Task.of('boom');
