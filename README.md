@@ -1,4 +1,4 @@
-# Zoom ~-~
+# Zoom . js
 
 [![CircleCI](https://circleci.com/gh/dustinws/zoom/tree/master.svg?style=shield)](https://circleci.com/gh/dustinws/zoom/tree/master)
 [![npm version](https://badge.fury.io/js/%40dustinws%2Fzoom.svg)](https://badge.fury.io/js/%40dustinws%2Fzoom)
