@@ -1,13 +1,13 @@
 /* global describe, expect, test */
-import complement from '../complement';
+import negate from '../negate';
 
-describe('Zoom.Core.complement', () => {
+describe('Zoom.Core.negate', () => {
   test('It should return a function', () => {
-    expect(typeof complement(() => {})).toBe('function');
+    expect(typeof negate(() => {})).toBe('function');
   });
 
   test('It should return the opposite boolean value of the original function', () => {
     const True = () => true;
-    expect(complement(True)()).toBe(false);
+    expect(negate(True)()).toBe(false);
   });
 });

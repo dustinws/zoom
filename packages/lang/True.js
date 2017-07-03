@@ -11,20 +11,20 @@ var _constant2 = _interopRequireDefault(_constant);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * @description A constant for the value "false"
+ * @description A constant for the value "true"
  * @memberof module:Zoom.Core
- * @since v1.15.0
- * @function False
+ * @since v2.0.0
+ * @function True
  * @example
- * // False :: * -> Bool
- * import { False } from '@dustinws/zoom/packages/core';
+ * True :: * -> Bool
+ * import { True } from '@dustinws/zoom/packages/core';
  *
- * False(); // false
- * False(1, [], function(){}); // false
+ * True(); // true
+ * True(1, [], function(){}); // true
  *
  * @return {Boolean}
  */
-var False = (0, _constant2.default)(false);
+var True = (0, _constant2.default)(true);
 
-exports.default = False;
+exports.default = True;
 module.exports = exports['default'];

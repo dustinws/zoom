@@ -49,6 +49,15 @@ Object.defineProperty(exports, 'curryN', {
   }
 });
 
+var _negate = require('./negate');
+
+Object.defineProperty(exports, 'negate', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_negate).default;
+  }
+});
+
 var _memoize = require('./memoize');
 
 Object.defineProperty(exports, 'memoize', {

@@ -1,22 +1,22 @@
 /**
- * @memberof module:Zoom.Core
+ * @memberof module:Zoom.Lambda
  * @description Given a function that returns a truthy / falsy value,
  * return a new function that returns the the opposite truthy / falsy value.
  * @since v1.0.0
- * @function complement
+ * @function negate
  * @example
- * // complement :: (a..c -> Bool) -> (a..c) -> Bool
- * import { complement } from '@dustinws/zoom/packages/core';
+ * // negate :: (a..c -> Bool) -> (a..c) -> Bool
+ * import { negate } from '@dustinws/zoom/packages/core';
  *
  * const isOdd = n => n % 2;
- * const isEven = complement(isOdd);
+ * const isEven = negate(isOdd);
  *
  * isOdd(5) // true
  * isEven(5) // false
  *
- * @param  {Function} func The function to complement
+ * @param  {Function} func The function to negate
  * @return {Function}
  */
-export default function complement(func) {
+export default function negate(func) {
   return (...args) => !func(...args);
 }

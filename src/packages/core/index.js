@@ -4,8 +4,6 @@
  */
 
 export { default as complement } from './complement';
-export { default as False } from './False';
 export { default as path } from './path';
 export { default as prop } from './prop';
-export { default as True } from './True';
 export { default as typeOf } from './typeOf';

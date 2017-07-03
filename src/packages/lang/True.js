@@ -3,7 +3,7 @@ import constant from '../lambda/constant';
 /**
  * @description A constant for the value "true"
  * @memberof module:Zoom.Core
- * @since v1.15.0
+ * @since v2.0.0
  * @function True
  * @example
  * True :: * -> Bool
