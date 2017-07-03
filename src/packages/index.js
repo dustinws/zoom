@@ -11,7 +11,7 @@ import * as Lang from './lang';
 import * as Logic from './logic';
 import * as Math from './math';
 
-export default {
+export {
   ADT,
   Check,
   Core,

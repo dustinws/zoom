@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Clean existing build files
+if [ -d dist/browser ]; then
+  echo "Removing 'dist/browser' files..."
+  rm -rf dist/browser
+  echo "Removed 'dist/browser' files."
+fi
+
+# Build source files with webpack.
+echo "Building source files..."
+./node_modules/.bin/webpack --config webpack.config.js
+echo "Source files built successfully."

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Clean existing build files
+if [ -d dist/node ]; then
+  echo "Removing 'dist/node' files..."
+  rm -rf dist/node
+  echo "Removed 'dist/node' files."
+fi
+
+# Build source files with babel.
+echo "Building source files..."
+./node_modules/.bin/babel --ignore **/*.test.js -d build/node src/packages
+echo "Source files built successfully."
+
+# Copy essential files into .tmp/deploy
+echo "Copying package.json..."
+cp package.json build/node
+
+echo "Copying package-lock.json..."
+cp package-lock.json build/node
+
+echo "Copying LICENSE..."
+cp LICENSE build/node
+
+echo "Copying README.md..."
+cp README.md build/node

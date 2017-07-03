@@ -2,10 +2,10 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: './index.js',
+  entry: './src/packages/index.js',
 
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'build', 'browser'),
     filename: 'zoom.min.js',
     library: 'Zoom',
   },

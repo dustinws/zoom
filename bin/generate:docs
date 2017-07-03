@@ -1,0 +1,3 @@
+#!/bin/bash
+
+jsdoc -t node_modules/docdash -R ./README.md -d docs -r src

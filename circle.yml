@@ -20,4 +20,4 @@ deployment:
   feature:
     branch: master
     commands:
-      - npm publish
+      - bin/publish

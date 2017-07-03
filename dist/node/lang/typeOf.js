@@ -1,3 +1,9 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = typeOf;
 /**
  * @memberof module:Zoom.Lang
  * @description Get the [[class]] of any native object.
@@ -16,6 +22,7 @@
  * @param  {Any} value The value who's type you want to know
  * @return {String}
  */
-export default function typeOf(value) {
+function typeOf(value) {
   return Object.prototype.toString.call(value).slice(8, -1);
 }
+module.exports = exports["default"];

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# At this point, it's expected that the tests have been run and linting
+# has passed. We can assume it's safe to proceed with the script.
+
+
+# Build source files
+echo "Building source files..."
+bin/build:node
+echo "Source files built successfully."
+
+# Start the "npm publish" command
+cd build/node
+echo "Starting '$ npm publish'"
+npm publish
+echo "Published to npm"
