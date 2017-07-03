@@ -9,3 +9,4 @@ export { default as constant } from './constant';
 export { default as curry } from './curry';
 export { default as curryN } from './curryN';
 export { default as pipe } from './pipe';
+export { default as spread } from './spread';

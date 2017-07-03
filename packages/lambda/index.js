@@ -58,4 +58,13 @@ Object.defineProperty(exports, 'pipe', {
   }
 });
 
+var _spread = require('./spread');
+
+Object.defineProperty(exports, 'spread', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_spread).default;
+  }
+});
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

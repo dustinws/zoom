@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>data/list/init.js - Documentation</title>
+    <title>lambda/spread.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">data/list/init.js</h1>
+    <h1 class="page-title">lambda/spread.js</h1>
     
 
     
@@ -37,27 +37,38 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @description Get all elements except the last one.
- * @memberof module:Zoom.Data.List
- * @since v1.15.0
- * @function init
+            <pre class="prettyprint source linenums"><code>import curry from './curry';
+
+/**
+ * @memberof module:Zoom.Lambda
+ * @description Given a function and an array of values, apply the
+ * array of values as parameters to the function.
+ * @since v1.0.0
+ * @function spread
  * @example
- * // init :: [a] -> [a]
- * import { init } from '@dustinws/zoom/packages/data/list';
+ * import { spread } from '@dustinws/zoom/packages/core';
  *
- * init([1, 2, 3, 4]); // [2, 3, 4]
- * init([1]); // []
- * init([]); // []
+ * Promise
+ *   .all([
+ *     lookupFileOne('one.txt'),
+ *     lookupFileTwo('two.txt'),
+ *     lookupFileThree('three.txt'),
+ *   ])
+ *   .then(
+ *      spread((bufferOne, bufferTwo, bufferThree) => {
+ *        // Do stuff with the buffers
+ *      })
+ *     );
  *
- * @param  {Array&lt;T>} array The array to use
- * @return {Array&lt;T>}
+ * @param  {Function} func The function to run
+ * @param  {Array&lt;Any>} args The array to spread out
+ * @return {Any}
  */
-function init(array) {
-  return array.slice(0, -1);
+function spread(func, args) {
+  return func(...args);
 }
 
-export default init;
+export default curry(spread);
 </code></pre>
         </article>
     </section>
