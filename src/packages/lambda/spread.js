@@ -7,7 +7,7 @@ import curry from './curry';
  * @since v2.0.0
  * @function spread
  * @example
- * import { spread } from '@dustinws/zoom/core';
+ * import { spread } from '@dustinws/zoom/lambda';
  *
  * Promise
  *   .all([

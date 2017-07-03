@@ -19,7 +19,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  * @since v2.0.0
  * @function spread
  * @example
- * import { spread } from '@dustinws/zoom/core';
+ * import { spread } from '@dustinws/zoom/lambda';
  *
  * Promise
  *   .all([

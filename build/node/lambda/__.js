@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", {
  * @constant
  * @example
  * // __ :: Symbol
- * import { __, curry } from '@dustinws/zoom/core';
+ * import { __, curry } from '@dustinws/zoom/lambda';
  *
  * const add = curry((a, b) => a + b);
  *

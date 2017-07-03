@@ -6,7 +6,7 @@ import pipe from './pipe';
  * @since v2.0.0
  * @function compose
  * @example
- * import { compose } from '@dustinws/zoom/core';
+ * import { compose } from '@dustinws/zoom/lambda';
  *
  * const square = n => n * n;
  * const increment = n => n + 1;

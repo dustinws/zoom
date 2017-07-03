@@ -7,7 +7,7 @@ import __ from './__';
  * @since v2.0.0
  * @function curryN
  * @example
- * import { curryN } from '@dustinws/zoom/core';
+ * import { curryN } from '@dustinws/zoom/lambda';
  *
  * const add = curryN(2, (a, b) => a + b);
  *

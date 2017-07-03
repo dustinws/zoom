@@ -7,7 +7,7 @@ import constant from '../lambda/constant';
  * @function False
  * @example
  * // False :: * -> Bool
- * import { False } from '@dustinws/zoom/core';
+ * import { False } from '@dustinws/zoom/lang';
  *
  * False(); // false
  * False(1, [], function(){}); // false

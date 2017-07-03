@@ -17,7 +17,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @since v2.0.0
  * @function pipe
  * @example
- * import { pipe } from '@dustinws/zoom/core';
+ * import { pipe } from '@dustinws/zoom/lambda';
  *
  * const square = n => n * n;
  * const increment = n => n + 1;

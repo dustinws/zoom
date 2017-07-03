@@ -18,7 +18,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @since v2.0.0
  * @function curry
  * @example
- * import { curry } from '@dustinws/zoom/core';
+ * import { curry } from '@dustinws/zoom/lambda';
  *
  * const add = curry((a, b) => a + b);
  *

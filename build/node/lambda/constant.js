@@ -11,7 +11,7 @@ exports.default = constant;
  * @function constant
  * @example
  * // constant :: a -> b -> a
- * import { constant } from '@dustinws/zoom/core';
+ * import { constant } from '@dustinws/zoom/lambda';
  *
  * const Pi = constant(3.14);
  *

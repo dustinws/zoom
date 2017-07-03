@@ -20,7 +20,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @function memoize
  * @example
  * // memoize :: (a -> b) -> (a -> b)
- * import { memoize } from '@dustinws/zoom/core';
+ * import { memoize } from '@dustinws/zoom/lambda';
  *
  * let count = 0;
  *

@@ -19,7 +19,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  * @since v2.0.0
  * @function compose
  * @example
- * import { compose } from '@dustinws/zoom/core';
+ * import { compose } from '@dustinws/zoom/lambda';
  *
  * const square = n => n * n;
  * const increment = n => n + 1;

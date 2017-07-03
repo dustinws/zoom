@@ -11,7 +11,7 @@ exports.default = typeOf;
  * @function typeOf
  * @example
  * // typeOf :: * -> String
- * import { typeOf } from '@dustinws/zoom/core';
+ * import { typeOf } from '@dustinws/zoom/lambda';
  *
  * typeOf('') // String
  * typeOf([]) // Array

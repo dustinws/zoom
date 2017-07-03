@@ -12,7 +12,7 @@ exports.default = negate;
  * @function negate
  * @example
  * // negate :: (a..c -> Bool) -> (a..c) -> Bool
- * import { negate } from '@dustinws/zoom/core';
+ * import { negate } from '@dustinws/zoom/lambda';
  *
  * const isOdd = n => n % 2;
  * const isEven = negate(isOdd);
