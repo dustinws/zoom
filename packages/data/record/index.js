@@ -28,6 +28,10 @@ var _matches = require('./matches');
 
 var _matches2 = _interopRequireDefault(_matches);
 
+var _merge = require('./merge');
+
+var _merge2 = _interopRequireDefault(_merge);
+
 var _size = require('./size');
 
 var _size2 = _interopRequireDefault(_size);
@@ -38,15 +42,6 @@ var _values2 = _interopRequireDefault(_values);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * @class Record
- * @memberof module:Zoom.Data
- * @description
- * This module contains functions for object interactions. It is a static object
- * and is not an actual class. The class tag was used in the documentation
- * for namespacing and formatting.
- */
-
 exports.default = {
   entries: _entries2.default,
   fromPairs: _fromPairs2.default,
@@ -54,7 +49,16 @@ exports.default = {
   keys: _keys2.default,
   map: _map2.default,
   matches: _matches2.default,
+  merge: _merge2.default,
   size: _size2.default,
   values: _values2.default
-};
+}; /**
+    * @class Record
+    * @memberof module:Zoom.Data
+    * @description
+    * This module contains functions for object interactions. It is a static object
+    * and is not an actual class. The class tag was used in the documentation
+    * for namespacing and formatting.
+    */
+
 module.exports = exports['default'];

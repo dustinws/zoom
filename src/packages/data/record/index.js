@@ -13,6 +13,7 @@ import has from './has';
 import keys from './keys';
 import map from './map';
 import matches from './matches';
+import merge from './merge';
 import size from './size';
 import values from './values';
 
@@ -23,6 +24,7 @@ export default{
   keys,
   map,
   matches,
+  merge,
   size,
   values,
 };
