@@ -24,6 +24,18 @@ var _filter = require('./filter');
 
 var _filter2 = _interopRequireDefault(_filter);
 
+var _filterWhere = require('./filterWhere');
+
+var _filterWhere2 = _interopRequireDefault(_filterWhere);
+
+var _find = require('./find');
+
+var _find2 = _interopRequireDefault(_find);
+
+var _findWhere = require('./findWhere');
+
+var _findWhere2 = _interopRequireDefault(_findWhere);
+
 var _fold = require('./fold');
 
 var _fold2 = _interopRequireDefault(_fold);
@@ -64,6 +76,10 @@ var _reject = require('./reject');
 
 var _reject2 = _interopRequireDefault(_reject);
 
+var _rejectWhere = require('./rejectWhere');
+
+var _rejectWhere2 = _interopRequireDefault(_rejectWhere);
+
 var _tail = require('./tail');
 
 var _tail2 = _interopRequireDefault(_tail);
@@ -85,6 +101,9 @@ exports.default = {
   each: _each2.default,
   empty: _empty2.default,
   filter: _filter2.default,
+  filterWhere: _filterWhere2.default,
+  find: _find2.default,
+  findWhere: _findWhere2.default,
   fold: _fold2.default,
   head: _head2.default,
   includes: _includes2.default,
@@ -95,6 +114,7 @@ exports.default = {
   map: _map2.default,
   of: _of2.default,
   reject: _reject2.default,
+  rejectWhere: _rejectWhere2.default,
   tail: _tail2.default
 };
 module.exports = exports['default'];

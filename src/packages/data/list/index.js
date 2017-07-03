@@ -12,6 +12,9 @@ import concat from './concat';
 import each from './each';
 import empty from './empty';
 import filter from './filter';
+import filterWhere from './filterWhere';
+import find from './find';
+import findWhere from './findWhere';
 import fold from './fold';
 import head from './head';
 import includes from './includes';
@@ -22,6 +25,7 @@ import last from './last';
 import map from './map';
 import of from './of';
 import reject from './reject';
+import rejectWhere from './rejectWhere';
 import tail from './tail';
 
 export default {
@@ -30,6 +34,9 @@ export default {
   each,
   empty,
   filter,
+  filterWhere,
+  find,
+  findWhere,
   fold,
   head,
   includes,
@@ -40,5 +47,6 @@ export default {
   map,
   of,
   reject,
+  rejectWhere,
   tail,
 };
