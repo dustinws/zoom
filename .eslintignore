@@ -2,4 +2,3 @@ dist/
 docs/
 coverage/
 node_modules/
-/packages/
