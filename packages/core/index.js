@@ -58,12 +58,30 @@ Object.defineProperty(exports, 'False', {
   }
 });
 
+var _path = require('./path');
+
+Object.defineProperty(exports, 'path', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_path).default;
+  }
+});
+
 var _pipe = require('./pipe');
 
 Object.defineProperty(exports, 'pipe', {
   enumerable: true,
   get: function get() {
     return _interopRequireDefault(_pipe).default;
+  }
+});
+
+var _prop = require('./prop');
+
+Object.defineProperty(exports, 'prop', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_prop).default;
   }
 });
 

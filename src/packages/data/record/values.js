@@ -1,0 +1,20 @@
+import keys from './keys';
+import List from '../List';
+
+/**
+ * @description Get an object's values in an array.
+ * @memberof module:Zoom.Data.Record
+ * @since v1.16.0
+ * @function values
+ * @example
+ * import { Record } from '@dustinws/zoom/packages/data';
+ *
+ * Record.values({ a: 1, b: 2 }) // [1, 2]
+ *
+ * @param  {Object} object The object to query
+ * @return {Array<String>}
+ */
+const values = object =>
+  List.map(x => object[x], keys(object));
+
+export default values;
