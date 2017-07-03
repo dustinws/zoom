@@ -238,6 +238,28 @@ Maybe.fromNullable = (value) => {
   return Maybe.Just.of(value);
 };
 
+/**
+ * @description Extract the value from a Maybe, with a default value in
+ * case it is `Nothing`.
+ * @since v2.1.0
+ * @memberof module:Zoom.Data.Maybe
+ * @function withDefault
+ * @example
+ * import { Maybe } from '@dustinws/zoom/data';
+ *
+ * Maybe.withDefault('bar', Maybe.Nothing); // 'bar'
+ * Maybe.withDefault('bar', Maybe.Just('foo')); // 'foo'
+ *
+ * @param  {Any} defaultValue The value to default to
+ * @param  {Maybe} maybe The maybe instance
+ * @return {Any}
+ */
+Maybe.withDefault = curry((defaultValue, maybe) =>
+  maybe.cata({
+    Just: value => value,
+    Nothing: () => defaultValue,
+  }));
+
 
 /*
  |------------------------------------------------------------------------------
@@ -449,6 +471,25 @@ Maybe.prototype.isNothing = function isNothing() {
  */
 Maybe.prototype.isJust = function isJust() {
   return Maybe.isJust(this);
+};
+
+/**
+ * @description Extract the value from a Maybe, with a default value in
+ * case it is `Nothing`.
+ * @since v2.1.0
+ * @memberof module:Zoom.Data.Maybe
+ * @function
+ * @example
+ * import { Maybe } from '@dustinws/zoom/data';
+ *
+ * Maybe.Nothing.withDefault('bar'); // 'bar'
+ * Maybe.Just('foo').withDefault('bar'); // 'foo'
+ *
+ * @param  {Any} defaultValue The value to default to
+ * @return {Any}
+ */
+Maybe.prototype.withDefault = function withDefault(value) {
+  return Maybe.withDefault(value, this);
 };
 
 export default Maybe;
