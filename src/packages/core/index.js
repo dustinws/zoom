@@ -9,6 +9,7 @@ export { default as constant } from './constant';
 export { default as curry } from './curry';
 export { default as curryN } from './curryN';
 export { default as False } from './False';
+export { default as path } from './path';
 export { default as pipe } from './pipe';
 export { default as prop } from './prop';
 export { default as True } from './True';
