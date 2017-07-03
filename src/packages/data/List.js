@@ -225,7 +225,7 @@ List.fold = curry((fn, seed, list) => {
  *
  * @param  {Any} value The value to detect
  * @param  {Array<Any>} list The list to query
- * @return {Number}
+ * @return {Maybe<Number>}
  */
 List.indexOf = curry((value, list) => {
   const idx = list.indexOf(value);
