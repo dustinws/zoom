@@ -49,6 +49,33 @@ Object.defineProperty(exports, 'curryN', {
   }
 });
 
+var _False = require('./False');
+
+Object.defineProperty(exports, 'False', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_False).default;
+  }
+});
+
+var _pipe = require('./pipe');
+
+Object.defineProperty(exports, 'pipe', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_pipe).default;
+  }
+});
+
+var _True = require('./True');
+
+Object.defineProperty(exports, 'True', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_True).default;
+  }
+});
+
 var _typeOf = require('./typeOf');
 
 Object.defineProperty(exports, 'typeOf', {

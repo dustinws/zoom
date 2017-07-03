@@ -13,6 +13,15 @@ Object.defineProperty(exports, 'and', {
   }
 });
 
+var _branch = require('./branch');
+
+Object.defineProperty(exports, 'branch', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_branch).default;
+  }
+});
+
 var _or = require('./or');
 
 Object.defineProperty(exports, 'or', {
