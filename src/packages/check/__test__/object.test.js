@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import object from '../object';
 
-describe('check.object', () => {
+describe('Zoom.Check.object', () => {
   test('It should return a Success for object values', () => {
     expect(object({}).isSuccess()).toBe(true);
   });

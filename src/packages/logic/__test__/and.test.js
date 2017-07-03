@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import and from '../and';
 
-describe('core.and(left, right)', () => {
+describe('Zoom.Logic.and', () => {
   test('It should be curried', () => {
     expect(typeof and(true)()).toBe('function');
   });

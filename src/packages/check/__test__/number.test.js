@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import number from '../number';
 
-describe('check.number', () => {
+describe('Zoom.Check.number', () => {
   test('It should return a Success for number values', () => {
     expect(number(32).isSuccess()).toBe(true);
   });

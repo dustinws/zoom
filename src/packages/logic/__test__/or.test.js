@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import or from '../or';
 
-describe('core.or(left, right)', () => {
+describe('Zoom.Logic.or', () => {
   test('It should be curried', () => {
     expect(typeof or(true)()).toBe('function');
   });

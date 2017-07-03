@@ -3,17 +3,17 @@
  */
 
 import * as ADT from './adt';
-import * as check from './check';
-import * as core from './core';
-import * as data from './data';
-import * as logic from './logic';
-import * as math from './math';
+import * as Check from './check';
+import * as Core from './core';
+import * as Data from './data';
+import * as Logic from './logic';
+import * as Math from './math';
 
 export default {
   ADT,
-  check,
-  core,
-  data,
-  logic,
-  math,
+  Check,
+  Core,
+  Data,
+  Logic,
+  Math,
 };

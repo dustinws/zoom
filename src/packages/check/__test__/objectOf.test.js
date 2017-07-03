@@ -2,7 +2,7 @@
 import objectOf from '../objectOf';
 import string from '../string';
 
-describe('check.objectOf', () => {
+describe('Zoom.Check.objectOf', () => {
   test('It should return a Success for objectOf values', () => {
     expect(objectOf(string, { a: '' }).isSuccess()).toBe(true);
   });

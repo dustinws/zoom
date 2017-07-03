@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import Maybe from '../Maybe';
 
-describe('data.Maybe', () => {
+describe('Zoom.Data.Maybe', () => {
   describe('Maybe.of', () => {
     test('It should return an instance of Maybe', () => {
       expect(Maybe.of(1) instanceof Maybe).toBe(true);

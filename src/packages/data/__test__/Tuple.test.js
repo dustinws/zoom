@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import Tuple from '../Tuple';
 
-describe('data.Tuple', () => {
+describe('Zoom.Data.Tuple', () => {
   describe('Tuple.of', () => {
     test('It should create a tuple instance', () => {
       expect(Tuple.of(1, 2) instanceof Tuple).toBe(true);

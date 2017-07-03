@@ -2,7 +2,7 @@
 import guard from '../guard';
 import number from '../number';
 
-describe('check.guard', () => {
+describe('Zoom.Check.guard', () => {
   const add = guard([number, number, number])((a, b) => a + b);
 
   test('It should return a Success for guard values', () => {

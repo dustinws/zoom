@@ -21,6 +21,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @since v1.16.0
  * @function prop
  * @example
+ * // prop :: String -> { String: a } -> Maybe a
  * import { prop } from '@dustinws/zoom/packages/core';
  *
  * prop('a', { a: 1 }) // Just(1)

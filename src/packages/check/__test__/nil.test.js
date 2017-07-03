@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import nil from '../nil';
 
-describe('check.nil', () => {
+describe('Zoom.Check.nil', () => {
   test('It should return a Success for nil values', () => {
     expect(nil(null).isSuccess()).toBe(true);
   });

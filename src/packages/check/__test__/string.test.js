@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import string from '../string';
 
-describe('check.string', () => {
+describe('Zoom.Check.string', () => {
   test('It should return a Success for string values', () => {
     expect(string('').isSuccess()).toBe(true);
   });

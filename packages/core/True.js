@@ -16,6 +16,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @since v1.15.0
  * @function True
  * @example
+ * True :: * -> Bool
  * import { True } from '@dustinws/zoom/packages/core';
  *
  * True(); // true

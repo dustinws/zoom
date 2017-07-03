@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import constant from '../constant';
 
-describe('core.constant(value)', () => {
+describe('Zoom.Core.constant', () => {
   test('It should return a function', () => {
     expect(typeof constant(1)).toBe('function');
   });

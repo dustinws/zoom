@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import add from '../add';
 
-describe('math.add(left, right)', () => {
+describe('Zoom.Math.add', () => {
   test('It should be curried', () => {
     expect(typeof add(3)()).toBe('function');
   });

@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import func from '../func';
 
-describe('check.func', () => {
+describe('Zoom.Check.func', () => {
   test('It should return a Success for func values', () => {
     expect(func(() => {}).isSuccess()).toBe(true);
   });

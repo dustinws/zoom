@@ -4,7 +4,7 @@ import pipe from '../pipe';
 const add = a => b => a + b;
 const sq = a => a * a;
 
-describe('core.pipe(value)', () => {
+describe('Zoom.Core.pipe', () => {
   test('It should return a function', () => {
     expect(typeof pipe(() => {})).toBe('function');
   });

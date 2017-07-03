@@ -6,6 +6,7 @@ import constant from './constant';
  * @since v1.15.0
  * @function False
  * @example
+ * // False :: * -> Bool
  * import { False } from '@dustinws/zoom/packages/core';
  *
  * False(); // false

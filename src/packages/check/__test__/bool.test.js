@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import bool from '../bool';
 
-describe('check.bool', () => {
+describe('Zoom.Check.bool', () => {
   test('It should return a Success for bool values', () => {
     expect(bool(true).isSuccess()).toBe(true);
   });

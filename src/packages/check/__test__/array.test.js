@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import array from '../array';
 
-describe('check.array', () => {
+describe('Zoom.Check.array', () => {
   test('It should return a Success for array values', () => {
     expect(array([]).isSuccess()).toBe(true);
   });

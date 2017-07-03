@@ -2,7 +2,7 @@
 import branch from '../branch';
 import constant from '../../core/constant';
 
-describe('core.branch', () => {
+describe('Zoom.Logic.branch', () => {
   test('It call the second function if the predicate returns truthy', () => {
     const main = branch(
       n => n < 5,

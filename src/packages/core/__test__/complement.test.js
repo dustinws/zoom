@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import complement from '../complement';
 
-describe('core.complement(value)', () => {
+describe('Zoom.Core.complement', () => {
   test('It should return a function', () => {
     expect(typeof complement(() => {})).toBe('function');
   });

@@ -3,7 +3,7 @@ import shapeOf from '../shapeOf';
 import number from '../number';
 import string from '../string';
 
-describe('check.shapeOf', () => {
+describe('Zoom.Check.shapeOf', () => {
   const user = shapeOf({
     id: number,
     name: string,

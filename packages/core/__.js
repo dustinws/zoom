@@ -11,6 +11,7 @@ Object.defineProperty(exports, "__esModule", {
  * @type {Symbol}
  * @constant
  * @example
+ * // __ :: Symbol
  * import { __, curry } from '@dustinws/zoom/packages/core';
  *
  * const add = curry((a, b) => a + b);

@@ -3,7 +3,7 @@ import union from '../union';
 import number from '../number';
 import string from '../string';
 
-describe('check.union', () => {
+describe('Zoom.Check.union', () => {
   const id = union([string, number]);
   test('It should return a Success for union values', () => {
     expect(id('').isSuccess()).toBe(true);

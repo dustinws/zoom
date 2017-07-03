@@ -10,6 +10,7 @@ exports.default = typeOf;
  * @since v1.0.0
  * @function typeOf
  * @example
+ * // typeOf :: * -> String
  * import { typeOf } from '@dustinws/zoom/packages/core';
  *
  * typeOf('') // String

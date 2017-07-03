@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import Result from '../Result';
 
-describe('data.Result', () => {
+describe('Zoom.Data.Result', () => {
   describe('Result.of', () => {
     test('It should return an instance of Result', () => {
       expect(Result.of(1) instanceof Result).toBe(true);

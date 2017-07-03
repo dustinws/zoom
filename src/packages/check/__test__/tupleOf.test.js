@@ -3,7 +3,7 @@ import tupleOf from '../tupleOf';
 import number from '../number';
 import string from '../string';
 
-describe('check.tupleOf', () => {
+describe('Zoom.Check.tupleOf', () => {
   const user = tupleOf([number, string]);
 
   test('It should return a Success for tupleOf values', () => {

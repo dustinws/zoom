@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import Either from '../Either';
 
-describe('data.Either', () => {
+describe('Zoom.Data.Either', () => {
   describe('Either.of', () => {
     test('It should return an instance of Either', () => {
       expect(Either.of(1) instanceof Either).toBe(true);

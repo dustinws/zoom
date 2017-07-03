@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import undef from '../undef';
 
-describe('check.undef', () => {
+describe('Zoom.Check.undef', () => {
   test('It should return a Success for undef values', () => {
     expect(undef().isSuccess()).toBe(true);
   });

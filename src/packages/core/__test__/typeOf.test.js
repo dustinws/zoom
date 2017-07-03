@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import typeOf from '../typeOf';
 
-describe('core.typeOf', () => {
+describe('Zoom.Core.typeOf', () => {
   test('It should return the [[class]] of an object', () => {
     expect(typeOf('')).toBe('String');
     expect(typeOf([])).toBe('Array');

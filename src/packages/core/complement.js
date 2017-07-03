@@ -5,6 +5,7 @@
  * @since v1.0.0
  * @function complement
  * @example
+ * // complement :: (a..c -> Bool) -> (a..c) -> Bool
  * import { complement } from '@dustinws/zoom/packages/core';
  *
  * const isOdd = n => n % 2;
