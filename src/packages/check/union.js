@@ -1,4 +1,4 @@
-import Validation from '../data/Validation';
+import Validation from '../data/validation';
 
 /**
  * @memberof module:Zoom.Check

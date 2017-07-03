@@ -1,8 +1,8 @@
-import __ from '../lambda/__';
-import { union } from '../adt';
-import curry from '../lambda/curry';
-import compose from '../lambda/compose';
-import constant from '../lambda/constant';
+import __ from '../../lambda/__';
+import { union } from '../../adt';
+import curry from '../../lambda/curry';
+import compose from '../../lambda/compose';
+import constant from '../../lambda/constant';
 
 /**
  * @class Result

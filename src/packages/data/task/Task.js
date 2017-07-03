@@ -1,5 +1,5 @@
-import { tag } from '../adt';
-import curry from '../lambda/curry';
+import { tag } from '../../adt';
+import curry from '../../lambda/curry';
 
 /**
  * @class Task

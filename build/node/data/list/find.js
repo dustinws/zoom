@@ -8,9 +8,9 @@ var _curry = require('../../lambda/curry');
 
 var _curry2 = _interopRequireDefault(_curry);
 
-var _Maybe = require('../Maybe');
+var _maybe = require('../maybe');
 
-var _Maybe2 = _interopRequireDefault(_Maybe);
+var _maybe2 = _interopRequireDefault(_maybe);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36,11 +36,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function find(predicate, list) {
   for (var i = 0; i < list.length; i += 1) {
     if (predicate(list[i])) {
-      return _Maybe2.default.Just.of(list[i]);
+      return _maybe2.default.Just.of(list[i]);
     }
   }
 
-  return _Maybe2.default.Nothing;
+  return _maybe2.default.Nothing;
 }
 
 exports.default = (0, _curry2.default)(find);

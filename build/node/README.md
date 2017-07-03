@@ -10,6 +10,7 @@
 Zoom is a suite of libraries that work together to encourage a safer way to write javascript.
 
 ###### Zoom <3's [Fantasy Land JS](https://github.com/fantasyland/fantasy-land).
+<small><em>It's our only dependency!</em></small>
 
 *A brief note ~*
 

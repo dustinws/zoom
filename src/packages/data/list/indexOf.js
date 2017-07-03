@@ -1,5 +1,5 @@
 import curry from '../../lambda/curry';
-import Maybe from '../Maybe';
+import Maybe from '../maybe';
 
 /**
  * @description Determine which index a value resides at inside of an

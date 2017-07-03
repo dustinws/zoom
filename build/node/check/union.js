@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = union;
 
-var _Validation = require('../data/Validation');
+var _validation = require('../data/validation');
 
-var _Validation2 = _interopRequireDefault(_Validation);
+var _validation2 = _interopRequireDefault(_validation);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -43,7 +43,7 @@ function union(contracts) {
       return valid;
     }
 
-    return _Validation2.default.Failure(validations.map(function (x) {
+    return _validation2.default.Failure(validations.map(function (x) {
       return x.value;
     }));
   };

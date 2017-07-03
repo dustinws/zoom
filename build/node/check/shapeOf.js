@@ -12,9 +12,9 @@ var _curry = require('../lambda/curry');
 
 var _curry2 = _interopRequireDefault(_curry);
 
-var _Validation = require('../data/Validation');
+var _validation = require('../data/validation');
 
-var _Validation2 = _interopRequireDefault(_Validation);
+var _validation2 = _interopRequireDefault(_validation);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44,18 +44,18 @@ exports.default = (0, _curry2.default)(function (contracts, value) {
     return (0, _object2.default)(value);
   }).chain(function () {
     if (Object.keys(contracts).length !== Object.keys(value).length) {
-      return _Validation2.default.Failure(new TypeError('Invalid Product Length.'));
+      return _validation2.default.Failure(new TypeError('Invalid Product Length.'));
     }
     var validation = Object.keys(value).reduce(function (result, item) {
       return result.chain(function () {
         return contracts[item](value[item]);
       });
-    }, _Validation2.default.empty());
+    }, _validation2.default.empty());
 
     return validation.cata({
-      Failure: _Validation2.default.Failure,
+      Failure: _validation2.default.Failure,
       Success: function Success() {
-        return _Validation2.default.Success(value);
+        return _validation2.default.Success(value);
       }
     });
   });

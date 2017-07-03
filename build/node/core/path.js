@@ -16,9 +16,9 @@ var _fold = require('../data/list/fold');
 
 var _fold2 = _interopRequireDefault(_fold);
 
-var _Maybe = require('../data/Maybe');
+var _maybe = require('../data/maybe');
 
-var _Maybe2 = _interopRequireDefault(_Maybe);
+var _maybe2 = _interopRequireDefault(_maybe);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -42,7 +42,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function path(crumbs, object) {
   return (0, _fold2.default)(function (a, b) {
     return a.chain((0, _prop2.default)(b));
-  }, _Maybe2.default.Just(object), crumbs);
+  }, _maybe2.default.Just(object), crumbs);
 }
 
 exports.default = (0, _curry2.default)(path);

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>data/Tuple.js - Documentation</title>
+    <title>data/either/Either.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">data/Tuple.js</h1>
+    <h1 class="page-title">data/either/Either.js</h1>
     
 
     
@@ -37,15 +37,23 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { tag } from '../adt';
-import curry from '../lambda/curry';
+            <pre class="prettyprint source linenums"><code>import __ from '../../lambda/__';
+import { union } from '../../adt';
+import curry from '../../lambda/curry';
+import compose from '../../lambda/compose';
+import constant from '../../lambda/constant';
 
 /**
- * @class Tuple
+ * @class Either
  * @memberof module:Zoom.Data
  */
-const Tuple = tag('Tuple', 'left', 'right');
+const Either = union('Either', {
+  Right: ['value'],
+  Left: ['value'],
+});
 
+const Right = Either.Right;
+const Left = Either.Left;
 
 /*
  |------------------------------------------------------------------------------
@@ -54,97 +62,195 @@ const Tuple = tag('Tuple', 'left', 'right');
  */
 
 /**
- * @description Create a two element tuple.
- * @memberof module:Zoom.Data.Tuple
- * @since v1.15.0
+ * @description Lift a value into a successful 'Right' context.
+ * @memberof module:Zoom.Data.Either
  * @function of
- * @example
- * import { Tuple } from '@dustinws/zoom/data';
- *
- * Tuple.of(1, 3).toString(); // (1, 3)
- *
- * @param  {Any} left The first element
- * @param  {Any} right The second element
- * @return {Tuple}
- */
-Tuple.of = (a, b) =>
-  Tuple(a, b);
-
-/**
- * @description Get the first element of a Tuple
- * @memberof module:Zoom.Data.Tuple
  * @since v1.15.0
- * @function fst
  * @example
- * import { Tuple } from '@dustinws/zoom/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
- * const user = Tuple.of(1, 'Jake');
+ * const valid = Either.of(1);
  *
- * Tuple.fst(user); // 1
+ * valid.toString() // 'Right(1)'
  *
- * @param  {Tuple} tuple The tuple
- * @return {Any}
+ * @param  {Any} value The value to put in the Either
+ * @return {Either}
  */
-Tuple.fst = tuple =>
-  tuple.left;
+Either.of = function of(value) {
+  return Right(value);
+};
 
 /**
- * @description Get the second element of a Tuple
- * @memberof module:Zoom.Data.Tuple
+ * @description Lift a value into a successful 'Right' context.
+ * @memberof module:Zoom.Data.Either
+ * @function
  * @since v1.15.0
- * @function snd
  * @example
- * import { Tuple } from '@dustinws/zoom/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
- * const user = Tuple.of(1, 'Jake');
+ * const valid = Either.Right.of(1);
  *
- * Tuple.snd(user); // 'Jake'
+ * valid.toString() // 'Right(1)'
  *
- * @param  {Tuple} tuple The tuple
- * @return {Any}
+ * @param  {Any} value The value to put in the Either
+ * @return {Either}
  */
-Tuple.snd = tuple =>
-  tuple.right;
+Right.of = function of(value) {
+  return Right(value);
+};
 
 /**
- * @description Apply a function to the second element of a tuple
- * and return a new, modified tuple.
- * @memberof module:Zoom.Data.Tuple
+ * @description Lift a value into an unsuccessful 'Left' context.
+ * @memberof module:Zoom.Data.Either
+ * @function
+ * @since v1.15.0
+ * @example
+ * import { Either } from '@dustinws/zoom/data';
+ *
+ * const valid = Either.Left.of(1);
+ *
+ * valid.toString() // 'Left(1)'
+ *
+ * @param  {Any} value The value to put in the Either
+ * @return {Either}
+ */
+Left.of = function of(value) {
+  return Left(value);
+};
+
+/**
+ * @description Apply a transformation to the Either if it is an instance
+ * of "Right". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Right' to 'Left' instance and stop
+ * subsequent transformations from being applied.
+ * @memberof module:Zoom.Data.Either
+ * @since v1.15.0
+ * @function chain
+ * @example
+ * import { Either } from '@dustinws/zoom/data';
+ *
+ * const valid = Either.Right.of('yay!');
+ * const invalid = Either.Left.of('nay!');
+ *
+ * const toUpper = x => Either.Right.of(x.toUpperCase());
+ *
+ * Either.chain(toUpper, valid); // Right('YAY!');
+ * Either.chain(toUpper, invalid); // Left('nay!');
+ *
+ * @param  {Function} transform The transformation to apply to the inner value
+ * @param  {Eight} either The either instance.
+ * @return {Either}
+ */
+Either.chain = curry((transform, either) =>
+  either.cata({
+    Left: constant(either),
+    Right: transform,
+  }));
+
+/**
+ * @description Apply a transformation to the Either if it is an instance
+ * of "Right". Otherwise, ignore the transformation and return the instance.
+ * @memberof module:Zoom.Data.Either
  * @since v1.15.0
  * @function map
  * @example
- * import { Tuple } from '@dustinws/zoom/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
- * const user = Tuple.of(1, 'Jake');
+ * const valid = Either.Right.of('yay!');
+ * const failure = Either.Left.of('nay!');
  *
- * Tuple.map(x => x.toUpperCase(), user).toString(); // (1, 'JAKE')
+ * const toUpper = x => x.toUpperCase();
  *
- * @param  {Function} transform The function to run
- * @param  {Tuple} tuple The tuple
- * @return {Any}
+ * Either.map(toUpper, valid); // Right('YAY!');
+ * Either.map(toUpper, invalid); // Left('nay!');
+ *
+ * @param  {Function} transform The transformation to apply to the inner value
+ * @param  {Eight} either The either instance.
+ * @return {Either}
  */
-Tuple.map = curry((transform, tuple) =>
-  Tuple.of(tuple.left, transform(tuple.right)));
+Either.map = curry((transform, either) =>
+  Either.chain(compose(Either.of, transform), either));
 
 /**
- * @description Apply a function to the first element of a tuple
- * and return a new, modified tuple.
- * @memberof module:Zoom.Data.Tuple
+ * @description Apply a transformation to the Either if it is an instance
+ * of "Right". Otherwise, ignore the transformation and return the instance.
+ * @memberof module:Zoom.Data.Either
  * @since v1.15.0
- * @function mapLeft
+ * @function ap
  * @example
- * import { Tuple } from '@dustinws/zoom/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
- * const user = Tuple.of(1, 'Jake');
+ * const valid = Either.Right.of('yay!');
+ * const failure = Either.Left.of('nay!');
  *
- * Tuple.mapLeft(n => n + 1, user).toString(); // (2, 'Jake')
+ * const toUpper = Either.of(x => x.toUpperCase());
  *
- * @param  {Function} transform The function to run
- * @param  {Tuple} tuple The tuple
- * @return {Any}
+ * Either.ap(toUpper, valid); // Right('YAY!');
+ * Either.ap(toUpper, invalid); // Left('nay!');
+ *
+ * @param  {Either} left The either containing a function to run on the value
+ * @param  {Either} right The either containing a value
+ * @return {Either}
  */
-Tuple.mapLeft = curry((transform, tuple) =>
-  Tuple(transform(tuple.left), tuple.right));
+Either.ap = curry((left, right) =>
+  Either.chain(Either.map(__, right), left));
+
+/**
+ * @description Determine if an Either is an instance of Left
+ * @memberof module:Zoom.Data.Either
+ * @since v1.15.0
+ * @function isLeft
+ * @example
+ * import { Either } from '@dustinws/zoom/data';
+ *
+ * Either.isLeft(Either.Left.of(1)); // true
+ * Either.isLeft(Either.Right.of(1)); // false
+ *
+ * @param  {Either} either The either to query
+ * @return {Boolean}
+ */
+Either.isLeft = either => either instanceof Either.Left;
+
+/**
+ * @description Determine if an Either is an instance of Right
+ * @memberof module:Zoom.Data.Either
+ * @since v1.15.0
+ * @function isRight
+ * @example
+ * import { Either } from '@dustinws/zoom/data';
+ *
+ * Either.isRight(Either.Right.of(1)); // true
+ * Either.isRight(Either.Left.of(1)); // false
+ *
+ * @param  {Either} either The either to query
+ * @return {Boolean}
+ */
+Either.isRight = either => either instanceof Either.Right;
+
+/**
+ * @description Create a function that returns a Right when it is successful
+ * and returns a Left when it throws.
+ * @since v1.15.0
+ * @memberof module:Zoom.Data.Either
+ * @function try
+ * @example
+ * import { Either } from '@dustinws/zoom/data';
+ *
+ * const parse = Either.try(JSON.parse);
+ *
+ * parse('{ "foo": "bar" }').isRight(); // true
+ * parse('...').isRight(); // false
+ *
+ * @param  {Function} func
+ * @return {Function}
+ */
+Either.try = func => (...args) => {
+  try {
+    return Either.Right(func(...args));
+  } catch (error) {
+    return Either.Left(error);
+  }
+};
 
 
 /*
@@ -154,110 +260,145 @@ Tuple.mapLeft = curry((transform, tuple) =>
  */
 
 /**
-* @description Create a two element tuple. The instance version of "Tuple.of"
-* @memberof module:Zoom.Data.Tuple
-* @since v1.15.0
-* @example
-* import { Tuple } from '@dustinws/zoom/data';
-*
-* const emptyTuple = Tuple.of();
-*
-* emptyTuple.of(1, 3).toString(); // (1, 3)
-*
-* @param  {Any} left The first element
-* @param  {Any} right The second element
-* @return {Tuple}
-*/
-Tuple.prototype.of = function of(left, right) {
-  return Tuple.of(left, right);
+ * @description Lift a value into a successful 'Right' context.
+ * @memberof module:Zoom.Data.Either
+ * @since v1.15.0
+ * @example
+ * import { Either } from '@dustinws/zoom/data';
+ *
+ * const valid = Either.Right.of(1);
+ *
+ * valid.toString() // 'Right(1)'
+ *
+ * @param  {Any} value The value to put in the Either
+ * @return {Either}
+ */
+Right.prototype.of = function of(value) {
+  return Right.of(value);
 };
 
 /**
-* @description Get the first element of a Tuple. Instance version of "Tuple.fst"
-* @memberof module:Zoom.Data.Tuple
-* @since v1.15.0
-* @example
-* import { Tuple } from '@dustinws/zoom/data';
-*
-* Tuple.of(1, 'Jake').fst(); // 1
-*
-* @return {Any}
-*/
-Tuple.prototype.fst = function fst() {
-  return Tuple.fst(this);
+ * @description Lift a value into an unsuccessful 'Left' context.
+ * @memberof module:Zoom.Data.Either
+ * @since v1.15.0
+ * @example
+ * import { Either } from '@dustinws/zoom/data';
+ *
+ * const valid = Either.Left.of(1);
+ *
+ * valid.toString() // 'Left(1)'
+ *
+ * @param  {Any} value The value to put in the Either
+ * @return {Either}
+ */
+Left.prototype.of = function of(value) {
+  return Left.of(value);
 };
 
 /**
-* @description Get the second element of a Tuple. Instance version of "Tuple.snd"
-* @memberof module:Zoom.Data.Tuple
-* @since v1.15.0
-* @example
-* import { Tuple } from '@dustinws/zoom/data';
-*
-* Tuple.of(1, 'Jake').snd(); // 'Jake'
-*
-* @return {Any}
-*/
-Tuple.prototype.snd = function snd() {
-  return Tuple.snd(this);
+ * @description Apply a transformation to the Either if it is an instance
+ * of "Right". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Right' to 'Left' instance and stop
+ * subsequent transformations from being applied.
+ * @memberof module:Zoom.Data.Either
+ * @since v1.15.0
+ * @example
+ * import { Either } from '@dustinws/zoom/data';
+ *
+ * const valid = Either.Right.of('yay!');
+ * const invalid = Either.Left.of('nay!');
+ *
+ * const toUpper = x => Either.Right.of(x.toUpperCase());
+ *
+ * valid.chain(toUpper); // Right('YAY!');
+ * invalid.chain(toUpper); // Left('nay!');
+ *
+ * @param  {Function} transform The transformation to apply to the inner value
+ * @return {Either}
+ */
+Either.prototype.chain = function chain(transform) {
+  return Either.chain(transform, this);
 };
 
 /**
-* @description Apply a function to the second element of a tuple
-* and return a new, modified tuple. Instance version of "Tuple.map"
-* @memberof module:Zoom.Data.Tuple
-* @since v1.15.0
-* @example
-* import { Tuple } from '@dustinws/zoom/data';
-*
-* const user = Tuple.of(1, 'Jake');
-*
-* user.map(x => x.toUpperCase()).toString() // (1, 'JAKE')
-*
-* @param  {Function} transform The function to run
-* @return {Any}
-*/
-Tuple.prototype.map = function map(transform) {
-  return Tuple.map(transform, this);
+ * @description Apply a transformation to the Either if it is an instance
+ * of "Right". Otherwise, ignore the transformation and return the instance.
+ * @memberof module:Zoom.Data.Either
+ * @since v1.15.0
+ * @example
+ * import { Either } from '@dustinws/zoom/data';
+ *
+ * const valid = Either.Right.of('yay!');
+ * const failure = Either.Left.of('nay!');
+ *
+ * const toUpper = x => x.toUpperCase();
+ *
+ * valid.map(toUpper); // Right('YAY!');
+ * invalid.map(toUpper); // Left('nay!');
+ *
+ * @param  {Function} transform The transformation to apply to the inner value
+ * @return {Either}
+ */
+Either.prototype.map = function map(transform) {
+  return Either.map(transform, this);
 };
 
 /**
-* @description Apply a function to the first element of a tuple
-* and return a new, modified tuple. Instance version of "Tuple.mapLeft"
-* @memberof module:Zoom.Data.Tuple
-* @since v1.15.0
-* @example
-* import { Tuple } from '@dustinws/zoom/data';
-*
-* const user = Tuple.of(1, 'Jake');
-*
-* user.mapLeft(n => n + 1).toString(); // (2, 'Jake')
-*
-* @param  {Function} transform The function to run
-* @param  {Tuple} tuple The tuple
-* @return {Any}
-*/
-Tuple.prototype.mapLeft = function mapLeft(transform) {
-  return Tuple.mapLeft(transform, this);
+ * @description Apply a transformation to the Either if it is an instance
+ * of "Right". Otherwise, ignore the transformation and return the instance.
+ * @memberof module:Zoom.Data.Either
+ * @since v1.15.0
+ * @example
+ * import { Either } from '@dustinws/zoom/data';
+ *
+ * const valid = Either.Right.of('yay!');
+ * const failure = Either.Left.of('nay!');
+ *
+ * const toUpper = Either.of(x => x.toUpperCase());
+ *
+ * valid.ap(toUpper, valid); // Right('YAY!');
+ * invalid.ap(toUpper, invalid); // Left('nay!');
+ *
+ * @param  {Either} apply An either containing a function to run on the value
+ * @return {Either}
+ */
+Either.prototype.ap = function ap(apply) {
+  return Either.ap(apply, this);
 };
 
 /**
-* @description Get the string representation of the tuple.
-* @memberof module:Zoom.Data.Tuple
-* @since v1.15.0
-* @example
-* import { Tuple } from '@dustinws/zoom/data';
-*
-* Tuple.of(1, 'Jake').toString(); // (1, 'Jake')
-*
-* @return {String}
-*/
-Tuple.prototype.toString = function toString() {
-  return `(${this.left.toString()}, ${this.right.toString()})`;
+ * @description Determine if an Either is an instance of Left
+ * @memberof module:Zoom.Data.Either
+ * @since v1.15.0
+ * @example
+ * import { Either } from '@dustinws/zoom/data';
+ *
+ * Either.Left.of(1).isLeft(); // true
+ * Either.Right.of(1).isLeft(); // false
+ *
+ * @return {Boolean}
+ */
+Either.prototype.isLeft = function isLeft() {
+  return Either.isLeft(this);
 };
 
+/**
+ * @description Determine if an Either is an instance of Right
+ * @memberof module:Zoom.Data.Either
+ * @since v1.15.0
+ * @example
+ * import { Either } from '@dustinws/zoom/data';
+ *
+ * Either.Right.of(1).isRight(); // true
+ * Either.Left.of(1).isRight(); // false
+ *
+ * @return {Boolean}
+ */
+Either.prototype.isRight = function isRight() {
+  return Either.isRight(this);
+};
 
-export default Tuple;
+export default Either;
 </code></pre>
         </article>
     </section>
@@ -270,7 +411,7 @@ export default Tuple;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Jul 03 2017 06:13:14 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Jul 03 2017 10:53:53 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

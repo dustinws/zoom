@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Maybe = require('../Maybe');
+var _maybe = require('../maybe');
 
-var _Maybe2 = _interopRequireDefault(_Maybe);
+var _maybe2 = _interopRequireDefault(_maybe);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26,7 +26,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @return {Maybe<T>}
  */
 function head(list) {
-  return _Maybe2.default.fromNullable(list[0]);
+  return _maybe2.default.fromNullable(list[0]);
 }
 
 exports.default = head;

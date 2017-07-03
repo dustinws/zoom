@@ -8,11 +8,11 @@
  * own constructors.
  */
 
-export { default as Either } from './Either';
+export { default as Either } from './either';
 export { default as List } from './list';
-export { default as Maybe } from './Maybe';
+export { default as Maybe } from './maybe';
 export { default as Record } from './record';
-export { default as Result } from './Result';
-export { default as Task } from './Task';
-export { default as Tuple } from './Tuple';
-export { default as Validation } from './Validation';
+export { default as Result } from './result';
+export { default as Task } from './task';
+export { default as Tuple } from './tuple';
+export { default as Validation } from './validation';

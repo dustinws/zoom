@@ -1,7 +1,7 @@
 import curry from '../lambda/curry';
 import prop from './prop';
 import fold from '../data/list/fold';
-import Maybe from '../data/Maybe';
+import Maybe from '../data/maybe';
 
 /**
  * @description Get the value at the given path on the given object. Returns

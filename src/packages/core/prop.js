@@ -1,5 +1,5 @@
 import curry from '../lambda/curry';
-import Maybe from '../data/Maybe';
+import Maybe from '../data/maybe';
 
 /**
  * @description Get the value at the given key on the given object. Returns

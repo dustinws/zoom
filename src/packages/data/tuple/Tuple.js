@@ -1,22 +1,12 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _adt = require('../adt');
-
-var _curry = require('../lambda/curry');
-
-var _curry2 = _interopRequireDefault(_curry);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+import { tag } from '../../adt';
+import curry from '../../lambda/curry';
 
 /**
  * @class Tuple
  * @memberof module:Zoom.Data
  */
-var Tuple = (0, _adt.tag)('Tuple', 'left', 'right');
+const Tuple = tag('Tuple', 'left', 'right');
+
 
 /*
  |------------------------------------------------------------------------------
@@ -38,9 +28,8 @@ var Tuple = (0, _adt.tag)('Tuple', 'left', 'right');
  * @param  {Any} right The second element
  * @return {Tuple}
  */
-Tuple.of = function (a, b) {
-  return Tuple(a, b);
-};
+Tuple.of = (a, b) =>
+  Tuple(a, b);
 
 /**
  * @description Get the first element of a Tuple
@@ -57,9 +46,8 @@ Tuple.of = function (a, b) {
  * @param  {Tuple} tuple The tuple
  * @return {Any}
  */
-Tuple.fst = function (tuple) {
-  return tuple.left;
-};
+Tuple.fst = tuple =>
+  tuple.left;
 
 /**
  * @description Get the second element of a Tuple
@@ -76,9 +64,8 @@ Tuple.fst = function (tuple) {
  * @param  {Tuple} tuple The tuple
  * @return {Any}
  */
-Tuple.snd = function (tuple) {
-  return tuple.right;
-};
+Tuple.snd = tuple =>
+  tuple.right;
 
 /**
  * @description Apply a function to the second element of a tuple
@@ -97,9 +84,8 @@ Tuple.snd = function (tuple) {
  * @param  {Tuple} tuple The tuple
  * @return {Any}
  */
-Tuple.map = (0, _curry2.default)(function (transform, tuple) {
-  return Tuple.of(tuple.left, transform(tuple.right));
-});
+Tuple.map = curry((transform, tuple) =>
+  Tuple.of(tuple.left, transform(tuple.right)));
 
 /**
  * @description Apply a function to the first element of a tuple
@@ -118,9 +104,9 @@ Tuple.map = (0, _curry2.default)(function (transform, tuple) {
  * @param  {Tuple} tuple The tuple
  * @return {Any}
  */
-Tuple.mapLeft = (0, _curry2.default)(function (transform, tuple) {
-  return Tuple(transform(tuple.left), tuple.right);
-});
+Tuple.mapLeft = curry((transform, tuple) =>
+  Tuple(transform(tuple.left), tuple.right));
+
 
 /*
  |------------------------------------------------------------------------------
@@ -228,8 +214,8 @@ Tuple.prototype.mapLeft = function mapLeft(transform) {
 * @return {String}
 */
 Tuple.prototype.toString = function toString() {
-  return '(' + this.left.toString() + ', ' + this.right.toString() + ')';
+  return `(${this.left.toString()}, ${this.right.toString()})`;
 };
 
-exports.default = Tuple;
-module.exports = exports['default'];
+
+export default Tuple;

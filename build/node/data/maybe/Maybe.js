@@ -1,21 +1,40 @@
-import __ from '../lambda/__';
-import { union } from '../adt';
-import curry from '../lambda/curry';
-import compose from '../lambda/compose';
-import constant from '../lambda/constant';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _ = require('../../lambda/__');
+
+var _2 = _interopRequireDefault(_);
+
+var _adt = require('../../adt');
+
+var _curry = require('../../lambda/curry');
+
+var _curry2 = _interopRequireDefault(_curry);
+
+var _compose = require('../../lambda/compose');
+
+var _compose2 = _interopRequireDefault(_compose);
+
+var _constant = require('../../lambda/constant');
+
+var _constant2 = _interopRequireDefault(_constant);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * @class Maybe
  * @memberof module:Zoom.Data
  */
-const Maybe = union('Maybe', {
+var Maybe = (0, _adt.union)('Maybe', {
   Just: ['value'],
-  Nothing: [],
+  Nothing: []
 });
 
-const Just = Maybe.Just;
-const Nothing = Maybe.Nothing;
-
+var Just = Maybe.Just;
+var Nothing = Maybe.Nothing;
 
 /*
  |------------------------------------------------------------------------------
@@ -104,11 +123,12 @@ Nothing.of = function of() {
  * @param  {Maybe} maybe The maybe
  * @return {Maybe}
  */
-Maybe.chain = curry((transform, maybe) =>
-  maybe.cata({
-    Nothing: constant(maybe),
-    Just: transform,
-  }));
+Maybe.chain = (0, _curry2.default)(function (transform, maybe) {
+  return maybe.cata({
+    Nothing: (0, _constant2.default)(maybe),
+    Just: transform
+  });
+});
 
 /**
  * @description Apply a transformation to the Maybe if it is an instance
@@ -131,8 +151,9 @@ Maybe.chain = curry((transform, maybe) =>
  * @param  {Maybe} maybe The maybe
  * @return {Maybe}
  */
-Maybe.map = curry((transform, maybe) =>
-  Maybe.chain(compose(Maybe.of, transform), maybe));
+Maybe.map = (0, _curry2.default)(function (transform, maybe) {
+  return Maybe.chain((0, _compose2.default)(Maybe.of, transform), maybe);
+});
 
 /**
  * @description Apply a transformation to the Maybe if it is an instance
@@ -155,8 +176,9 @@ Maybe.map = curry((transform, maybe) =>
  * @param  {Maybe} right The maybe containing a value
  * @return {Maybe}
  */
-Maybe.ap = curry((left, right) =>
-  Maybe.chain(Maybe.map(__, right), left));
+Maybe.ap = (0, _curry2.default)(function (left, right) {
+  return Maybe.chain(Maybe.map(_2.default, right), left);
+});
 
 /**
  * @description Determine if an Maybe is an instance of Nothing
@@ -172,7 +194,9 @@ Maybe.ap = curry((left, right) =>
  * @param  {Maybe} maybe The maybe to query
  * @return {Boolean}
  */
-Maybe.isNothing = maybe => maybe === Maybe.Nothing;
+Maybe.isNothing = function (maybe) {
+  return maybe === Maybe.Nothing;
+};
 
 /**
  * @description Determine if an Maybe is an instance of Just
@@ -188,7 +212,9 @@ Maybe.isNothing = maybe => maybe === Maybe.Nothing;
  * @param  {Maybe} maybe The maybe to query
  * @return {Boolean}
  */
-Maybe.isJust = maybe => maybe instanceof Maybe.Just;
+Maybe.isJust = function (maybe) {
+  return maybe instanceof Maybe.Just;
+};
 
 /**
  * @description Create a maybe from a potentially null value.
@@ -205,14 +231,13 @@ Maybe.isJust = maybe => maybe instanceof Maybe.Just;
  * @param  {Any} value
  * @return {Maybe}
  */
-Maybe.fromNullable = (value) => {
+Maybe.fromNullable = function (value) {
   if (value === null || value === undefined) {
     return Maybe.Nothing;
   }
 
   return Maybe.Just.of(value);
 };
-
 
 /*
  |------------------------------------------------------------------------------
@@ -341,4 +366,5 @@ Maybe.prototype.isJust = function isJust() {
   return Maybe.isJust(this);
 };
 
-export default Maybe;
+exports.default = Maybe;
+module.exports = exports['default'];

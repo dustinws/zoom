@@ -1,40 +1,20 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _ = require('../lambda/__');
-
-var _2 = _interopRequireDefault(_);
-
-var _adt = require('../adt');
-
-var _curry = require('../lambda/curry');
-
-var _curry2 = _interopRequireDefault(_curry);
-
-var _compose = require('../lambda/compose');
-
-var _compose2 = _interopRequireDefault(_compose);
-
-var _constant = require('../lambda/constant');
-
-var _constant2 = _interopRequireDefault(_constant);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+import __ from '../../lambda/__';
+import { union } from '../../adt';
+import curry from '../../lambda/curry';
+import compose from '../../lambda/compose';
+import constant from '../../lambda/constant';
 
 /**
  * @class Either
  * @memberof module:Zoom.Data
  */
-var Either = (0, _adt.union)('Either', {
+const Either = union('Either', {
   Right: ['value'],
-  Left: ['value']
+  Left: ['value'],
 });
 
-var Right = Either.Right;
-var Left = Either.Left;
+const Right = Either.Right;
+const Left = Either.Left;
 
 /*
  |------------------------------------------------------------------------------
@@ -122,12 +102,11 @@ Left.of = function of(value) {
  * @param  {Eight} either The either instance.
  * @return {Either}
  */
-Either.chain = (0, _curry2.default)(function (transform, either) {
-  return either.cata({
-    Left: (0, _constant2.default)(either),
-    Right: transform
-  });
-});
+Either.chain = curry((transform, either) =>
+  either.cata({
+    Left: constant(either),
+    Right: transform,
+  }));
 
 /**
  * @description Apply a transformation to the Either if it is an instance
@@ -150,9 +129,8 @@ Either.chain = (0, _curry2.default)(function (transform, either) {
  * @param  {Eight} either The either instance.
  * @return {Either}
  */
-Either.map = (0, _curry2.default)(function (transform, either) {
-  return Either.chain((0, _compose2.default)(Either.of, transform), either);
-});
+Either.map = curry((transform, either) =>
+  Either.chain(compose(Either.of, transform), either));
 
 /**
  * @description Apply a transformation to the Either if it is an instance
@@ -175,9 +153,8 @@ Either.map = (0, _curry2.default)(function (transform, either) {
  * @param  {Either} right The either containing a value
  * @return {Either}
  */
-Either.ap = (0, _curry2.default)(function (left, right) {
-  return Either.chain(Either.map(_2.default, right), left);
-});
+Either.ap = curry((left, right) =>
+  Either.chain(Either.map(__, right), left));
 
 /**
  * @description Determine if an Either is an instance of Left
@@ -193,9 +170,7 @@ Either.ap = (0, _curry2.default)(function (left, right) {
  * @param  {Either} either The either to query
  * @return {Boolean}
  */
-Either.isLeft = function (either) {
-  return either instanceof Either.Left;
-};
+Either.isLeft = either => either instanceof Either.Left;
 
 /**
  * @description Determine if an Either is an instance of Right
@@ -211,9 +186,7 @@ Either.isLeft = function (either) {
  * @param  {Either} either The either to query
  * @return {Boolean}
  */
-Either.isRight = function (either) {
-  return either instanceof Either.Right;
-};
+Either.isRight = either => either instanceof Either.Right;
 
 /**
  * @description Create a function that returns a Right when it is successful
@@ -232,15 +205,14 @@ Either.isRight = function (either) {
  * @param  {Function} func
  * @return {Function}
  */
-Either.try = function (func) {
-  return function () {
-    try {
-      return Either.Right(func.apply(undefined, arguments));
-    } catch (error) {
-      return Either.Left(error);
-    }
-  };
+Either.try = func => (...args) => {
+  try {
+    return Either.Right(func(...args));
+  } catch (error) {
+    return Either.Left(error);
+  }
 };
+
 
 /*
  |------------------------------------------------------------------------------
@@ -387,5 +359,4 @@ Either.prototype.isRight = function isRight() {
   return Either.isRight(this);
 };
 
-exports.default = Either;
-module.exports = exports['default'];
+export default Either;

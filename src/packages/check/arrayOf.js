@@ -1,6 +1,6 @@
 import array from './array';
 import curry from '../lambda/curry';
-import Validation from '../data/Validation';
+import Validation from '../data/validation';
 
 /**
  * @memberof module:Zoom.Check

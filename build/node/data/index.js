@@ -4,12 +4,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Either = require('./Either');
+var _either = require('./either');
 
 Object.defineProperty(exports, 'Either', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_Either).default;
+    return _interopRequireDefault(_either).default;
   }
 });
 
@@ -22,12 +22,12 @@ Object.defineProperty(exports, 'List', {
   }
 });
 
-var _Maybe = require('./Maybe');
+var _maybe = require('./maybe');
 
 Object.defineProperty(exports, 'Maybe', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_Maybe).default;
+    return _interopRequireDefault(_maybe).default;
   }
 });
 
@@ -40,39 +40,39 @@ Object.defineProperty(exports, 'Record', {
   }
 });
 
-var _Result = require('./Result');
+var _result = require('./result');
 
 Object.defineProperty(exports, 'Result', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_Result).default;
+    return _interopRequireDefault(_result).default;
   }
 });
 
-var _Task = require('./Task');
+var _task = require('./task');
 
 Object.defineProperty(exports, 'Task', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_Task).default;
+    return _interopRequireDefault(_task).default;
   }
 });
 
-var _Tuple = require('./Tuple');
+var _tuple = require('./tuple');
 
 Object.defineProperty(exports, 'Tuple', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_Tuple).default;
+    return _interopRequireDefault(_tuple).default;
   }
 });
 
-var _Validation = require('./Validation');
+var _validation = require('./validation');
 
 Object.defineProperty(exports, 'Validation', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_Validation).default;
+    return _interopRequireDefault(_validation).default;
   }
 });
 

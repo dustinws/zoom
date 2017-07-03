@@ -9,9 +9,9 @@ var _typeOf = require('../lang/typeOf');
 
 var _typeOf2 = _interopRequireDefault(_typeOf);
 
-var _Validation = require('../data/Validation');
+var _validation = require('../data/validation');
 
-var _Validation2 = _interopRequireDefault(_Validation);
+var _validation2 = _interopRequireDefault(_validation);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20,10 +20,10 @@ function isType(expectedType) {
     var actualType = (0, _typeOf2.default)(value);
 
     if (actualType !== expectedType) {
-      return _Validation2.default.Failure(new TypeError('Expected type ' + expectedType + ' but got type ' + actualType + '!'));
+      return _validation2.default.Failure(new TypeError('Expected type ' + expectedType + ' but got type ' + actualType + '!'));
     }
 
-    return _Validation2.default.Success(value);
+    return _validation2.default.Success(value);
   };
 }
 module.exports = exports['default'];

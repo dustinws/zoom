@@ -8,9 +8,9 @@ var _curry = require('../lambda/curry');
 
 var _curry2 = _interopRequireDefault(_curry);
 
-var _Maybe = require('../data/Maybe');
+var _maybe = require('../data/maybe');
 
-var _Maybe2 = _interopRequireDefault(_Maybe);
+var _maybe2 = _interopRequireDefault(_maybe);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32,7 +32,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @return {Maybe<Any>}
  */
 function prop(key, object) {
-  return _Maybe2.default.fromNullable(object[key]);
+  return _maybe2.default.fromNullable(object[key]);
 }
 
 exports.default = (0, _curry2.default)(prop);

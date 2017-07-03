@@ -1,4 +1,4 @@
-import Maybe from '../Maybe';
+import Maybe from '../maybe';
 
 /**
  * @description Get the first element of a potentially empty array.

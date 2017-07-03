@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>data/Maybe.js - Documentation</title>
+    <title>data/validation/Validation.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">data/Maybe.js</h1>
+    <h1 class="page-title">data/validation/Validation.js</h1>
     
 
     
@@ -37,24 +37,23 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import __ from '../lambda/__';
-import { union } from '../adt';
-import curry from '../lambda/curry';
-import compose from '../lambda/compose';
-import constant from '../lambda/constant';
+            <pre class="prettyprint source linenums"><code>import __ from '../../lambda/__';
+import { union } from '../../adt';
+import curry from '../../lambda/curry';
+import compose from '../../lambda/compose';
+import constant from '../../lambda/constant';
 
 /**
- * @class Maybe
+ * @class Validation
  * @memberof module:Zoom.Data
  */
-const Maybe = union('Maybe', {
-  Just: ['value'],
-  Nothing: [],
+const Validation = union('Validation', {
+  Success: ['value'],
+  Failure: ['value'],
 });
 
-const Just = Maybe.Just;
-const Nothing = Maybe.Nothing;
-
+const Success = Validation.Success;
+const Failure = Validation.Failure;
 
 /*
  |------------------------------------------------------------------------------
@@ -63,194 +62,223 @@ const Nothing = Maybe.Nothing;
  */
 
 /**
- * @description Lift a value into a successful 'Just' context.
- * @memberof module:Zoom.Data.Maybe
+ * @description Lift a value into a successful 'Success' context.
+ * @memberof module:Zoom.Data.Validation
  * @function of
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
- * const val = Maybe.of(1);
+ * const valid = Validation.of(1);
  *
- * val.toString() // 'Just(1)'
+ * valid.toString() // 'Success(1)'
  *
- * @param  {Any} value The value to put in the Maybe
- * @return {Maybe}
+ * @param  {Any} value The value to put in the Validation
+ * @return {Validation}
  */
-Maybe.of = function of(value) {
-  return Just(value);
+Validation.of = function of(value) {
+  return Success(value);
 };
 
 /**
- * @description Lift a value into a successful 'Just' context.
- * @memberof module:Zoom.Data.Maybe
+ * @description Lift a value into a successful 'Success' context.
+ * @memberof module:Zoom.Data.Validation
  * @function
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
- * const val = Maybe.Just.of(1);
+ * const valid = Validation.Success.of(1);
  *
- * val.toString() // 'Just(1)'
+ * valid.toString() // 'Success(1)'
  *
- * @param  {Any} value The value to put in the Maybe
- * @return {Maybe}
+ * @param  {Any} value The value to put in the Validation
+ * @return {Validation}
  */
-Just.of = function of(value) {
-  return Just(value);
+Success.of = function of(value) {
+  return Success(value);
 };
 
 /**
- * @description Lift a value into a 'Nothing' context. Any value
- * passed will be ignored.
- * @memberof module:Zoom.Data.Maybe
+ * @description Lift a value into an unsuccessful 'Failure' context.
+ * @memberof module:Zoom.Data.Validation
  * @function
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
- * const val = Maybe.Nothing.of(1);
+ * const valid = Validation.Failure.of(1);
  *
- * val.toString() // 'Nothing'
+ * valid.toString() // 'Failure(1)'
  *
- * @param  {Any} value The value to put in the Maybe
- * @return {Maybe}
+ * @param  {Any} value The value to put in the Validation
+ * @return {Validation}
  */
-Nothing.of = function of() {
-  return Maybe.Nothing;
+Failure.of = function of(value) {
+  return Failure(value);
 };
 
 /**
- * @description Apply a transformation to the Maybe if it is an instance
- * of "Just". Otherwise, ignore the transformation and return the instance.
- * This is how you can switch from a 'Just' to 'Nothing' instance and stop
+ * @description Apply a transformation to the Validation if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Success' to 'Failure' instance and stop
  * subsequent transformations from being applied.
- * @memberof module:Zoom.Data.Maybe
+ * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
  * @function chain
  * @example
- * import { Maybe } from '@dustinws/zoom/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
- * const valid = Maybe.Just.of('yay!');
- * const invalid = Maybe.Nothing;
+ * const valid = Validation.Success.of('yay!');
+ * const invalid = Validation.Failure.of('nay!');
  *
- * const toUpper = x => Maybe.Just.of(x.toUpperCase());
+ * const toUpper = x => Validation.Success.of(x.toUpperCase());
  *
- * Maybe.chain(toUpper, valid); // Just('YAY!')
- * Maybe.chain(toUpper, invalid); // Nothing
+ * Validation.chain(toUpper, valid); // Success('YAY!');
+ * Validation.chain(toUpper, invalid); // Failure('nay!');
  *
  * @param  {Function} transform The transformation to apply to the inner value
- * @param  {Maybe} maybe The maybe
- * @return {Maybe}
+ * @param  {Validation} validation The transformation to apply to the inner value
+ * @return {Validation}
  */
-Maybe.chain = curry((transform, maybe) =>
-  maybe.cata({
-    Nothing: constant(maybe),
-    Just: transform,
+Validation.chain = curry((transform, validation) =>
+  validation.cata({
+    Failure: constant(validation),
+    Success: transform,
   }));
 
 /**
- * @description Apply a transformation to the Maybe if it is an instance
- * of "Just". Otherwise, ignore the transformation and return the instance.
- * @memberof module:Zoom.Data.Maybe
+ * @description Apply a transformation to the Validation if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
  * @function map
  * @example
- * import { Maybe } from '@dustinws/zoom/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
- * const valid = Maybe.Just.of('yay!');
- * const failure = Maybe.Nothing;
+ * const valid = Validation.Success.of('yay!');
+ * const failure = Validation.Failure.of('nay!');
  *
  * const toUpper = x => x.toUpperCase();
  *
- * Maybe.map(toUpper, valid); // Just('YAY!')
- * Maybe.map(toUpper, invalid); // Nothing
+ * Validation.map(toUpper, valid); // Success('YAY!');
+ * Validation.map(toUpper, invalid); // Failure('nay!');
  *
  * @param  {Function} transform The transformation to apply to the inner value
- * @param  {Maybe} maybe The maybe
- * @return {Maybe}
+ * @param  {Validation} validation The validation
+ * @return {Validation}
  */
-Maybe.map = curry((transform, maybe) =>
-  Maybe.chain(compose(Maybe.of, transform), maybe));
+Validation.map = curry((transform, validation) =>
+  Validation.chain(compose(Validation.of, transform), validation));
 
 /**
- * @description Apply a transformation to the Maybe if it is an instance
- * of "Just". Otherwise, ignore the transformation and return the instance.
- * @memberof module:Zoom.Data.Maybe
+ * @description Apply a transformation to the Validation if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
  * @function ap
  * @example
- * import { Maybe } from '@dustinws/zoom/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
- * const valid = Maybe.Just.of('yay!');
- * const failure = Maybe.Nothing;
+ * const valid = Validation.Success.of('yay!');
+ * const failure = Validation.Failure.of('nay!');
  *
- * const toUpper = Maybe.of(x => x.toUpperCase());
+ * const toUpper = Validation.of(x => x.toUpperCase());
  *
- * Maybe.ap(toUpper, valid); // Just('YAY!')
- * Maybe.ap(toUpper, invalid); // Nothing
+ * Validation.ap(toUpper, valid); // Success('YAY!');
+ * Validation.ap(toUpper, invalid); // Failure('nay!');
  *
- * @param  {Maybe} left The maybe containing a function to run on the value
- * @param  {Maybe} right The maybe containing a value
- * @return {Maybe}
+ * @param  {Validation} left The validation containing a function to run on the value
+ * @param  {Validation} right The validation containing a value
+ * @return {Validation}
  */
-Maybe.ap = curry((left, right) =>
-  Maybe.chain(Maybe.map(__, right), left));
+Validation.ap = curry((left, right) =>
+  Validation.chain(Validation.map(__, right), left));
 
 /**
- * @description Determine if an Maybe is an instance of Nothing
- * @memberof module:Zoom.Data.Maybe
+ * @description Determine if an Validation is an instance of Failure
+ * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
- * @function isNothing
+ * @function isFailure
  * @example
- * import { Maybe } from '@dustinws/zoom/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
- * Maybe.isNothing(Maybe.Nothing); // true
- * Maybe.isNothing(Maybe.Just.of(1)); // false
+ * Validation.isFailure(Validation.Failure.of(1)); // true
+ * Validation.isFailure(Validation.Success.of(1)); // false
  *
- * @param  {Maybe} maybe The maybe to query
+ * @param  {Validation} validation The validation to query
  * @return {Boolean}
  */
-Maybe.isNothing = maybe => maybe === Maybe.Nothing;
+Validation.isFailure = validation => validation instanceof Validation.Failure;
 
 /**
- * @description Determine if an Maybe is an instance of Just
- * @memberof module:Zoom.Data.Maybe
+ * @description Determine if an Validation is an instance of Success
+ * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
- * @function isJust
+ * @function isSuccess
  * @example
- * import { Maybe } from '@dustinws/zoom/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
- * Maybe.isJust(Maybe.Just.of(1)); // true
- * Maybe.isJust(Maybe.Nothing); // false
+ * Validation.isSuccess(Validation.Success.of(1)); // true
+ * Validation.isSuccess(Validation.Failure.of(1)); // false
  *
- * @param  {Maybe} maybe The maybe to query
+ * @param  {Validation} validation The validation to query
  * @return {Boolean}
  */
-Maybe.isJust = maybe => maybe instanceof Maybe.Just;
+Validation.isSuccess = validation => validation instanceof Validation.Success;
 
 /**
- * @description Create a maybe from a potentially null value.
+ * @description Combine two validations into one with a bias towards Failures.
+ * If both values are the same type (both Failures, etc..) then their values
+ * will be concatenated and a single instance of that type will be returned.
+ * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
- * @memberof module:Zoom.Data.Maybe
- * @function fromNullable
+ * @function concat
  * @example
- * import { Maybe } from '@dustinws/zoom/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
- * Maybe.fromNullable(''); // Just('')
- * Maybe.fromNullable(null); // Nothing
- * Maybe.fromNullable(); // Nothing
+ * const failure = Validation.Failure.of(['fail!']);
+ * const success = Validation.Success.of(['win!']);
  *
- * @param  {Any} value
- * @return {Maybe}
+ * Validation.concat(failure, success); // failure
+ * Validation.concat(success, failure); // failure
+ * Validation.concat(failure, failure); // Failure(['fail!', 'fail!'])
+ * Validation.concat(success, success); // Success(['win!', 'win!'])
+ *
+ * @param  {Validation} left The first validation
+ * @param  {Validation} right The second validation
+ * @return {Validation}
  */
-Maybe.fromNullable = (value) => {
-  if (value === null || value === undefined) {
-    return Maybe.Nothing;
-  }
+Validation.concat = curry((left, right) =>
+  left.cata({
+    Failure: value =>
+      right.cata({
+        Success: constant(left),
+        Failure: x => Validation.Failure(value.concat(x)),
+      }),
 
-  return Maybe.Just.of(value);
-};
+    Success: value =>
+      right.cata({
+        Success: x => Validation.Success(value.concat(x)),
+        Failure: constant(right),
+      }),
+  }));
+
+/**
+ * @description Create an empty Validation. Used as the "identity" element
+ * for the Validation monoid.
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.15.0
+ * @function empty
+ * @example
+ * import { Validation } from '@dustinws/zoom/data';
+ *
+ * Validation.empty(); // Success([])
+ *
+ * @return {Validation}
+ */
+Validation.empty = () =>
+  Validation.Success([]);
 
 
 /*
@@ -260,127 +288,171 @@ Maybe.fromNullable = (value) => {
  */
 
 /**
- * @description Lift a value into a successful 'Just' context.
- * @memberof module:Zoom.Data.Maybe
+ * @description Lift a value into a successful 'Success' context.
+ * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
- * const val = Maybe.Just.of(1);
+ * const valid = Validation.();
  *
- * val.toString() // 'Just(1)'
+ * valid.of(1); // Success(1)
  *
- * @param  {Any} value The value to put in the Maybe
- * @return {Maybe}
+ * @param  {Any} value The value to put in the Validation
+ * @return {Validation}
  */
-Just.prototype.of = function of(value) {
-  return Just(value);
+Success.prototype.of = function of(value) {
+  return Success.of(value);
 };
 
 /**
- * @description Apply a transformation to the Maybe if it is an instance
- * of "Just". Otherwise, ignore the transformation and return the instance.
- * This is how you can switch from a 'Just' to 'Nothing' instance and stop
- * subsequent transformations from being applied.
- * @memberof module:Zoom.Data.Maybe
+ * @description Lift a value into an unsuccessful 'Failure' context.
+ * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
- * const valid = Maybe.Just.of('yay!');
- * const invalid = Maybe.Nothing;
+ * const invalid = Validation.();
  *
- * const toUpper = x => Maybe.Just.of(x.toUpperCase());
+ * invalid.of(1); // Failure(1)
  *
- * valid.chain(toUpper); // Just('YAY!')
- * invalid.chain(toUpper); // Nothing
+ * @param  {Any} value The value to put in the Validation
+ * @return {Validation}
+ */
+Failure.prototype.of = function of(value) {
+  return Failure.of(value);
+};
+
+/**
+ * @description Apply a transformation to the Validation if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Success' to 'Failure' instance and stop
+ * subsequent transformations from being applied.
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.15.0
+ * @example
+ * import { Validation } from '@dustinws/zoom/data';
+ *
+ * const valid = Validation.Success.of('yay!');
+ * const invalid = Validation.Failure.of('nay!');
+ *
+ * const toUpper = x => Validation.Success.of(x.toUpperCase());
+ *
+ * valid.chain(toUpper); // Success('YAY!');
+ * invalid.chain(toUpper); // Failure('nay!');
  *
  * @param  {Function} transform The transformation to apply to the inner value
- * @return {Maybe}
-*/
-Maybe.prototype.chain = function chain(transform) {
-  return Maybe.chain(transform, this);
+ * @return {Validation}
+ */
+Validation.prototype.chain = function chain(transform) {
+  return Validation.chain(transform, this);
 };
 
 /**
- * @description Apply a transformation to the Maybe if it is an instance
- * of "Just". Otherwise, ignore the transformation and return the instance.
- * @memberof module:Zoom.Data.Maybe
+ * @description Apply a transformation to the Validation if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
- * const valid = Maybe.Just.of('yay!');
- * const failure = Maybe.Nothing;
+ * const valid = Validation.Success.of('yay!');
+ * const failure = Validation.Failure.of('nay!');
  *
  * const toUpper = x => x.toUpperCase();
  *
- * valid.map(toUpper); // Just('YAY!')
- * invalid.map(toUpper); // Nothing
+ * valid.map(toUpper); // Success('YAY!');
+ * invalid.map(toUpper); // Failure('nay!');
  *
  * @param  {Function} transform The transformation to apply to the inner value
- * @return {Maybe}
+ * @return {Validation}
  */
-Maybe.prototype.map = function map(transform) {
-  return Maybe.map(transform, this);
+Validation.prototype.map = function map(transform) {
+  return Validation.map(transform, this);
 };
 
 /**
- * @description Apply a transformation to the Maybe if it is an instance
- * of "Just". Otherwise, ignore the transformation and return the instance.
- * @memberof module:Zoom.Data.Maybe
+ * @description Apply a transformation to the Validation if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
- * const valid = Maybe.Just.of('yay!');
- * const failure = Maybe.Nothing;
+ * const valid = Validation.Success.of('yay!');
+ * const failure = Validation.Failure.of('nay!');
  *
- * const toUpper = Maybe.of(x => x.toUpperCase());
+ * const toUpper = Validation.of(x => x.toUpperCase());
  *
- * valid.ap(toUpper); // Just('YAY!')
- * invalid.ap(toUpper); // Nothing
+ * valid.ap(toUpper); // Success('YAY!');
+ * invalid.ap(toUpper); // Failure('nay!');
  *
- * @param  {Maybe} applyt A maybe containing a function to run on the value
- * @return {Maybe}
+ * @param  {Validation} apply A validation containing a function to run on the value
+ * @return {Validation}
  */
-Maybe.prototype.ap = function ap(transform) {
-  return Maybe.ap(transform, this);
+Validation.prototype.ap = function ap(apply) {
+  return Validation.ap(apply, this);
 };
 
 /**
- * @description Determine if an Maybe is an instance of Nothing
- * @memberof module:Zoom.Data.Maybe
+ * @description Determine if an Validation is an instance of Failure
+ * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
- * Maybe.Nothing.isNothing(); // true
- * Maybe.Just.of().isNothing(); // false
+ * Validation.Failure.of(1).isFailure(); // true
+ * Validation.Success.of(1).isFailure(); // false
  *
+ * @param  {Validation} validation The validation to query
  * @return {Boolean}
  */
-Maybe.prototype.isNothing = function isNothing() {
-  return Maybe.isNothing(this);
+Validation.prototype.isFailure = function isFailure() {
+  return Validation.isFailure(this);
 };
 
 /**
- * @description Determine if an Maybe is an instance of Just
- * @memberof module:Zoom.Data.Maybe
+ * @description Determine if an Validation is an instance of Success
+ * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
- * Maybe.Just.of().isJust(); // true
- * Maybe.Nothing.isJust(); // false
+ * Validation.Success.of(1).isSuccess(); // true
+ * Validation.Failure.of(1).isSuccess(); // false
  *
+ * @param  {Validation} validation The validation to query
  * @return {Boolean}
  */
-Maybe.prototype.isJust = function isJust() {
-  return Maybe.isJust(this);
+Validation.prototype.isSuccess = function isSuccess() {
+  return Validation.isSuccess(this);
 };
 
-export default Maybe;
+/**
+ * @description Combine two validations into one with a bias towards Failures.
+ * If both values are the same type (both Failures, etc..) then their values
+ * will be concatenated and a single instance of that type will be returned.
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.15.0
+ * @example
+ * import { Validation } from '@dustinws/zoom/data';
+ *
+ * const failure = Validation.Failure.of(['fail!']);
+ * const success = Validation.Success.of(['win!']);
+ *
+ * success.concat(failure); // failure
+ * failure.concat(success); // failure
+ * failure.concat(failure); // Failure(['fail!', 'fail!'])
+ * success.concat(success); // Success(['win!', 'win!'])
+ *
+ * @param  {Validation} other The validation to join with
+ * @return {Validation}
+ */
+Validation.prototype.concat = function concat(other) {
+  return Validation.concat(other, this);
+};
+
+export default Validation;
 </code></pre>
         </article>
     </section>
@@ -393,7 +465,7 @@ export default Maybe;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Jul 03 2017 06:13:14 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Jul 03 2017 10:53:53 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

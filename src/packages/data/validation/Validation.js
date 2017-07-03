@@ -1,40 +1,20 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _ = require('../lambda/__');
-
-var _2 = _interopRequireDefault(_);
-
-var _adt = require('../adt');
-
-var _curry = require('../lambda/curry');
-
-var _curry2 = _interopRequireDefault(_curry);
-
-var _compose = require('../lambda/compose');
-
-var _compose2 = _interopRequireDefault(_compose);
-
-var _constant = require('../lambda/constant');
-
-var _constant2 = _interopRequireDefault(_constant);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+import __ from '../../lambda/__';
+import { union } from '../../adt';
+import curry from '../../lambda/curry';
+import compose from '../../lambda/compose';
+import constant from '../../lambda/constant';
 
 /**
  * @class Validation
  * @memberof module:Zoom.Data
  */
-var Validation = (0, _adt.union)('Validation', {
+const Validation = union('Validation', {
   Success: ['value'],
-  Failure: ['value']
+  Failure: ['value'],
 });
 
-var Success = Validation.Success;
-var Failure = Validation.Failure;
+const Success = Validation.Success;
+const Failure = Validation.Failure;
 
 /*
  |------------------------------------------------------------------------------
@@ -122,12 +102,11 @@ Failure.of = function of(value) {
  * @param  {Validation} validation The transformation to apply to the inner value
  * @return {Validation}
  */
-Validation.chain = (0, _curry2.default)(function (transform, validation) {
-  return validation.cata({
-    Failure: (0, _constant2.default)(validation),
-    Success: transform
-  });
-});
+Validation.chain = curry((transform, validation) =>
+  validation.cata({
+    Failure: constant(validation),
+    Success: transform,
+  }));
 
 /**
  * @description Apply a transformation to the Validation if it is an instance
@@ -150,9 +129,8 @@ Validation.chain = (0, _curry2.default)(function (transform, validation) {
  * @param  {Validation} validation The validation
  * @return {Validation}
  */
-Validation.map = (0, _curry2.default)(function (transform, validation) {
-  return Validation.chain((0, _compose2.default)(Validation.of, transform), validation);
-});
+Validation.map = curry((transform, validation) =>
+  Validation.chain(compose(Validation.of, transform), validation));
 
 /**
  * @description Apply a transformation to the Validation if it is an instance
@@ -175,9 +153,8 @@ Validation.map = (0, _curry2.default)(function (transform, validation) {
  * @param  {Validation} right The validation containing a value
  * @return {Validation}
  */
-Validation.ap = (0, _curry2.default)(function (left, right) {
-  return Validation.chain(Validation.map(_2.default, right), left);
-});
+Validation.ap = curry((left, right) =>
+  Validation.chain(Validation.map(__, right), left));
 
 /**
  * @description Determine if an Validation is an instance of Failure
@@ -193,9 +170,7 @@ Validation.ap = (0, _curry2.default)(function (left, right) {
  * @param  {Validation} validation The validation to query
  * @return {Boolean}
  */
-Validation.isFailure = function (validation) {
-  return validation instanceof Validation.Failure;
-};
+Validation.isFailure = validation => validation instanceof Validation.Failure;
 
 /**
  * @description Determine if an Validation is an instance of Success
@@ -211,9 +186,7 @@ Validation.isFailure = function (validation) {
  * @param  {Validation} validation The validation to query
  * @return {Boolean}
  */
-Validation.isSuccess = function (validation) {
-  return validation instanceof Validation.Success;
-};
+Validation.isSuccess = validation => validation instanceof Validation.Success;
 
 /**
  * @description Combine two validations into one with a bias towards Failures.
@@ -237,27 +210,20 @@ Validation.isSuccess = function (validation) {
  * @param  {Validation} right The second validation
  * @return {Validation}
  */
-Validation.concat = (0, _curry2.default)(function (left, right) {
-  return left.cata({
-    Failure: function Failure(value) {
-      return right.cata({
-        Success: (0, _constant2.default)(left),
-        Failure: function Failure(x) {
-          return Validation.Failure(value.concat(x));
-        }
-      });
-    },
+Validation.concat = curry((left, right) =>
+  left.cata({
+    Failure: value =>
+      right.cata({
+        Success: constant(left),
+        Failure: x => Validation.Failure(value.concat(x)),
+      }),
 
-    Success: function Success(value) {
-      return right.cata({
-        Success: function Success(x) {
-          return Validation.Success(value.concat(x));
-        },
-        Failure: (0, _constant2.default)(right)
-      });
-    }
-  });
-});
+    Success: value =>
+      right.cata({
+        Success: x => Validation.Success(value.concat(x)),
+        Failure: constant(right),
+      }),
+  }));
 
 /**
  * @description Create an empty Validation. Used as the "identity" element
@@ -272,9 +238,9 @@ Validation.concat = (0, _curry2.default)(function (left, right) {
  *
  * @return {Validation}
  */
-Validation.empty = function () {
-  return Validation.Success([]);
-};
+Validation.empty = () =>
+  Validation.Success([]);
+
 
 /*
  |------------------------------------------------------------------------------
@@ -447,5 +413,4 @@ Validation.prototype.concat = function concat(other) {
   return Validation.concat(other, this);
 };
 
-exports.default = Validation;
-module.exports = exports['default'];
+export default Validation;

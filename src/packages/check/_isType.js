@@ -1,5 +1,5 @@
 import typeOf from '../lang/typeOf';
-import Validation from '../data/Validation';
+import Validation from '../data/validation';
 
 export default function isType(expectedType) {
   return (value) => {

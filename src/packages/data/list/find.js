@@ -1,5 +1,5 @@
 import curry from '../../lambda/curry';
-import Maybe from '../Maybe';
+import Maybe from '../maybe';
 
 /**
  * @description Find the first element in a list that satisfies a predicate
