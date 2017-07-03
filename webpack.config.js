@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/packages/index.js',
 
   output: {
-    path: path.join(__dirname, 'dist', 'browser'),
+    path: path.join(__dirname, 'build', 'browser'),
     filename: 'zoom.min.js',
     library: 'Zoom',
   },
