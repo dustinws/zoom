@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>core/index.js - Documentation</title>
+    <title>lambda/memoize.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">core/index.js</h1>
+    <h1 class="page-title">lambda/memoize.js</h1>
     
 
     
@@ -37,17 +37,69 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @class Core
- * @memberof module:Zoom
- */
+            <pre class="prettyprint source linenums"><code>import includes from '../data/list/includes';
 
-export { default as complement } from './complement';
-export { default as False } from './False';
-export { default as path } from './path';
-export { default as prop } from './prop';
-export { default as True } from './True';
-export { default as typeOf } from './typeOf';
+/**
+ * @memberof module:Zoom.Lambda
+ * @description Create a function that only runs for arguments it hasn't
+ * computed yet.
+ * @since v1.0.0
+ * @function memoize
+ * @example
+ * // memoize :: (a -> b) -> (a -> b)
+ * import { memoize } from '@dustinws/zoom/packages/core';
+ *
+ * let count = 0;
+ *
+ * function someExpensiveOperation() {
+ *   count += 1;
+ *
+ *   return count;
+ * }
+ *
+ * const memoized = memoize(someExpensiveOperation);
+ *
+ * memoized(1); // 1
+ * memoized(1); // 1
+ * memoized(1); // 1
+ * memoized(1); // 1
+ *
+ * count; // 1
+ *
+ * memoized(2); // 2
+ * memoized(2); // 2
+ * memoized(2); // 2
+ * memoized(2); // 2
+ *
+ * count; // 2
+ *
+ * @param  {Any} value The value the memoize will return.
+ * @return {Function}
+ */
+function memoize(func) {
+  const memoized = (firstArg, ...rest) => {
+    const [keys, vals] = memoized.cache;
+
+    // If we've seen this argument before, just return the
+    // cached result.
+    if (includes(firstArg, keys)) {
+      return vals[keys.indexOf(firstArg)];
+    }
+
+    // Otherwise, call the function and save the results.
+    const result = func(firstArg, ...rest);
+    memoized.cache[0].push(firstArg);
+    memoized.cache[1].push(result);
+    return result;
+  };
+
+  // Create the cache
+  memoized.cache = [[], []];
+
+  return memoized;
+}
+
+export default memoize;
 </code></pre>
         </article>
     </section>
