@@ -8,7 +8,9 @@ var _array = require('./array');
 
 var _array2 = _interopRequireDefault(_array);
 
-var _core = require('../core');
+var _curry = require('../lambda/curry');
+
+var _curry2 = _interopRequireDefault(_curry);
 
 var _Validation = require('../data/Validation');
 
@@ -31,7 +33,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {Array<Any>} value The array to validate
  * @return {Validation}
  */
-var arrayOf = (0, _core.curry)(function (contract, value) {
+var arrayOf = (0, _curry2.default)(function (contract, value) {
   return (0, _array2.default)(value).chain(function () {
     var validation = value.reduce(function (result, item) {
       return result.chain(function () {

@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _curry = require('./curry');
+var _curry = require('../lambda/curry');
 
 var _curry2 = _interopRequireDefault(_curry);
 

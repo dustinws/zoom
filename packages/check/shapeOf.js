@@ -8,7 +8,9 @@ var _object = require('./object');
 
 var _object2 = _interopRequireDefault(_object);
 
-var _core = require('../core');
+var _curry = require('../lambda/curry');
+
+var _curry2 = _interopRequireDefault(_curry);
 
 var _Validation = require('../data/Validation');
 
@@ -37,7 +39,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {Object} value The object to validate
  * @return {Validation}
  */
-exports.default = (0, _core.curry)(function (contracts, value) {
+exports.default = (0, _curry2.default)(function (contracts, value) {
   return (0, _object2.default)(contracts).chain(function () {
     return (0, _object2.default)(value);
   }).chain(function () {

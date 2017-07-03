@@ -1,5 +1,5 @@
 import each from './each';
-import curry from '../../core/curry';
+import curry from '../../lambda/curry';
 
 /**
  * @description Turn a list into a single value.

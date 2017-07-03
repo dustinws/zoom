@@ -1,4 +1,4 @@
-import curry from '../../core/curry';
+import curry from '../../lambda/curry';
 
 /**
  * @description Determine if there is a value at the given key on

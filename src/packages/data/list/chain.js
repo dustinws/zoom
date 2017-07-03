@@ -1,4 +1,4 @@
-import curry from '../../core/curry';
+import curry from '../../lambda/curry';
 import concat from './concat';
 import fold from './fold';
 import map from './map';

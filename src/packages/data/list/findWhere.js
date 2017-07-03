@@ -1,4 +1,4 @@
-import curry from '../../core/curry';
+import curry from '../../lambda/curry';
 import find from './find';
 import matches from '../record/matches';
 

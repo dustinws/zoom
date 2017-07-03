@@ -1,4 +1,4 @@
-import curry from '../../core/curry';
+import curry from '../../lambda/curry';
 import complement from '../../core/complement';
 import filter from './filter';
 

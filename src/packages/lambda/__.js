@@ -1,5 +1,5 @@
 /**
- * @memberof module:Zoom.Core
+ * @memberof module:Zoom.Lambda
  * @description The functional placeholder used to add arguments
  * in a different order than the function originally declared.
  * @since v1.0.0

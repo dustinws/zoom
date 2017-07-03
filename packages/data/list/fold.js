@@ -8,7 +8,7 @@ var _each = require('./each');
 
 var _each2 = _interopRequireDefault(_each);
 
-var _curry = require('../../core/curry');
+var _curry = require('../../lambda/curry');
 
 var _curry2 = _interopRequireDefault(_curry);
 

@@ -1,8 +1,8 @@
-import __ from '../core/__';
+import __ from '../lambda/__';
 import { union } from '../adt';
-import curry from '../core/curry';
-import compose from '../core/compose';
-import constant from '../core/constant';
+import curry from '../lambda/curry';
+import compose from '../lambda/compose';
+import constant from '../lambda/constant';
 
 /**
  * @class Maybe

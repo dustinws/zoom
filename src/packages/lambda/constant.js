@@ -1,5 +1,5 @@
 /**
- * @memberof module:Zoom.Core
+ * @memberof module:Zoom.Lambda
  * @description Create a function that always returns the initial value.
  * @since v1.0.0
  * @function constant

@@ -4,11 +4,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _curry = require('../../core/curry');
+var _curry = require('../../lambda/curry');
 
 var _curry2 = _interopRequireDefault(_curry);
 
-var _pipe = require('../../core/pipe');
+var _pipe = require('../../lambda/pipe');
 
 var _pipe2 = _interopRequireDefault(_pipe);
 

@@ -1,4 +1,4 @@
-import curry from './curry';
+import curry from '../lambda/curry';
 import prop from './prop';
 import fold from '../data/list/fold';
 import Maybe from '../data/Maybe';

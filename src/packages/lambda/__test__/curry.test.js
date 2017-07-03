@@ -2,7 +2,7 @@
 import __ from '../__';
 import curry from '../curry';
 
-describe('Zoom.Core.curry', () => {
+describe('Zoom.Lambda.curry', () => {
   test('It should create a curried function by guessing the arity', () => {
     const add = curry((a, b) => a + b);
 

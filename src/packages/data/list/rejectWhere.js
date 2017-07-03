@@ -1,4 +1,4 @@
-import curry from '../../core/curry';
+import curry from '../../lambda/curry';
 import reject from './reject';
 import matches from '../record/matches';
 

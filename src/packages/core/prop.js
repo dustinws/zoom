@@ -1,4 +1,4 @@
-import curry from './curry';
+import curry from '../lambda/curry';
 import Maybe from '../data/Maybe';
 
 /**

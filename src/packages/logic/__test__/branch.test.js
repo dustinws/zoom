@@ -1,6 +1,6 @@
 /* global describe, expect, test */
 import branch from '../branch';
-import constant from '../../core/constant';
+import constant from '../../lambda/constant';
 
 describe('Zoom.Logic.branch', () => {
   test('It call the second function if the predicate returns truthy', () => {

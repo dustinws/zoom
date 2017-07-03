@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _curryN = require('../core/curryN');
+var _curryN = require('../lambda/curryN');
 
 var _curryN2 = _interopRequireDefault(_curryN);
 

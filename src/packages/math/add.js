@@ -1,4 +1,4 @@
-import curry from '../core/curry';
+import curry from '../lambda/curry';
 
 /**
  * @description A curried wrapper around the + operator.

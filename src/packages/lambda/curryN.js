@@ -1,7 +1,7 @@
 import __ from './__';
 
 /**
- * @memberof module:Zoom.Core
+ * @memberof module:Zoom.Lambda
  * @description Convert a non-curried function with the given arity to
  * a curried function. This includes compatibility with "core.__".
  * @since v1.0.0

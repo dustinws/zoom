@@ -1,4 +1,4 @@
-import curryN from '../core/curryN';
+import curryN from '../lambda/curryN';
 
 /**
  * @description A curried wrapper for an if / else statement. If the function

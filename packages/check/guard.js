@@ -8,7 +8,7 @@ var _tupleOf = require('./tupleOf');
 
 var _tupleOf2 = _interopRequireDefault(_tupleOf);
 
-var _curryN = require('../core/curryN');
+var _curryN = require('../lambda/curryN');
 
 var _curryN2 = _interopRequireDefault(_curryN);
 

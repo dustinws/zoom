@@ -1,5 +1,5 @@
 import tupleOf from './tupleOf';
-import curryN from '../core/curryN';
+import curryN from '../lambda/curryN';
 
 /**
  * @memberof module:Zoom.Check

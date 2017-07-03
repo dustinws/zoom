@@ -1,4 +1,4 @@
-import curry from '../../core/curry';
+import curry from '../../lambda/curry';
 
 /**
  * @description Run a function for each item in an array. Returns the array.

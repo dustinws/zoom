@@ -1,5 +1,5 @@
 import array from './array';
-import { curry } from '../core';
+import curry from '../lambda/curry';
 import Validation from '../data/Validation';
 
 /**

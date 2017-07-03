@@ -20,6 +20,10 @@ var _data = require('./data');
 
 var Data = _interopRequireWildcard(_data);
 
+var _lambda = require('./lambda');
+
+var Lambda = _interopRequireWildcard(_lambda);
+
 var _logic = require('./logic');
 
 var Logic = _interopRequireWildcard(_logic);
@@ -30,16 +34,16 @@ var Math = _interopRequireWildcard(_math);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-/**
- * @namespace Zoom
- */
-
 exports.default = {
   ADT: ADT,
   Check: Check,
   Core: Core,
   Data: Data,
+  Lambda: Lambda,
   Logic: Logic,
   Math: Math
-};
+}; /**
+    * @namespace Zoom
+    */
+
 module.exports = exports['default'];

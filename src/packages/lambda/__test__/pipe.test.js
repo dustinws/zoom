@@ -1,17 +1,17 @@
 /* global describe, expect, test */
-import compose from '../compose';
+import pipe from '../pipe';
 
 const add = a => b => a + b;
 const sq = a => a * a;
 
-describe('Zoom.Core.compose', () => {
+describe('Zoom.Lambda.pipe', () => {
   test('It should return a function', () => {
-    expect(typeof compose(() => {})).toBe('function');
+    expect(typeof pipe(() => {})).toBe('function');
   });
 
   test('It create a left to right composition', () => {
-    const main = compose(add(1), sq);
+    const main = pipe(add(1), sq);
 
-    expect(main(4)).toBe(17);
+    expect(main(4)).toBe(25);
   });
 });

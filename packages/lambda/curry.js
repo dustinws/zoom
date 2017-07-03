@@ -1,7 +1,18 @@
-import curryN from './curryN';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = curry;
+
+var _curryN = require('./curryN');
+
+var _curryN2 = _interopRequireDefault(_curryN);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * @memberof module:Zoom.Core
+ * @memberof module:Zoom.Lambda
  * @description Convert a non-curried function to a curried function. This
  * includes compatibility with "core.__".
  * @since v1.0.0
@@ -19,6 +30,7 @@ import curryN from './curryN';
  * @param  {Function} func The function to curry.
  * @return {Function}
  */
-export default function curry(func) {
-  return curryN(func.length, func);
+function curry(func) {
+  return (0, _curryN2.default)(func.length, func);
 }
+module.exports = exports['default'];

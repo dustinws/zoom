@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 /**
- * @memberof module:Zoom.Core
+ * @memberof module:Zoom.Lambda
  * @description Convert a non-curried function with the given arity to
  * a curried function. This includes compatibility with "core.__".
  * @since v1.0.0

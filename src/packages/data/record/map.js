@@ -1,5 +1,5 @@
-import curry from '../../core/curry';
-import pipe from '../../core/pipe';
+import curry from '../../lambda/curry';
+import pipe from '../../lambda/pipe';
 import keys from './keys';
 import fold from '../list/fold';
 

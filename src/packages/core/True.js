@@ -1,4 +1,4 @@
-import constant from './constant';
+import constant from '../lambda/constant';
 
 /**
  * @description A constant for the value "true"
