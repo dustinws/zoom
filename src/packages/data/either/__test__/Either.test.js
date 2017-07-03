@@ -72,6 +72,26 @@ describe('Zoom.Data.Either', () => {
     });
   });
 
+  describe('Either.andThen', () => {
+    test('It should apply the transform if the instance is a Right', () => {
+      const transform = x => x.toUpperCase();
+      const either = Either.of('text');
+
+      const result = Either.andThen(transform, either);
+
+      expect(result).toBe('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Left', () => {
+      const transform = x => x.toUpperCase();
+      const either = Either.Left.of('text');
+
+      const result = Either.andThen(transform, either);
+
+      expect(result).toBe(either);
+    });
+  });
+
   describe('Either.isLeft', () => {
     test('It should return true if the instance is a Left', () => {
       expect(Either.isLeft(Either.Left.of())).toBe(true);
@@ -165,6 +185,22 @@ describe('Zoom.Data.Either', () => {
     test('It should ignore the transform if the instance is a Left', () => {
       const result = Either.Left.of('text');
       const value = result.chain(x => x.toUpperCase());
+
+      expect(value).toBe(result);
+    });
+  });
+
+  describe('Either#andThen', () => {
+    test('It should apply the transform if the instance is a Right', () => {
+      const result = Either.Right.of('text');
+      const value = result.andThen(x => x.toUpperCase());
+
+      expect(value).toBe('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Left', () => {
+      const result = Either.Left.of('text');
+      const value = result.andThen(x => x.toUpperCase());
 
       expect(value).toBe(result);
     });

@@ -45,6 +45,21 @@ describe('Zoom.Data.Task', () => {
     });
   });
 
+  describe('Task.andThen', () => {
+    test('It should call the function and wait on the returned task.', () => {
+      const task = Task.of('boom');
+      const toUpper = Task.lift(x => x.toUpperCase());
+
+      const result = Task.andThen(toUpper, task);
+
+      return Task
+        .toPromise(result)
+        .then((value) => {
+          expect(value).toBe('BOOM');
+        });
+    });
+  });
+
   describe('Task.toPromise', () => {
     test('It should return a valid Promise', () => {
       expect(Task.toPromise(Task.of()) instanceof Promise).toBe(true);
@@ -147,6 +162,18 @@ describe('Zoom.Data.Task', () => {
       return Task
         .of('boom')
         .chain(Task.lift(x => x.toUpperCase()))
+        .toPromise()
+        .then((value) => {
+          expect(value).toBe('BOOM');
+        });
+    });
+  });
+
+  describe('Task#andThen', () => {
+    test('It should call the function and wait on the returned task.', () => {
+      return Task
+        .of('boom')
+        .andThen(Task.lift(x => x.toUpperCase()))
         .toPromise()
         .then((value) => {
           expect(value).toBe('BOOM');

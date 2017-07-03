@@ -71,9 +71,11 @@ function tag(type) {
     var _this2 = this;
 
     var paramsList = params.map(function (param) {
-      return _this2[param].toString();
-    }).join(', ');
-    return '' + this[_symbol2.default] + (paramsList && '(' + paramsList + ')');
+      return _this2[param];
+    }).join(', ').trim();
+
+    var paramDisplay = params.length ? '(' + paramsList + ')' : '';
+    return '' + this[_symbol2.default] + paramDisplay;
   };
 
   return Adt;

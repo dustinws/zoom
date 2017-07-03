@@ -71,8 +71,11 @@ function union(parentType, childTypes) {
     var Child = _tag2.default.apply(undefined, [childType].concat(_toConsumableArray(params)));
 
     // Inherit from the parent type.
+    var ogProto = Child.prototype;
     Child.prototype = Object.create(Parent.prototype);
     Child.prototype.constructor = Child;
+
+    Object.assign(Child.prototype, ogProto);
 
     // Add the cata method.
     Child.prototype.cata = function cata(cases) {

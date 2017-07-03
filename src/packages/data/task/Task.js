@@ -47,10 +47,37 @@ Task.reject = value =>
   Task(reject => reject(value));
 
 /**
+ * @description Fork a task. This is the only way to run the code contained
+ * in the task.
+ * @memberof module:Zoom.Data.Task
+ * @since v1.17.0
+ * @function fork
+ * @example
+ * import { Task } from '@dustinws/zoom/data';
+ *
+ * Task.fork(
+ *   error => console.log('Task error:', error),
+ *   result => console.log('Task result:', result),
+ *   Task.of('Hello world!'),
+ * );
+ *
+ * // 'Task result: Hello world!'
+ *
+ * @param  {Function} reject The error handler.
+ * @param  {Function} resolve The success handler.
+ * @param  {Task} task The function to run.
+ * @return {void}
+ */
+Task.fork = curry((reject, resolve, task) =>
+  task.fork(reject, resolve));
+
+/**
  * @description Run a function that returns a nested task and flatten
- * the result into a single task.
+ * the result into a single task. An alias for
+ * [Task.andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.andThen)
  * @memberof module:Zoom.Data.Task
  * @since v1.15.0
+ * @see [Task.andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.andThen)
  * @function chain
  * @example
  * import { Task } from '@dustinws/zoom/data';
@@ -65,6 +92,25 @@ Task.chain = curry((transform, task) =>
   Task((reject, resolve) =>
     task.fork(reject, value =>
       transform(value).fork(reject, resolve))));
+
+/**
+ * @description Run a function that returns a nested task and flatten
+ * the result into a single task. An alias for
+ * [Task.chain](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.chain)
+ * @memberof module:Zoom.Data.Task
+ * @since v1.15.0
+ * @see [Task.chain](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.chain)
+ * @function andThen
+ * @example
+ * import { Task } from '@dustinws/zoom/data';
+ *
+ * Task.andThen(Task.lift(n => n + 1), Task.of(1)); // Task(null, 2)
+ *
+ * @param  {Function} transform The function to run.
+ * @param  {Task} task The task
+ * @return {Task}
+ */
+Task.andThen = Task.chain;
 
 /**
  * @description Run a function on a value contained in a Task.
@@ -119,7 +165,7 @@ Task.toPromise = (task, Promise = global.Promise) =>
  * @param  {Task} task The task
  * @return {Task}
  */
-Task.recover = ((transform, task) =>
+Task.recover = curry((transform, task) =>
   Task((reject, resolve) =>
     task.fork(error =>
       transform(error).fork(reject, resolve), resolve)));
@@ -223,9 +269,11 @@ Task.liftNode = func => (...args) =>
 
 /**
 * @description Run a function that returns a nested task and flatten
-* the result into a single task.
+* the result into a single task. An alias for
+* [Task#andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.Task#andThen)
 * @memberof module:Zoom.Data.Task
 * @since v1.15.0
+* @see [Task#andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.Task#andThen)
 * @example
 * import { Task } from '@dustinws/zoom/data';
 *
@@ -235,6 +283,25 @@ Task.liftNode = func => (...args) =>
 * @return {Task}
 */
 Task.prototype.chain = function chain(transform) {
+  return Task.chain(transform, this);
+};
+
+/**
+* @description Run a function that returns a nested task and flatten
+* the result into a single task. An alias for
+* [Task#chain](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.Task#chain)
+* @memberof module:Zoom.Data.Task
+* @since v1.15.0
+* @see [Task#chain](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.Task#chain)
+* @example
+* import { Task } from '@dustinws/zoom/data';
+*
+* Task.of(1).andThen(x => Task.of(x + x)); // Task(null, 2)
+*
+* @param  {Function} transform The function to run.
+* @return {Task}
+*/
+Task.prototype.andThen = function andThen(transform) {
   return Task.chain(transform, this);
 };
 

@@ -1,6 +1,13 @@
 import typeOf from '../lang/typeOf';
 import Validation from '../data/validation';
 
+/**
+ * Return a Success if an object is of the expected type, and a Failure if
+ * it is not.
+ *
+ * @param  {String}  expectedType
+ * @return {Function}
+ */
 export default function isType(expectedType) {
   return (value) => {
     const actualType = typeOf(value);

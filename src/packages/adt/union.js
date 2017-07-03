@@ -59,8 +59,11 @@ function union(parentType, childTypes) {
     const Child = tag(childType, ...params);
 
     // Inherit from the parent type.
+    const ogProto = Child.prototype;
     Child.prototype = Object.create(Parent.prototype);
     Child.prototype.constructor = Child;
+
+    Object.assign(Child.prototype, ogProto);
 
     // Add the cata method.
     Child.prototype.cata = function cata(cases) {

@@ -84,10 +84,12 @@ Err.of = function of(value) {
  * @description Apply a transformation to the Result if it is an instance
  * of "Ok". Otherwise, ignore the transformation and return the instance.
  * This is how you can switch from a 'Ok' to 'Err' instance and stop
- * subsequent transformations from being applied.
+ * subsequent transformations from being applied. Alias for
+ * [Result.andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Result.html#.andThen)
  * @memberof module:Zoom.Data.Result
  * @since v1.15.0
  * @function chain
+ * @see [Result.andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Result.html#.andThen)
  * @example
  * import { Result } from '@dustinws/zoom/data';
  *
@@ -108,6 +110,33 @@ Result.chain = curry((transform, result) =>
     Err: constant(result),
     Ok: transform,
   }));
+
+/**
+ * @description Apply a transformation to the Result if it is an instance
+ * of "Ok". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Ok' to 'Err' instance and stop
+ * subsequent transformations from being applied. Alias for
+ * [Result.chain](https://dustinws.github.io/zoom/module-Zoom.Data.Result.html#.chain)
+ * @memberof module:Zoom.Data.Result
+ * @since v1.15.0
+ * @function andThen
+ * @see [Result.chain](https://dustinws.github.io/zoom/module-Zoom.Data.Result.html#.chain)
+ * @example
+ * import { Result } from '@dustinws/zoom/data';
+ *
+ * const valid = Result.Ok.of('yay!');
+ * const invalid = Result.Err.of('nay!');
+ *
+ * const toUpper = x => Result.Ok.of(x.toUpperCase());
+ *
+ * Result.andThen(toUpper, valid); // Ok('YAY!');
+ * Result.andThen(toUpper, invalid); // Err('nay!');
+ *
+ * @param  {Function} transform The transformation to apply to the inner value
+ * @param  {Result} result The result
+ * @return {Result}
+ */
+Result.andThen = Result.chain;
 
 /**
  * @description Apply a transformation to the Result if it is an instance
@@ -197,6 +226,62 @@ Result.isOk = result => result instanceof Result.Ok;
  */
 
 /**
+ * @description A function that accepts an object with two functions, one
+ * to run if the either is an instance of `Ok`, and one to run if the
+ * either is an instance of `Err`. The return value will be returned
+ * directly, with no wrapper instance. This name is short for `catamorphism`.
+ * An alias for [Result#caseOf](https://dustinws.github.io/zoom/module-Zoom.Data.Result.html#.Result#caseOf)
+ * @memberof module:Zoom.Data.Result
+ * @since v1.0.0
+ * @function
+ * @see [Result#caseOf](https://dustinws.github.io/zoom/module-Zoom.Data.Result.html#.Result#caseOf)
+ * @example
+ * import { Result } from '@dustinws/zoom/data';
+ *
+ * Result.Ok.of('foobar').cata({
+ *   Ok(foobar) {
+ *     // Do something with foobar
+ *   },
+ *
+ *   Err(error) {
+ *     // Handle the error
+ *   },
+ * });
+ *
+ * @param  {Object} cases The cases to match against.
+ * @return {Result}
+ */
+Result.prototype.cata = Result.prototype.cata;
+
+/**
+ * @description A function that accepts an object with two functions, one
+ * to run if the either is an instance of `Ok`, and one to run if the
+ * either is an instance of `Err`. The return value will be returned
+ * directly, with no wrapper instance. An alias for
+ * [Result#cata](https://dustinws.github.io/zoom/module-Zoom.Data.Result.html#.Result#cata)
+ * @memberof module:Zoom.Data.Result
+ * @since v1.0.0
+ * @function
+ * @see [Result#cata](https://dustinws.github.io/zoom/module-Zoom.Data.Result.html#.Result#cata)
+ * @example
+ * import { Result } from '@dustinws/zoom/data';
+ *
+ * Result.Ok.of('foobar').caseOf({
+ *   Ok(foobar) {
+ *     // Do something with foobar
+ *   },
+ *
+ *   Err(error) {
+ *     // Handle the error
+ *   },
+ * });
+ *
+ * @param  {Object} cases The cases to match against.
+ * @return {Result}
+ */
+Result.prototype.caseOf = Result.prototype.cata;
+
+/**
  * @description Lift a value into a successful 'Ok' context.
  * @memberof module:Zoom.Data.Result
  * @since v1.15.0
@@ -236,9 +321,11 @@ Err.prototype.of = function of(value) {
 * @description Apply a transformation to the Result if it is an instance
 * of "Ok". Otherwise, ignore the transformation and return the instance.
 * This is how you can switch from a 'Ok' to 'Err' instance and stop
-* subsequent transformations from being applied.
+* subsequent transformations from being applied. Alias for
+* [Result#andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Result.html#.Result#andThen)
 * @memberof module:Zoom.Data.Result
 * @since v1.15.0
+* @see [Result#andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Result.html#.Result#andThen)
 * @example
 * import { Result } from '@dustinws/zoom/data';
 *
@@ -254,6 +341,33 @@ Err.prototype.of = function of(value) {
 * @return {Result}
 */
 Result.prototype.chain = function chain(transform) {
+  return Result.chain(transform, this);
+};
+
+/**
+* @description Apply a transformation to the Result if it is an instance
+* of "Ok". Otherwise, ignore the transformation and return the instance.
+* This is how you can switch from a 'Ok' to 'Err' instance and stop
+* subsequent transformations from being applied. Alias for
+* [Result#chain](https://dustinws.github.io/zoom/module-Zoom.Data.Result.html#.Result#chain)
+* @memberof module:Zoom.Data.Result
+* @since v1.15.0
+* @see [Result#chain](https://dustinws.github.io/zoom/module-Zoom.Data.Result.html#.Result#chain)
+* @example
+* import { Result } from '@dustinws/zoom/data';
+*
+* const valid = Result.Ok.of('yay!');
+* const invalid = Result.Err.of('nay!');
+*
+* const toUpper = x => Result.Ok.of(x.toUpperCase());
+*
+* valid.andThen(toUpper); // Ok('YAY!');
+* invalid.andThen(toUpper); // Err('nay!');
+*
+* @param  {Function} transform The transformation to apply to the inner value
+* @return {Result}
+*/
+Result.prototype.andThen = function andThen(transform) {
   return Result.chain(transform, this);
 };
 

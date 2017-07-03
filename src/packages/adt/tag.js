@@ -49,8 +49,13 @@ function tag(type, ...params) {
   Adt.prototype[symbol] = type;
 
   Adt.prototype.toString = function toString() {
-    const paramsList = params.map(param => this[param].toString()).join(', ');
-    return `${this[symbol]}${paramsList && `(${paramsList})`}`;
+    const paramsList = params
+      .map(param => this[param])
+      .join(', ')
+      .trim();
+
+    const paramDisplay = params.length ? `(${paramsList})` : '';
+    return `${this[symbol]}${paramDisplay}`;
   };
 
   return Adt;

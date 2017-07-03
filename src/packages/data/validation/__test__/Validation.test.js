@@ -72,6 +72,26 @@ describe('Zoom.Data.Validation', () => {
     });
   });
 
+  describe('Validation.andThen', () => {
+    test('It should apply the transform if the instance is a Success', () => {
+      const transform = x => x.toUpperCase();
+      const either = Validation.of('text');
+
+      const result = Validation.andThen(transform, either);
+
+      expect(result).toBe('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Failure', () => {
+      const transform = x => x.toUpperCase();
+      const either = Validation.Failure.of('text');
+
+      const result = Validation.andThen(transform, either);
+
+      expect(result).toBe(either);
+    });
+  });
+
   describe('Validation.isFailure', () => {
     test('It should return true if the instance is a Failure', () => {
       expect(Validation.isFailure(Validation.Failure.of())).toBe(true);
@@ -184,6 +204,24 @@ describe('Zoom.Data.Validation', () => {
       const transform = x => x.toUpperCase();
       const either = Validation.Failure.of('text');
       const result = either.chain(transform);
+
+      expect(result).toBe(either);
+    });
+  });
+
+  describe('Validation#andThen', () => {
+    test('It should apply the transform if the instance is a Success', () => {
+      const transform = x => x.toUpperCase();
+
+      const result = Validation.of('text').andThen(transform);
+
+      expect(result).toBe('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Failure', () => {
+      const transform = x => x.toUpperCase();
+      const either = Validation.Failure.of('text');
+      const result = either.andThen(transform);
 
       expect(result).toBe(either);
     });

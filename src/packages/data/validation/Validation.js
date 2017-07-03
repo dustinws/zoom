@@ -83,9 +83,11 @@ Failure.of = function of(value) {
  * @description Apply a transformation to the Validation if it is an instance
  * of "Success". Otherwise, ignore the transformation and return the instance.
  * This is how you can switch from a 'Success' to 'Failure' instance and stop
- * subsequent transformations from being applied.
+ * subsequent transformations from being applied. An alias for
+ * [Validation.andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.andThen)
  * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
+ * @see [Validation.andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.andThen)
  * @function chain
  * @example
  * import { Validation } from '@dustinws/zoom/data';
@@ -107,6 +109,33 @@ Validation.chain = curry((transform, validation) =>
     Failure: constant(validation),
     Success: transform,
   }));
+
+/**
+ * @description Apply a transformation to the Validation if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Success' to 'Failure' instance and stop
+ * subsequent transformations from being applied. An alias for
+ * [Validation.chain](https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.chain)
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.15.0
+ * @see [Validation.chain](https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.chain)
+ * @function andThen
+ * @example
+ * import { Validation } from '@dustinws/zoom/data';
+ *
+ * const valid = Validation.Success.of('yay!');
+ * const invalid = Validation.Failure.of('nay!');
+ *
+ * const toUpper = x => Validation.Success.of(x.toUpperCase());
+ *
+ * Validation.andThen(toUpper, valid); // Success('YAY!');
+ * Validation.andThen(toUpper, invalid); // Failure('nay!');
+ *
+ * @param  {Function} transform The transformation to apply to the inner value
+ * @param  {Validation} validation The transformation to apply to the inner value
+ * @return {Validation}
+ */
+Validation.andThen = Validation.chain;
 
 /**
  * @description Apply a transformation to the Validation if it is an instance
@@ -249,6 +278,62 @@ Validation.empty = () =>
  */
 
 /**
+ * @description A function that accepts an object with two functions, one
+ * to run if the either is an instance of `Success`, and one to run if the
+ * either is an instance of `Failure`. The return value will be returned
+ * directly, with no wrapper instance. This name is short for `catamorphism`.
+ * An alias for [Validation#caseOf](https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.Validation#caseOf)
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.0.0
+ * @function
+ * @see [Validation#caseOf](https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.Validation#caseOf)
+ * @example
+ * import { Validation } from '@dustinws/zoom/data';
+ *
+ * Validation.Success.of('foobar').cata({
+ *   Success(foobar) {
+ *     // Do something with foobar
+ *   },
+ *
+ *   Failure(error) {
+ *     // Handle the error
+ *   },
+ * });
+ *
+ * @param  {Object} cases The cases to match against.
+ * @return {Validation}
+ */
+Validation.prototype.cata = Validation.prototype.cata;
+
+/**
+ * @description A function that accepts an object with two functions, one
+ * to run if the either is an instance of `Success`, and one to run if the
+ * either is an instance of `Failure`. The return value will be returned
+ * directly, with no wrapper instance. This name is short for `catamorphism`.
+ * An alias for [Validation#cata](https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.Validation#cata)
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.17.0
+ * @function
+ * @see [Validation#cata](https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.Validation#cata)
+ * @example
+ * import { Validation } from '@dustinws/zoom/data';
+ *
+ * Validation.Success.of('foobar').caseOf({
+ *   Success(foobar) {
+ *     // Do something with foobar
+ *   },
+ *
+ *   Failure(error) {
+ *     // Handle the error
+ *   },
+ * });
+ *
+ * @param  {Object} cases The cases to match against.
+ * @return {Validation}
+ */
+Validation.prototype.caseOf = Validation.prototype.cata;
+
+/**
  * @description Lift a value into a successful 'Success' context.
  * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
@@ -288,9 +373,11 @@ Failure.prototype.of = function of(value) {
  * @description Apply a transformation to the Validation if it is an instance
  * of "Success". Otherwise, ignore the transformation and return the instance.
  * This is how you can switch from a 'Success' to 'Failure' instance and stop
- * subsequent transformations from being applied.
+ * subsequent transformations from being applied. An alias for
+ * [Validation#andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.Validation#andThen)
  * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
+ * @see [Validation#andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.Validation#andThen)
  * @example
  * import { Validation } from '@dustinws/zoom/data';
  *
@@ -306,6 +393,33 @@ Failure.prototype.of = function of(value) {
  * @return {Validation}
  */
 Validation.prototype.chain = function chain(transform) {
+  return Validation.chain(transform, this);
+};
+
+/**
+ * @description Apply a transformation to the Validation if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Success' to 'Failure' instance and stop
+ * subsequent transformations from being applied. An alias for
+ * [Validation#chain](https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.Validation#chain)
+ * @memberof module:Zoom.Data.Validation
+ * @since v1.15.0
+ * @see [Validation#chain](https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.Validation#chain)
+ * @example
+ * import { Validation } from '@dustinws/zoom/data';
+ *
+ * const valid = Validation.Success.of('yay!');
+ * const invalid = Validation.Failure.of('nay!');
+ *
+ * const toUpper = x => Validation.Success.of(x.toUpperCase());
+ *
+ * valid.andThen(toUpper); // Success('YAY!');
+ * invalid.andThen(toUpper); // Failure('nay!');
+ *
+ * @param  {Function} transform The transformation to apply to the inner value
+ * @return {Validation}
+ */
+Validation.prototype.andThen = function andThen(transform) {
   return Validation.chain(transform, this);
 };
 

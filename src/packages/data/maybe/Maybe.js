@@ -4,10 +4,6 @@ import curry from '../../lambda/curry';
 import compose from '../../lambda/compose';
 import constant from '../../lambda/constant';
 
-/**
- * @class Maybe
- * @memberof module:Zoom.Data
- */
 const Maybe = union('Maybe', {
   Just: ['value'],
   Nothing: [],
@@ -45,7 +41,7 @@ Maybe.of = function of(value) {
 /**
  * @description Lift a value into a successful 'Just' context.
  * @memberof module:Zoom.Data.Maybe
- * @function
+ * @function Just.of
  * @since v1.15.0
  * @example
  * import { Maybe } from '@dustinws/zoom/data';
@@ -65,7 +61,7 @@ Just.of = function of(value) {
  * @description Lift a value into a 'Nothing' context. Any value
  * passed will be ignored.
  * @memberof module:Zoom.Data.Maybe
- * @function
+ * @function Nothing.of
  * @since v1.15.0
  * @example
  * import { Maybe } from '@dustinws/zoom/data';
@@ -85,10 +81,12 @@ Nothing.of = function of() {
  * @description Apply a transformation to the Maybe if it is an instance
  * of "Just". Otherwise, ignore the transformation and return the instance.
  * This is how you can switch from a 'Just' to 'Nothing' instance and stop
- * subsequent transformations from being applied.
+ * subsequent transformations from being applied. An alias for
+ * [Task.andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.andThen)
  * @memberof module:Zoom.Data.Maybe
  * @since v1.15.0
  * @function chain
+ * @see [Task.andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.andThen)
  * @example
  * import { Maybe } from '@dustinws/zoom/data';
  *
@@ -109,6 +107,33 @@ Maybe.chain = curry((transform, maybe) =>
     Nothing: constant(maybe),
     Just: transform,
   }));
+
+/**
+ * @description Apply a transformation to the Maybe if it is an instance
+ * of "Just". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Just' to 'Nothing' instance and stop
+ * subsequent transformations from being applied. An alias for
+ * [Task.chain](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.chain)
+ * @memberof module:Zoom.Data.Maybe
+ * @since v1.15.0
+ * @function andThen
+ * @see [Task.chain](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.chain)
+ * @example
+ * import { Maybe } from '@dustinws/zoom/data';
+ *
+ * const valid = Maybe.Just.of('yay!');
+ * const invalid = Maybe.Nothing;
+ *
+ * const toUpper = x => Maybe.Just.of(x.toUpperCase());
+ *
+ * Maybe.andThen(toUpper, valid); // Just('YAY!')
+ * Maybe.andThen(toUpper, invalid); // Nothing
+ *
+ * @param  {Function} transform The transformation to apply to the inner value
+ * @param  {Maybe} maybe The maybe
+ * @return {Maybe}
+ */
+Maybe.andThen = Maybe.chain;
 
 /**
  * @description Apply a transformation to the Maybe if it is an instance
@@ -221,6 +246,62 @@ Maybe.fromNullable = (value) => {
  */
 
 /**
+ * @description A function that accepts an object with two functions, one
+ * to run if the either is an instance of `Just`, and one to run if the
+ * either is an instance of `Nothing`. The return value will be returned
+ * directly, with no wrapper instance. This name is short for `catamorphism`.
+ * An alias for [Maybe#caseOf](https://dustinws.github.io/zoom/module-Zoom.Data.Maybe.html#.Maybe#caseOf)
+ * @memberof module:Zoom.Data.Maybe
+ * @since v1.0.0
+ * @function
+ * @see [Maybe#caseOf](https://dustinws.github.io/zoom/module-Zoom.Data.Maybe.html#.Maybe#caseOf)
+ * @example
+ * import { Maybe } from '@dustinws/zoom/data';
+ *
+ * Maybe.Just.of('foobar').cata({
+ *   Just(foobar) {
+ *     // Do stuff with foobar
+ *   },
+ *
+ *   Nothing() {
+ *     // Do stuff
+ *   },
+ * });
+ *
+ * @param  {Object} cases The cases to match against.
+ * @return {Maybe}
+ */
+Maybe.prototype.cata = Maybe.prototype.cata;
+
+/**
+ * @description A function that accepts an object with two functions, one
+ * to run if the either is an instance of `Just`, and one to run if the
+ * either is an instance of `Nothing`. The return value will be returned
+ * directly, with no wrapper instance. An alias for
+ * [Maybe#cata](https://dustinws.github.io/zoom/module-Zoom.Data.Maybe.html#.Maybe#cata)
+ * @memberof module:Zoom.Data.Maybe
+ * @since v1.0.0
+ * @function
+ * @see [Maybe#cata](https://dustinws.github.io/zoom/module-Zoom.Data.Maybe.html#.Maybe#cata)
+ * @example
+ * import { Maybe } from '@dustinws/zoom/data';
+ *
+ * Maybe.Just.of('foobar').caseOf({
+ *   Just(foobar) {
+ *     // Do stuff with foobar
+ *   },
+ *
+ *   Nothing() {
+ *     // Do stuff
+ *   },
+ * });
+ *
+ * @param  {Object} cases The cases to match against.
+ * @return {Maybe}
+ */
+Maybe.prototype.caseOf = Maybe.prototype.cata;
+
+/**
  * @description Lift a value into a successful 'Just' context.
  * @memberof module:Zoom.Data.Maybe
  * @since v1.15.0
@@ -242,9 +323,11 @@ Just.prototype.of = function of(value) {
  * @description Apply a transformation to the Maybe if it is an instance
  * of "Just". Otherwise, ignore the transformation and return the instance.
  * This is how you can switch from a 'Just' to 'Nothing' instance and stop
- * subsequent transformations from being applied.
+ * subsequent transformations from being applied. An alias for
+ * [Task#andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.Task#andThen)
  * @memberof module:Zoom.Data.Maybe
  * @since v1.15.0
+ * @see [Task#andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.Task#andThen)
  * @example
  * import { Maybe } from '@dustinws/zoom/data';
  *
@@ -260,6 +343,33 @@ Just.prototype.of = function of(value) {
  * @return {Maybe}
 */
 Maybe.prototype.chain = function chain(transform) {
+  return Maybe.chain(transform, this);
+};
+
+/**
+ * @description Apply a transformation to the Maybe if it is an instance
+ * of "Just". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Just' to 'Nothing' instance and stop
+ * subsequent transformations from being applied. An alias for
+ * [Task#chain](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.Task#chain)
+ * @memberof module:Zoom.Data.Maybe
+ * @since v1.15.0
+ * @see [Task#chain](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.Task#chain)
+ * @example
+ * import { Maybe } from '@dustinws/zoom/data';
+ *
+ * const valid = Maybe.Just.of('yay!');
+ * const invalid = Maybe.Nothing;
+ *
+ * const toUpper = x => Maybe.Just.of(x.toUpperCase());
+ *
+ * valid.andThen(toUpper); // Just('YAY!')
+ * invalid.andThen(toUpper); // Nothing
+ *
+ * @param  {Function} transform The transformation to apply to the inner value
+ * @return {Maybe}
+*/
+Maybe.prototype.andThen = function andThen(transform) {
   return Maybe.chain(transform, this);
 };
 

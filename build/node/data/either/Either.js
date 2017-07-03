@@ -24,10 +24,6 @@ var _constant2 = _interopRequireDefault(_constant);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * @class Either
- * @memberof module:Zoom.Data
- */
 var Either = (0, _adt.union)('Either', {
   Right: ['value'],
   Left: ['value']
@@ -103,10 +99,12 @@ Left.of = function of(value) {
  * @description Apply a transformation to the Either if it is an instance
  * of "Right". Otherwise, ignore the transformation and return the instance.
  * This is how you can switch from a 'Right' to 'Left' instance and stop
- * subsequent transformations from being applied.
+ * subsequent transformations from being applied. An alias for
+ * [Either.andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Either.html#.andThen)
  * @memberof module:Zoom.Data.Either
  * @since v1.15.0
  * @function chain
+ * @see [Either.andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Either.html#.andThen)
  * @example
  * import { Either } from '@dustinws/zoom/data';
  *
@@ -119,7 +117,7 @@ Left.of = function of(value) {
  * Either.chain(toUpper, invalid); // Left('nay!');
  *
  * @param  {Function} transform The transformation to apply to the inner value
- * @param  {Eight} either The either instance.
+ * @param  {Either} either The either instance.
  * @return {Either}
  */
 Either.chain = (0, _curry2.default)(function (transform, either) {
@@ -128,6 +126,33 @@ Either.chain = (0, _curry2.default)(function (transform, either) {
     Right: transform
   });
 });
+
+/**
+ * @description Apply a transformation to the Either if it is an instance
+ * of "Right". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Right' to 'Left' instance and stop
+ * subsequent transformations from being applied. An alias for
+ * [Either.chain](https://dustinws.github.io/zoom/module-Zoom.Data.Either.html#.chain)
+ * @memberof module:Zoom.Data.Either
+ * @since v1.17.0
+ * @function andThen
+ * @see [Either.chain](https://dustinws.github.io/zoom/module-Zoom.Data.Either.html#.chain)
+ * @example
+ * import { Either } from '@dustinws/zoom/data';
+ *
+ * const valid = Either.Right.of('yay!');
+ * const invalid = Either.Left.of('nay!');
+ *
+ * const toUpper = x => Either.Right.of(x.toUpperCase());
+ *
+ * Either.andThen(toUpper, valid); // Right('YAY!');
+ * Either.andThen(toUpper, invalid); // Left('nay!');
+ *
+ * @param  {Function} transform The transformation to apply to the inner value
+ * @param  {Either} either The either instance.
+ * @return {Either}
+ */
+Either.andThen = Either.chain;
 
 /**
  * @description Apply a transformation to the Either if it is an instance
@@ -147,7 +172,7 @@ Either.chain = (0, _curry2.default)(function (transform, either) {
  * Either.map(toUpper, invalid); // Left('nay!');
  *
  * @param  {Function} transform The transformation to apply to the inner value
- * @param  {Eight} either The either instance.
+ * @param  {Either} either The either instance.
  * @return {Either}
  */
 Either.map = (0, _curry2.default)(function (transform, either) {
@@ -249,6 +274,61 @@ Either.try = function (func) {
  */
 
 /**
+ * @description A function that accepts an object with two functions, one
+ * to run if the either is an instance of `Right`, and one to run if the
+ * either is an instance of `Left`. The return value will be returned
+ * directly, with no wrapper instance. This name is short for `catamorphism`.
+ * An alias for [Either#caseOf](https://dustinws.github.io/zoom/module-Zoom.Data.Either.html#.Either#caseOf)
+ * @memberof module:Zoom.Data.Either
+ * @since v1.0.0
+ * @function
+ * @see [Either#caseOf](https://dustinws.github.io/zoom/module-Zoom.Data.Either.html#.Either#caseOf)
+ * @example
+ * import { Either } from '@dustinws/zoom/data';
+ *
+ * Either.Right.of('foobar').cata({
+ *   Right(foobar) {
+ *     // Do something with foobar
+ *   },
+ *
+ *   Left(error) {
+ *     // Handle the error
+ *   },
+ * });
+ *
+ * @param  {Object} cases The cases to match against.
+ * @return {Either}
+ */
+Either.prototype.cata = Either.prototype.cata;
+
+/**
+ * @description A function that accepts an object with two functions, one
+ * to run if the either is an instance of `Right`, and one to run if the
+ * either is an instance of `Left`. The return value will be returned
+ * directly, with no wrapper instance. An alias for An alias for [Either#cata](https://dustinws.github.io/zoom/module-Zoom.Data.Either.html#.Either#cata)
+ * @memberof module:Zoom.Data.Either
+ * @since v1.0.0
+ * @see [Either#cata](https://dustinws.github.io/zoom/module-Zoom.Data.Either.html#.Either#cata)
+ * @function
+ * @example
+ * import { Either } from '@dustinws/zoom/data';
+ *
+ * Either.Right.of('foobar').caseOf({
+ *   Right(foobar) {
+ *     // Do something with foobar
+ *   },
+ *
+ *   Left(error) {
+ *     // Handle the error
+ *   },
+ * });
+ *
+ * @param  {Object} cases The cases to match against.
+ * @return {Either}
+ */
+Either.prototype.caseOf = Either.prototype.cata;
+
+/**
  * @description Lift a value into a successful 'Right' context.
  * @memberof module:Zoom.Data.Either
  * @since v1.15.0
@@ -288,9 +368,11 @@ Left.prototype.of = function of(value) {
  * @description Apply a transformation to the Either if it is an instance
  * of "Right". Otherwise, ignore the transformation and return the instance.
  * This is how you can switch from a 'Right' to 'Left' instance and stop
- * subsequent transformations from being applied.
+ * subsequent transformations from being applied. An alias for
+ * [Either#andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Either.html#.Either#andThen)
  * @memberof module:Zoom.Data.Either
  * @since v1.15.0
+ * @see [Either#andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Either.html#.Either#andThen)
  * @example
  * import { Either } from '@dustinws/zoom/data';
  *
@@ -306,6 +388,33 @@ Left.prototype.of = function of(value) {
  * @return {Either}
  */
 Either.prototype.chain = function chain(transform) {
+  return Either.chain(transform, this);
+};
+
+/**
+ * @description Apply a transformation to the Either if it is an instance
+ * of "Right". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Right' to 'Left' instance and stop
+ * subsequent transformations from being applied. An alias for
+ * [Either#chain](https://dustinws.github.io/zoom/module-Zoom.Data.Either.html#.Either#chain)
+ * @memberof module:Zoom.Data.Either
+ * @since v1.15.0
+ * @see [Either#chain](https://dustinws.github.io/zoom/module-Zoom.Data.Either.html#.Either#chain)
+ * @example
+ * import { Either } from '@dustinws/zoom/data';
+ *
+ * const valid = Either.Right.of('yay!');
+ * const invalid = Either.Left.of('nay!');
+ *
+ * const toUpper = x => Either.Right.of(x.toUpperCase());
+ *
+ * valid.andThen(toUpper); // Right('YAY!');
+ * invalid.andThen(toUpper); // Left('nay!');
+ *
+ * @param  {Function} transform The transformation to apply to the inner value
+ * @return {Either}
+ */
+Either.prototype.andThen = function andThen(transform) {
   return Either.chain(transform, this);
 };
 

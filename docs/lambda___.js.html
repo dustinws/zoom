@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>lambda/compose.js - Documentation</title>
+    <title>lambda/__.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">lambda/compose.js</h1>
+    <h1 class="page-title">lambda/__.js</h1>
     
 
     
@@ -37,30 +37,23 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import pipe from './pipe';
-
-/**
+            <pre class="prettyprint source linenums"><code>/**
  * @memberof module:Zoom.Lambda
- * @description Create a right to left function composition.
+ * @description The functional placeholder used to add arguments
+ * in a different order than the function originally declared.
  * @since v2.0.0
- * @function compose
+ * @type {Symbol}
+ * @constant
  * @example
- * import { compose } from '@dustinws/zoom/lambda';
+ * // __ :: Symbol
+ * import { __, curry } from '@dustinws/zoom/lambda';
  *
- * const square = n => n * n;
- * const increment = n => n + 1;
+ * const add = curry((a, b) => a + b);
  *
- * const main = compose(square, increment);
- *
- * main(4); // 25
- * compose(square, increment)(4) === square(increment(4))
- *
- * @param  {...Function} functions The functions to compose
- * @return {Function}
+ * add('Hello, ')('world!') // 'Hello, world!'
+ * add(__, 'world!')('Hello, ') // 'Hello, world!'
  */
-export default function compose(...functions) {
-  return pipe(...functions.reverse());
-}
+export default Symbol('@@functional/placeholder');
 </code></pre>
         </article>
     </section>

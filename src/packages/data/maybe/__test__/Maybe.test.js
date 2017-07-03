@@ -70,6 +70,26 @@ describe('Zoom.Data.Maybe', () => {
     });
   });
 
+  describe('Maybe.andThen', () => {
+    test('It should apply the transform if the instance is a Just', () => {
+      const transform = x => x.toUpperCase();
+      const maybe = Maybe.of('text');
+
+      const result = Maybe.andThen(transform, maybe);
+
+      expect(result).toBe('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Nothing', () => {
+      const transform = x => x.toUpperCase();
+      const maybe = Maybe.Nothing;
+
+      const result = Maybe.andThen(transform, maybe);
+
+      expect(result).toBe(maybe);
+    });
+  });
+
   describe('Maybe.isNothing', () => {
     test('It should return true if the instance is a Nothing', () => {
       expect(Maybe.isNothing(Maybe.Nothing)).toBe(true);
@@ -160,6 +180,22 @@ describe('Zoom.Data.Maybe', () => {
     test('It should ignore the transform if the instance is a Nothing', () => {
       const result = Maybe.Nothing.of();
       const value = result.chain(x => x.toUpperCase());
+
+      expect(value).toBe(result);
+    });
+  });
+
+  describe('Maybe#andThen', () => {
+    test('It should apply the transform if the instance is a Just', () => {
+      const result = Maybe.Just.of('text');
+      const value = result.andThen(x => x.toUpperCase());
+
+      expect(value).toBe('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Nothing', () => {
+      const result = Maybe.Nothing.of();
+      const value = result.andThen(x => x.toUpperCase());
 
       expect(value).toBe(result);
     });

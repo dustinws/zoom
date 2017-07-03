@@ -72,6 +72,26 @@ describe('Zoom.Data.Result', () => {
     });
   });
 
+  describe('Result.andThen', () => {
+    test('It should apply the transform if the instance is a Ok', () => {
+      const transform = x => x.toUpperCase();
+      const either = Result.of('text');
+
+      const result = Result.andThen(transform, either);
+
+      expect(result).toBe('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Err', () => {
+      const transform = x => x.toUpperCase();
+      const either = Result.Err.of('text');
+
+      const result = Result.andThen(transform, either);
+
+      expect(result).toBe(either);
+    });
+  });
+
   describe('Result.isErr', () => {
     test('It should return true if the instance is a Err', () => {
       expect(Result.isErr(Result.Err.of())).toBe(true);
@@ -151,6 +171,22 @@ describe('Zoom.Data.Result', () => {
     test('It should ignore the transform if the instance is a Err', () => {
       const result = Result.Err.of('text');
       const value = result.chain(x => x.toUpperCase());
+
+      expect(value).toBe(result);
+    });
+  });
+
+  describe('Result#andThen', () => {
+    test('It should apply the transform if the instance is a Ok', () => {
+      const result = Result.Ok.of('text');
+      const value = result.andThen(x => x.toUpperCase());
+
+      expect(value).toBe('TEXT');
+    });
+
+    test('It should ignore the transform if the instance is a Err', () => {
+      const result = Result.Err.of('text');
+      const value = result.andThen(x => x.toUpperCase());
 
       expect(value).toBe(result);
     });
