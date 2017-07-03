@@ -9,5 +9,5 @@ fi
 
 # Build new docs
 echo "Building docs..."
-jsdoc -t node_modules/docdash -R ./README.md -d docs -r src
+./node_modules/.bin/jsdoc -t node_modules/docdash -R ./README.md -d docs -r src
 echo "Docs built successfully"
