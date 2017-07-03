@@ -28,7 +28,7 @@ const Failure = Validation.Failure;
  * @function of
  * @since v1.15.0
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * const valid = Validation.of(1);
  *
@@ -47,7 +47,7 @@ Validation.of = function of(value) {
  * @function
  * @since v1.15.0
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * const valid = Validation.Success.of(1);
  *
@@ -66,7 +66,7 @@ Success.of = function of(value) {
  * @function
  * @since v1.15.0
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * const valid = Validation.Failure.of(1);
  *
@@ -88,7 +88,7 @@ Failure.of = function of(value) {
  * @since v1.15.0
  * @function chain
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * const valid = Validation.Success.of('yay!');
  * const invalid = Validation.Failure.of('nay!');
@@ -115,7 +115,7 @@ Validation.chain = curry((transform, validation) =>
  * @since v1.15.0
  * @function map
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * const valid = Validation.Success.of('yay!');
  * const failure = Validation.Failure.of('nay!');
@@ -139,7 +139,7 @@ Validation.map = curry((transform, validation) =>
  * @since v1.15.0
  * @function ap
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * const valid = Validation.Success.of('yay!');
  * const failure = Validation.Failure.of('nay!');
@@ -162,7 +162,7 @@ Validation.ap = curry((left, right) =>
  * @since v1.15.0
  * @function isFailure
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * Validation.isFailure(Validation.Failure.of(1)); // true
  * Validation.isFailure(Validation.Success.of(1)); // false
@@ -178,7 +178,7 @@ Validation.isFailure = validation => validation instanceof Validation.Failure;
  * @since v1.15.0
  * @function isSuccess
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * Validation.isSuccess(Validation.Success.of(1)); // true
  * Validation.isSuccess(Validation.Failure.of(1)); // false
@@ -196,7 +196,7 @@ Validation.isSuccess = validation => validation instanceof Validation.Success;
  * @since v1.15.0
  * @function concat
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * const failure = Validation.Failure.of(['fail!']);
  * const success = Validation.Success.of(['win!']);
@@ -232,7 +232,7 @@ Validation.concat = curry((left, right) =>
  * @since v1.15.0
  * @function empty
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * Validation.empty(); // Success([])
  *
@@ -253,7 +253,7 @@ Validation.empty = () =>
  * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * const valid = Validation.();
  *
@@ -271,7 +271,7 @@ Success.prototype.of = function of(value) {
  * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * const invalid = Validation.();
  *
@@ -292,7 +292,7 @@ Failure.prototype.of = function of(value) {
  * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * const valid = Validation.Success.of('yay!');
  * const invalid = Validation.Failure.of('nay!');
@@ -315,7 +315,7 @@ Validation.prototype.chain = function chain(transform) {
  * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * const valid = Validation.Success.of('yay!');
  * const failure = Validation.Failure.of('nay!');
@@ -338,7 +338,7 @@ Validation.prototype.map = function map(transform) {
  * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * const valid = Validation.Success.of('yay!');
  * const failure = Validation.Failure.of('nay!');
@@ -360,7 +360,7 @@ Validation.prototype.ap = function ap(apply) {
  * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * Validation.Failure.of(1).isFailure(); // true
  * Validation.Success.of(1).isFailure(); // false
@@ -377,7 +377,7 @@ Validation.prototype.isFailure = function isFailure() {
  * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * Validation.Success.of(1).isSuccess(); // true
  * Validation.Failure.of(1).isSuccess(); // false
@@ -396,7 +396,7 @@ Validation.prototype.isSuccess = function isSuccess() {
  * @memberof module:Zoom.Data.Validation
  * @since v1.15.0
  * @example
- * import { Validation } from '@dustinws/zoom/packages/data';
+ * import { Validation } from '@dustinws/zoom/data';
  *
  * const failure = Validation.Failure.of(['fail!']);
  * const success = Validation.Success.of(['win!']);

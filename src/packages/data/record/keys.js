@@ -5,7 +5,7 @@
  * @function keys
  * @example
  * // keys :: { String: * } -> [String]
- * import { keys } from '@dustinws/zoom/packages/data/record';
+ * import { keys } from '@dustinws/zoom/data/record';
  *
  * keys({ a: 1, b: 2 }) // ['a', 'b']
  *

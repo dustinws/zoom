@@ -10,7 +10,7 @@ import keys from './keys';
  * @function omit
  * @example
  * // omit :: [String] -> { String: a } -> { String: a }
- * import { omit } from '@dustinws/zoom/packages/data/record';
+ * import { omit } from '@dustinws/zoom/data/record';
  *
  * omit(['a'], { a: 1, b:2 }) // { b: 2 }
  *

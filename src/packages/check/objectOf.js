@@ -8,7 +8,7 @@ import Validation from '../data/Validation';
  * @since v1.14.0
  * @function objectOf
  * @example
- * import { objectOf, string } from '@dustinws/zoom/packages/check';
+ * import { objectOf, string } from '@dustinws/zoom/check';
  *
  * objectOf(string, { a: '1' }).isSuccess() // true
  * objectOf(string, { a: 1 }).isSuccess() // false

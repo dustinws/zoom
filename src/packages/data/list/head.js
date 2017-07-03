@@ -7,7 +7,7 @@ import Maybe from '../Maybe';
  * @function head
  * @example
  * // head :: [a] -> Maybe a
- * import { head } from '@dustinws/zoom/packages/data/list';
+ * import { head } from '@dustinws/zoom/data/list';
  *
  * head([1]); // Just(1)
  * head([]); // Nothing

@@ -5,7 +5,7 @@
  * @function isEmpty
  * @example
  * // isEmpty :: [*] -> Bool
- * import { isEmpty } from '@dustinws/zoom/packages/data/list';
+ * import { isEmpty } from '@dustinws/zoom/data/list';
  *
  * isEmpty([]); // true
  * isEmpty([1]); // false

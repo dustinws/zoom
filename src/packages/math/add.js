@@ -6,7 +6,7 @@ import curry from '../lambda/curry';
  * @function add
  * @since v1.0.0
  * @example
- * import { add } from '@dustinws/zoom/packages/math';
+ * import { add } from '@dustinws/zoom/math';
  *
  * add(3, 2); // 5
  *

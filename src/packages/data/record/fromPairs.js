@@ -7,7 +7,7 @@ import fold from '../list/fold';
  * @function fromPairs
  * @example
  * // fromPairs :: [[String, a]] -> { String: a }
- * import { fromPairs } from '@dustinws/zoom/packages/data/record';
+ * import { fromPairs } from '@dustinws/zoom/data/record';
  *
  * fromPairs([['a', 1], ['b', 2]]) // { a: 1, b: 2 }
  *

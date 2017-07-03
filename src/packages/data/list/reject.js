@@ -11,7 +11,7 @@ import filter from './filter';
  * @function reject
  * @example
  * // reject :: (a -> Bool) -> [a] -> [a]
- * import { reject } from '@dustinws/zoom/packages/data/list';
+ * import { reject } from '@dustinws/zoom/data/list';
  *
  * const isOdd = n => n % 2;
  * const numbers = [1, 2, 3, 4, 5];

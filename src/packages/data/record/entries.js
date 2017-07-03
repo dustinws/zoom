@@ -8,7 +8,7 @@ import map from '../list/map';
  * @function entries
  * @example
  * // entries :: { String: a } -> [[String, a]]
- * import { entries } from '@dustinws/zoom/packages/data/record';
+ * import { entries } from '@dustinws/zoom/data/record';
  *
  * entries({ a: 1, b: 2 }) // [['a', 1], ['b', 2]]
  *

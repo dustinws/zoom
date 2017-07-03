@@ -8,7 +8,7 @@ import curry from '../../lambda/curry';
  * @function has
  * @example
  * // has :: String -> { String: * } -> Bool
- * import { has } from '@dustinws/zoom/packages/data/record';
+ * import { has } from '@dustinws/zoom/data/record';
  *
  * has('a', { a: 1 }) // true
  * has('b', { a: 1 }) // false

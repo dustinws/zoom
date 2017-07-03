@@ -8,7 +8,7 @@ import curry from '../../lambda/curry';
  * @function each
  * @example
  * // each :: (a -> *) -> [a] -> [a]
- * import { each } from '@dustinws/zoom/packages/data/list';
+ * import { each } from '@dustinws/zoom/data/list';
  *
  * each(console.log, [1, 2, 3]);
  * // 1

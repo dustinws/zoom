@@ -7,7 +7,7 @@ import keys from './keys';
  * @function size
  * @example
  * // size :: { String: * } -> Int
- * import { size } from '@dustinws/zoom/packages/data/record';
+ * import { size } from '@dustinws/zoom/data/record';
  *
  * size({ a: 1 }) // 1
  *

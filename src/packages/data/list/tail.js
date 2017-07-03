@@ -5,7 +5,7 @@
  * @function tail
  * @example
  * // tail :: [a] -> [a]
- * import { tail } from '@dustinws/zoom/packages/data/tail';
+ * import { tail } from '@dustinws/zoom/data/tail';
  *
  * tail([1, 2, 3, 4]); // [2, 3, 4]
  * tail([1]); // []

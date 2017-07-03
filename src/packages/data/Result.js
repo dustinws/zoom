@@ -29,7 +29,7 @@ const Err = Result.Err;
  * @function of
  * @since v1.15.0
  * @example
- * import { Result } from '@dustinws/zoom/packages/data';
+ * import { Result } from '@dustinws/zoom/data';
  *
  * const valid = Result.of(1);
  *
@@ -48,7 +48,7 @@ Result.of = function of(value) {
  * @function
  * @since v1.15.0
  * @example
- * import { Result } from '@dustinws/zoom/packages/data';
+ * import { Result } from '@dustinws/zoom/data';
  *
  * const valid = Result.Ok.of(1);
  *
@@ -67,7 +67,7 @@ Ok.of = function of(value) {
  * @function
  * @since v1.15.0
  * @example
- * import { Result } from '@dustinws/zoom/packages/data';
+ * import { Result } from '@dustinws/zoom/data';
  *
  * const valid = Result.Err.of(1);
  *
@@ -89,7 +89,7 @@ Err.of = function of(value) {
  * @since v1.15.0
  * @function chain
  * @example
- * import { Result } from '@dustinws/zoom/packages/data';
+ * import { Result } from '@dustinws/zoom/data';
  *
  * const valid = Result.Ok.of('yay!');
  * const invalid = Result.Err.of('nay!');
@@ -116,7 +116,7 @@ Result.chain = curry((transform, result) =>
  * @since v1.15.0
  * @function map
  * @example
- * import { Result } from '@dustinws/zoom/packages/data';
+ * import { Result } from '@dustinws/zoom/data';
  *
  * const valid = Result.Ok.of('yay!');
  * const failure = Result.Err.of('nay!');
@@ -140,7 +140,7 @@ Result.map = curry((transform, result) =>
  * @since v1.15.0
  * @function ap
  * @example
- * import { Result } from '@dustinws/zoom/packages/data';
+ * import { Result } from '@dustinws/zoom/data';
  *
  * const valid = Result.Ok.of('yay!');
  * const failure = Result.Err.of('nay!');
@@ -163,7 +163,7 @@ Result.ap = curry((left, right) =>
  * @since v1.15.0
  * @function isErr
  * @example
- * import { Result } from '@dustinws/zoom/packages/data';
+ * import { Result } from '@dustinws/zoom/data';
  *
  * Result.isErr(Result.Err.of(1)); // true
  * Result.isErr(Result.Ok.of(1)); // false
@@ -179,7 +179,7 @@ Result.isErr = result => result instanceof Result.Err;
  * @since v1.15.0
  * @function isOk
  * @example
- * import { Result } from '@dustinws/zoom/packages/data';
+ * import { Result } from '@dustinws/zoom/data';
  *
  * Result.isOk(Result.Ok.of(1)); // true
  * Result.isOk(Result.Err.of(1)); // false
@@ -201,7 +201,7 @@ Result.isOk = result => result instanceof Result.Ok;
  * @memberof module:Zoom.Data.Result
  * @since v1.15.0
  * @example
- * import { Result } from '@dustinws/zoom/packages/data';
+ * import { Result } from '@dustinws/zoom/data';
  *
  * const valid = Result.Ok.of(1);
  *
@@ -219,7 +219,7 @@ Ok.prototype.of = function of(value) {
 * @memberof module:Zoom.Data.Result
 * @since v1.15.0
 * @example
-* import { Result } from '@dustinws/zoom/packages/data';
+* import { Result } from '@dustinws/zoom/data';
 *
 * const valid = Result.Err.of(1);
 *
@@ -240,7 +240,7 @@ Err.prototype.of = function of(value) {
 * @memberof module:Zoom.Data.Result
 * @since v1.15.0
 * @example
-* import { Result } from '@dustinws/zoom/packages/data';
+* import { Result } from '@dustinws/zoom/data';
 *
 * const valid = Result.Ok.of('yay!');
 * const invalid = Result.Err.of('nay!');
@@ -263,7 +263,7 @@ Result.prototype.chain = function chain(transform) {
 * @memberof module:Zoom.Data.Result
 * @since v1.15.0
 * @example
-* import { Result } from '@dustinws/zoom/packages/data';
+* import { Result } from '@dustinws/zoom/data';
 *
 * const valid = Result.Ok.of('yay!');
 * const failure = Result.Err.of('nay!');
@@ -286,7 +286,7 @@ Result.prototype.map = function map(transform) {
 * @memberof module:Zoom.Data.Result
 * @since v1.15.0
 * @example
-* import { Result } from '@dustinws/zoom/packages/data';
+* import { Result } from '@dustinws/zoom/data';
 *
 * const valid = Result.Ok.of('yay!');
 * const failure = Result.Err.of('nay!');
@@ -308,7 +308,7 @@ Result.prototype.ap = function ap(apply) {
 * @memberof module:Zoom.Data.Result
 * @since v1.15.0
 * @example
-* import { Result } from '@dustinws/zoom/packages/data';
+* import { Result } from '@dustinws/zoom/data';
 *
 * Result.Err.of(1).isErr(); // true
 * Result.Ok.of(1).isErr(); // false
@@ -324,7 +324,7 @@ Result.prototype.isErr = function isErr() {
 * @memberof module:Zoom.Data.Result
 * @since v1.15.0
 * @example
-* import { Result } from '@dustinws/zoom/packages/data';
+* import { Result } from '@dustinws/zoom/data';
 *
 * Result.Ok.of(1)isOk(); // true
 * Result.Err.of(1)isOk(); // false

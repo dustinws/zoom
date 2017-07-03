@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Run tests with jest
+NODE_ENV=testing ./node_modules/.bin/jest --coverage

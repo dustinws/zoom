@@ -10,7 +10,7 @@ import Maybe from '../Maybe';
  * @function indexOf
  * @example
  * // indexOf :: * -> [*] -> Maybe Int
- * import { indexOf } from '@dustinws/zoom/packages/data/list';
+ * import { indexOf } from '@dustinws/zoom/data/list';
  *
  * indexOf(1, [1]); // Just(0)
  * indexOf(2, [1]); // Nothing

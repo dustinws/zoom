@@ -7,7 +7,7 @@ import Validation from '../data/Validation';
  * @since v1.14.0
  * @function union
  * @example
- * import { union, string, bool } from '@dustinws/zoom/packages/check';
+ * import { union, string, bool } from '@dustinws/zoom/check';
  *
  * const myType = union([string, bool]);
  *

@@ -7,9 +7,9 @@
     "build:node": "bin/build:node",
     "build:browser": "bin/build:browser",
     "generate:docs": "bin/generate:docs",
-    "lint": "eslint .",
-    "tdd": "NODE_ENV=testing jest --watch",
-    "test": "NODE_ENV=testing jest --coverage"
+    "lint": "bin/lint",
+    "tdd": "bin/tdd",
+    "test": "bin/test"
   },
   "author": "Dustin <dustinws@protonmail.com>",
   "license": "MIT",

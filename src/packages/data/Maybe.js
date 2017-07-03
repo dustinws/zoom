@@ -29,7 +29,7 @@ const Nothing = Maybe.Nothing;
  * @function of
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/packages/data';
+ * import { Maybe } from '@dustinws/zoom/data';
  *
  * const val = Maybe.of(1);
  *
@@ -48,7 +48,7 @@ Maybe.of = function of(value) {
  * @function
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/packages/data';
+ * import { Maybe } from '@dustinws/zoom/data';
  *
  * const val = Maybe.Just.of(1);
  *
@@ -68,7 +68,7 @@ Just.of = function of(value) {
  * @function
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/packages/data';
+ * import { Maybe } from '@dustinws/zoom/data';
  *
  * const val = Maybe.Nothing.of(1);
  *
@@ -90,7 +90,7 @@ Nothing.of = function of() {
  * @since v1.15.0
  * @function chain
  * @example
- * import { Maybe } from '@dustinws/zoom/packages/data';
+ * import { Maybe } from '@dustinws/zoom/data';
  *
  * const valid = Maybe.Just.of('yay!');
  * const invalid = Maybe.Nothing;
@@ -117,7 +117,7 @@ Maybe.chain = curry((transform, maybe) =>
  * @since v1.15.0
  * @function map
  * @example
- * import { Maybe } from '@dustinws/zoom/packages/data';
+ * import { Maybe } from '@dustinws/zoom/data';
  *
  * const valid = Maybe.Just.of('yay!');
  * const failure = Maybe.Nothing;
@@ -141,7 +141,7 @@ Maybe.map = curry((transform, maybe) =>
  * @since v1.15.0
  * @function ap
  * @example
- * import { Maybe } from '@dustinws/zoom/packages/data';
+ * import { Maybe } from '@dustinws/zoom/data';
  *
  * const valid = Maybe.Just.of('yay!');
  * const failure = Maybe.Nothing;
@@ -164,7 +164,7 @@ Maybe.ap = curry((left, right) =>
  * @since v1.15.0
  * @function isNothing
  * @example
- * import { Maybe } from '@dustinws/zoom/packages/data';
+ * import { Maybe } from '@dustinws/zoom/data';
  *
  * Maybe.isNothing(Maybe.Nothing); // true
  * Maybe.isNothing(Maybe.Just.of(1)); // false
@@ -180,7 +180,7 @@ Maybe.isNothing = maybe => maybe === Maybe.Nothing;
  * @since v1.15.0
  * @function isJust
  * @example
- * import { Maybe } from '@dustinws/zoom/packages/data';
+ * import { Maybe } from '@dustinws/zoom/data';
  *
  * Maybe.isJust(Maybe.Just.of(1)); // true
  * Maybe.isJust(Maybe.Nothing); // false
@@ -196,7 +196,7 @@ Maybe.isJust = maybe => maybe instanceof Maybe.Just;
  * @memberof module:Zoom.Data.Maybe
  * @function fromNullable
  * @example
- * import { Maybe } from '@dustinws/zoom/packages/data';
+ * import { Maybe } from '@dustinws/zoom/data';
  *
  * Maybe.fromNullable(''); // Just('')
  * Maybe.fromNullable(null); // Nothing
@@ -225,7 +225,7 @@ Maybe.fromNullable = (value) => {
  * @memberof module:Zoom.Data.Maybe
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/packages/data';
+ * import { Maybe } from '@dustinws/zoom/data';
  *
  * const val = Maybe.Just.of(1);
  *
@@ -246,7 +246,7 @@ Just.prototype.of = function of(value) {
  * @memberof module:Zoom.Data.Maybe
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/packages/data';
+ * import { Maybe } from '@dustinws/zoom/data';
  *
  * const valid = Maybe.Just.of('yay!');
  * const invalid = Maybe.Nothing;
@@ -269,7 +269,7 @@ Maybe.prototype.chain = function chain(transform) {
  * @memberof module:Zoom.Data.Maybe
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/packages/data';
+ * import { Maybe } from '@dustinws/zoom/data';
  *
  * const valid = Maybe.Just.of('yay!');
  * const failure = Maybe.Nothing;
@@ -292,7 +292,7 @@ Maybe.prototype.map = function map(transform) {
  * @memberof module:Zoom.Data.Maybe
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/packages/data';
+ * import { Maybe } from '@dustinws/zoom/data';
  *
  * const valid = Maybe.Just.of('yay!');
  * const failure = Maybe.Nothing;
@@ -314,7 +314,7 @@ Maybe.prototype.ap = function ap(transform) {
  * @memberof module:Zoom.Data.Maybe
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/packages/data';
+ * import { Maybe } from '@dustinws/zoom/data';
  *
  * Maybe.Nothing.isNothing(); // true
  * Maybe.Just.of().isNothing(); // false
@@ -330,7 +330,7 @@ Maybe.prototype.isNothing = function isNothing() {
  * @memberof module:Zoom.Data.Maybe
  * @since v1.15.0
  * @example
- * import { Maybe } from '@dustinws/zoom/packages/data';
+ * import { Maybe } from '@dustinws/zoom/data';
  *
  * Maybe.Just.of().isJust(); // true
  * Maybe.Nothing.isJust(); // false

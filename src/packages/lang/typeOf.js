@@ -5,7 +5,7 @@
  * @function typeOf
  * @example
  * // typeOf :: * -> String
- * import { typeOf } from '@dustinws/zoom/packages/core';
+ * import { typeOf } from '@dustinws/zoom/core';
  *
  * typeOf('') // String
  * typeOf([]) // Array

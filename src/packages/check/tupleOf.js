@@ -8,7 +8,7 @@ import Validation from '../data/Validation';
  * @since v1.14.0
  * @function tupleOf
  * @example
- * import { tupleOf, number, string } from '@dustinws/zoom/packages/check';
+ * import { tupleOf, number, string } from '@dustinws/zoom/check';
  *
  * const user = tupleOf([number, string]);
  *

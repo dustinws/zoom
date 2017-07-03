@@ -7,7 +7,7 @@ import curry from '../../lambda/curry';
  * @function concat
  * @example
  * // concat :: [a] -> [a] -> [a]
- * import { concat } from '@dustinws/zoom/packages/data/list';
+ * import { concat } from '@dustinws/zoom/data/list';
  *
  * concat([1], [2]); // [1, 2]
  *

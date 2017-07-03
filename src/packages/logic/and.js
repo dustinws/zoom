@@ -6,7 +6,7 @@ import curry from '../lambda/curry';
  * @function and
  * @since v1.0.0
  * @example
- * import { and } from '@dustinws/zoom/packages/logic';
+ * import { and } from '@dustinws/zoom/logic';
  *
  * and(false, true); // false
  * and(true, false); // false

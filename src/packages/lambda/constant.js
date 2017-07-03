@@ -5,7 +5,7 @@
  * @function constant
  * @example
  * // constant :: a -> b -> a
- * import { constant } from '@dustinws/zoom/packages/core';
+ * import { constant } from '@dustinws/zoom/core';
  *
  * const Pi = constant(3.14);
  *

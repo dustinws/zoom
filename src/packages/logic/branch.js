@@ -9,9 +9,9 @@ import curryN from '../lambda/curryN';
  * @function branch
  * @since v1.15.0
  * @example
- * import { prop, pipe } from '@dustinws/zoom/packages/core';
- * import { branch, eq } from '@dustinws/zoom/packages/logic';
- * import { True, False } from '@dustinws/zoom/packages/logic';
+ * import { prop, pipe } from '@dustinws/zoom/core';
+ * import { branch, eq } from '@dustinws/zoom/logic';
+ * import { True, False } from '@dustinws/zoom/logic';
  *
  * const isEmpty = branch(pipe(prop('length'), eq(0)), True, False);
  *

@@ -8,7 +8,7 @@ import curry from '../../lambda/curry';
  * @function merge
  * @example
  * // merge :: { String: * } -> { String: * } -> Bool
- * import { __, merge } from '@dustinws/zoom/packages/data/record';
+ * import { __, merge } from '@dustinws/zoom/data/record';
  *
  * merge({ a: 1 }, { b:2 }) // { a: 1, b: 2 }
  *

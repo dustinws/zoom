@@ -5,7 +5,7 @@
  * @function empty
  * @example
  * // empty :: * -> [*]
- * import { concat, empty, fold } from '@dustinws/zoom/packages/data/list';
+ * import { concat, empty, fold } from '@dustinws/zoom/data/list';
  *
  * empty(); // []
  *

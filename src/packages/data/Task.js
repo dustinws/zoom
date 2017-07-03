@@ -20,7 +20,7 @@ const Task = tag('Task', 'fork');
  * @since v1.15.0
  * @function of
  * @example
- * import { Task } from '@dustinws/zoom/packages/data';
+ * import { Task } from '@dustinws/zoom/data';
  *
  * Task.of(1); // Task(null, 1)
  *
@@ -36,7 +36,7 @@ Task.of = value =>
  * @since v1.15.0
  * @function reject
  * @example
- * import { Task } from '@dustinws/zoom/packages/data';
+ * import { Task } from '@dustinws/zoom/data';
  *
  * Task.reject(1); // Task(1, null)
  *
@@ -53,7 +53,7 @@ Task.reject = value =>
  * @since v1.15.0
  * @function chain
  * @example
- * import { Task } from '@dustinws/zoom/packages/data';
+ * import { Task } from '@dustinws/zoom/data';
  *
  * Task.chain(Task.lift(n => n + 1), Task.of(1)); // Task(null, 2)
  *
@@ -72,7 +72,7 @@ Task.chain = curry((transform, task) =>
  * @since v1.15.0
  * @function map
  * @example
- * import { Task } from '@dustinws/zoom/packages/data';
+ * import { Task } from '@dustinws/zoom/data';
  *
  * Task.map(x => x + x, Task.of(1)) // Task(null, 2)
  *
@@ -89,7 +89,7 @@ Task.map = curry((transform, task) =>
  * @since v1.15.0
  * @function toPromise
  * @example
- * import { Task } from '@dustinws/zoom/packages/data';
+ * import { Task } from '@dustinws/zoom/data';
  * import Promise from 'bluebird';
  *
  * Task.toPromise(Task.of(1)); // Promise(1)
@@ -110,7 +110,7 @@ Task.toPromise = (task, Promise = global.Promise) =>
  * @since v1.15.0
  * @function recover
  * @example
- * import { Task } from '@dustinws/zoom/packages/data';
+ * import { Task } from '@dustinws/zoom/data';
  *
  * const rejected = Task.reject(1); // Task(1, null)
  * Task.recover(err => Task.of('Recovered!'), rejected); // Task(null, 'Recovered!')
@@ -131,7 +131,7 @@ Task.recover = ((transform, task) =>
  * @since v1.15.0
  * @function parallel
  * @example
- * import { Task } from '@dustinws/zoom/packages/data';
+ * import { Task } from '@dustinws/zoom/data';
  *
  * const tasks = Task
  *   .parallel([
@@ -176,7 +176,7 @@ Task.parallel = tasks =>
  * @since v1.15.0
  * @function lift
  * @example
- * import { Task } from '@dustinws/zoom/packages/data';
+ * import { Task } from '@dustinws/zoom/data';
  *
  * const addTask = Task.lift((a, b) => a + b);
  *
@@ -196,7 +196,7 @@ Task.lift = func => (...args) =>
  * @function liftNode
  * @example
  * import fs from 'fs';
- * import { Task } from '@dustinws/zoom/packages/data';
+ * import { Task } from '@dustinws/zoom/data';
  *
  * const readFile = Task.liftNode(fs.readFile);
  *
@@ -227,7 +227,7 @@ Task.liftNode = func => (...args) =>
 * @memberof module:Zoom.Data.Task
 * @since v1.15.0
 * @example
-* import { Task } from '@dustinws/zoom/packages/data';
+* import { Task } from '@dustinws/zoom/data';
 *
 * Task.of(1).chain(x => Task.of(x + x)); // Task(null, 2)
 *
@@ -243,7 +243,7 @@ Task.prototype.chain = function chain(transform) {
 * @memberof module:Zoom.Data.Task
 * @since v1.15.0
 * @example
-* import { Task } from '@dustinws/zoom/packages/data';
+* import { Task } from '@dustinws/zoom/data';
 *
 * Task.of(1).map(x => x + x); // Task(null, 2)
 *
@@ -259,7 +259,7 @@ Task.prototype.map = function map(transform) {
 * @memberof module:Zoom.Data.Task
 * @since v1.15.0
 * @example
-* import { Task } from '@dustinws/zoom/packages/data';
+* import { Task } from '@dustinws/zoom/data';
 *
 * Task.of(1).toPromise(); // Promise(1)
 *
@@ -276,7 +276,7 @@ Task.prototype.toPromise = function toPromise(Promise = global.Promise) {
 * @memberof module:Zoom.Data.Task
 * @since v1.15.0
 * @example
-* import { Task } from '@dustinws/zoom/packages/data';
+* import { Task } from '@dustinws/zoom/data';
 *
 * const rejected = Task.reject(1); // Task(1, null)
 * rejected.recover(err => Task.of('Recovered!')); // Task(null, 'Recovered!')

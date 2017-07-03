@@ -12,7 +12,7 @@ import fold from '../list/fold';
  * @function map
  * @example
  * // map :: (a -> b) -> { String: a } -> { String: b }
- * import { map } from '@dustinws/zoom/packages/data/record';
+ * import { map } from '@dustinws/zoom/data/record';
  *
  * map(n => n + 1, { a: 1 }) // { a: 2 }
  *

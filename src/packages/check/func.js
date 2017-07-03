@@ -6,7 +6,7 @@ import _isType from './_isType';
  * @since v1.14.0
  * @function func
  * @example
- * import { func } from '@dustinws/zoom/packages/check';
+ * import { func } from '@dustinws/zoom/check';
  *
  * func(function(){}).isSuccess() // true
  * func('').isSuccess() // false

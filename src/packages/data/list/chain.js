@@ -11,7 +11,7 @@ import map from './map';
  * @function chain
  * @example
  * // chain :: (a -> [b]) -> [a] -> [b]
- * import { chain } from '@dustinws/zoom/packages/data/list';
+ * import { chain } from '@dustinws/zoom/data/list';
  *
  * chain(x => [x, x], [1, 2, 3]); // [1, 1, 2, 2, 3, 3]
  *

@@ -8,7 +8,7 @@ import Validation from '../data/Validation';
  * @since v1.14.0
  * @function shapeOf
  * @example
- * import { shapeOf, string, bool } from '@dustinws/zoom/packages/check';
+ * import { shapeOf, string, bool } from '@dustinws/zoom/check';
  *
  * const user = shapeOf({
  *   id: string,

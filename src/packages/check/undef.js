@@ -6,7 +6,7 @@ import _isType from './_isType';
  * @since v1.14.0
  * @function undef
  * @example
- * import { undef } from '@dustinws/zoom/packages/check';
+ * import { undef } from '@dustinws/zoom/check';
  *
  * undef(32).isSuccess() // true
  * undef('').isSuccess() // false

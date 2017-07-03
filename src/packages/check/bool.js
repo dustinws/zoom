@@ -6,7 +6,7 @@ import _isType from './_isType';
  * @since v1.14.0
  * @function bool
  * @example
- * import { bool } from '@dustinws/zoom/packages/check';
+ * import { bool } from '@dustinws/zoom/check';
  *
  * bool(true).isSuccess() // true
  * bool('').isSuccess() // false

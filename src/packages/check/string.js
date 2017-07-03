@@ -6,7 +6,7 @@ import _isType from './_isType';
  * @since v1.14.0
  * @function string
  * @example
- * import { string } from '@dustinws/zoom/packages/check';
+ * import { string } from '@dustinws/zoom/check';
  *
  * string('').isSuccess() // true
  * string(32).isSuccess() // false

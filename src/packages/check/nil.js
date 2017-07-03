@@ -6,7 +6,7 @@ import _isType from './_isType';
  * @since v1.14.0
  * @function nil
  * @example
- * import { nil } from '@dustinws/zoom/packages/check';
+ * import { nil } from '@dustinws/zoom/check';
  *
  * nil(null).isSuccess() // true
  * nil('').isSuccess() // false

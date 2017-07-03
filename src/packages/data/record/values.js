@@ -8,7 +8,7 @@ import map from '../list/map';
  * @function values
  * @example
  * // values :: { String: a } -> [a]
- * import { Record } from '@dustinws/zoom/packages/data';
+ * import { Record } from '@dustinws/zoom/data';
  *
  * Record.values({ a: 1, b: 2 }) // [1, 2]
  *

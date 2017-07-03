@@ -9,7 +9,7 @@ import entries from './entries';
  * @function matches
  * @example
  * // matches :: { String: * } -> { String: * } -> Bool
- * import { matches } from '@dustinws/zoom/packages/data/record';
+ * import { matches } from '@dustinws/zoom/data/record';
  *
  * matches({ name: 'barry' }, { name: 'barry', age: 31 }) // true
  * matches({ name: 'barry' }, { name: 'jake', age: 26 }) // false

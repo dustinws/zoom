@@ -9,7 +9,7 @@ import fold from './fold';
  * @function map
  * @example
  * // map :: (a -> b) -> [a] -> [b]
- * import { map } from '@dustinws/zoom/packages/data/list';
+ * import { map } from '@dustinws/zoom/data/list';
  *
  * const inc = n => n + 1;
  * const numbers = [1, 2, 3, 4, 5];

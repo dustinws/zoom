@@ -9,7 +9,7 @@ import Maybe from '../data/Maybe';
  * @function prop
  * @example
  * // prop :: String -> { String: a } -> Maybe a
- * import { prop } from '@dustinws/zoom/packages/core';
+ * import { prop } from '@dustinws/zoom/core';
  *
  * prop('a', { a: 1 }) // Just(1)
  * prop('a', {}) // Nothing

@@ -8,7 +8,7 @@ import curryN from '../lambda/curryN';
  * @since v1.14.0
  * @function guard
  * @example
- * import { guard, number } from '@dustinws/zoom/packages/check';
+ * import { guard, number } from '@dustinws/zoom/check';
  *
  * const add = guard([number, number, number], (a, b) => a + b);
  *

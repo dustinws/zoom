@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Run eslint
+./node_modules/.bin/eslint .

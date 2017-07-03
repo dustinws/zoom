@@ -9,7 +9,7 @@ import merge from './merge';
  * @function pick
  * @example
  * // pick :: [String] -> { String: a } -> { String: a }
- * import { pick } from '@dustinws/zoom/packages/data/record';
+ * import { pick } from '@dustinws/zoom/data/record';
  *
  * pick(['a'], { a: 1, b:2 }) // { a: 1 }
  *

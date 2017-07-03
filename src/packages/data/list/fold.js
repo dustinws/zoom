@@ -8,7 +8,7 @@ import curry from '../../lambda/curry';
  * @function fold
  * @example
  * // fold :: (a -> b -> a) -> a -> [b] -> a
- * import { fold } from '@dustinws/zoom/packages/data/list';
+ * import { fold } from '@dustinws/zoom/data/list';
  *
  * // Create a function that combines two elements at a time
  * const add = (a, b) => a + b;

@@ -10,7 +10,7 @@ import fold from './fold';
  * @function filter
  * @example
  * // filter :: (a -> Bool) -> [a] -> [a]
- * import { filter } from '@dustinws/zoom/packages/data/list';
+ * import { filter } from '@dustinws/zoom/data/list';
  *
  * const isOdd = n => n % 2;
  * const numbers = [1, 2, 3, 4, 5];

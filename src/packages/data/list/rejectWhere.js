@@ -10,7 +10,7 @@ import matches from '../record/matches';
  * @function rejectWhere
  * @example
  * // rejectWhere :: { String: * } -> [{ String: * }] -> [{ String: * }]
- * import { rejectWhere } from '@dustinws/zoom/packages/data/list';
+ * import { rejectWhere } from '@dustinws/zoom/data/list';
  *
  * const users = [{ name: 'Lucy', admin: false }, { name: 'Jo', admin: true }];
  *

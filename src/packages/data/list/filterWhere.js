@@ -10,7 +10,7 @@ import matches from '../record/matches';
  * @function filterWhere
  * @example
  * // filterWhere :: { String: * } -> [{ String: * }] -> [{ String: * }]
- * import { filterWhere } from '@dustinws/zoom/packages/data/list';
+ * import { filterWhere } from '@dustinws/zoom/data/list';
  *
  * const isAdmin = {
  *   admin: true,

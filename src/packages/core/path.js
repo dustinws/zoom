@@ -10,7 +10,7 @@ import Maybe from '../data/Maybe';
  * @since v1.16.0
  * @function path
  * @example
- * import { path } from '@dustinws/zoom/packages/core';
+ * import { path } from '@dustinws/zoom/core';
  *
  * path(['a', 'b'], { a: { b: 1 } }) // Just(1)
  * path(['rows', 0], { rows: [1] }) // Just(1)

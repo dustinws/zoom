@@ -8,7 +8,7 @@ import indexOf from './indexOf';
  * @function includes
  * @example
  * // includes :: * -> [*] -> Bool
- * import { includes } from '@dustinws/zoom/packages/data/list';
+ * import { includes } from '@dustinws/zoom/data/list';
  *
  * includes(1, [1]); // true
  * includes(2, [1]); // false

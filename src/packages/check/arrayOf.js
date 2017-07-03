@@ -8,7 +8,7 @@ import Validation from '../data/Validation';
  * @since v1.14.0
  * @function arrayOf
  * @example
- * import { arrayOf, string } from '@dustinws/zoom/packages/check';
+ * import { arrayOf, string } from '@dustinws/zoom/check';
  *
  * arrayOf(string, ['foo']).isSuccess() // true
  * arrayOf(string, [23221]).isSuccess() // false

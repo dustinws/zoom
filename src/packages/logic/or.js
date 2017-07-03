@@ -6,7 +6,7 @@ import curry from '../lambda/curry';
  * @function or
  * @since v1.0.0
  * @example
- * import { or } from '@dustinws/zoom/packages/logic';
+ * import { or } from '@dustinws/zoom/logic';
  *
  * or(false, true); // true
  * or(true, false); // true

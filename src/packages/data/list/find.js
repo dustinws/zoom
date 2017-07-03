@@ -9,7 +9,7 @@ import Maybe from '../Maybe';
  * @function find
  * @example
  * // find :: (a -> Bool) -> [a] -> Maybe a
- * import { find } from '@dustinws/zoom/packages/data/list';
+ * import { find } from '@dustinws/zoom/data/list';
  *
  * const isOdd = n => n % 2;
  *

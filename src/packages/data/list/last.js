@@ -6,7 +6,7 @@ import Maybe from '../Maybe';
  * @since v1.15.0
  * @function last
  * @example
- * import { last } from '@dustinws/zoom/packages/data/list';
+ * import { last } from '@dustinws/zoom/data/list';
  *
  * last([1, 2]); // Just(2)
  * last([1]); // Just(1)

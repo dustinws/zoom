@@ -9,7 +9,7 @@ import matches from '../record/matches';
  * @function findWhere
  * @example
  * // findWhere :: { String: * } -> [a] -> Maybe a
- * import { findWhere } from '@dustinws/zoom/packages/data/list';
+ * import { findWhere } from '@dustinws/zoom/data/list';
  *
  * findWhere({ a: 2 }, [{ a: 1 }, { a: 2 }]) // Just({ a: 2 })
  * findWhere({ a: 3 }, [{ a: 1 }, { a: 2 }]) // Nothing

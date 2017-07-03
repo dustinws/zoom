@@ -8,7 +8,7 @@ import includes from '../data/list/includes';
  * @function memoize
  * @example
  * // memoize :: (a -> b) -> (a -> b)
- * import { memoize } from '@dustinws/zoom/packages/core';
+ * import { memoize } from '@dustinws/zoom/core';
  *
  * let count = 0;
  *

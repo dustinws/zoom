@@ -1,3 +1,13 @@
 #!/bin/bash
 
+# Remove existing docs if they exist
+if [ -d docs ]; then
+  echo "Removing docs folder..."
+  rm =rf docs
+  echo "Removed docs folder."
+fi
+
+# Build new docs
+echo "Building docs..."
 jsdoc -t node_modules/docdash -R ./README.md -d docs -r src
+echo "Docs built successfully"

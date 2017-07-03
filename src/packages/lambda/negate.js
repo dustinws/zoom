@@ -6,7 +6,7 @@
  * @function negate
  * @example
  * // negate :: (a..c -> Bool) -> (a..c) -> Bool
- * import { negate } from '@dustinws/zoom/packages/core';
+ * import { negate } from '@dustinws/zoom/core';
  *
  * const isOdd = n => n % 2;
  * const isEven = negate(isOdd);

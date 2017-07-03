@@ -28,7 +28,7 @@ const Left = Either.Left;
  * @function of
  * @since v1.15.0
  * @example
- * import { Either } from '@dustinws/zoom/packages/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
  * const valid = Either.of(1);
  *
@@ -47,7 +47,7 @@ Either.of = function of(value) {
  * @function
  * @since v1.15.0
  * @example
- * import { Either } from '@dustinws/zoom/packages/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
  * const valid = Either.Right.of(1);
  *
@@ -66,7 +66,7 @@ Right.of = function of(value) {
  * @function
  * @since v1.15.0
  * @example
- * import { Either } from '@dustinws/zoom/packages/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
  * const valid = Either.Left.of(1);
  *
@@ -88,7 +88,7 @@ Left.of = function of(value) {
  * @since v1.15.0
  * @function chain
  * @example
- * import { Either } from '@dustinws/zoom/packages/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
  * const valid = Either.Right.of('yay!');
  * const invalid = Either.Left.of('nay!');
@@ -115,7 +115,7 @@ Either.chain = curry((transform, either) =>
  * @since v1.15.0
  * @function map
  * @example
- * import { Either } from '@dustinws/zoom/packages/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
  * const valid = Either.Right.of('yay!');
  * const failure = Either.Left.of('nay!');
@@ -139,7 +139,7 @@ Either.map = curry((transform, either) =>
  * @since v1.15.0
  * @function ap
  * @example
- * import { Either } from '@dustinws/zoom/packages/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
  * const valid = Either.Right.of('yay!');
  * const failure = Either.Left.of('nay!');
@@ -162,7 +162,7 @@ Either.ap = curry((left, right) =>
  * @since v1.15.0
  * @function isLeft
  * @example
- * import { Either } from '@dustinws/zoom/packages/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
  * Either.isLeft(Either.Left.of(1)); // true
  * Either.isLeft(Either.Right.of(1)); // false
@@ -178,7 +178,7 @@ Either.isLeft = either => either instanceof Either.Left;
  * @since v1.15.0
  * @function isRight
  * @example
- * import { Either } from '@dustinws/zoom/packages/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
  * Either.isRight(Either.Right.of(1)); // true
  * Either.isRight(Either.Left.of(1)); // false
@@ -195,7 +195,7 @@ Either.isRight = either => either instanceof Either.Right;
  * @memberof module:Zoom.Data.Either
  * @function try
  * @example
- * import { Either } from '@dustinws/zoom/packages/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
  * const parse = Either.try(JSON.parse);
  *
@@ -225,7 +225,7 @@ Either.try = func => (...args) => {
  * @memberof module:Zoom.Data.Either
  * @since v1.15.0
  * @example
- * import { Either } from '@dustinws/zoom/packages/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
  * const valid = Either.Right.of(1);
  *
@@ -243,7 +243,7 @@ Right.prototype.of = function of(value) {
  * @memberof module:Zoom.Data.Either
  * @since v1.15.0
  * @example
- * import { Either } from '@dustinws/zoom/packages/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
  * const valid = Either.Left.of(1);
  *
@@ -264,7 +264,7 @@ Left.prototype.of = function of(value) {
  * @memberof module:Zoom.Data.Either
  * @since v1.15.0
  * @example
- * import { Either } from '@dustinws/zoom/packages/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
  * const valid = Either.Right.of('yay!');
  * const invalid = Either.Left.of('nay!');
@@ -287,7 +287,7 @@ Either.prototype.chain = function chain(transform) {
  * @memberof module:Zoom.Data.Either
  * @since v1.15.0
  * @example
- * import { Either } from '@dustinws/zoom/packages/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
  * const valid = Either.Right.of('yay!');
  * const failure = Either.Left.of('nay!');
@@ -310,7 +310,7 @@ Either.prototype.map = function map(transform) {
  * @memberof module:Zoom.Data.Either
  * @since v1.15.0
  * @example
- * import { Either } from '@dustinws/zoom/packages/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
  * const valid = Either.Right.of('yay!');
  * const failure = Either.Left.of('nay!');
@@ -332,7 +332,7 @@ Either.prototype.ap = function ap(apply) {
  * @memberof module:Zoom.Data.Either
  * @since v1.15.0
  * @example
- * import { Either } from '@dustinws/zoom/packages/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
  * Either.Left.of(1).isLeft(); // true
  * Either.Right.of(1).isLeft(); // false
@@ -348,7 +348,7 @@ Either.prototype.isLeft = function isLeft() {
  * @memberof module:Zoom.Data.Either
  * @since v1.15.0
  * @example
- * import { Either } from '@dustinws/zoom/packages/data';
+ * import { Either } from '@dustinws/zoom/data';
  *
  * Either.Right.of(1).isRight(); // true
  * Either.Left.of(1).isRight(); // false

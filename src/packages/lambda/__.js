@@ -7,7 +7,7 @@
  * @constant
  * @example
  * // __ :: Symbol
- * import { __, curry } from '@dustinws/zoom/packages/core';
+ * import { __, curry } from '@dustinws/zoom/core';
  *
  * const add = curry((a, b) => a + b);
  *

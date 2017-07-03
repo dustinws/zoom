@@ -5,7 +5,7 @@
  * @function init
  * @example
  * // init :: [a] -> [a]
- * import { init } from '@dustinws/zoom/packages/data/list';
+ * import { init } from '@dustinws/zoom/data/list';
  *
  * init([1, 2, 3, 4]); // [2, 3, 4]
  * init([1]); // []

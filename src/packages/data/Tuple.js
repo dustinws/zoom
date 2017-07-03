@@ -20,7 +20,7 @@ const Tuple = tag('Tuple', 'left', 'right');
  * @since v1.15.0
  * @function of
  * @example
- * import { Tuple } from '@dustinws/zoom/packages/data';
+ * import { Tuple } from '@dustinws/zoom/data';
  *
  * Tuple.of(1, 3).toString(); // (1, 3)
  *
@@ -37,7 +37,7 @@ Tuple.of = (a, b) =>
  * @since v1.15.0
  * @function fst
  * @example
- * import { Tuple } from '@dustinws/zoom/packages/data';
+ * import { Tuple } from '@dustinws/zoom/data';
  *
  * const user = Tuple.of(1, 'Jake');
  *
@@ -55,7 +55,7 @@ Tuple.fst = tuple =>
  * @since v1.15.0
  * @function snd
  * @example
- * import { Tuple } from '@dustinws/zoom/packages/data';
+ * import { Tuple } from '@dustinws/zoom/data';
  *
  * const user = Tuple.of(1, 'Jake');
  *
@@ -74,7 +74,7 @@ Tuple.snd = tuple =>
  * @since v1.15.0
  * @function map
  * @example
- * import { Tuple } from '@dustinws/zoom/packages/data';
+ * import { Tuple } from '@dustinws/zoom/data';
  *
  * const user = Tuple.of(1, 'Jake');
  *
@@ -94,7 +94,7 @@ Tuple.map = curry((transform, tuple) =>
  * @since v1.15.0
  * @function mapLeft
  * @example
- * import { Tuple } from '@dustinws/zoom/packages/data';
+ * import { Tuple } from '@dustinws/zoom/data';
  *
  * const user = Tuple.of(1, 'Jake');
  *
@@ -119,7 +119,7 @@ Tuple.mapLeft = curry((transform, tuple) =>
 * @memberof module:Zoom.Data.Tuple
 * @since v1.15.0
 * @example
-* import { Tuple } from '@dustinws/zoom/packages/data';
+* import { Tuple } from '@dustinws/zoom/data';
 *
 * const emptyTuple = Tuple.of();
 *
@@ -138,7 +138,7 @@ Tuple.prototype.of = function of(left, right) {
 * @memberof module:Zoom.Data.Tuple
 * @since v1.15.0
 * @example
-* import { Tuple } from '@dustinws/zoom/packages/data';
+* import { Tuple } from '@dustinws/zoom/data';
 *
 * Tuple.of(1, 'Jake').fst(); // 1
 *
@@ -153,7 +153,7 @@ Tuple.prototype.fst = function fst() {
 * @memberof module:Zoom.Data.Tuple
 * @since v1.15.0
 * @example
-* import { Tuple } from '@dustinws/zoom/packages/data';
+* import { Tuple } from '@dustinws/zoom/data';
 *
 * Tuple.of(1, 'Jake').snd(); // 'Jake'
 *
@@ -169,7 +169,7 @@ Tuple.prototype.snd = function snd() {
 * @memberof module:Zoom.Data.Tuple
 * @since v1.15.0
 * @example
-* import { Tuple } from '@dustinws/zoom/packages/data';
+* import { Tuple } from '@dustinws/zoom/data';
 *
 * const user = Tuple.of(1, 'Jake');
 *
@@ -188,7 +188,7 @@ Tuple.prototype.map = function map(transform) {
 * @memberof module:Zoom.Data.Tuple
 * @since v1.15.0
 * @example
-* import { Tuple } from '@dustinws/zoom/packages/data';
+* import { Tuple } from '@dustinws/zoom/data';
 *
 * const user = Tuple.of(1, 'Jake');
 *
@@ -207,7 +207,7 @@ Tuple.prototype.mapLeft = function mapLeft(transform) {
 * @memberof module:Zoom.Data.Tuple
 * @since v1.15.0
 * @example
-* import { Tuple } from '@dustinws/zoom/packages/data';
+* import { Tuple } from '@dustinws/zoom/data';
 *
 * Tuple.of(1, 'Jake').toString(); // (1, 'Jake')
 *

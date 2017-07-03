@@ -5,7 +5,7 @@
  * @function of
  * @example
  * // of :: (...a) -> [a]
- * import { of } from '@dustinws/zoom/packages/data/list';
+ * import { of } from '@dustinws/zoom/data/list';
  *
  * of(1, 2, 3); // [1, 2, 3]
  *
