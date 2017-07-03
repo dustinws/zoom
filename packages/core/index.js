@@ -4,15 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _complement = require('./complement');
-
-Object.defineProperty(exports, 'complement', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_complement).default;
-  }
-});
-
 var _path = require('./path');
 
 Object.defineProperty(exports, 'path', {

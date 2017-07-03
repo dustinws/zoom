@@ -8,9 +8,9 @@ var _curry = require('../../lambda/curry');
 
 var _curry2 = _interopRequireDefault(_curry);
 
-var _complement = require('../../core/complement');
+var _negate = require('../../lambda/negate');
 
-var _complement2 = _interopRequireDefault(_complement);
+var _negate2 = _interopRequireDefault(_negate);
 
 var _filter = require('./filter');
 
@@ -39,7 +39,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @return {Array<Any>}
  */
 function reject(predicate, list) {
-  return (0, _filter2.default)((0, _complement2.default)(predicate), list);
+  return (0, _filter2.default)((0, _negate2.default)(predicate), list);
 }
 
 exports.default = (0, _curry2.default)(reject);

@@ -1,5 +1,5 @@
 import curry from '../../lambda/curry';
-import complement from '../../core/complement';
+import negate from '../../lambda/negate';
 import filter from './filter';
 
 /**
@@ -23,7 +23,7 @@ import filter from './filter';
  * @return {Array<Any>}
  */
 function reject(predicate, list) {
-  return filter(complement(predicate), list);
+  return filter(negate(predicate), list);
 }
 
 export default curry(reject);
