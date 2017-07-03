@@ -4,7 +4,7 @@ import curry from './curry';
  * @memberof module:Zoom.Lambda
  * @description Given a function and an array of values, apply the
  * array of values as parameters to the function.
- * @since v1.0.0
+ * @since v2.0.0
  * @function spread
  * @example
  * import { spread } from '@dustinws/zoom/packages/core';

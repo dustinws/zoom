@@ -7,7 +7,7 @@ exports.default = constant;
 /**
  * @memberof module:Zoom.Lambda
  * @description Create a function that always returns the initial value.
- * @since v1.0.0
+ * @since v2.0.0
  * @function constant
  * @example
  * // constant :: a -> b -> a

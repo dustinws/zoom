@@ -16,7 +16,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 /**
  * @memberof module:Zoom.Lambda
  * @description Create a right to left function composition.
- * @since v1.0.0
+ * @since v2.0.0
  * @function compose
  * @example
  * import { compose } from '@dustinws/zoom/packages/core';

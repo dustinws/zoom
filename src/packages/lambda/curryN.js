@@ -4,7 +4,7 @@ import __ from './__';
  * @memberof module:Zoom.Lambda
  * @description Convert a non-curried function with the given arity to
  * a curried function. This includes compatibility with "core.__".
- * @since v1.0.0
+ * @since v2.0.0
  * @function curryN
  * @example
  * import { curryN } from '@dustinws/zoom/packages/core';

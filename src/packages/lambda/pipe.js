@@ -3,7 +3,7 @@ import fold from '../data/list/fold';
 /**
  * @memberof module:Zoom.Lambda
  * @description Create a left to right function composition.
- * @since v1.0.0
+ * @since v2.0.0
  * @function pipe
  * @example
  * import { pipe } from '@dustinws/zoom/packages/core';

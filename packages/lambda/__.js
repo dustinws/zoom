@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", {
  * @memberof module:Zoom.Lambda
  * @description The functional placeholder used to add arguments
  * in a different order than the function originally declared.
- * @since v1.0.0
+ * @since v2.0.0
  * @type {Symbol}
  * @constant
  * @example

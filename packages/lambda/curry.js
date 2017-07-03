@@ -15,7 +15,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @memberof module:Zoom.Lambda
  * @description Convert a non-curried function to a curried function. This
  * includes compatibility with "core.__".
- * @since v1.0.0
+ * @since v2.0.0
  * @function curry
  * @example
  * import { curry } from '@dustinws/zoom/packages/core';

@@ -4,7 +4,7 @@ import includes from '../data/list/includes';
  * @memberof module:Zoom.Lambda
  * @description Create a function that only runs for arguments it hasn't
  * computed yet.
- * @since v1.0.0
+ * @since v2.0.0
  * @function memoize
  * @example
  * // memoize :: (a -> b) -> (a -> b)

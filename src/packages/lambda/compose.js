@@ -3,7 +3,7 @@ import pipe from './pipe';
 /**
  * @memberof module:Zoom.Lambda
  * @description Create a right to left function composition.
- * @since v1.0.0
+ * @since v2.0.0
  * @function compose
  * @example
  * import { compose } from '@dustinws/zoom/packages/core';
