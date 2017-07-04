@@ -19,7 +19,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * @description Determine if an object has the same comparable values at
  * each key as a provided query object.
- * @memberof module:Zoom.Data.Record
+ * @memberof Record
  * @since v1.16.0
  * @function matches
  * @example

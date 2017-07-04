@@ -5,7 +5,7 @@ import matches from '../record/matches';
 /**
  * @description Remove all objects in a list that have the same comparable
  * values as the query object.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.17.0
  * @function rejectWhere
  * @example

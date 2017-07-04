@@ -1,6 +1,6 @@
 /**
  * @description Turn multiple values into an array.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.15.0
  * @function of
  * @example

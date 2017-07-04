@@ -3,7 +3,7 @@ import curry from '../../lambda/curry';
 /**
  * @description Copy all 'own' keys from one object to another. The second
  * object will overwrite properties on the first.
- * @memberof module:Zoom.Data.Record
+ * @memberof Record
  * @since v1.16.0
  * @function merge
  * @example

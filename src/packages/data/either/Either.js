@@ -15,6 +15,9 @@ import constant from '../../lambda/constant';
  * an unsuccessful operation with an embedded error message. You can chain
  * functions that return `Either` instances by using `.chain` or `.andThen`.
  *
+ * ---
+ *  #### Fantasy Land Implementations
+ *  `Applicative`, `Functor`, `Apply`, `Chain`, `Monad`
  * @example
  * import Either from '@dustinws/zoom/data/either';
  *
@@ -73,6 +76,7 @@ const Left = Either.Left;
  * @description Lift a value into a successful 'Right' context.
  * @memberof Either
  * @since v1.15.0
+ * @implements Applicative
  * @example
  * import { Either } from '@dustinws/zoom/data';
  *
@@ -90,6 +94,7 @@ Either.of = function of(value) {
  * @description Lift a value into a successful 'Right' context.
  * @memberof Either
  * @since v1.15.0
+ * @implements Applicative
  * @example
  * import { Right } from '@dustinws/zoom/data';
  *
@@ -107,6 +112,7 @@ Right.of = function of(value) {
  * @description Lift a value into an unsuccessful 'Left' context.
  * @memberof Either
  * @since v1.15.0
+ * @implements Applicative
  * @example
  * import { Left } from '@dustinws/zoom/data';
  *
@@ -129,6 +135,7 @@ Left.of = function of(value) {
  * @static
  * @function
  * @since v1.15.0
+ * @implements Chain
  * @see {@link Either.andThen}
  * @example
  * // chain Either a b :: (b -> Either a c) -> Either a c
@@ -200,6 +207,7 @@ Either.andThen = Either.chain;
  * new `Either` instances, and map let's you use plain old functions.
  * @memberof Either
  * @since v1.15.0
+ * @implements Functor
  * @function map
  * @static
  * @example
@@ -233,10 +241,11 @@ Either.map = curry((transform, either) =>
  *
  * @memberof Either
  * @since v1.15.0
+ * @implements Apply
  * @function ap
  * @static
  * @example
- * // ap :: Either e => e a b -> e a (b -> c) -> e a c
+ * // ap :: Apply (b -> c) -> Either a b -> Either a c
  * import { ap, Left, Right } from '@dustinws/zoom/data';
  *
  * // toUpperE :: Either a (String -> String)
@@ -384,6 +393,7 @@ Either.lift = func => (...args) => {
   * @instance
   * @see {@link Either#caseOf}
   * @example
+  * // cata Either a b :: { Left: a -> c, Right: b -> c } -> c
   * import { Either } from '@dustinws/zoom/data';
   *
   * Either.of(1).cata({
@@ -415,6 +425,7 @@ Either.prototype.cata = Either.prototype.cata;
   * @method
   * @instance
   * @example
+  * // caseOf Either a b :: { Left: a -> c, Right: b -> c } -> c
   * import { Either } from '@dustinws/zoom/data';
   *
   * Either.of(1).caseOf({
@@ -439,9 +450,11 @@ Either.prototype.caseOf = Either.prototype.cata;
  * @description Lift a value into a successful 'Right' context.
  * @memberof Either.Right
  * @since v1.15.0
+ * @implements Applicative
  * @method of
  * @instance
  * @example
+ * // of Either a b :: c -> Either d c
  * import { Right } from '@dustinws/zoom/data/either';
  *
  * Right.of(1);
@@ -459,9 +472,11 @@ Right.prototype.of = function of(value) {
  * @description Lift a value into an unsuccessful 'Left' context.
  * @memberof Either.Left
  * @since v1.15.0
+ * @implements Applicative
  * @method of
  * @instance
  * @example
+ * // of Either a b :: c -> Either c d
  * import { Left } from '@dustinws/zoom/data/either';
  *
  * Left.of(1);
@@ -483,10 +498,12 @@ Left.prototype.of = function of(value) {
  *
  * @memberof Either
  * @since v1.15.0
+ * @implements Chain
  * @method
  * @instance
  * @see {@link Either#andThen}
  * @example
+ * // chain Either a b :: (b -> Either a c) -> Either a c
  * import { Left, Right } from '@dustinws/zoom/data/either';
  *
  * // toUpper :: String -> Either String String
@@ -523,6 +540,7 @@ Either.prototype.chain = function chain(transform) {
  * @instance
  * @see {@link Either#chain}
  * @example
+ * // andThen Either a b :: (b -> Either a c) -> Either a c
  * import { Left, Right } from '@dustinws/zoom/data/either';
  *
  * // toUpper :: String -> Either String String
@@ -556,9 +574,11 @@ Either.prototype.andThen = function andThen(transform) {
  *
  * @memberof Either
  * @since v1.15.0
+ * @implements Functor
  * @method
  * @instance
  * @example
+ * // map Either a b :: (b -> c) -> Either a c
  * import { Left, Right } from '@dustinws/zoom/data/either';
  *
  * // toUpper :: String -> String
@@ -591,8 +611,9 @@ Either.prototype.map = function map(transform) {
  * @method
  * @instance
  * @since v1.15.0
+ * @implements Apply
  * @example
- * // ap :: Either e => e a b -> e a (b -> c) -> e a c
+ * // ap Either a b :: Apply (b -> c) -> Either a c
  * import { ap, Left, Right } from '@dustinws/zoom/data';
  *
  * // toUpperE :: Either a (String -> String)
@@ -621,6 +642,7 @@ Either.prototype.ap = function ap(apply) {
  * @method
  * @instance
  * @example
+ * // isLeft Either a b :: c -> Bool
  * import { Left, Right } from '@dustinws/zoom/data/either';
  *
  * Left.of(1).isLeft(); // true
@@ -640,6 +662,7 @@ Either.prototype.isLeft = function isLeft() {
  * @method
  * @instance
  * @example
+ * // isRight Either a b :: c -> Bool
  * import { Left, Right } from '@dustinws/zoom/data/either';
  *
  * Right.of(1).isRight(); // true

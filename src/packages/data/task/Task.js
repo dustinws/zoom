@@ -3,7 +3,124 @@ import curry from '../../lambda/curry';
 
 /**
  * @class Task
- * @memberof module:Zoom.Data
+ * @description
+ * A `Task` represents an asynchronous action, and is very similar to a
+ * javascript `Promise`. A good way to get an understanding of  how a `Task`
+ * works is to find out how it is different from a `Promise`.
+ *
+ * The first, and most notable difference is that a `Task` does not run right
+ * away, but a `Promise` is.
+ * ```
+ * const fetchUsers = () =>
+ *   new Promise((resolve, reject) => {
+ *     // ...
+ *   });
+ * ```
+ * When `fetchUsers` is called, whatever logic is stored in the `Promise` will
+ * be executed right away. That means that this is troublesome:
+ * ```
+ * fetchUsers();
+ * fetchUsers();
+ * fetchUsers();
+ *
+ * // Query executed 3 times.
+ * ```
+ * Of course, you wouldn't actually call a database query three times in a row
+ * like that in real code. This example is meant to drill in the fact that
+ * _creating a Promise will execute the closure that was given to it's constructor_.
+ * There is no intermediate step.
+ *
+ * A `Task`, however, will not run right away. Here is the same code refactored
+ * to use a `Task` instead of a `Promise`;
+ * ```
+ * const fetchUsers = () =>
+ *   Task((reject, resolve) => {
+ *     // ...
+ *   });
+ *
+ * // NOTE: You do not need to use "new" when creating a Task
+ * ```
+ * Now, this is no trouble at all.
+ * ```
+ * fetchUsers();
+ * fetchUsers();
+ * fetchUsers();
+ *
+ * // Query executed 0 times.
+ * ```
+ * At this point, you're probably wondering, "Well, how _do_ you run this thing?".
+ * That's a valid question. The answer is `.fork`
+ * ```
+ * fetchUsers().fork(
+ *   error => console.log('Oh noes!', error),
+ *   result => console.log('Aw yeaa -', result),
+ * );
+ * ```
+ * There are a few things to note about `fork` <small>(and it's static equivalent
+ * {@link Task.fork})</small>. First, notice how the error case is handled first.
+ * With a `Promise`, adding a `.catch` handler is not *required, which means it's
+ * possible for a developer to accidentally <small>(or intentionally)</small>
+ * skip error handling. With a `Task`, the only way to skip error handling is to
+ * explicitly do nothing in your error handler. This difference means that no
+ * errors are forgotton.
+ *
+ * \* In new versions of node.js, unhandled rejections will throw a top level error
+ *
+ * Another difference is the lack of a `.then` method. `.then` is an overloaded
+ * method that will check the return value of the function you pass it to
+ * detect new `Promise` instances. If one is returned, then `.then` will wait
+ * on it to resolve before it does. Otherwise, it will wrap the value up in a
+ * new `Promise` and return that. `.then` ** does not require you to be explicit
+ * about whether or not your function returns a new Promise ** and _this_ is how
+ * it is different from a `Task`. With a `Task`, you will use `.andThen` for async
+ * functions and `.map` for sync functions.
+ * ```
+ * // Let's define some helpers
+ *
+ * const log = msg => value =>
+ *   console.log(msg, value);
+ *
+ * // A sync function
+ * const toUpper = x => x.toUpperCase();
+ *
+ * // An async function
+ * const delay = ms => value =>
+ *   new Promise(r => setTimeout(r, ms, value));
+ *
+ * // An async function
+ * const delayT = ms => value =>
+ *   Task((_, r) => setTimeout(r, ms, value));
+ *
+ *
+ * // With a Promise
+ * Promise.resolve('ayo')
+ *   .then(delay(1000))
+ *   .then(toUpper)
+ *   .then(log('Result:'))
+ *   .catch(log('Error:'));
+ *
+ *
+ * // With a Task
+ * Task.of('ayo')
+ *   .andThen(delayT(1000))
+ *   .map(toUpper)
+ *   .fork(log('Error:'), log('Result'));
+ * ```
+ * This makes it obvious to tell if a function is sync or async just by
+ * looking at the method used to call it.
+ *
+ * The last major difference is the order of the `Promise(resolve, reject)`
+ * arguments. In a `Task`, the `reject` function is provided as the first
+ * parameter, and `resolve` is the second.
+ * ```
+ * new Promise((resolve, reject) => {
+ *   resolve('Why, hello there.');
+ * });
+ *
+ * Task((reject, resolve) => {
+ *   resolve('Why, hello there.');
+ * });
+ * ```
  */
 const Task = tag('Task', 'fork');
 
@@ -16,10 +133,13 @@ const Task = tag('Task', 'fork');
 
 /**
  * @description Create a new Task with the given value.
- * @memberof module:Zoom.Data.Task
+ * @memberof Task
  * @since v1.15.0
  * @function of
+ * @static
+ * @implements Applicative
  * @example
+ * // of :: b -> Task a b
  * import { Task } from '@dustinws/zoom/data';
  *
  * Task.of(1); // Task(null, 1)
@@ -32,10 +152,12 @@ Task.of = value =>
 
 /**
  * @description Create a rejected Task with the given value.
- * @memberof module:Zoom.Data.Task
+ * @memberof Task
  * @since v1.15.0
  * @function reject
+ * @static
  * @example
+ * // reject :: a -> Task a b
  * import { Task } from '@dustinws/zoom/data';
  *
  * Task.reject(1); // Task(1, null)
@@ -49,10 +171,12 @@ Task.reject = value =>
 /**
  * @description Fork a task. This is the only way to run the code contained
  * in the task.
- * @memberof module:Zoom.Data.Task
+ * @memberof Task
  * @since v1.17.0
  * @function fork
+ * @static
  * @example
+ * // fork :: (a -> c) -> (b -> c) -> Task a b -> d
  * import { Task } from '@dustinws/zoom/data';
  *
  * Task.fork(
@@ -73,13 +197,15 @@ Task.fork = curry((reject, resolve, task) =>
 
 /**
  * @description Run a function that returns a nested task and flatten
- * the result into a single task. An alias for
- * [Task.andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.andThen)
- * @memberof module:Zoom.Data.Task
+ * the result into a single task. An alias for {@link Task.andThen}.
+ * @memberof Task
  * @since v1.15.0
- * @see [Task.andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.andThen)
+ * @implements Chain
+ * @see {@link Task.andThen}
  * @function chain
+ * @static
  * @example
+ * // chain :: (b -> Task a c) -> Task a b -> Task a c
  * import { Task } from '@dustinws/zoom/data';
  *
  * Task.chain(Task.lift(n => n + 1), Task.of(1)); // Task(null, 2)
@@ -95,13 +221,14 @@ Task.chain = curry((transform, task) =>
 
 /**
  * @description Run a function that returns a nested task and flatten
- * the result into a single task. An alias for
- * [Task.chain](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.chain)
- * @memberof module:Zoom.Data.Task
+ * the result into a single task. An alias for {@link Task.chain}
+ * @memberof Task
  * @since v1.15.0
- * @see [Task.chain](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.chain)
+ * @see {@link Task.chain}
  * @function andThen
+ * @static
  * @example
+ * // andThen :: (b -> Task a c) -> Task a b -> Task a c
  * import { Task } from '@dustinws/zoom/data';
  *
  * Task.andThen(Task.lift(n => n + 1), Task.of(1)); // Task(null, 2)
@@ -114,10 +241,13 @@ Task.andThen = Task.chain;
 
 /**
  * @description Run a function on a value contained in a Task.
- * @memberof module:Zoom.Data.Task
+ * @memberof Task
  * @since v1.15.0
  * @function map
+ * @static
+ * @implements Functor
  * @example
+ * // map :: (b -> c) -> Task a b -> Task a c
  * import { Task } from '@dustinws/zoom/data';
  *
  * Task.map(x => x + x, Task.of(1)) // Task(null, 2)
@@ -131,10 +261,12 @@ Task.map = curry((transform, task) =>
 
 /**
  * @description Convert a Task to a Promise. This implicitely calls "fork"
- * @memberof module:Zoom.Data.Task
+ * @memberof Task
  * @since v1.15.0
  * @function toPromise
+ * @static
  * @example
+ * // toPromise :: Task a b -> Promise a b
  * import { Task } from '@dustinws/zoom/data';
  * import Promise from 'bluebird';
  *
@@ -152,10 +284,12 @@ Task.toPromise = (task, Promise = global.Promise) =>
 /**
  * @description Define a function to run if the Task is rejected, which will
  * accept the error and return a new, valid Task.
- * @memberof module:Zoom.Data.Task
+ * @memberof Task
  * @since v1.15.0
  * @function recover
+ * @static
  * @example
+ * // recover :: (a -> Task d c) -> Task a b -> Task d c
  * import { Task } from '@dustinws/zoom/data';
  *
  * const rejected = Task.reject(1); // Task(1, null)
@@ -173,10 +307,12 @@ Task.recover = curry((transform, task) =>
 /**
  * @description Run many Tasks in parallel. If any Task rejects, it will
  * reject the top level Task immediately.
- * @memberof module:Zoom.Data.Task
+ * @memberof Task
  * @since v1.15.0
  * @function parallel
+ * @static
  * @example
+ * // parallel :: [Task a b] -> Task a [b]
  * import { Task } from '@dustinws/zoom/data';
  *
  * const tasks = Task
@@ -218,10 +354,12 @@ Task.parallel = tasks =>
 /**
  * @description Convert a regular function into a function that returns
  * a task.
- * @memberof module:Zoom.Data.Task
+ * @memberof Task
  * @since v1.15.0
  * @function lift
+ * @static
  * @example
+ * // lift :: (a -> b) -> (a -> Task b)
  * import { Task } from '@dustinws/zoom/data';
  *
  * const addTask = Task.lift((a, b) => a + b);
@@ -237,10 +375,12 @@ Task.lift = func => (...args) =>
 /**
  * @description Convert a node style callback into a function that returns
  * a task.
- * @memberof module:Zoom.Data.Task
+ * @memberof Task
  * @since v1.15.0
  * @function liftNode
+ * @static
  * @example
+ * // liftNode :: (a, (b, c) -> d) -> (a -> Task b c)
  * import fs from 'fs';
  * import { Task } from '@dustinws/zoom/data';
  *
@@ -269,12 +409,15 @@ Task.liftNode = func => (...args) =>
 
 /**
 * @description Run a function that returns a nested task and flatten
-* the result into a single task. An alias for
-* [Task#andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.Task#andThen)
-* @memberof module:Zoom.Data.Task
+* the result into a single task. An alias for {@link Task#andThen}
+* @memberof Task
 * @since v1.15.0
-* @see [Task#andThen](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.Task#andThen)
+* @see {@link Task#andThen}
+* @method
+* @instance
+* @implements Chain
 * @example
+* // chain Task a b :: (b -> Task a c) -> Task a c
 * import { Task } from '@dustinws/zoom/data';
 *
 * Task.of(1).chain(x => Task.of(x + x)); // Task(null, 2)
@@ -288,12 +431,14 @@ Task.prototype.chain = function chain(transform) {
 
 /**
 * @description Run a function that returns a nested task and flatten
-* the result into a single task. An alias for
-* [Task#chain](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.Task#chain)
-* @memberof module:Zoom.Data.Task
+* the result into a single task. An alias for {@link Task#chain}
+* @memberof Task
 * @since v1.15.0
-* @see [Task#chain](https://dustinws.github.io/zoom/module-Zoom.Data.Task.html#.Task#chain)
+* @see {@link Task#chain}
+* @method
+* @instance
 * @example
+* // andThen Task a b :: (b -> Task a c) -> Task a c
 * import { Task } from '@dustinws/zoom/data';
 *
 * Task.of(1).andThen(x => Task.of(x + x)); // Task(null, 2)
@@ -307,9 +452,13 @@ Task.prototype.andThen = function andThen(transform) {
 
 /**
 * @description Run a function on a value contained in a Task.
-* @memberof module:Zoom.Data.Task
+* @memberof Task
 * @since v1.15.0
+* @method
+* @instance
+* @implements Functor
 * @example
+* // map Task a b :: (b -> c) -> Task a c
 * import { Task } from '@dustinws/zoom/data';
 *
 * Task.of(1).map(x => x + x); // Task(null, 2)
@@ -323,9 +472,12 @@ Task.prototype.map = function map(transform) {
 
 /**
 * @description Convert a Task to a Promise. This implicitely calls "fork"
-* @memberof module:Zoom.Data.Task
+* @memberof Task
 * @since v1.15.0
+* @method
+* @instance
 * @example
+* // map Task a b :: c -> Promise a b
 * import { Task } from '@dustinws/zoom/data';
 *
 * Task.of(1).toPromise(); // Promise(1)
@@ -340,9 +492,12 @@ Task.prototype.toPromise = function toPromise(Promise = global.Promise) {
 /**
 * @description Define a function to run if the Task is rejected, which will
 * accept the error and return a new, valid Task.
-* @memberof module:Zoom.Data.Task
+* @memberof Task
 * @since v1.15.0
+* @method
+* @instance
 * @example
+* // map Task a b :: (a -> Task c d) -> Task c d
 * import { Task } from '@dustinws/zoom/data';
 *
 * const rejected = Task.reject(1); // Task(1, null)

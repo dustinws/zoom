@@ -3,7 +3,7 @@ import map from '../list/map';
 
 /**
  * @description Get an object's values in an array.
- * @memberof module:Zoom.Data.Record
+ * @memberof Record
  * @since v1.16.0
  * @function values
  * @example

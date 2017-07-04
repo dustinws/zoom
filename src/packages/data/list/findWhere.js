@@ -4,7 +4,7 @@ import matches from '../record/matches';
 
 /**
  * @description Find the first element in a list that matches a query object.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.17.0
  * @function findWhere
  * @example

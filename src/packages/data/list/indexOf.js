@@ -5,7 +5,7 @@ import Maybe from '../maybe';
  * @description Determine which index a value resides at inside of an
  * array. Returns a Maybe for the index, where Nothing indicates the
  * value is not present in the array.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.15.0
  * @function indexOf
  * @example

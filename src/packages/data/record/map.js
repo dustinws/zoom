@@ -7,7 +7,7 @@ import fold from '../list/fold';
  * @description Create a new object where each value is the result of calling
  * the function with the original value at that key. Only the value is passed
  * to the "transform" function.
- * @memberof module:Zoom.Data.Record
+ * @memberof Record
  * @since v1.16.0
  * @function map
  * @example

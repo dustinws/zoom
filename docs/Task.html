@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Validation - Documentation</title>
+    <title>Task - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Validation</h1>
+    <h1 class="page-title">Task</h1>
     
 
     
@@ -40,9 +40,7 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-Zoom.Data.html">.Data</a>.</span>
-        
-        Validation
+        Task
         </h2>
         
     
@@ -55,7 +53,7 @@
 
     
 
-    <h4 class="name" id="Validation"><span class="type-signature"></span>new Validation<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Task"><span class="type-signature"></span>new Task<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -67,7 +65,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line7">line 7</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line4">line 4</a>
     </li></ul></dd>
     
 
@@ -105,6 +103,101 @@
 
 
 
+
+<div class="description">
+    <p>A <code>Task</code> represents an asynchronous action, and is very similar to a
+javascript <code>Promise</code>. A good way to get an understanding of  how a <code>Task</code>
+works is to find out how it is different from a <code>Promise</code>.</p>
+<p>The first, and most notable difference is that a <code>Task</code> does not run right
+away, but a <code>Promise</code> is.</p>
+<pre class="prettyprint source"><code>const fetchUsers = () =>
+  new Promise((resolve, reject) => {
+    // ...
+  });</code></pre><p>When <code>fetchUsers</code> is called, whatever logic is stored in the <code>Promise</code> will
+be executed right away. That means that this is troublesome:</p>
+<pre class="prettyprint source"><code>fetchUsers();
+fetchUsers();
+fetchUsers();
+
+// Query executed 3 times.</code></pre><p>Of course, you wouldn't actually call a database query three times in a row
+like that in real code. This example is meant to drill in the fact that
+<em>creating a Promise will execute the closure that was given to it's constructor</em>.
+There is no intermediate step.</p>
+<p>A <code>Task</code>, however, will not run right away. Here is the same code refactored
+to use a <code>Task</code> instead of a <code>Promise</code>;</p>
+<pre class="prettyprint source"><code>const fetchUsers = () =>
+  Task((reject, resolve) => {
+    // ...
+  });
+
+// NOTE: You do not need to use &quot;new&quot; when creating a Task</code></pre><p>Now, this is no trouble at all.</p>
+<pre class="prettyprint source"><code>fetchUsers();
+fetchUsers();
+fetchUsers();
+
+// Query executed 0 times.</code></pre><p>At this point, you're probably wondering, &quot;Well, how <em>do</em> you run this thing?&quot;.
+That's a valid question. The answer is <code>.fork</code></p>
+<pre class="prettyprint source"><code>fetchUsers().fork(
+  error => console.log('Oh noes!', error),
+  result => console.log('Aw yeaa -', result),
+);</code></pre><p>There are a few things to note about <code>fork</code> <small>(and it's static equivalent
+<a href="Task.html#.fork">Task.fork</a>)</small>. First, notice how the error case is handled first.
+With a <code>Promise</code>, adding a <code>.catch</code> handler is not *required, which means it's
+possible for a developer to accidentally <small>(or intentionally)</small>
+skip error handling. With a <code>Task</code>, the only way to skip error handling is to
+explicitly do nothing in your error handler. This difference means that no
+errors are forgotton.</p>
+<p>* In new versions of node.js, unhandled rejections will throw a top level error</p>
+<p>Another difference is the lack of a <code>.then</code> method. <code>.then</code> is an overloaded
+method that will check the return value of the function you pass it to
+detect new <code>Promise</code> instances. If one is returned, then <code>.then</code> will wait
+on it to resolve before it does. Otherwise, it will wrap the value up in a
+new <code>Promise</code> and return that. <code>.then</code> <strong> does not require you to be explicit
+about whether or not your function returns a new Promise </strong> and <em>this</em> is how
+it is different from a <code>Task</code>. With a <code>Task</code>, you will use <code>.andThen</code> for async
+functions and <code>.map</code> for sync functions.</p>
+<pre class="prettyprint source"><code>// Let's define some helpers
+
+const log = msg => value =>
+  console.log(msg, value);
+
+// A sync function
+const toUpper = x => x.toUpperCase();
+
+// An async function
+const delay = ms => value =>
+  new Promise(r => setTimeout(r, ms, value));
+
+// An async function
+const delayT = ms => value =>
+  Task((_, r) => setTimeout(r, ms, value));
+
+
+// With a Promise
+Promise.resolve('ayo')
+  .then(delay(1000))
+  .then(toUpper)
+  .then(log('Result:'))
+  .catch(log('Error:'));
+
+
+// With a Task
+Task.of('ayo')
+  .andThen(delayT(1000))
+  .map(toUpper)
+  .fork(log('Error:'), log('Result'));</code></pre><p>This makes it obvious to tell if a function is sync or async just by
+looking at the method used to call it.</p>
+<p>The last major difference is the order of the <code>Promise(resolve, reject)</code>
+arguments. In a <code>Task</code>, the <code>reject</code> function is provided as the first
+parameter, and <code>resolve</code> is the second.</p>
+<pre class="prettyprint source"><code>new Promise((resolve, reject) => {
+  resolve('Why, hello there.');
+});
+
+Task((reject, resolve) => {
+  resolve('Why, hello there.');
+});</code></pre>
+</div>
 
 
 
@@ -153,7 +246,7 @@
 
     
 
-    <h4 class="name" id=".andThen"><span class="type-signature">(static) </span>andThen<span class="signature">(transform, validation)</span><span class="type-signature"> &rarr; {Validation}</span></h4>
+    <h4 class="name" id=".andThen"><span class="type-signature">(static) </span>andThen<span class="signature">(transform, task)</span><span class="type-signature"> &rarr; {<a href="Task.html">Task</a>}</span></h4>
 
     
 
@@ -165,7 +258,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line113">line 113</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line222">line 222</a>
     </li></ul></dd>
     
 
@@ -202,7 +295,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><p><a href="https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.chain">Validation.chain</a></p></li>
+            <li><a href="Task.html#.chain">Task.chain</a></li>
         </ul>
     </dd>
     
@@ -215,11 +308,8 @@
 
 
 <div class="description">
-    <p>Apply a transformation to the Validation if it is an instance
-of &quot;Success&quot;. Otherwise, ignore the transformation and return the instance.
-This is how you can switch from a 'Success' to 'Failure' instance and stop
-subsequent transformations from being applied. An alias for
-<a href="https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.chain">Validation.chain</a></p>
+    <p>Run a function that returns a nested task and flatten
+the result into a single task. An alias for <a href="Task.html#.chain">Task.chain</a></p>
 </div>
 
 
@@ -232,15 +322,10 @@ subsequent transformations from being applied. An alias for
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
+    <pre class="prettyprint"><code>// andThen :: (b -> Task a c) -> Task a b -> Task a c
+import { Task } from '@dustinws/zoom/data';
 
-const valid = Validation.Success.of('yay!');
-const invalid = Validation.Failure.of('nay!');
-
-const toUpper = x => Validation.Success.of(x.toUpperCase());
-
-Validation.andThen(toUpper, valid); // Success('YAY!');
-Validation.andThen(toUpper, invalid); // Failure('nay!');</code></pre>
+Task.andThen(Task.lift(n => n + 1), Task.of(1)); // Task(null, 2)</code></pre>
 
 
 
@@ -286,20 +371,20 @@ Validation.andThen(toUpper, invalid); // Failure('nay!');</code></pre>
 
             
 
-            <td class="description last"><p>The transformation to apply to the inner value</p></td>
+            <td class="description last"><p>The function to run.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>validation</code></td>
+                <td class="name"><code>task</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Validation</span>
+<span class="param-type"><a href="Task.html">Task</a></span>
 
 
             
@@ -309,7 +394,7 @@ Validation.andThen(toUpper, invalid); // Failure('nay!');</code></pre>
 
             
 
-            <td class="description last"><p>The transformation to apply to the inner value</p></td>
+            <td class="description last"><p>The task</p></td>
         </tr>
 
     
@@ -340,7 +425,7 @@ Validation.andThen(toUpper, invalid); // Failure('nay!');</code></pre>
     </dt>
     <dd>
         
-<span class="param-type">Validation</span>
+<span class="param-type"><a href="Task.html">Task</a></span>
 
 
     </dd>
@@ -354,7 +439,7 @@ Validation.andThen(toUpper, invalid); // Failure('nay!');</code></pre>
 
     
 
-    <h4 class="name" id=".ap"><span class="type-signature">(static) </span>ap<span class="signature">(left, right)</span><span class="type-signature"> &rarr; {Validation}</span></h4>
+    <h4 class="name" id=".chain"><span class="type-signature">(static) </span>chain<span class="signature">(transform, task)</span><span class="type-signature"> &rarr; {<a href="Task.html">Task</a>}</span></h4>
 
     
 
@@ -366,7 +451,7 @@ Validation.andThen(toUpper, invalid); // Failure('nay!');</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line164">line 164</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line198">line 198</a>
     </li></ul></dd>
     
 
@@ -384,196 +469,12 @@ Validation.andThen(toUpper, invalid); // Failure('nay!');</code></pre>
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Apply a transformation to the Validation if it is an instance
-of &quot;Success&quot;. Otherwise, ignore the transformation and return the instance.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
-
-const valid = Validation.Success.of('yay!');
-const failure = Validation.Failure.of('nay!');
-
-const toUpper = Validation.of(x => x.toUpperCase());
-
-Validation.ap(toUpper, valid); // Success('YAY!');
-Validation.ap(toUpper, invalid); // Failure('nay!');</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
         
-        <th>Name</th>
+            <li>Chain</li>
         
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>left</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Validation</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The validation containing a function to run on the value</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>right</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Validation</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The validation containing a value</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Validation</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".chain"><span class="type-signature">(static) </span>chain<span class="signature">(transform, validation)</span><span class="type-signature"> &rarr; {Validation}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line82">line 82</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
+    </ul></dd>
     
 
     
@@ -594,7 +495,7 @@ Validation.ap(toUpper, invalid); // Failure('nay!');</code></pre>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><p><a href="https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.andThen">Validation.andThen</a></p></li>
+            <li><a href="Task.html#.andThen">Task.andThen</a></li>
         </ul>
     </dd>
     
@@ -607,11 +508,8 @@ Validation.ap(toUpper, invalid); // Failure('nay!');</code></pre>
 
 
 <div class="description">
-    <p>Apply a transformation to the Validation if it is an instance
-of &quot;Success&quot;. Otherwise, ignore the transformation and return the instance.
-This is how you can switch from a 'Success' to 'Failure' instance and stop
-subsequent transformations from being applied. An alias for
-<a href="https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.andThen">Validation.andThen</a></p>
+    <p>Run a function that returns a nested task and flatten
+the result into a single task. An alias for <a href="Task.html#.andThen">Task.andThen</a>.</p>
 </div>
 
 
@@ -624,15 +522,10 @@ subsequent transformations from being applied. An alias for
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
+    <pre class="prettyprint"><code>// chain :: (b -> Task a c) -> Task a b -> Task a c
+import { Task } from '@dustinws/zoom/data';
 
-const valid = Validation.Success.of('yay!');
-const invalid = Validation.Failure.of('nay!');
-
-const toUpper = x => Validation.Success.of(x.toUpperCase());
-
-Validation.chain(toUpper, valid); // Success('YAY!');
-Validation.chain(toUpper, invalid); // Failure('nay!');</code></pre>
+Task.chain(Task.lift(n => n + 1), Task.of(1)); // Task(null, 2)</code></pre>
 
 
 
@@ -678,20 +571,20 @@ Validation.chain(toUpper, invalid); // Failure('nay!');</code></pre>
 
             
 
-            <td class="description last"><p>The transformation to apply to the inner value</p></td>
+            <td class="description last"><p>The function to run.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>validation</code></td>
+                <td class="name"><code>task</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Validation</span>
+<span class="param-type"><a href="Task.html">Task</a></span>
 
 
             
@@ -701,7 +594,7 @@ Validation.chain(toUpper, invalid); // Failure('nay!');</code></pre>
 
             
 
-            <td class="description last"><p>The transformation to apply to the inner value</p></td>
+            <td class="description last"><p>The task</p></td>
         </tr>
 
     
@@ -732,7 +625,7 @@ Validation.chain(toUpper, invalid); // Failure('nay!');</code></pre>
     </dt>
     <dd>
         
-<span class="param-type">Validation</span>
+<span class="param-type"><a href="Task.html">Task</a></span>
 
 
     </dd>
@@ -746,7 +639,7 @@ Validation.chain(toUpper, invalid); // Failure('nay!');</code></pre>
 
     
 
-    <h4 class="name" id=".concat"><span class="type-signature">(static) </span>concat<span class="signature">(left, right)</span><span class="type-signature"> &rarr; {Validation}</span></h4>
+    <h4 class="name" id=".fork"><span class="type-signature">(static) </span>fork<span class="signature">(reject, resolve, task)</span><span class="type-signature"> &rarr; {void}</span></h4>
 
     
 
@@ -758,1988 +651,7 @@ Validation.chain(toUpper, invalid); // Failure('nay!');</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line220">line 220</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Combine two validations into one with a bias towards Failures.
-If both values are the same type (both Failures, etc..) then their values
-will be concatenated and a single instance of that type will be returned.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
-
-const failure = Validation.Failure.of(['fail!']);
-const success = Validation.Success.of(['win!']);
-
-Validation.concat(failure, success); // failure
-Validation.concat(success, failure); // failure
-Validation.concat(failure, failure); // Failure(['fail!', 'fail!'])
-Validation.concat(success, success); // Success(['win!', 'win!'])</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>left</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Validation</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The first validation</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>right</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Validation</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The second validation</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Validation</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".empty"><span class="type-signature">(static) </span>empty<span class="signature">()</span><span class="type-signature"> &rarr; {Validation}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line257">line 257</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Create an empty Validation. Used as the &quot;identity&quot; element
-for the Validation monoid.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
-
-Validation.empty(); // Success([])</code></pre>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Validation</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".Failure.of"><span class="type-signature">(static) </span>Failure.of<span class="signature">(value)</span><span class="type-signature"> &rarr; {Validation}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line78">line 78</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Lift a value into an unsuccessful 'Failure' context.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
-
-const valid = Validation.Failure.of(1);
-
-valid.toString() // 'Failure(1)'</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Any</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The value to put in the Validation</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Validation</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="of"><span class="type-signature">(static) </span>Failure#of<span class="signature">(value)</span><span class="type-signature"> &rarr; {Validation}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line368">line 368</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Lift a value into an unsuccessful 'Failure' context.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
-
-const invalid = Validation.();
-
-invalid.of(1); // Failure(1)</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Any</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The value to put in the Validation</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Validation</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".isFailure"><span class="type-signature">(static) </span>isFailure<span class="signature">(validation)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line188">line 188</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Determine if an Validation is an instance of Failure</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
-
-Validation.isFailure(Validation.Failure.of(1)); // true
-Validation.isFailure(Validation.Success.of(1)); // false</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>validation</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Validation</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The validation to query</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".isSuccess"><span class="type-signature">(static) </span>isSuccess<span class="signature">(validation)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line204">line 204</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Determine if an Validation is an instance of Success</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
-
-Validation.isSuccess(Validation.Success.of(1)); // true
-Validation.isSuccess(Validation.Failure.of(1)); // false</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>validation</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Validation</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The validation to query</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".map"><span class="type-signature">(static) </span>map<span class="signature">(transform, validation)</span><span class="type-signature"> &rarr; {Validation}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line140">line 140</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Apply a transformation to the Validation if it is an instance
-of &quot;Success&quot;. Otherwise, ignore the transformation and return the instance.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
-
-const valid = Validation.Success.of('yay!');
-const failure = Validation.Failure.of('nay!');
-
-const toUpper = x => x.toUpperCase();
-
-Validation.map(toUpper, valid); // Success('YAY!');
-Validation.map(toUpper, invalid); // Failure('nay!');</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>transform</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The transformation to apply to the inner value</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>validation</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Validation</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The validation</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Validation</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".of"><span class="type-signature">(static) </span>of<span class="signature">(value)</span><span class="type-signature"> &rarr; {Validation}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line25">line 25</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Lift a value into a successful 'Success' context.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
-
-const valid = Validation.of(1);
-
-valid.toString() // 'Success(1)'</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Any</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The value to put in the Validation</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Validation</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".Success.of"><span class="type-signature">(static) </span>Success.of<span class="signature">(value)</span><span class="type-signature"> &rarr; {Validation}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line59">line 59</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Lift a value into a successful 'Success' context.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
-
-const valid = Validation.Success.of(1);
-
-valid.toString() // 'Success(1)'</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Any</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The value to put in the Validation</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Validation</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="of"><span class="type-signature">(static) </span>Success#of<span class="signature">(value)</span><span class="type-signature"> &rarr; {Validation}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line350">line 350</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Lift a value into a successful 'Success' context.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
-
-const valid = Validation.();
-
-valid.of(1); // Success(1)</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Any</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The value to put in the Validation</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Validation</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="andThen"><span class="type-signature">(static) </span>Validation#andThen<span class="signature">(transform)</span><span class="type-signature"> &rarr; {Validation}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line422">line 422</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><p><a href="https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.Validation#chain">Validation#chain</a></p></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Apply a transformation to the Validation if it is an instance
-of &quot;Success&quot;. Otherwise, ignore the transformation and return the instance.
-This is how you can switch from a 'Success' to 'Failure' instance and stop
-subsequent transformations from being applied. An alias for
-<a href="https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.Validation#chain">Validation#chain</a></p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
-
-const valid = Validation.Success.of('yay!');
-const invalid = Validation.Failure.of('nay!');
-
-const toUpper = x => Validation.Success.of(x.toUpperCase());
-
-valid.andThen(toUpper); // Success('YAY!');
-invalid.andThen(toUpper); // Failure('nay!');</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>transform</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The transformation to apply to the inner value</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Validation</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="ap"><span class="type-signature">(static) </span>Validation#ap<span class="signature">(apply)</span><span class="type-signature"> &rarr; {Validation}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line468">line 468</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Apply a transformation to the Validation if it is an instance
-of &quot;Success&quot;. Otherwise, ignore the transformation and return the instance.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
-
-const valid = Validation.Success.of('yay!');
-const failure = Validation.Failure.of('nay!');
-
-const toUpper = Validation.of(x => x.toUpperCase());
-
-valid.ap(toUpper); // Success('YAY!');
-invalid.ap(toUpper); // Failure('nay!');</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>apply</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Validation</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>A validation containing a function to run on the value</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Validation</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="caseOf"><span class="type-signature">(static) </span>Validation#caseOf<span class="signature">(cases)</span><span class="type-signature"> &rarr; {Validation}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line334">line 334</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line171">line 171</a>
     </li></ul></dd>
     
 
@@ -2773,13 +685,6 @@ invalid.ap(toUpper); // Failure('nay!');</code></pre>
     
 
     
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><p><a href="https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.Validation#cata">Validation#cata</a></p></li>
-        </ul>
-    </dd>
-    
 
     
 </dl>
@@ -2789,11 +694,8 @@ invalid.ap(toUpper); // Failure('nay!');</code></pre>
 
 
 <div class="description">
-    <p>A function that accepts an object with two functions, one
-to run if the either is an instance of <code>Success</code>, and one to run if the
-either is an instance of <code>Failure</code>. The return value will be returned
-directly, with no wrapper instance. This name is short for <code>catamorphism</code>.
-An alias for <a href="https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.Validation#cata">Validation#cata</a></p>
+    <p>Fork a task. This is the only way to run the code contained
+in the task.</p>
 </div>
 
 
@@ -2806,17 +708,16 @@ An alias for <a href="https://dustinws.github.io/zoom/module-Zoom.Data.Validatio
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
+    <pre class="prettyprint"><code>// fork :: (a -> c) -> (b -> c) -> Task a b -> d
+import { Task } from '@dustinws/zoom/data';
 
-Validation.Success.of('foobar').caseOf({
-  Success(foobar) {
-    // Do something with foobar
-  },
+Task.fork(
+  error => console.log('Task error:', error),
+  result => console.log('Task result:', result),
+  Task.of('Hello world!'),
+);
 
-  Failure(error) {
-    // Handle the error
-  },
-});</code></pre>
+// 'Task result: Hello world!'</code></pre>
 
 
 
@@ -2846,13 +747,13 @@ Validation.Success.of('foobar').caseOf({
 
         <tr>
             
-                <td class="name"><code>cases</code></td>
+                <td class="name"><code>reject</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">function</span>
 
 
             
@@ -2862,7 +763,53 @@ Validation.Success.of('foobar').caseOf({
 
             
 
-            <td class="description last"><p>The cases to match against.</p></td>
+            <td class="description last"><p>The error handler.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>resolve</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The success handler.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>task</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Task.html">Task</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The function to run.</p></td>
         </tr>
 
     
@@ -2893,7 +840,7 @@ Validation.Success.of('foobar').caseOf({
     </dt>
     <dd>
         
-<span class="param-type">Validation</span>
+<span class="param-type">void</span>
 
 
     </dd>
@@ -2907,7 +854,7 @@ Validation.Success.of('foobar').caseOf({
 
     
 
-    <h4 class="name" id="cata"><span class="type-signature">(static) </span>Validation#cata<span class="signature">(cases)</span><span class="type-signature"> &rarr; {Validation}</span></h4>
+    <h4 class="name" id=".lift"><span class="type-signature">(static) </span>lift<span class="signature">(transform)</span><span class="type-signature"> &rarr; {function}</span></h4>
 
     
 
@@ -2919,187 +866,7 @@ Validation.Success.of('foobar').caseOf({
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line306">line 306</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.0.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><p><a href="https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.Validation#caseOf">Validation#caseOf</a></p></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>A function that accepts an object with two functions, one
-to run if the either is an instance of <code>Success</code>, and one to run if the
-either is an instance of <code>Failure</code>. The return value will be returned
-directly, with no wrapper instance. This name is short for <code>catamorphism</code>.
-An alias for <a href="https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.Validation#caseOf">Validation#caseOf</a></p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
-
-Validation.Success.of('foobar').cata({
-  Success(foobar) {
-    // Do something with foobar
-  },
-
-  Failure(error) {
-    // Handle the error
-  },
-});</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>cases</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The cases to match against.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Validation</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="chain"><span class="type-signature">(static) </span>Validation#chain<span class="signature">(transform)</span><span class="type-signature"> &rarr; {Validation}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line395">line 395</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line354">line 354</a>
     </li></ul></dd>
     
 
@@ -3133,13 +900,6 @@ Validation.Success.of('foobar').cata({
     
 
     
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><p><a href="https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.Validation#andThen">Validation#andThen</a></p></li>
-        </ul>
-    </dd>
-    
 
     
 </dl>
@@ -3149,11 +909,8 @@ Validation.Success.of('foobar').cata({
 
 
 <div class="description">
-    <p>Apply a transformation to the Validation if it is an instance
-of &quot;Success&quot;. Otherwise, ignore the transformation and return the instance.
-This is how you can switch from a 'Success' to 'Failure' instance and stop
-subsequent transformations from being applied. An alias for
-<a href="https://dustinws.github.io/zoom/module-Zoom.Data.Validation.html#.Validation#andThen">Validation#andThen</a></p>
+    <p>Convert a regular function into a function that returns
+a task.</p>
 </div>
 
 
@@ -3166,15 +923,12 @@ subsequent transformations from being applied. An alias for
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
+    <pre class="prettyprint"><code>// lift :: (a -> b) -> (a -> Task b)
+import { Task } from '@dustinws/zoom/data';
 
-const valid = Validation.Success.of('yay!');
-const invalid = Validation.Failure.of('nay!');
+const addTask = Task.lift((a, b) => a + b);
 
-const toUpper = x => Validation.Success.of(x.toUpperCase());
-
-valid.chain(toUpper); // Success('YAY!');
-invalid.chain(toUpper); // Failure('nay!');</code></pre>
+addTask(1, 4); // Task(null, 5)</code></pre>
 
 
 
@@ -3220,7 +974,7 @@ invalid.chain(toUpper); // Failure('nay!');</code></pre>
 
             
 
-            <td class="description last"><p>The transformation to apply to the inner value</p></td>
+            <td class="description last"><p>The function to convert.</p></td>
         </tr>
 
     
@@ -3251,7 +1005,7 @@ invalid.chain(toUpper); // Failure('nay!');</code></pre>
     </dt>
     <dd>
         
-<span class="param-type">Validation</span>
+<span class="param-type">function</span>
 
 
     </dd>
@@ -3265,7 +1019,7 @@ invalid.chain(toUpper); // Failure('nay!');</code></pre>
 
     
 
-    <h4 class="name" id="concat"><span class="type-signature">(static) </span>Validation#concat<span class="signature">(other)</span><span class="type-signature"> &rarr; {Validation}</span></h4>
+    <h4 class="name" id=".liftNode"><span class="type-signature">(static) </span>liftNode<span class="signature">(func)</span><span class="type-signature"> &rarr; {function}</span></h4>
 
     
 
@@ -3277,7 +1031,7 @@ invalid.chain(toUpper); // Failure('nay!');</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line526">line 526</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line375">line 375</a>
     </li></ul></dd>
     
 
@@ -3320,9 +1074,8 @@ invalid.chain(toUpper); // Failure('nay!');</code></pre>
 
 
 <div class="description">
-    <p>Combine two validations into one with a bias towards Failures.
-If both values are the same type (both Failures, etc..) then their values
-will be concatenated and a single instance of that type will be returned.</p>
+    <p>Convert a node style callback into a function that returns
+a task.</p>
 </div>
 
 
@@ -3335,15 +1088,13 @@ will be concatenated and a single instance of that type will be returned.</p>
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
+    <pre class="prettyprint"><code>// liftNode :: (a, (b, c) -> d) -> (a -> Task b c)
+import fs from 'fs';
+import { Task } from '@dustinws/zoom/data';
 
-const failure = Validation.Failure.of(['fail!']);
-const success = Validation.Success.of(['win!']);
+const readFile = Task.liftNode(fs.readFile);
 
-success.concat(failure); // failure
-failure.concat(success); // failure
-failure.concat(failure); // Failure(['fail!', 'fail!'])
-success.concat(success); // Success(['win!', 'win!'])</code></pre>
+readFile('foo.js'); // Task(Error, Buffer)</code></pre>
 
 
 
@@ -3373,13 +1124,13 @@ success.concat(success); // Success(['win!', 'win!'])</code></pre>
 
         <tr>
             
-                <td class="name"><code>other</code></td>
+                <td class="name"><code>func</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Validation</span>
+<span class="param-type">function</span>
 
 
             
@@ -3389,7 +1140,7 @@ success.concat(success); // Success(['win!', 'win!'])</code></pre>
 
             
 
-            <td class="description last"><p>The validation to join with</p></td>
+            <td class="description last"><p>The function to convert.</p></td>
         </tr>
 
     
@@ -3420,7 +1171,7 @@ success.concat(success); // Success(['win!', 'win!'])</code></pre>
     </dt>
     <dd>
         
-<span class="param-type">Validation</span>
+<span class="param-type">function</span>
 
 
     </dd>
@@ -3434,7 +1185,7 @@ success.concat(success); // Success(['win!', 'win!'])</code></pre>
 
     
 
-    <h4 class="name" id="isFailure"><span class="type-signature">(static) </span>Validation#isFailure<span class="signature">(validation)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id=".map"><span class="type-signature">(static) </span>map<span class="signature">(transform, task)</span><span class="type-signature"> &rarr; {<a href="Task.html">Task</a>}</span></h4>
 
     
 
@@ -3446,7 +1197,7 @@ success.concat(success); // Success(['win!', 'win!'])</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line485">line 485</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line242">line 242</a>
     </li></ul></dd>
     
 
@@ -3463,6 +1214,13 @@ success.concat(success); // Success(['win!', 'win!'])</code></pre>
 
     
 
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li>Functor</li>
+        
+    </ul></dd>
     
 
     
@@ -3489,7 +1247,7 @@ success.concat(success); // Success(['win!', 'win!'])</code></pre>
 
 
 <div class="description">
-    <p>Determine if an Validation is an instance of Failure</p>
+    <p>Run a function on a value contained in a Task.</p>
 </div>
 
 
@@ -3502,340 +1260,10 @@ success.concat(success); // Success(['win!', 'win!'])</code></pre>
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
+    <pre class="prettyprint"><code>// map :: (b -> c) -> Task a b -> Task a c
+import { Task } from '@dustinws/zoom/data';
 
-Validation.Failure.of(1).isFailure(); // true
-Validation.Success.of(1).isFailure(); // false</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>validation</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Validation</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The validation to query</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="isSuccess"><span class="type-signature">(static) </span>Validation#isSuccess<span class="signature">(validation)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line502">line 502</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Determine if an Validation is an instance of Success</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
-
-Validation.Success.of(1).isSuccess(); // true
-Validation.Failure.of(1).isSuccess(); // false</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>validation</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Validation</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The validation to query</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="map"><span class="type-signature">(static) </span>Validation#map<span class="signature">(transform)</span><span class="type-signature"> &rarr; {Validation}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_validation_Validation.js.html">data/validation/Validation.js</a>, <a href="data_validation_Validation.js.html#line445">line 445</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Apply a transformation to the Validation if it is an instance
-of &quot;Success&quot;. Otherwise, ignore the transformation and return the instance.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Validation } from '@dustinws/zoom/data';
-
-const valid = Validation.Success.of('yay!');
-const failure = Validation.Failure.of('nay!');
-
-const toUpper = x => x.toUpperCase();
-
-valid.map(toUpper); // Success('YAY!');
-invalid.map(toUpper); // Failure('nay!');</code></pre>
+Task.map(x => x + x, Task.of(1)) // Task(null, 2)</code></pre>
 
 
 
@@ -3881,7 +1309,30 @@ invalid.map(toUpper); // Failure('nay!');</code></pre>
 
             
 
-            <td class="description last"><p>The transformation to apply to the inner value</p></td>
+            <td class="description last"><p>The function to run.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>task</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Task.html">Task</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The task</p></td>
         </tr>
 
     
@@ -3912,7 +1363,1776 @@ invalid.map(toUpper); // Failure('nay!');</code></pre>
     </dt>
     <dd>
         
-<span class="param-type">Validation</span>
+<span class="param-type"><a href="Task.html">Task</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".of"><span class="type-signature">(static) </span>of<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="Task.html">Task</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line134">line 134</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li>Applicative</li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Create a new Task with the given value.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// of :: b -> Task a b
+import { Task } from '@dustinws/zoom/data';
+
+Task.of(1); // Task(null, 1)</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The value to put in the Task</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Task.html">Task</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".parallel"><span class="type-signature">(static) </span>parallel<span class="signature">(tasks)</span><span class="type-signature"> &rarr; {<a href="Task.html">Task</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line307">line 307</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Run many Tasks in parallel. If any Task rejects, it will
+reject the top level Task immediately.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// parallel :: [Task a b] -> Task a [b]
+import { Task } from '@dustinws/zoom/data';
+
+const tasks = Task
+  .parallel([
+    Task.of(1),
+    Task.of(2),
+  ])
+  .map((results) => {
+    results; // [1, 2]
+  });</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tasks</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="Task.html">Task</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The tasks to run.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Task.html">Task</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".recover"><span class="type-signature">(static) </span>recover<span class="signature">(transform, task)</span><span class="type-signature"> &rarr; {<a href="Task.html">Task</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line284">line 284</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Define a function to run if the Task is rejected, which will
+accept the error and return a new, valid Task.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// recover :: (a -> Task d c) -> Task a b -> Task d c
+import { Task } from '@dustinws/zoom/data';
+
+const rejected = Task.reject(1); // Task(1, null)
+Task.recover(err => Task.of('Recovered!'), rejected); // Task(null, 'Recovered!')</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>transform</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The function to run.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>task</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Task.html">Task</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The task</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Task.html">Task</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".reject"><span class="type-signature">(static) </span>reject<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="Task.html">Task</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line153">line 153</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Create a rejected Task with the given value.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// reject :: a -> Task a b
+import { Task } from '@dustinws/zoom/data';
+
+Task.reject(1); // Task(1, null)</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The value to put in the Task</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Task.html">Task</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".toPromise"><span class="type-signature">(static) </span>toPromise<span class="signature">(task, Promise<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line262">line 262</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Convert a Task to a Promise. This implicitely calls &quot;fork&quot;</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// toPromise :: Task a b -> Promise a b
+import { Task } from '@dustinws/zoom/data';
+import Promise from 'bluebird';
+
+Task.toPromise(Task.of(1)); // Promise(1)
+Task.toPromise(Task.of(1), Promise) // Bluebird(1)</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>task</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Task.html">Task</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The task to convert</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Promise</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>global.Promise</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The promise constructor</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="andThen"><span class="type-signature"></span>andThen<span class="signature">(transform)</span><span class="type-signature"> &rarr; {<a href="Task.html">Task</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line449">line 449</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="Task.html#chain">Task#chain</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Run a function that returns a nested task and flatten
+the result into a single task. An alias for <a href="Task.html#chain">Task#chain</a></p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// andThen Task a b :: (b -> Task a c) -> Task a c
+import { Task } from '@dustinws/zoom/data';
+
+Task.of(1).andThen(x => Task.of(x + x)); // Task(null, 2)</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>transform</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The function to run.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Task.html">Task</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="chain"><span class="type-signature"></span>chain<span class="signature">(transform)</span><span class="type-signature"> &rarr; {<a href="Task.html">Task</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line428">line 428</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li>Chain</li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="Task.html#andThen">Task#andThen</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Run a function that returns a nested task and flatten
+the result into a single task. An alias for <a href="Task.html#andThen">Task#andThen</a></p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// chain Task a b :: (b -> Task a c) -> Task a c
+import { Task } from '@dustinws/zoom/data';
+
+Task.of(1).chain(x => Task.of(x + x)); // Task(null, 2)</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>transform</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The function to run.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Task.html">Task</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="map"><span class="type-signature"></span>map<span class="signature">(transform)</span><span class="type-signature"> &rarr; {<a href="Task.html">Task</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line469">line 469</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li>Functor</li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Run a function on a value contained in a Task.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// map Task a b :: (b -> c) -> Task a c
+import { Task } from '@dustinws/zoom/data';
+
+Task.of(1).map(x => x + x); // Task(null, 2)</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>transform</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The function to run.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Task.html">Task</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="recover"><span class="type-signature"></span>recover<span class="signature">(transform)</span><span class="type-signature"> &rarr; {<a href="Task.html">Task</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line509">line 509</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Define a function to run if the Task is rejected, which will
+accept the error and return a new, valid Task.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// map Task a b :: (a -> Task c d) -> Task c d
+import { Task } from '@dustinws/zoom/data';
+
+const rejected = Task.reject(1); // Task(1, null)
+rejected.recover(err => Task.of('Recovered!')); // Task(null, 'Recovered!')</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>transform</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The function to run.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Task.html">Task</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="toPromise"><span class="type-signature"></span>toPromise<span class="signature">(Promise<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line488">line 488</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Convert a Task to a Promise. This implicitely calls &quot;fork&quot;</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// map Task a b :: c -> Promise a b
+import { Task } from '@dustinws/zoom/data';
+
+Task.of(1).toPromise(); // Promise(1)</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>Promise</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>global.Promise</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The promise constructor</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
 
 
     </dd>

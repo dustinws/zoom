@@ -25,7 +25,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * @description Map a function over an array and flatten
  * the results by one level.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.15.0
  * @function chain
  * @example

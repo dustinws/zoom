@@ -3,7 +3,7 @@ import curry from '../../lambda/curry';
 
 /**
  * @description Turn a list into a single value.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.15.0
  * @function fold
  * @example

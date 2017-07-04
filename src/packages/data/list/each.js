@@ -3,7 +3,7 @@ import curry from '../../lambda/curry';
 /**
  * @description Run a function for each item in an array. Returns the array.
  * Does not provide an index.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.15.0
  * @function each
  * @example

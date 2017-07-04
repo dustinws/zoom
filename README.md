@@ -7,6 +7,8 @@
 ---
 ### Overview
 
+<img src="https://cdn.pixabay.com/photo/2017/02/21/21/14/unicorn-2087452_1280.png" alt="Drawing" style="width: 200px;"/>
+
 Zoom is a suite of libraries that work together to encourage a safer way to write javascript.
 
 ###### Zoom <3's [Fantasy Land JS](https://github.com/fantasyland/fantasy-land).

@@ -18,7 +18,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @description Apply a predicate to each element in an array and
  * return a new array containing all of the values the predicate
  * returned a truthy response for.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.15.0
  * @function filter
  * @example

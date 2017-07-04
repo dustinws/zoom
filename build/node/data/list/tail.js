@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 /**
  * @description Return a new array that does not include the first element.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.15.0
  * @function tail
  * @example

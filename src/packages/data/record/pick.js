@@ -4,7 +4,7 @@ import merge from './merge';
 
 /**
  * @description Create a new object containing only the specified keys.
- * @memberof module:Zoom.Data.Record
+ * @memberof Record
  * @since v1.16.0
  * @function pick
  * @example

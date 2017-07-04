@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 /**
  * @description Determine if an array is empty.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.15.0
  * @function isEmpty
  * @example

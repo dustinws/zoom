@@ -1,6 +1,5 @@
 /**
  * @class List
- * @memberof module:Zoom.Data
  * @description
  * This module contains functions for array interactions. It is a static object
  * and is not an actual class. The class tag was used in the documentation

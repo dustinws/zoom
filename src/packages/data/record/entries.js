@@ -3,7 +3,7 @@ import map from '../list/map';
 
 /**
  * @description Turn an object into an array of [key, value] tuples.
- * @memberof module:Zoom.Data.Record
+ * @memberof Record
  * @since v1.16.0
  * @function entries
  * @example

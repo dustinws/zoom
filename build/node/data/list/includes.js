@@ -16,7 +16,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /**
  * @description Determine if an item is present in an array.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.15.0
  * @function includes
  * @example

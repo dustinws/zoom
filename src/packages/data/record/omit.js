@@ -5,7 +5,7 @@ import keys from './keys';
 
 /**
  * @description Create a new object without the specified keys.
- * @memberof module:Zoom.Data.Record
+ * @memberof Record
  * @since v1.16.0
  * @function omit
  * @example

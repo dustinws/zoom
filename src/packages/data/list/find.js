@@ -4,7 +4,7 @@ import Maybe from '../maybe';
 /**
  * @description Find the first element in a list that satisfies a predicate
  * function. Returns a Maybe.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.17.0
  * @function find
  * @example

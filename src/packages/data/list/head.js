@@ -2,7 +2,7 @@ import Maybe from '../maybe';
 
 /**
  * @description Get the first element of a potentially empty array.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.15.0
  * @function head
  * @example

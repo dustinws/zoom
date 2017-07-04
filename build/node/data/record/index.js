@@ -54,7 +54,6 @@ exports.default = {
   values: _values2.default
 }; /**
     * @class Record
-    * @memberof module:Zoom.Data
     * @description
     * This module contains functions for object interactions. It is a static object
     * and is not an actual class. The class tag was used in the documentation

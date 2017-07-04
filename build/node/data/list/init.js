@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 /**
  * @description Get all elements except the last one.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.15.0
  * @function init
  * @example

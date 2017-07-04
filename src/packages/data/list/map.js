@@ -4,7 +4,7 @@ import fold from './fold';
 /**
  * @description Apply a function to each element in a list and return
  * the results in a new array.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.15.0
  * @function map
  * @example

@@ -2,7 +2,7 @@ import keys from './keys';
 
 /**
  * @description Determine the number of enumberable keys that an object has.
- * @memberof module:Zoom.Data.Record
+ * @memberof Record
  * @since v1.16.0
  * @function size
  * @example

@@ -21,7 +21,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * @description Find all objects in a list that have the same comparable
  * values as the query object.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.17.0
  * @function filterWhere
  * @example

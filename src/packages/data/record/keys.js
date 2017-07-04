@@ -1,6 +1,6 @@
 /**
  * @description Get an object's enumberable keys as an array of strings
- * @memberof module:Zoom.Data.Record
+ * @memberof Record
  * @since v1.16.0
  * @function keys
  * @example

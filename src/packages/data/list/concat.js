@@ -2,7 +2,7 @@ import curry from '../../lambda/curry';
 
 /**
  * @description Concatenate two arrays together.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.15.0
  * @function concat
  * @example

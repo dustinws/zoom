@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * @description Run a function for each item in an array. Returns the array.
  * Does not provide an index.
- * @memberof module:Zoom.Data.List
+ * @memberof List
  * @since v1.15.0
  * @function each
  * @example
