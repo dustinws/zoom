@@ -5,7 +5,7 @@ import curry from '../../lambda/curry';
  * @class Task
  * @description
  * #### Fantasy Land Implementations
- * `Applicative`, `Apply`, `Functor`, `Chain`, `Monad`
+ * `Applicative`, `Functor`, `Apply`, `Chain`, `Monad`
  *
  * ---
  *
@@ -501,8 +501,8 @@ Task.prototype.map = function map(transform) {
  * contained in a Task.
  * @memberof Task
  * @since v2.2.0
- * @function ap
- * @static
+ * @method
+ * @instance
  * @implements Apply
  * @example
  * // ap Task a b :: Apply (b -> c) -> Task a c
