@@ -7,7 +7,7 @@
 ---
 ### Overview
 
-![](https://cdn.pixabay.com/photo/2017/02/21/21/14/unicorn-2087452_1280.png | width=200)
+<img src="https://cdn.pixabay.com/photo/2017/02/21/21/14/unicorn-2087452_1280.png" width="200px" />
 
 Zoom is a collection tools to help javascript developers write safe, reliable
 code that is easy to read and easy to refactor.
