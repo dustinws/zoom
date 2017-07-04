@@ -36,7 +36,7 @@ Documentation can be found [here](https://dustinws.github.io/zoom/).
 ### Installation
 
 ##### npm
-`$ npm install --save @dustinws/zoom`
+`$ npm install --save zoomjs`
 
 ##### bower
 `$ bower --save install zoom`
