@@ -17,6 +17,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @description
  * #### Fantasy Land Implementations
  * `Applicative`, `Apply`, `Functor`, `Chain`, `Monad`
+ *
  * ---
  *
  * A `Task` represents an asynchronous action, and is very similar to a

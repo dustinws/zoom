@@ -105,7 +105,9 @@
 
 
 <div class="description">
-    <h4>Fantasy Land Implementations</h4><h2><code>Applicative</code>, <code>Apply</code>, <code>Functor</code>, <code>Chain</code>, <code>Monad</code></h2><p>A <code>Task</code> represents an asynchronous action, and is very similar to a
+    <h4>Fantasy Land Implementations</h4><p><code>Applicative</code>, <code>Apply</code>, <code>Functor</code>, <code>Chain</code>, <code>Monad</code></p>
+<hr>
+<p>A <code>Task</code> represents an asynchronous action, and is very similar to a
 javascript <code>Promise</code>. A good way to get an understanding of  how a <code>Task</code>
 works is to find out how it is different from a <code>Promise</code>.</p>
 <p>The first, and most notable difference is that a <code>Task</code> does not run right
@@ -258,7 +260,7 @@ Task((reject, resolve) => {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line226">line 226</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line227">line 227</a>
     </li></ul></dd>
     
 
@@ -451,7 +453,7 @@ Task.andThen(Task.lift(n => n + 1), Task.of(1)); // Task(null, 2)</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line266">line 266</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line267">line 267</a>
     </li></ul></dd>
     
 
@@ -644,7 +646,7 @@ Task.ap(Task.of(x => x + x), Task.of(1)) // Task(null, 2)</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line498">line 498</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line499">line 499</a>
     </li></ul></dd>
     
 
@@ -818,7 +820,7 @@ Task.of(1).ap(Task.of(x => x + x));
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line202">line 202</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line203">line 203</a>
     </li></ul></dd>
     
 
@@ -1018,7 +1020,7 @@ Task.chain(Task.lift(n => n + 1), Task.of(1)); // Task(null, 2)</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line175">line 175</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line176">line 176</a>
     </li></ul></dd>
     
 
@@ -1233,7 +1235,7 @@ Task.fork(
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line379">line 379</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line380">line 380</a>
     </li></ul></dd>
     
 
@@ -1398,7 +1400,7 @@ addTask(1, 4); // Task(null, 5)</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line400">line 400</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line401">line 401</a>
     </li></ul></dd>
     
 
@@ -1564,7 +1566,7 @@ readFile('foo.js'); // Task(Error, Buffer)</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line246">line 246</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line247">line 247</a>
     </li></ul></dd>
     
 
@@ -1756,7 +1758,7 @@ Task.map(x => x + x, Task.of(1)) // Task(null, 2)</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line138">line 138</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line139">line 139</a>
     </li></ul></dd>
     
 
@@ -1925,7 +1927,7 @@ Task.of(1); // Task(null, 1)</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line332">line 332</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line333">line 333</a>
     </li></ul></dd>
     
 
@@ -2095,7 +2097,7 @@ const tasks = Task
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line309">line 309</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line310">line 310</a>
     </li></ul></dd>
     
 
@@ -2282,7 +2284,7 @@ Task.recover(err => Task.of('Recovered!'), rejected); // Task(null, 'Recovered!'
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line157">line 157</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line158">line 158</a>
     </li></ul></dd>
     
 
@@ -2444,7 +2446,7 @@ Task.reject(1); // Task(1, null)</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line287">line 287</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line288">line 288</a>
     </li></ul></dd>
     
 
@@ -2663,7 +2665,7 @@ Task.toPromise(Task.of(1), Promise) // Bluebird(1)</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line474">line 474</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line475">line 475</a>
     </li></ul></dd>
     
 
@@ -2833,7 +2835,7 @@ Task.of(1).andThen(x => Task.of(x + x)); // Task(null, 2)</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line453">line 453</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line454">line 454</a>
     </li></ul></dd>
     
 
@@ -3010,7 +3012,7 @@ Task.of(1).chain(x => Task.of(x + x)); // Task(null, 2)</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line494">line 494</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line495">line 495</a>
     </li></ul></dd>
     
 
@@ -3179,7 +3181,7 @@ Task.of(1).map(x => x + x); // Task(null, 2)</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line557">line 557</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line558">line 558</a>
     </li></ul></dd>
     
 
@@ -3343,7 +3345,7 @@ rejected.recover(err => Task.of('Recovered!')); // Task(null, 'Recovered!')</cod
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line536">line 536</a>
+        <a href="data_task_Task.js.html">data/task/Task.js</a>, <a href="data_task_Task.js.html#line537">line 537</a>
     </li></ul></dd>
     
 
@@ -3526,7 +3528,7 @@ Task.of(1).toPromise(); // Promise(1)</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Jul 04 2017 14:33:52 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Jul 04 2017 14:35:09 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

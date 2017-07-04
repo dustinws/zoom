@@ -6,6 +6,7 @@ import curry from '../../lambda/curry';
  * @description
  * #### Fantasy Land Implementations
  * `Applicative`, `Apply`, `Functor`, `Chain`, `Monad`
+ *
  * ---
  *
  * A `Task` represents an asynchronous action, and is very similar to a
