@@ -1,7 +1,7 @@
 {
   "plugins": ["plugins/markdown"],
-  "static": false,
   "opts": {
+    "static": true,
     "template": "node_modules/docdash"
   }
 }

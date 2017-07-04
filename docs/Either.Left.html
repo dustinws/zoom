@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Core - Documentation</title>
+    <title>Left - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Core</h1>
+    <h1 class="page-title">Left</h1>
     
 
     
@@ -40,7 +40,9 @@
 <header>
     
         <h2>
-        Core
+            <span class="ancestors"><a href="Either.html">Either</a>.</span>
+        
+        Left
         </h2>
         
     
@@ -53,7 +55,7 @@
 
     
 
-    <h4 class="name" id="Core"><span class="type-signature"></span>new Core<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Left"><span class="type-signature"></span>new Left<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -65,7 +67,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core_index.js.html">core/index.js</a>, <a href="core_index.js.html#line1">line 1</a>
+        <a href="data_either_Either.js.html">data/either/Either.js</a>, <a href="data_either_Either.js.html#line56">line 56</a>
     </li></ul></dd>
     
 
@@ -132,6 +134,17 @@
     </div>
 
     
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="Either.html">Either</a></li>
+    </ul>
+
+
+    
 
     
 
@@ -151,7 +164,7 @@
 
     
 
-    <h4 class="name" id=".path"><span class="type-signature">(static) </span>path<span class="signature">(key, object)</span><span class="type-signature"> &rarr; {Maybe.&lt;Any>}</span></h4>
+    <h4 class="name" id="andThen"><span class="type-signature"></span>andThen<span class="signature">(transform)</span><span class="type-signature"> &rarr; {<a href="Either.html">Either</a>.&lt;A, C>}</span></h4>
 
     
 
@@ -163,7 +176,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core_path.js.html">core/path.js</a>, <a href="core_path.js.html#line6">line 6</a>
+        <a href="data_either_Either.js.html">data/either/Either.js</a>, <a href="data_either_Either.js.html#line546">line 546</a>
     </li></ul></dd>
     
 
@@ -171,9 +184,205 @@
 
     
     <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.16.0</li></ul></dd>
+    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
     
 
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Either.html#andThen">Either#andThen</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="Either.html#chain">Either#chain</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Apply a transformation to the Either if it is an instance
+of &quot;Right&quot;. Otherwise, ignore the transformation and return the instance.
+This is how you can switch from a 'Right' to 'Left' instance and stop
+subsequent transformations from being applied. An alias for <a href="Either.html#chain">Either#chain</a></p>
+</div>
+
+
+
+
+
+
+
+    <h5>This:</h5>
+    <ul><li><a href="Either.html">Either</a></li></ul>
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>import { Left, Right } from '@dustinws/zoom/data/either';
+
+// toUpper :: String -> Either String String
+const toUpper = x =>
+  typeof x !== 'string'
+    ? Left.of('toUpper() recieved a non string.')
+    : Right.of(x.toUpperCase());
+
+// A "Right" will apply the next operation
+Right.of('boom').andThen(toUpper);
+// => Right(BOOM)
+
+// A "Left" will ignore the next operation
+Left.of('yea right').andThen(toUpper);
+// => Left(yea right)</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>transform</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The transformation to apply to the inner value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Either.html">Either</a>.&lt;A, C></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="ap"><span class="type-signature"></span>ap<span class="signature">(apply)</span><span class="type-signature"> &rarr; {<a href="Either.html">Either</a>.&lt;A, C>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_either_Either.js.html">data/either/Either.js</a>, <a href="data_either_Either.js.html#line613">line 613</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Either.html#ap">Either#ap</a>
+    </li></ul></dd>
     
 
     
@@ -206,8 +415,10 @@
 
 
 <div class="description">
-    <p>Get the value at the given path on the given object. Returns
-a Maybe.</p>
+    <p><code>ap</code> is just like <code>map</code>, allowing a user to use plain old functions to
+transform values hidden away in <code>Either</code>s. The only difference is that
+instead of giving it the function, you give it an <code>Either</code> of the function.
+This is known as the <code>Apply</code> type in fantasy land JS.</p>
 </div>
 
 
@@ -216,15 +427,26 @@ a Maybe.</p>
 
 
 
+    <h5>This:</h5>
+    <ul><li><a href="Either.html">Either</a></li></ul>
+
 
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { path } from '@dustinws/zoom/core';
+    <pre class="prettyprint"><code>// ap :: Either e => e a b -> e a (b -> c) -> e a c
+import { ap, Left, Right } from '@dustinws/zoom/data';
 
-path(['a', 'b'], { a: { b: 1 } }) // Just(1)
-path(['rows', 0], { rows: [1] }) // Just(1)
-path(['a', 'b', 'c', 0, 'd'], {}) // Nothing</code></pre>
+// toUpperE :: Either a (String -> String)
+const toUpperE = Right(x => x.toUpperCase());
+
+// A "Right" will apply the next operation
+Right.of('boom').ap(toUpperE);
+// => Right(BOOM)
+
+// A "Left" will ignore the next operation
+Left.of('yea right').ap(toUpperE);
+// => Left(yea right)</code></pre>
 
 
 
@@ -254,13 +476,13 @@ path(['a', 'b', 'c', 0, 'd'], {}) // Nothing</code></pre>
 
         <tr>
             
-                <td class="name"><code>key</code></td>
+                <td class="name"><code>apply</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;(String|Number)></span>
+<span class="param-type"><a href="Either.html">Either</a>.&lt;A, function()></span>
 
 
             
@@ -270,30 +492,7 @@ path(['a', 'b', 'c', 0, 'd'], {}) // Nothing</code></pre>
 
             
 
-            <td class="description last"><p>An array of indices</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>object</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The object to query</p></td>
+            <td class="description last"><p>An either containing a function to run on the value</p></td>
         </tr>
 
     
@@ -324,7 +523,7 @@ path(['a', 'b', 'c', 0, 'd'], {}) // Nothing</code></pre>
     </dt>
     <dd>
         
-<span class="param-type">Maybe.&lt;Any></span>
+<span class="param-type"><a href="Either.html">Either</a>.&lt;A, C></span>
 
 
     </dd>
@@ -338,7 +537,7 @@ path(['a', 'b', 'c', 0, 'd'], {}) // Nothing</code></pre>
 
     
 
-    <h4 class="name" id=".prop"><span class="type-signature">(static) </span>prop<span class="signature">(key, object)</span><span class="type-signature"> &rarr; {Maybe.&lt;Any>}</span></h4>
+    <h4 class="name" id="caseOf"><span class="type-signature"></span>caseOf<span class="signature">(cases)</span><span class="type-signature"> &rarr; {<a href="Either.html">Either</a>.&lt;A, C>}</span></h4>
 
     
 
@@ -350,194 +549,7 @@ path(['a', 'b', 'c', 0, 'd'], {}) // Nothing</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core_prop.js.html">core/prop.js</a>, <a href="core_prop.js.html#line4">line 4</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>v1.16.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Get the value at the given key on the given object. Returns
-a Maybe.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>// prop :: String -> { String: a } -> Maybe a
-import { prop } from '@dustinws/zoom/core';
-
-prop('a', { a: 1 }) // Just(1)
-prop('a', {}) // Nothing</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>key</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The key to lookup</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>object</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The object to query</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Maybe.&lt;Any></span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".typeOf"><span class="type-signature">(static) </span>typeOf<span class="signature">(value)</span><span class="type-signature"> &rarr; {String}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lambda_typeOf.js.html">lambda/typeOf.js</a>, <a href="lambda_typeOf.js.html#line1">line 1</a>
+        <a href="data_either_Either.js.html">data/either/Either.js</a>, <a href="data_either_Either.js.html#line436">line 436</a>
     </li></ul></dd>
     
 
@@ -549,6 +561,721 @@ prop('a', {}) // Nothing</code></pre>
     
 
     
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Either.html#caseOf">Either#caseOf</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="Either.html#cata">Either#cata</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>A function that accepts an object with two functions, one
+to run if the either is an instance of <code>Right</code>, and one to run if the
+either is an instance of <code>Left</code>. The return value will be returned
+directly, with no wrapper instance. An alias for An alias for <a href="Either.html#cata">Either#cata</a></p>
+</div>
+
+
+
+
+
+
+
+    <h5>This:</h5>
+    <ul><li><a href="Either.html">Either</a></li></ul>
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>import { Either } from '@dustinws/zoom/data';
+
+Either.of(1).caseOf({
+  Right(one) {
+    // Do something with one
+  },
+
+  Left(error) {
+    // Handle the error
+  },
+});</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>cases</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p><code>{ Left: a -&gt; c, Right: b -&gt; c }</code></p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>Left</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The <code>Left</code> case</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Right</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The <code>Right</code> case</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Either.html">Either</a>.&lt;A, C></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="cata"><span class="type-signature"></span>cata<span class="signature">(cases)</span><span class="type-signature"> &rarr; {<a href="Either.html">Either</a>.&lt;A, C>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_either_Either.js.html">data/either/Either.js</a>, <a href="data_either_Either.js.html#line405">line 405</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>v1.0.0</li></ul></dd>
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Either.html#cata">Either#cata</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="Either.html#caseOf">Either#caseOf</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>A function that accepts an object with two functions, one
+to run if the either is an instance of <code>Right</code>, and one to run if the
+either is an instance of <code>Left</code>. The return value will be returned
+directly, with no wrapper instance. This name is short for <code>catamorphism</code>.
+An alias for <a href="Either.html#caseOf">Either#caseOf</a></p>
+</div>
+
+
+
+
+
+
+
+    <h5>This:</h5>
+    <ul><li><a href="Either.html">Either</a></li></ul>
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>import { Either } from '@dustinws/zoom/data';
+
+Either.of(1).cata({
+  Right(one) {
+    // Do something with one
+  },
+
+  Left(error) {
+    // Handle the error
+  },
+});</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>cases</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p><code>{ Left: a -&gt; c, Right: b -&gt; c }</code></p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>Left</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The <code>Left</code> case</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Right</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The <code>Right</code> case</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Either.html">Either</a>.&lt;A, C></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="chain"><span class="type-signature"></span>chain<span class="signature">(transform)</span><span class="type-signature"> &rarr; {<a href="Either.html">Either</a>.&lt;A, C>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_either_Either.js.html">data/either/Either.js</a>, <a href="data_either_Either.js.html#line510">line 510</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Either.html#chain">Either#chain</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="Either.html#andThen">Either#andThen</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Apply a transformation to the Either if it is an instance
+of &quot;Right&quot;. Otherwise, ignore the transformation and return the instance.
+This is how you can switch from a 'Right' to 'Left' instance and stop
+subsequent transformations from being applied. An alias for <a href="Either.html#andThen">Either#andThen</a></p>
+</div>
+
+
+
+
+
+
+
+    <h5>This:</h5>
+    <ul><li><a href="Either.html">Either</a></li></ul>
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>import { Left, Right } from '@dustinws/zoom/data/either';
+
+// toUpper :: String -> Either String String
+const toUpper = x =>
+  typeof x !== 'string'
+    ? Left.of('toUpper() recieved a non string.')
+    : Right.of(x.toUpperCase());
+
+// A "Right" will apply the next operation
+Right.of('boom').chain(toUpper);
+// => Right(BOOM)
+
+// A "Left" will ignore the next operation
+Left.of('yea right').chain(toUpper);
+// => Left(yea right)</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>transform</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The transformation to apply to the inner value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Either.html">Either</a>.&lt;A, C></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="isLeft"><span class="type-signature"></span>isLeft<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_either_Either.js.html">data/either/Either.js</a>, <a href="data_either_Either.js.html#line632">line 632</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Either.html#isLeft">Either#isLeft</a>
+    </li></ul></dd>
+    
 
     
 
@@ -580,7 +1307,7 @@ prop('a', {}) // Nothing</code></pre>
 
 
 <div class="description">
-    <p>Get the [[class]] of any native object.</p>
+    <p>Determine if an Either is an instance of Left</p>
 </div>
 
 
@@ -589,18 +1316,436 @@ prop('a', {}) // Nothing</code></pre>
 
 
 
+    <h5>This:</h5>
+    <ul><li><a href="Either.html">Either</a></li></ul>
+
 
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// typeOf :: * -> String
-import { typeOf } from '@dustinws/zoom/lambda';
+    <pre class="prettyprint"><code>import { Left, Right } from '@dustinws/zoom/data/either';
 
-typeOf('') // String
-typeOf([]) // Array
-typeOf({}) // Object
-typeOf(new Date) // Date
-typeOf(/\.js$/) // RegExp</code></pre>
+Left.of(1).isLeft(); // true
+Right.of(1).isLeft(); // false</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="isRight"><span class="type-signature"></span>isRight<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_either_Either.js.html">data/either/Either.js</a>, <a href="data_either_Either.js.html#line651">line 651</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Either.html#isRight">Either#isRight</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Determine if an Either is an instance of Right</p>
+</div>
+
+
+
+
+
+
+
+    <h5>This:</h5>
+    <ul><li><a href="Either.html">Either</a></li></ul>
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>import { Left, Right } from '@dustinws/zoom/data/either';
+
+Right.of(1).isRight(); // true
+Left.of(1).isRight(); // false</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="map"><span class="type-signature"></span>map<span class="signature">(transform)</span><span class="type-signature"> &rarr; {<a href="Either.html">Either</a>.&lt;A, C>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_either_Either.js.html">data/either/Either.js</a>, <a href="data_either_Either.js.html#line579">line 579</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Either.html#map">Either#map</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p><code>map</code> is very similar to <a href="Either.html#.andThen">Either.andThen</a> and
+<a href="Either.html#.chain">Either.chain</a> in that it only runs the function if the
+either is an instance of <code>Just</code>. The main difference is that <a href="Either.html#.andThen">Either.andThen</a>
+and <a href="Either.html#.chain">Either.chain</a> expect the functions you give them to return
+new <code>Either</code> instances, and map let's you use plain old functions.</p>
+</div>
+
+
+
+
+
+
+
+    <h5>This:</h5>
+    <ul><li><a href="Either.html">Either</a></li></ul>
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>import { Left, Right } from '@dustinws/zoom/data/either';
+
+// toUpper :: String -> String
+const toUpper = x => x.toUpperCase();
+
+// A "Right" will run the next operation
+Right.of('yay').map(toUpper);
+// => Right('YAY!');
+
+// A "Left" will ignore the next operation
+Left.of('nay!').map(toUpper);
+// => Left('nay!');</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>transform</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The transformation to apply to the inner value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Either.html">Either</a>.&lt;A, C></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="of"><span class="type-signature"></span>of<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="Either.html">Either</a>.&lt;A, B>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_either_Either.js.html">data/either/Either.js</a>, <a href="data_either_Either.js.html#line458">line 458</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>v1.15.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Lift a value into an unsuccessful 'Left' context.</p>
+</div>
+
+
+
+
+
+
+
+    <h5>This:</h5>
+    <ul><li><a href="Either.html">Either</a></li></ul>
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>import { Left } from '@dustinws/zoom/data/either';
+
+Left.of(1);
+// => Left(1)</code></pre>
 
 
 
@@ -636,7 +1781,7 @@ typeOf(/\.js$/) // RegExp</code></pre>
             <td class="type">
             
                 
-<span class="param-type">Any</span>
+<span class="param-type">A</span>
 
 
             
@@ -646,7 +1791,7 @@ typeOf(/\.js$/) // RegExp</code></pre>
 
             
 
-            <td class="description last"><p>The value who's type you want to know</p></td>
+            <td class="description last"><p>The value to put in the Either</p></td>
         </tr>
 
     
@@ -677,7 +1822,7 @@ typeOf(/\.js$/) // RegExp</code></pre>
     </dt>
     <dd>
         
-<span class="param-type">String</span>
+<span class="param-type"><a href="Either.html">Either</a>.&lt;A, B></span>
 
 
     </dd>
@@ -704,7 +1849,7 @@ typeOf(/\.js$/) // RegExp</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Jul 04 2017 10:52:15 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Jul 04 2017 10:52:14 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
