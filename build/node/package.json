@@ -1,6 +1,6 @@
 {
   "name": "zoomjs",
-  "version": "1.0.0-beta",
+  "version": "1.0.1-beta",
   "description": "Helpful abstractions for functional programming in javascript.",
   "main": "index.js",
   "scripts": {

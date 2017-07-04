@@ -7,7 +7,7 @@
 ---
 ### Overview
 
-<img src="https://cdn.pixabay.com/photo/2017/02/21/21/14/unicorn-2087452_1280.png" alt="Drawing" style="width: 200px;"/>
+![](https://cdn.pixabay.com/photo/2017/02/21/21/14/unicorn-2087452_1280.png | width=200)
 
 Zoom is a collection tools to help javascript developers write safe, reliable
 code that is easy to read and easy to refactor.
@@ -17,11 +17,11 @@ code that is easy to read and easy to refactor.
 ---
 
 #### Types
-- [Either](https://dustinws.github.io/Either.html)
-- [Maybe](https://dustinws.github.io/Maybe.html)
-- [Task](https://dustinws.github.io/Task.html)
-- [Tuple](https://dustinws.github.io/Tuple.html)
-- [Validation](https://dustinws.github.io/Validation.html)
+- [Either](https://dustinws.github.io/zoom/Either.html)
+- [Maybe](https://dustinws.github.io/zoom/Maybe.html)
+- [Task](https://dustinws.github.io/zoom/Task.html)
+- [Tuple](https://dustinws.github.io/zoom/Tuple.html)
+- [Validation](https://dustinws.github.io/zoom/Validation.html)
 
 ---
 
