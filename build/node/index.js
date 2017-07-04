@@ -3,51 +3,39 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Math = exports.Logic = exports.Lang = exports.Lambda = exports.Data = exports.Core = exports.Check = exports.ADT = undefined;
+exports.Validation = exports.Tuple = exports.Task = exports.Maybe = exports.Either = exports.ADT = undefined;
 
 var _adt = require('./adt');
 
 var ADT = _interopRequireWildcard(_adt);
 
-var _check = require('./check');
+var _either = require('./either');
 
-var Check = _interopRequireWildcard(_check);
+var _either2 = _interopRequireDefault(_either);
 
-var _core = require('./core');
+var _maybe = require('./maybe');
 
-var Core = _interopRequireWildcard(_core);
+var _maybe2 = _interopRequireDefault(_maybe);
 
-var _data = require('./data');
+var _task = require('./task');
 
-var Data = _interopRequireWildcard(_data);
+var _task2 = _interopRequireDefault(_task);
 
-var _lambda = require('./lambda');
+var _tuple = require('./tuple');
 
-var Lambda = _interopRequireWildcard(_lambda);
+var _tuple2 = _interopRequireDefault(_tuple);
 
-var _lang = require('./lang');
+var _validation = require('./validation');
 
-var Lang = _interopRequireWildcard(_lang);
+var _validation2 = _interopRequireDefault(_validation);
 
-var _logic = require('./logic');
-
-var Logic = _interopRequireWildcard(_logic);
-
-var _math = require('./math');
-
-var Math = _interopRequireWildcard(_math);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-/**
- * @namespace Zoom
- */
-
 exports.ADT = ADT;
-exports.Check = Check;
-exports.Core = Core;
-exports.Data = Data;
-exports.Lambda = Lambda;
-exports.Lang = Lang;
-exports.Logic = Logic;
-exports.Math = Math;
+exports.Either = _either2.default;
+exports.Maybe = _maybe2.default;
+exports.Task = _task2.default;
+exports.Tuple = _tuple2.default;
+exports.Validation = _validation2.default;

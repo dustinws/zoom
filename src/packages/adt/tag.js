@@ -7,7 +7,7 @@ import symbol from './symbol';
  * @function tag
  * @since v1.0.0
  * @example
- * import { tag, symbol } from '@dustinws/zoom/adt';
+ * import { tag, symbol } from 'zoomjs/adt';
  *
  * const Point2D = tag('Point2D', 'x', 'y');
  *

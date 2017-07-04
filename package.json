@@ -1,6 +1,6 @@
 {
-  "name": "@dustinws/zoom",
-  "version": "2.1.0",
+  "name": "zoomjs",
+  "version": "1.0.0-beta",
   "description": "Helpful abstractions for functional programming in javascript.",
   "main": "index.js",
   "scripts": {
@@ -32,7 +32,8 @@
   },
   "dependencies": {
     "esdoc": "^0.5.2",
-    "fantasy-land": "^3.3.0"
+    "fantasy-land": "^3.3.0",
+    "ramda": "^0.24.1"
   },
   "repository": {
     "type": "git",

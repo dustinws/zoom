@@ -25,7 +25,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  * @since v1.0.0
  * @function union
  * @example
- * import { union } from '@dustinws/zoom/adt';
+ * import { union } from 'zoomjs/adt';
  *
  * const Maybe = union('Maybe', {
  *   Just: ['value'],

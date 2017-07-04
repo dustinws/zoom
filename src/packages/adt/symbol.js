@@ -5,7 +5,7 @@
  * @type {Symbol}
  * @const symbol
  * @example
- * import { symbol } from '@dustinws/zoom/adt';
+ * import { symbol } from 'zoomjs/adt';
  *
  * const obj = {
  *   [symbol]: 'MyType',
