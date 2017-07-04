@@ -15,6 +15,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * @class Task
  * @description
+ * #### Fantasy Land Implementations
+ * `Applicative`, `Apply`, `Functor`, `Chain`, `Monad`
+ * ---
+ *
  * A `Task` represents an asynchronous action, and is very similar to a
  * javascript `Promise`. A good way to get an understanding of  how a `Task`
  * works is to find out how it is different from a `Promise`.
@@ -283,6 +287,30 @@ Task.map = (0, _curry2.default)(function (transform, task) {
 });
 
 /**
+ * @description Run a function contained in an Apply on a value
+ * contained in a Task.
+ * @memberof Task
+ * @since v2.2.0
+ * @function ap
+ * @static
+ * @implements Apply
+ * @example
+ * // ap :: Apply (b -> c) -> Task a b -> Task a c
+ * import { Task } from '@dustinws/zoom/data';
+ *
+ * Task.ap(Task.of(x => x + x), Task.of(1)) // Task(null, 2)
+ *
+ * @param  {Apply<function>} apply The Apply containing a function
+ * @param  {Task<A, B>} task The task
+ * @return {Task<A, C>}
+ */
+Task.ap = (0, _curry2.default)(function (apply, task) {
+  return Task.chain(function (transform) {
+    return task.map(transform);
+  }, apply);
+});
+
+/**
  * @description Convert a Task to a Promise. This implicitely calls "fork"
  * @memberof Task
  * @since v1.15.0
@@ -514,6 +542,29 @@ Task.prototype.andThen = function andThen(transform) {
 */
 Task.prototype.map = function map(transform) {
   return Task.map(transform, this);
+};
+
+/**
+ * @description Run a function contained in an Apply on a value
+ * contained in a Task.
+ * @memberof Task
+ * @since v2.2.0
+ * @function ap
+ * @static
+ * @implements Apply
+ * @example
+ * // ap Task a b :: Apply (b -> c) -> Task a c
+ * import { Task } from '@dustinws/zoom/data';
+ *
+ * Task.of(1).ap(Task.of(x => x + x));
+ * // => Task(null, 2)
+ *
+ * @this Task
+ * @param  {Apply<function>} apply The Apply containing a function
+ * @return {Task<A, C>}
+ */
+Task.prototype.ap = function ap(apply) {
+  return Task.ap(apply, this);
 };
 
 /**

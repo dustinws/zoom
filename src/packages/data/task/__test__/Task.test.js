@@ -50,6 +50,21 @@ describe('Zoom.Data.Task', () => {
     });
   });
 
+  describe('Task.ap', () => {
+    test('It should call the function with the inner value.', () => {
+      const task = Task.of('boom');
+      const toUpper = Task.of(x => x.toUpperCase());
+
+      const result = Task.ap(toUpper, task);
+
+      return Task
+        .toPromise(result)
+        .then((value) => {
+          expect(value).toBe('BOOM');
+        });
+    });
+  });
+
   describe('Task.chain', () => {
     test('It should call the function and wait on the returned task.', () => {
       const task = Task.of('boom');
@@ -170,6 +185,20 @@ describe('Zoom.Data.Task', () => {
       return Task
         .of('boom')
         .map(x => x.toUpperCase())
+        .toPromise()
+        .then((value) => {
+          expect(value).toBe('BOOM');
+        });
+    });
+  });
+
+  describe('Task#ap', () => {
+    test('It should call the function with the inner value.', () => {
+      const toUpper = Task.of(x => x.toUpperCase());
+
+      return Task
+        .of('boom')
+        .ap(toUpper)
         .toPromise()
         .then((value) => {
           expect(value).toBe('BOOM');
