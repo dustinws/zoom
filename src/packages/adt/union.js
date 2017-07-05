@@ -10,7 +10,7 @@ import tag from './tag';
  * If a type has no params (an empty array), an instance will be eagerly
  * created to act as a singleton.
  *
- * @since v1.0.0
+ * @since 1.0.0-beta
  * @function union
  * @example
  * import { union } from 'zoomjs/adt';

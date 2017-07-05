@@ -22,7 +22,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  * If a type has no params (an empty array), an instance will be eagerly
  * created to act as a singleton.
  *
- * @since v1.0.0
+ * @since 1.0.0-beta
  * @function union
  * @example
  * import { union } from 'zoomjs/adt';

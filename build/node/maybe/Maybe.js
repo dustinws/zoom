@@ -134,7 +134,7 @@ var Nothing = Maybe.Nothing;
  * @function of
  * @static
  * @implements Applicative
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @example
  * // of :: a -> Maybe a
  * import { Maybe } from 'zoomjs';
@@ -155,7 +155,7 @@ Maybe.of = function of(value) {
  * @memberof Just
  * @function of
  * @static
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @implements Applicative
  * @example
  * // of :: a -> Maybe a
@@ -179,7 +179,7 @@ Just.of = function of(value) {
  * @function of
  * @static
  * @implements Applicative
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @example
  * // of :: a -> Maybe a
  * import { Maybe } from 'zoomjs';
@@ -201,7 +201,7 @@ Nothing.of = function of() {
  * This is how you can switch from a 'Just' to 'Nothing' instance and stop
  * subsequent transformations from being applied. An alias for {@link Maybe.andThen}
  * @memberof Maybe
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function chain
  * @static
  * @implements Chain
@@ -235,7 +235,7 @@ Maybe.chain = (0, _curry2.default)(function (transform, maybe) {
  * This is how you can switch from a 'Just' to 'Nothing' instance and stop
  * subsequent transformations from being applied. An alias for {@link Maybe.chain}
  * @memberof Maybe
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function andThen
  * @static
  * @see {@link Maybe.chain}
@@ -261,7 +261,7 @@ Maybe.andThen = Maybe.chain;
  * @description Apply a transformation to the Maybe if it is an instance
  * of "Just". Otherwise, ignore the transformation and return the instance.
  * @memberof Maybe
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function map
  * @static
  * @implements Functor
@@ -289,7 +289,7 @@ Maybe.map = (0, _curry2.default)(function (transform, maybe) {
  * @description Apply a transformation to the Maybe if it is an instance
  * of "Just". Otherwise, ignore the transformation and return the instance.
  * @memberof Maybe
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function ap
  * @static
  * @implements Apply
@@ -316,7 +316,7 @@ Maybe.ap = (0, _curry2.default)(function (left, right) {
 /**
  * @description Determine if an Maybe is an instance of Nothing
  * @memberof Maybe
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function isNothing
  * @static
  * @example
@@ -336,7 +336,7 @@ Maybe.isNothing = function (maybe) {
 /**
  * @description Determine if an Maybe is an instance of Just
  * @memberof Maybe
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function isJust
  * @static
  * @example
@@ -355,7 +355,7 @@ Maybe.isJust = function (maybe) {
 
 /**
  * @description Create a maybe from a potentially null value.
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @memberof Maybe
  * @function fromNullable
  * @static
@@ -381,7 +381,7 @@ Maybe.fromNullable = function (value) {
 /**
  * @description Extract the value from a Maybe, with a default value in
  * case it is `Nothing`.
- * @since v2.1.0
+ * @since 1.0.0-beta
  * @memberof Maybe
  * @function withDefault
  * @static
@@ -420,7 +420,7 @@ Maybe.withDefault = (0, _curry2.default)(function (defaultValue, maybe) {
  * directly, with no wrapper instance. This name is short for `catamorphism`.
  * An alias for {@link Maybe#caseOf}
  * @memberof Maybe
- * @since v1.0.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @see {@link Maybe#caseOf}
@@ -452,7 +452,7 @@ Maybe.prototype.cata = Maybe.prototype.cata;
  * either is an instance of `Nothing`. The return value will be returned
  * directly, with no wrapper instance. An alias for {@link Maybe#cata}
  * @memberof Maybe
- * @since v1.0.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @see {@link Maybe#cata}
@@ -484,7 +484,7 @@ Maybe.prototype.caseOf = Maybe.prototype.cata;
  * @method
  * @instance
  * @implements Applicative
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @example
  * // of Maybe a :: b -> Maybe b
  * import { Maybe } from 'zoomjs';
@@ -506,7 +506,7 @@ Just.prototype.of = function of(value) {
  * This is how you can switch from a 'Just' to 'Nothing' instance and stop
  * subsequent transformations from being applied. An alias for {@link Maybe#andThen}
  * @memberof Maybe
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @implements Chain
@@ -536,7 +536,7 @@ Maybe.prototype.chain = function chain(transform) {
  * This is how you can switch from a 'Just' to 'Nothing' instance and stop
  * subsequent transformations from being applied. An alias for {@link Maybe#chain}
  * @memberof Maybe
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @see {@link Maybe#chain}
@@ -563,7 +563,7 @@ Maybe.prototype.andThen = function andThen(transform) {
  * @description Apply a transformation to the Maybe if it is an instance
  * of "Just". Otherwise, ignore the transformation and return the instance.
  * @memberof Maybe
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @implements Functor
@@ -590,7 +590,7 @@ Maybe.prototype.map = function map(transform) {
  * @description Apply a transformation to the Maybe if it is an instance
  * of "Just". Otherwise, ignore the transformation and return the instance.
  * @memberof Maybe
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @implements Apply
@@ -616,7 +616,7 @@ Maybe.prototype.ap = function ap(transform) {
 /**
  * @description Determine if an Maybe is an instance of Nothing
  * @memberof Maybe
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @example
@@ -635,7 +635,7 @@ Maybe.prototype.isNothing = function isNothing() {
 /**
  * @description Determine if an Maybe is an instance of Just
  * @memberof Maybe
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @example
  * // isJust Maybe a :: b -> Bool
  * import { Maybe } from 'zoomjs';
@@ -652,7 +652,7 @@ Maybe.prototype.isJust = function isJust() {
 /**
  * @description Extract the value from a Maybe, with a default value in
  * case it is `Nothing`.
- * @since v2.1.0
+ * @since 1.0.0-beta
  * @memberof Maybe
  * @method
  * @instance

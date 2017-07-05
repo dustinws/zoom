@@ -47,7 +47,7 @@ var Tuple = (0, _adt.tag)('Tuple', 'left', 'right');
 /**
  * @description Create a new tuple.
  * @memberof Tuple
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @implements Applicative
  * @function of
  * @example
@@ -67,7 +67,7 @@ Tuple.of = function (a, b) {
 /**
  * @description Get the first element of a Tuple
  * @memberof Tuple
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function fst
  * @example
  * // fst :: (a, b) -> a
@@ -85,7 +85,7 @@ Tuple.fst = function (tuple) {
 /**
  * @description Get the second element of a Tuple
  * @memberof Tuple
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function snd
  * @example
  * // snd :: (a, b) -> b
@@ -104,7 +104,7 @@ Tuple.snd = function (tuple) {
  * @description Determine if one tuple is the same as another. Both elements
  * are checked with the `===` comparison operator.
  * @memberof Tuple
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @implements Setoid
  * @function equals
  * @example
@@ -136,7 +136,7 @@ Tuple.equals = (0, _curry2.default)(function (left, right) {
  * @description Apply a function to the second element of a tuple and return
  * a new, modified tuple.
  * @memberof Tuple
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @implements Functor
  * @function map
  * @example
@@ -161,7 +161,7 @@ Tuple.map = (0, _curry2.default)(function (transform, tuple) {
  * @description Apply a function to the first element of a tuple
  * and return a new, modified tuple.
  * @memberof Tuple
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function mapLeft
  * @example
  * // mapLeft :: (a -> c) -> (a, b) -> (c, b)
@@ -188,7 +188,7 @@ Tuple.mapLeft = (0, _curry2.default)(function (transform, tuple) {
 /**
 * @description Create a two element tuple. The instance version of "Tuple.of"
 * @memberof Tuple
-* @since v1.15.0
+* @since 1.0.0-beta
 * @implements Applicative
 * @method
 * @instance
@@ -212,7 +212,7 @@ Tuple.prototype.of = function of(left, right) {
 /**
 * @description Get the first element of a Tuple. Instance version of "Tuple.fst"
 * @memberof Tuple
-* @since v1.15.0
+* @since 1.0.0-beta
 * @method
 * @instance
 * @example
@@ -231,7 +231,7 @@ Tuple.prototype.fst = function fst() {
 /**
 * @description Get the second element of a Tuple. Instance version of "Tuple.snd"
 * @memberof Tuple
-* @since v1.15.0
+* @since 1.0.0-beta
 * @method
 * @instance
 * @example
@@ -251,7 +251,7 @@ Tuple.prototype.snd = function snd() {
  * @description Determine if one tuple is the same as another. Both elements
  * are checked with the `===` comparison operator.
  * @memberof Tuple
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @implements Setoid
  * @method
  * @instance
@@ -284,7 +284,7 @@ Tuple.prototype.equals = function equals(tuple) {
 * @description Apply a function to the second element of a tuple
 * and return a new, modified tuple. Instance version of "Tuple.map"
 * @memberof Tuple
-* @since v1.15.0
+* @since 1.0.0-beta
 * @implements Functor
 * @method
 * @instance
@@ -308,7 +308,7 @@ Tuple.prototype.map = function map(transform) {
 * @description Apply a function to the first element of a tuple
 * and return a new, modified tuple. Instance version of {@link Tuple.mapLeft}
 * @memberof Tuple
-* @since v1.15.0
+* @since 1.0.0-beta
 * @method
 * @instance
 * @example
@@ -331,7 +331,7 @@ Tuple.prototype.mapLeft = function mapLeft(transform) {
 /**
 * @description Get the string representation of the tuple.
 * @memberof Tuple
-* @since v1.15.0
+* @since 1.0.0-beta
 * @method
 * @instance
 * @example
@@ -351,7 +351,7 @@ Tuple.prototype.toString = function toString() {
  * @memberof Tuple
  * @description
  * Support the `Symbol.iterator` protocol.
- * @since v2.2.0
+ * @since 1.0.0-beta
  * @method Iterator
  * @instance
  * @example

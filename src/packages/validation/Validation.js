@@ -108,7 +108,7 @@ const Failure = Validation.Failure;
  * @function of
  * @static
  * @implements Applicative
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @example
  * // of :: a -> Validation b a
  * import { Validation } from 'zoomjs';
@@ -130,7 +130,7 @@ Validation.of = function of(value) {
  * @function of
  * @static
  * @implements Applicative
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @example
  * // of :: a -> Validation b a
  * import { Validation } from 'zoomjs';
@@ -152,7 +152,7 @@ Success.of = function of(value) {
  * @function of
  * @static
  * @implements Applicative
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @example
  * // of :: a -> Validation a b
  * import { Validation } from 'zoomjs';
@@ -174,7 +174,7 @@ Failure.of = function of(value) {
  * This is how you can switch from a 'Success' to 'Failure' instance and stop
  * subsequent transformations from being applied. An alias for {@link Validation.andThen}
  * @memberof Validation
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @see {@link Validation.andThen}
  * @function chain
  * @static
@@ -208,7 +208,7 @@ Validation.chain = curry((transform, validation) =>
  * subsequent transformations from being applied. An alias for
  * {@link Validation.chain}
  * @memberof Validation
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function andThen
  * @static
  * @see {@link Validation.chain}
@@ -234,7 +234,7 @@ Validation.andThen = Validation.chain;
  * @description Apply a transformation to the Validation if it is an instance
  * of "Success". Otherwise, ignore the transformation and return the instance.
  * @memberof Validation
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function map
  * @static
  * @implements Functor
@@ -261,7 +261,7 @@ Validation.map = curry((transform, validation) =>
  * @description Apply a transformation to the Validation if it is an instance
  * of "Success". Otherwise, ignore the transformation and return the instance.
  * @memberof Validation
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function ap
  * @static
  * @implements Apply
@@ -287,7 +287,7 @@ Validation.ap = curry((left, right) =>
 /**
  * @description Determine if an Validation is an instance of Failure
  * @memberof Validation
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function isFailure
  * @static
  * @example
@@ -305,7 +305,7 @@ Validation.isFailure = validation => validation instanceof Validation.Failure;
 /**
  * @description Determine if an Validation is an instance of Success
  * @memberof Validation
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function isSuccess
  * @static
  * @example
@@ -325,7 +325,7 @@ Validation.isSuccess = validation => validation instanceof Validation.Success;
  * If both values are the same type (both Failures, etc..) then their values
  * will be concatenated and a single instance of that type will be returned.
  * @memberof Validation
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function concat
  * @static
  * @implements Semigroup
@@ -364,7 +364,7 @@ Validation.concat = curry((left, right) =>
  * @description Create an empty Validation. Used as the "identity" element
  * for the Validation monoid.
  * @memberof Validation
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function empty
  * @static
  * @implements Monoid
@@ -393,7 +393,7 @@ Validation.empty = () =>
  * directly, with no wrapper instance. This name is short for `catamorphism`.
  * An alias for {@link Validation#caseOf}
  * @memberof Validation
- * @since v1.0.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @see {@link Validation#caseOf}
@@ -423,7 +423,7 @@ Validation.prototype.cata = Validation.prototype.cata;
  * directly, with no wrapper instance. This name is short for `catamorphism`.
  * An alias for {@link Validation#cata}
  * @memberof Validation
- * @since v1.17.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @see {@link Validation#cata}
@@ -449,7 +449,7 @@ Validation.prototype.caseOf = Validation.prototype.cata;
 /**
  * @description Lift a value into a successful 'Success' context.
  * @memberof Validation.Success
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @implements Applicative
@@ -470,7 +470,7 @@ Success.prototype.of = function of(value) {
 /**
  * @description Lift a value into an unsuccessful 'Failure' context.
  * @memberof Validation.Failure
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @implements Applicative
@@ -494,7 +494,7 @@ Failure.prototype.of = function of(value) {
  * This is how you can switch from a 'Success' to 'Failure' instance and stop
  * subsequent transformations from being applied. An alias for {@link Validation#andThen}
  * @memberof Validation
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @see {@link Validation#andThen}
  * @method
  * @instance
@@ -524,7 +524,7 @@ Validation.prototype.chain = function chain(transform) {
  * This is how you can switch from a 'Success' to 'Failure' instance and stop
  * subsequent transformations from being applied. An alias for {@link Validation#chain}
  * @memberof Validation
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @see {@link Validation#chain}
  * @method
  * @instance
@@ -551,7 +551,7 @@ Validation.prototype.andThen = function andThen(transform) {
  * @description Apply a transformation to the Validation if it is an instance
  * of "Success". Otherwise, ignore the transformation and return the instance.
  * @memberof Validation
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @implements Functor
@@ -578,7 +578,7 @@ Validation.prototype.map = function map(transform) {
  * @description Apply a transformation to the Validation if it is an instance
  * of "Success". Otherwise, ignore the transformation and return the instance.
  * @memberof Validation
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @implements Apply
@@ -604,7 +604,7 @@ Validation.prototype.ap = function ap(apply) {
 /**
  * @description Determine if an Validation is an instance of Failure
  * @memberof Validation
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @example
@@ -624,7 +624,7 @@ Validation.prototype.isFailure = function isFailure() {
 /**
  * @description Determine if an Validation is an instance of Success
  * @memberof Validation
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @example
@@ -646,7 +646,7 @@ Validation.prototype.isSuccess = function isSuccess() {
  * If both values are the same type (both Failures, etc..) then their values
  * will be concatenated and a single instance of that type will be returned.
  * @memberof Validation
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @implements Semigroup

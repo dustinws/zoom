@@ -149,7 +149,7 @@ var Task = (0, _adt.tag)('Task', 'fork');
 /**
  * @description Create a new Task with the given value.
  * @memberof Task
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function of
  * @static
  * @implements Applicative
@@ -171,7 +171,7 @@ Task.of = function (value) {
 /**
  * @description Create a rejected Task with the given value.
  * @memberof Task
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function reject
  * @static
  * @example
@@ -193,7 +193,7 @@ Task.reject = function (value) {
  * @description Fork a task. This is the only way to run the code contained
  * in the task.
  * @memberof Task
- * @since v1.17.0
+ * @since 1.0.0-beta
  * @function fork
  * @static
  * @example
@@ -221,7 +221,7 @@ Task.fork = (0, _curry2.default)(function (reject, resolve, task) {
  * @description Run a function that returns a nested task and flatten
  * the result into a single task. An alias for {@link Task.andThen}.
  * @memberof Task
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @implements Chain
  * @see {@link Task.andThen}
  * @function chain
@@ -248,7 +248,7 @@ Task.chain = (0, _curry2.default)(function (transform, task) {
  * @description Run a function that returns a nested task and flatten
  * the result into a single task. An alias for {@link Task.chain}
  * @memberof Task
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @see {@link Task.chain}
  * @function andThen
  * @static
@@ -267,7 +267,7 @@ Task.andThen = Task.chain;
 /**
  * @description Run a function on a value contained in a Task.
  * @memberof Task
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function map
  * @static
  * @implements Functor
@@ -291,7 +291,7 @@ Task.map = (0, _curry2.default)(function (transform, task) {
  * @description Run a function contained in an Apply on a value
  * contained in a Task.
  * @memberof Task
- * @since v2.2.0
+ * @since 1.0.0-beta
  * @function ap
  * @static
  * @implements Apply
@@ -314,7 +314,7 @@ Task.ap = (0, _curry2.default)(function (apply, task) {
 /**
  * @description Convert a Task to a Promise. This implicitely calls "fork"
  * @memberof Task
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function toPromise
  * @static
  * @example
@@ -340,7 +340,7 @@ Task.toPromise = function (task) {
  * @description Define a function to run if the Task is rejected, which will
  * accept the error and return a new, valid Task.
  * @memberof Task
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function recover
  * @static
  * @example
@@ -366,7 +366,7 @@ Task.recover = (0, _curry2.default)(function (transform, task) {
  * @description Run many Tasks in parallel. If any Task rejects, it will
  * reject the top level Task immediately.
  * @memberof Task
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function parallel
  * @static
  * @example
@@ -414,7 +414,7 @@ Task.parallel = function (tasks) {
  * @description Convert a regular function into a function that returns
  * a task.
  * @memberof Task
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function lift
  * @static
  * @example
@@ -444,7 +444,7 @@ Task.lift = function (func) {
  * @description Convert a node style callback into a function that returns
  * a task.
  * @memberof Task
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function liftNode
  * @static
  * @example
@@ -486,7 +486,7 @@ Task.liftNode = function (func) {
 * @description Run a function that returns a nested task and flatten
 * the result into a single task. An alias for {@link Task#andThen}
 * @memberof Task
-* @since v1.15.0
+* @since 1.0.0-beta
 * @see {@link Task#andThen}
 * @method
 * @instance
@@ -508,7 +508,7 @@ Task.prototype.chain = function chain(transform) {
 * @description Run a function that returns a nested task and flatten
 * the result into a single task. An alias for {@link Task#chain}
 * @memberof Task
-* @since v1.15.0
+* @since 1.0.0-beta
 * @see {@link Task#chain}
 * @method
 * @instance
@@ -528,7 +528,7 @@ Task.prototype.andThen = function andThen(transform) {
 /**
 * @description Run a function on a value contained in a Task.
 * @memberof Task
-* @since v1.15.0
+* @since 1.0.0-beta
 * @method
 * @instance
 * @implements Functor
@@ -549,7 +549,7 @@ Task.prototype.map = function map(transform) {
  * @description Run a function contained in an Apply on a value
  * contained in a Task.
  * @memberof Task
- * @since v2.2.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @implements Apply
@@ -571,7 +571,7 @@ Task.prototype.ap = function ap(apply) {
 /**
 * @description Convert a Task to a Promise. This implicitely calls "fork"
 * @memberof Task
-* @since v1.15.0
+* @since 1.0.0-beta
 * @method
 * @instance
 * @example
@@ -593,7 +593,7 @@ Task.prototype.toPromise = function toPromise() {
 * @description Define a function to run if the Task is rejected, which will
 * accept the error and return a new, valid Task.
 * @memberof Task
-* @since v1.15.0
+* @since 1.0.0-beta
 * @method
 * @instance
 * @example

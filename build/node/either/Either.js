@@ -95,7 +95,7 @@ var Left = Either.Left;
 /**
  * @description Lift a value into a successful 'Right' context.
  * @memberof Either
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @implements Applicative
  * @example
  * import { Either } from 'zoomjs';
@@ -113,7 +113,7 @@ Either.of = function of(value) {
 /**
  * @description Lift a value into a successful 'Right' context.
  * @memberof Either
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @implements Applicative
  * @example
  * import { Right } from 'zoomjs/either';
@@ -131,7 +131,7 @@ Right.of = function of(value) {
 /**
  * @description Lift a value into an unsuccessful 'Left' context.
  * @memberof Either
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @implements Applicative
  * @example
  * import { Left } from 'zoomjs/either';
@@ -154,7 +154,7 @@ Left.of = function of(value) {
  * @memberof Either
  * @static
  * @function
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @implements Chain
  * @see {@link Either.andThen}
  * @example
@@ -192,7 +192,7 @@ Either.chain = (0, _curry2.default)(function (transform, either) {
  * This is how you can switch from a 'Right' to 'Left' instance and stop
  * subsequent transformations from being applied. An alias for {@link Either.chain}
  * @memberof Either
- * @since v1.17.0
+ * @since 1.0.0-beta
  * @function andThen
  * @static
  * @see {@link Either.chain}
@@ -227,7 +227,7 @@ Either.andThen = Either.chain;
  * and {@link Either.chain} expect the functions you give them to return
  * new `Either` instances, and map let's you use plain old functions.
  * @memberof Either
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @implements Functor
  * @function map
  * @static
@@ -262,7 +262,7 @@ Either.map = (0, _curry2.default)(function (transform, either) {
  * This is known as the `Apply` type in fantasy land JS.
  *
  * @memberof Either
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @implements Apply
  * @function ap
  * @static
@@ -292,7 +292,7 @@ Either.ap = (0, _curry2.default)(function (left, right) {
 /**
  * @description Determine if an Either is an instance of Left
  * @memberof Either
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function isLeft
  * @static
  * @example
@@ -315,7 +315,7 @@ Either.isLeft = function (either) {
 /**
  * @description Determine if an Either is an instance of Right
  * @memberof Either
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @function isRight
  * @static
  * @example
@@ -341,7 +341,7 @@ Either.isRight = function (either) {
  * function that will wrap the original one in a try / catch block
  * and return a `Right` or `Left` for successful or unsuccessful values,
  * respectively.
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @deprecated
  * This will be removed in v3 in favor of {@link Either.lift}
  * @memberof Either
@@ -377,7 +377,7 @@ Either.try = function (func) {
  * function that will wrap the original one in a try / catch block
  * and return a `Right` or `Left` for successful or unsuccessful values,
  * respectively.
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @memberof Either
  * @function lift
  * @static
@@ -418,7 +418,7 @@ Either.lift = function (func) {
  * directly, with no wrapper instance. This name is short for `catamorphism`.
  * An alias for {@link Either#caseOf}
  * @memberof Either
- * @since v1.0.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @see {@link Either#caseOf}
@@ -450,7 +450,7 @@ Either.prototype.cata = Either.prototype.cata;
  * either is an instance of `Left`. The return value will be returned
  * directly, with no wrapper instance. An alias for An alias for {@link Either#cata}
  * @memberof Either
- * @since v1.0.0
+ * @since 1.0.0-beta
  * @see {@link Either#cata}
  * @method
  * @instance
@@ -479,7 +479,7 @@ Either.prototype.caseOf = Either.prototype.cata;
 /**
  * @description Lift a value into a successful 'Right' context.
  * @memberof Either.Right
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @implements Applicative
  * @method of
  * @instance
@@ -501,7 +501,7 @@ Right.prototype.of = function of(value) {
 /**
  * @description Lift a value into an unsuccessful 'Left' context.
  * @memberof Either.Left
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @implements Applicative
  * @method of
  * @instance
@@ -527,7 +527,7 @@ Left.prototype.of = function of(value) {
  * subsequent transformations from being applied. An alias for {@link Either#andThen}
  *
  * @memberof Either
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @implements Chain
  * @method
  * @instance
@@ -565,7 +565,7 @@ Either.prototype.chain = function chain(transform) {
  * subsequent transformations from being applied. An alias for {@link Either#chain}
  *
  * @memberof Either
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @see {@link Either#chain}
@@ -603,7 +603,7 @@ Either.prototype.andThen = function andThen(transform) {
  * new `Either` instances, and map let's you use plain old functions.
  *
  * @memberof Either
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @implements Functor
  * @method
  * @instance
@@ -640,7 +640,7 @@ Either.prototype.map = function map(transform) {
  * @memberof Either
  * @method
  * @instance
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @implements Apply
  * @example
  * // ap Either a b :: Apply (b -> c) -> Either a c
@@ -668,7 +668,7 @@ Either.prototype.ap = function ap(apply) {
 /**
  * @description Determine if an Either is an instance of Left
  * @memberof Either
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @example
@@ -688,7 +688,7 @@ Either.prototype.isLeft = function isLeft() {
 /**
  * @description Determine if an Either is an instance of Right
  * @memberof Either
- * @since v1.15.0
+ * @since 1.0.0-beta
  * @method
  * @instance
  * @example

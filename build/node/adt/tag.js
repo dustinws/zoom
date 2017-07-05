@@ -17,7 +17,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
  * @description Create a tagged abstract data type. Tags the object with the
  * "ADT.symbol" value, and creates a "toString" method.
  * @function tag
- * @since v1.0.0
+ * @since 1.0.0-beta
  * @example
  * import { tag, symbol } from 'zoomjs/adt';
  *
