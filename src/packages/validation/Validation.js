@@ -9,6 +9,75 @@ import { union } from '../adt';
  * @description
  * #### Fantasy Land Implementations
  * `Semigroup`, `Monoid`, `Applicative`, `Functor`, `Apply`, `Chain`, `Monad`
+ *
+ * ---
+ *
+ * `Validation` is a lot like `Either` <small>(in most cases they are interchangeable)
+ * </small> but with a few small differences.
+ *
+ * `Either` is great when you want to fail quickly, at the first error
+ * that occurs. However, what if you wanted to know _all_ possible errors that
+ * could have occurred? `Either` can only store one error at a time, so you
+ * can't use it to accumulate errors.
+ *
+ * This is where `Validation` comes in. It acts as an accumulator for errors,
+ * and it also supports parallel validation. This means that you can split up
+ * validations across multiple processes <small>(if your use case needs it)
+ * </small>. This works because of the {@link Validation.concat} function. It
+ * knows how to combine multiple validation instances, and it has a bias towards
+ * the `Failure` case.
+ *
+ * Let's show this in action with a simple nightclub app. We need to validate
+ * all guests that want to enter the club, and then charge them a cover fee.
+ * There are a few reasons why someone would be denied, and if they are, we
+ * want to tell them all of the reasons they were denied.
+ *
+ * @example
+ * import { Failure, Success, concat, empty } from 'zoomjs/validation';
+ *
+ * const checkAge = guest =>
+ *   guest.age < 21
+ *     ? Failure(['Too Young!'])
+ *     : Success(guest);
+ *
+ * const checkSobriety = guest =>
+ *   guest.bac > 0.07
+ *     ? Failure(['Too Drunk!'])
+ *     : Success(guest);
+ *
+ * // Our main validation function
+ * const validateGuest = (guest) => {
+ *   const validations = [
+ *     checkAge(guest),
+ *     checkSobriety(guest),
+ *   ];
+ *
+ *   // Here we reduce all validations down to a single validation.
+ *   // It will either return a Failure with an array of errors,
+ *   // or a Success with the guest.
+ *   return validations.reduce(concat, empty());
+ * };
+ *
+ * // All valid
+ * validateGuest({
+ *   age: 21,
+ *   bac: 0.04
+ * });
+ * // => Success({ age: 21, bac: 0.04 })
+ *
+ * // Not old enough
+ * validateGuest({
+ *   age: 20,
+ *   bac: 0.04
+ * });
+ * // => Failure(['Too Young!'])
+ *
+ * // Not old enough and a little too tipsy
+ * validateGuest({
+ *   age: 20,
+ *   bac: 0.08
+ * });
+ * // => Failure(['Too Young!', 'Too Drunk!'])
  */
 const Validation = union('Validation', {
   /**
