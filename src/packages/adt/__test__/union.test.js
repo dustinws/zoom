@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import { union } from '..';
 
-describe('Zoom.ADT.union', () => {
+describe('ADT.union', () => {
   test('It should attach the case classes to the returned object', () => {
     const T = union('T', {
       SomeCase: [],

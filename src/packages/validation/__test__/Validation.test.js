@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import Validation from '../Validation';
 
-describe('Zoom.Data.Validation', () => {
+describe('Data.Validation', () => {
   describe('Validation.of', () => {
     test('It should return an instance of Validation', () => {
       expect(Validation.of(1).isSuccess()).toBe(true);

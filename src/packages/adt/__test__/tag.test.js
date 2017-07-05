@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 import { tag } from '..';
 
-describe('Zoom.ADT.tag', () => {
+describe('ADT.tag', () => {
   test('It should return a constructor function', () => {
     const T = tag('T');
     expect(new T() instanceof T).toBe(true);
