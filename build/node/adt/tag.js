@@ -66,6 +66,7 @@ function tag(type) {
   tmp = null;
 
   Adt.prototype[_symbol2.default] = type;
+  Adt[_symbol2.default] = type;
 
   Adt.prototype.toString = function toString() {
     var _this2 = this;

@@ -47,6 +47,7 @@ function tag(type, ...params) {
   tmp = null;
 
   Adt.prototype[symbol] = type;
+  Adt[symbol] = type;
 
   Adt.prototype.toString = function toString() {
     const paramsList = params

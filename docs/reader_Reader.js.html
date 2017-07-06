@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>tuple/Tuple.js - Documentation</title>
+    <title>reader/Reader.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">tuple/Tuple.js</h1>
+    <h1 class="page-title">reader/Reader.js</h1>
     
 
     
@@ -37,34 +37,21 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import curry from 'ramda/src/curry';
+            <pre class="prettyprint source linenums"><code>import __ from 'ramda/src/__';
+import curry from 'ramda/src/curry';
 import { tag } from '../adt';
 
 /**
- * @class Tuple
+ * @class Reader
  * @description
- * A `Tuple` is like a list with a fixed number of elements. In this
- * implementation, we limit the number of elements to two, making this
- * more akin to a `Pair` type.
- *
- * ---
- * `Tuple` supports the `Symbol.iterator` protocol, which means it supports
- * `for of` loops, `...spread`, and `[a, b] = Tuple.of(0, 0)` destructuring.
- * For more detailed usage, see {@link Tuple#Iterator}
- *
- * ---
  * #### Fantasy Land Implementations
- * `Setoid`, `Applicative`, `Functor`
- * @example
- * import { Tuple } from 'zoomjs';
+ * `Applicative`, `Functor`, `Apply`, `Chain`, `Monad`
  *
- * // Create a Tuple instance
- * // user :: (Int, String)
- * const user = Tuple.of(1, 'Dustin');
- *
- * user.toString(); // (1, 'Dustin')
+ * ---
+ * A `Reader` is way to do dependency injection. This makes it a great tool
+ * for testing, since it is easy to mock stateful operations.
  */
-const Tuple = tag('Tuple', 'left', 'right');
+const Reader = tag('Reader', 'run');
 
 
 /*
@@ -74,133 +61,104 @@ const Tuple = tag('Tuple', 'left', 'right');
  */
 
 /**
- * @description Create a new tuple.
- * @memberof Tuple
- * @since 1.0.0-beta
- * @implements Applicative
+ * @description
+ * Create a new reader that will return the given value.
+ *
+ * @since v1.0.1-beta
+ * @memberof Reader
  * @function of
+ * @static
+ * @implements Applicative
  * @example
- * // of :: a -> b -> (a, b)
- * import { Tuple } from 'zoomjs';
+ * // of :: a -> Reader e a
+ * import { Reader } from 'zoomjs';
  *
- * Tuple.of(1, 3).toString(); // (1, 3)
+ * Reader.of('foo'); // Reader(null, foo)
  *
- * @param  {A} left The first element
- * @param  {B} right The second element
- * @return {Tuple&lt;A, B>}
+ * @param  {A} value The value to put in the Reader
+ * @return {Reader&lt;E, A>}
  */
-Tuple.of = (a, b) =>
-  Tuple(a, b);
+Reader.of = value =>
+  Reader(() => value);
 
 /**
- * @description Get the first element of a Tuple
- * @memberof Tuple
- * @since 1.0.0-beta
- * @function fst
+ * @description
+ * Run multiple readers in sequence. The function given to `.chain` must return
+ * a `Reader`.
+ *
+ * @since v1.0.1-beta
+ * @memberof Reader
+ * @function chain
+ * @static
+ * @implements Chain
  * @example
- * // fst :: (a, b) -> a
- * import { Tuple } from 'zoomjs';
+ * // chain :: (a -> Reader e b) -> Reader e a -> Reader e b
+ * import { Reader } from 'zoomjs';
  *
- * Tuple.fst(Tuple.of(1, 'Jake')); // 1
+ * // query :: String -> Reader Env [DbRow]
+ * const query = sql =>
+ *   Reader(env => env.db.query(sql));
  *
- * @param  {Tuple&lt;A, B>} tuple The tuple
- * @return {A}
+ * Reader.chain(query, Reader.of('Select * from "users";'));
+ * // Reader(Env, [DbRow])
+ *
+ * @param  {function} transform The function to chain
+ * @param  {Reader&lt;E, A>} reader The reader instance
+ * @return {Reader&lt;E, B>}
  */
-Tuple.fst = tuple =>
-  tuple.left;
+Reader.chain = curry((transform, reader) =>
+  Reader(env => transform(reader.run(env)).run(env)));
 
 /**
- * @description Get the second element of a Tuple
- * @memberof Tuple
- * @since 1.0.0-beta
- * @function snd
- * @example
- * // snd :: (a, b) -> b
- * import { Tuple } from 'zoomjs';
+ * @description
+ * Apply a function to the value held by a `Reader`. Returns a new `Reader`.
  *
- * Tuple.snd(Tuple.of(1, 'Jake')); // 'Jake'
- *
- * @param  {Tuple&lt;A, B>} tuple The tuple
- * @return {B}
- */
-Tuple.snd = tuple =>
-  tuple.right;
-
-/**
- * @description Determine if one tuple is the same as another. Both elements
- * are checked with the `===` comparison operator.
- * @memberof Tuple
- * @since 1.0.0-beta
- * @implements Setoid
- * @function equals
- * @example
- * // equals :: (a, b) -> (a, b) -> Bool
- * import { Tuple } from 'zoomjs';
- *
- * const userA = Tuple.of('male', 'Dustin');
- * const userB = Tuple.of('male', 'Dustin');
- * const userC = Tuple.of('male', 'Jimmy');
- *
- * Tuple.equals(userA, userB);
- * // => true
- *
- * Tuple.equals(userA, userC);
- * // => false
- *
- * Tuple.equals(userB, userC);
- * // => false
- *
- * @param  {Tuple&lt;A, B>} left The first tuple
- * @param  {Tuple&lt;A, B>} right The second tuple
- * @return {Boolean}
- */
-Tuple.equals = curry((left, right) =>
-  left.left === right.left &amp;&amp; left.right === right.right);
-
-/**
- * @description Apply a function to the second element of a tuple and return
- * a new, modified tuple.
- * @memberof Tuple
- * @since 1.0.0-beta
- * @implements Functor
+ * @since v1.0.1-beta
+ * @memberof Reader
  * @function map
+ * @static
+ * @implements Functor
  * @example
- * // map :: (b -> c) -> (a, b) -> (a, c)
- * import { Tuple } from 'zoomjs';
+ * // map :: (a -> b) -> Reader e a -> Reader e b
+ * import { Reader } from 'zoomjs';
  *
- * // toUpper :: String -> String
- * const toUpper = x => x.toUpperCase();
+ * const reader = Reader.of('foo');
  *
- * Tuple.map(toUpper, Tuple.of(1, 'jake'));
- * // => (1, 'JAKE')
+ * Reader.map(x => x.toUpperCase(), reader);
+ * // => Reader(null, FOO)
  *
- * @param  {function} transform The function to run
- * @param  {Tuple&lt;A, B>} tuple The tuple
- * @return {Tuple&lt;A, C>}
+ * @param  {function} transform The function to apply
+ * @param  {Reader&lt;E, A>} reader The reader instance
+ * @return {Reader&lt;E, B>}
  */
-Tuple.map = curry((transform, tuple) =>
-  Tuple.of(tuple.left, transform(tuple.right)));
+Reader.map = curry((transform, reader) =>
+  Reader.chain(x => Reader.of(transform(x)), reader));
 
 /**
- * @description Apply a function to the first element of a tuple
- * and return a new, modified tuple.
- * @memberof Tuple
- * @since 1.0.0-beta
- * @function mapLeft
+ * @description
+ * Apply a function to the value held by a `Reader`. Returns a new `Reader`.
+ *
+ * @since v1.0.1-beta
+ * @memberof Reader
+ * @function ap
+ * @static
+ * @implements Functor
  * @example
- * // mapLeft :: (a -> c) -> (a, b) -> (c, b)
- * import { Tuple } from 'zoomjs';
+ * // ap :: Apply (a -> b) -> Reader e a -> Reader e b
+ * import { Reader } from 'zoomjs';
  *
- * const user = Tuple.of(1, 'Jake');
+ * const reader = Reader.of('foo');
+ * const toUpper = Reader.of(x => x.toUpperCase());
  *
- * Tuple.mapLeft(n => n + 1, user).toString(); // (2, 'Jake')
+ * Reader.ap(toUpper, reader);
+ * // => Reader(null, FOO)
  *
- * @param  {function} transform The function to run
- * @param  {Tuple&lt;A, B>} tuple The tuple
- * @return {Tuple&lt;C, B>}
+ * @param  {Apply&lt;function>} apply The apply instance.
+ * @param  {Reader&lt;E, A>} reader The reader instance
+ * @return {Reader&lt;E, B>}
  */
-Tuple.mapLeft = curry((transform, tuple) =>
-  Tuple(transform(tuple.left), tuple.right));
+Reader.ap = curry((apply, reader) =>
+  Reader.chain(Reader.map(__, reader), apply));
 
 
 /*
@@ -210,226 +168,85 @@ Tuple.mapLeft = curry((transform, tuple) =>
  */
 
 /**
-* @description Create a two element tuple. The instance version of "Tuple.of"
-* @memberof Tuple
-* @since 1.0.0-beta
-* @implements Applicative
-* @method
-* @instance
-* @example
-* // of (a, b) :: c -> d -> (c, d)
-* import { Tuple } from 'zoomjs';
-*
-* const emptyTuple = Tuple.of();
-*
-* emptyTuple.of(1, 3).toString(); // (1, 3)
-*
-* @this Tuple
-* @param  {A} left The first element
-* @param  {B} right The second element
-* @return {Tuple&lt;A, B>}
-*/
-Tuple.prototype.of = function of(left, right) {
-  return Tuple.of(left, right);
-};
-
-/**
-* @description Get the first element of a Tuple. Instance version of "Tuple.fst"
-* @memberof Tuple
-* @since 1.0.0-beta
-* @method
-* @instance
-* @example
-* // fst (a, b) :: c -> a
-* import { Tuple } from 'zoomjs';
-*
-* Tuple.of(1, 'Jake').fst(); // 1
-*
-* @this Tuple
-* @return {A}
-*/
-Tuple.prototype.fst = function fst() {
-  return Tuple.fst(this);
-};
-
-/**
-* @description Get the second element of a Tuple. Instance version of "Tuple.snd"
-* @memberof Tuple
-* @since 1.0.0-beta
-* @method
-* @instance
-* @example
-* // snd (a, b) :: c -> b
-* import { Tuple } from 'zoomjs';
-*
-* Tuple.of(1, 'Jake').snd(); // 'Jake'
-*
-* @this Tuple
-* @return {B}
-*/
-Tuple.prototype.snd = function snd() {
-  return Tuple.snd(this);
-};
-
-/**
- * @description Determine if one tuple is the same as another. Both elements
- * are checked with the `===` comparison operator.
- * @memberof Tuple
- * @since 1.0.0-beta
- * @implements Setoid
+ * @description
+ * Run multiple readers in sequence. The function given to `.chain` must return
+ * a `Reader`.
+ *
+ * @since v1.0.1-beta
+ * @memberof Reader
  * @method
  * @instance
+ * @implements Chain
  * @example
- * // equals (a, b) :: (a, b) -> Bool
- * import { Tuple } from 'zoomjs';
+ * // chain Reader e a :: (a -> Reader e b) -> Reader e b
+ * import { Reader } from 'zoomjs';
  *
- * const userA = Tuple.of('male', 'Dustin');
- * const userB = Tuple.of('male', 'Dustin');
- * const userC = Tuple.of('male', 'Jimmy');
+ * // query :: String -> Reader Env [DbRow]
+ * const query = sql =>
+ *   Reader(env => env.db.query(sql));
  *
- * userA.equals(userB);
- * // => true
+ * Reader.of('Select * from "users"').chain(query);
+ * // Reader(Env, [DbRow])
  *
- * userA.equals(userC);
- * // => false
- *
- * userB.equals(userC);
- * // => false
- *
- * @this Tuple
- * @param  {Tuple&lt;A, B>} tuple The tuple to compare against
- * @return {Boolean}
+ * @param  {function} transform The function to chain
+ * @return {Reader&lt;E, B>}
  */
-Tuple.prototype.equals = function equals(tuple) {
-  return Tuple.equals(tuple, this);
+Reader.prototype.chain = function chain(transform) {
+  return Reader.chain(transform, this);
 };
 
 /**
-* @description Apply a function to the second element of a tuple
-* and return a new, modified tuple. Instance version of "Tuple.map"
-* @memberof Tuple
-* @since 1.0.0-beta
-* @implements Functor
-* @method
-* @instance
-* @example
-* // map (a, b) :: (b -> c) -> (a, c)
-* import { Tuple } from 'zoomjs';
-*
-* const user = Tuple.of(1, 'Jake');
-*
-* user.map(x => x.toUpperCase()).toString() // (1, 'JAKE')
-*
-* @this Tuple
-* @param  {function} transform The function to run
-* @return {Tuple&lt;A, C>}
-*/
-Tuple.prototype.map = function map(transform) {
-  return Tuple.map(transform, this);
-};
-
-/**
-* @description Apply a function to the first element of a tuple
-* and return a new, modified tuple. Instance version of {@link Tuple.mapLeft}
-* @memberof Tuple
-* @since 1.0.0-beta
-* @method
-* @instance
-* @example
-* // mapLeft (a, b) :: (a -> c) -> (c, b)
-* import { Tuple } from 'zoomjs';
-*
-* const user = Tuple.of(1, 'Jake');
-*
-* user.mapLeft(n => n + 1).toString(); // (2, 'Jake')
-*
-* @this Tuple
-* @param  {function} transform The function to run
-* @param  {Tuple&lt;A, B>} tuple The tuple
-* @return {Tuple&lt;C, B>}
-*/
-Tuple.prototype.mapLeft = function mapLeft(transform) {
-  return Tuple.mapLeft(transform, this);
-};
-
-/**
-* @description Get the string representation of the tuple.
-* @memberof Tuple
-* @since 1.0.0-beta
-* @method
-* @instance
-* @example
-* // toString (a, b) :: c -> String
-* import { Tuple } from 'zoomjs';
-*
-* Tuple.of(1, 'Jake').toString(); // (1, 'Jake')
-*
-* @this Tuple
-* @return {String}
-*/
-Tuple.prototype.toString = function toString() {
-  return `(${this.left.toString()}, ${this.right.toString()})`;
-};
-
-/**
- * @memberof Tuple
  * @description
- * Support the `Symbol.iterator` protocol.
- * @since 1.0.0-beta
- * @method Iterator
+ * Apply a function to the value held by a `Reader`. Returns a new `Reader`.
+ *
+ * @since v1.0.1-beta
+ * @memberof Reader
+ * @method
  * @instance
+ * @implements Functor
  * @example
- * import { Tuple } from 'zoomjs';
+ * // map Reader e a :: (a -> b) -> Reader e b
+ * import { Reader } from 'zoomjs';
  *
- * // user :: (Int, String)
- * const user = Tuple.of(1, 'Janet');
+ * const reader = Reader.of('foo');
  *
- * // For-of loops
- * for (let element of user) {
- *   console.log(element);
- * }
+ * reader.map(x => x.toUpperCase());
+ * // => Reader(null, FOO)
  *
- * // 1
- * // 'Janet'
- *
- *
- * // Spread Operator
- * // saveUser :: Int -> String -> DbResult
- * function saveUser(id, username) {
- *   return Db.save(id, username);
- * }
- *
- * saveUser(...user);
- *
- *
- * // Destructuring
- * const [id, username] = user;
- *
- * // saveUserT :: (Int, String) -> DbResult
- * function saveUserT([id, username]) {
- *   return Db.save(id, username);
- * }
- *
- * saveUserT(user);
- *
- * @this Either
- * @return {Iterator}
+ * @param  {function} transform The function to apply
+ * @return {Reader&lt;E, B>}
  */
-Tuple.prototype[Symbol.iterator] = function iterator() {
-  const pending = ['left', 'right'];
-  const tuple = this;
-  return {
-    next() {
-      if (pending.length) {
-        return { value: tuple[pending.shift()] };
-      }
-      return { done: true };
-    },
-  };
+Reader.prototype.map = function map(transform) {
+  return Reader.map(transform, this);
 };
 
+/**
+ * @description
+ * Apply a function to the value held by a `Reader`. Returns a new `Reader`.
+ *
+ * @since v1.0.1-beta
+ * @memberof Reader
+ * @method
+ * @instance
+ * @implements Functor
+ * @example
+ * // ap Reader e a :: Apply (a -> b) -> Reader e b
+ * import { Reader } from 'zoomjs';
+ *
+ * const reader = Reader.of('foo');
+ * const toUpper = Reader.of(x => x.toUpperCase());
+ *
+ * reaer.ap(toUpper);
+ * // => Reader(null, FOO)
+ *
+ * @param  {Apply&lt;function>} apply The apply instance.
+ * @return {Reader&lt;E, B>}
+ */
+Reader.prototype.ap = function ap(apply) {
+  return Reader.ap(apply, this);
+};
 
-export default Tuple;
+export default Reader;
 </code></pre>
         </article>
     </section>

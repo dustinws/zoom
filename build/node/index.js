@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Validation = exports.Tuple = exports.Task = exports.Maybe = exports.Either = exports.ADT = undefined;
+exports.Validation = exports.Tuple = exports.Task = exports.Reader = exports.Maybe = exports.Either = exports.ADT = undefined;
 
 var _adt = require('./adt');
 
@@ -16,6 +16,10 @@ var _either2 = _interopRequireDefault(_either);
 var _maybe = require('./maybe');
 
 var _maybe2 = _interopRequireDefault(_maybe);
+
+var _reader = require('./reader');
+
+var _reader2 = _interopRequireDefault(_reader);
 
 var _task = require('./task');
 
@@ -36,6 +40,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 exports.ADT = ADT;
 exports.Either = _either2.default;
 exports.Maybe = _maybe2.default;
+exports.Reader = _reader2.default;
 exports.Task = _task2.default;
 exports.Tuple = _tuple2.default;
 exports.Validation = _validation2.default;
