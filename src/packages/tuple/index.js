@@ -2,8 +2,8 @@ import FL from 'fantasy-land';
 import Tuple from './Tuple';
 
 // Tuple Applicative
-Tuple[FL.of] = Tuple.of;
-Tuple.prototype[FL.of] = Tuple.prototype.of;
+Tuple[FL.equals] = Tuple.equals;
+Tuple.prototype[FL.equals] = Tuple.prototype.equals;
 
 // Tuple Functor
 Tuple[FL.map] = Tuple.map;

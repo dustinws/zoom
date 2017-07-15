@@ -2,12 +2,6 @@
 import Tuple from '../Tuple';
 
 describe('Data.Tuple', () => {
-  describe('Tuple.of', () => {
-    test('It should create a tuple instance', () => {
-      expect(Tuple.of(1, 2) instanceof Tuple).toBe(true);
-    });
-  });
-
   describe('Tuple.equals', () => {
     test('It should return true if both tuples contain arguments that pass ===', () => {
       const tupleA = Tuple(1, 2);
@@ -57,14 +51,6 @@ describe('Data.Tuple', () => {
       const inc = n => n + 1;
 
       expect(Tuple.fst(Tuple.mapLeft(inc, tuple))).toBe(2);
-    });
-  });
-
-  describe('Tuple#of', () => {
-    test('It should create a tuple instance', () => {
-      const emptyTuple = Tuple.of();
-
-      expect(emptyTuple.of(1, 2) instanceof Tuple).toBe(true);
     });
   });
 

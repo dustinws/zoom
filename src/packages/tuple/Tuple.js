@@ -10,7 +10,7 @@ import { tag } from '../adt';
  *
  * ---
  * `Tuple` supports the `Symbol.iterator` protocol, which means it supports
- * `for of` loops, `...spread`, and `[a, b] = Tuple.of(0, 0)` destructuring.
+ * `for of` loops, `...spread`, and `[a, b] = Tuple(0, 0)` destructuring.
  * For more detailed usage, see {@link Tuple#Iterator}
  *
  * ---
@@ -21,7 +21,7 @@ import { tag } from '../adt';
  *
  * // Create a Tuple instance
  * // user :: (Int, String)
- * const user = Tuple.of(1, 'Dustin');
+ * const user = Tuple(1, 'Dustin');
  *
  * user.toString(); // (1, 'Dustin')
  */
@@ -35,25 +35,6 @@ const Tuple = tag('Tuple', 'left', 'right');
  */
 
 /**
- * @description Create a new tuple.
- * @memberof Tuple
- * @since 1.0.0-beta
- * @implements Applicative
- * @function of
- * @example
- * // of :: a -> b -> (a, b)
- * import { Tuple } from 'zoomjs';
- *
- * Tuple.of(1, 3).toString(); // (1, 3)
- *
- * @param  {A} left The first element
- * @param  {B} right The second element
- * @return {Tuple<A, B>}
- */
-Tuple.of = (a, b) =>
-  Tuple(a, b);
-
-/**
  * @description Get the first element of a Tuple
  * @memberof Tuple
  * @since 1.0.0-beta
@@ -62,7 +43,7 @@ Tuple.of = (a, b) =>
  * // fst :: (a, b) -> a
  * import { Tuple } from 'zoomjs';
  *
- * Tuple.fst(Tuple.of(1, 'Jake')); // 1
+ * Tuple.fst(Tuple(1, 'Jake')); // 1
  *
  * @param  {Tuple<A, B>} tuple The tuple
  * @return {A}
@@ -79,7 +60,7 @@ Tuple.fst = tuple =>
  * // snd :: (a, b) -> b
  * import { Tuple } from 'zoomjs';
  *
- * Tuple.snd(Tuple.of(1, 'Jake')); // 'Jake'
+ * Tuple.snd(Tuple(1, 'Jake')); // 'Jake'
  *
  * @param  {Tuple<A, B>} tuple The tuple
  * @return {B}
@@ -98,9 +79,9 @@ Tuple.snd = tuple =>
  * // equals :: (a, b) -> (a, b) -> Bool
  * import { Tuple } from 'zoomjs';
  *
- * const userA = Tuple.of('male', 'Dustin');
- * const userB = Tuple.of('male', 'Dustin');
- * const userC = Tuple.of('male', 'Jimmy');
+ * const userA = Tuple('male', 'Dustin');
+ * const userB = Tuple('male', 'Dustin');
+ * const userC = Tuple('male', 'Jimmy');
  *
  * Tuple.equals(userA, userB);
  * // => true
@@ -132,7 +113,7 @@ Tuple.equals = curry((left, right) =>
  * // toUpper :: String -> String
  * const toUpper = x => x.toUpperCase();
  *
- * Tuple.map(toUpper, Tuple.of(1, 'jake'));
+ * Tuple.map(toUpper, Tuple(1, 'jake'));
  * // => (1, 'JAKE')
  *
  * @param  {function} transform The function to run
@@ -140,7 +121,7 @@ Tuple.equals = curry((left, right) =>
  * @return {Tuple<A, C>}
  */
 Tuple.map = curry((transform, tuple) =>
-  Tuple.of(tuple.left, transform(tuple.right)));
+  Tuple(tuple.left, transform(tuple.right)));
 
 /**
  * @description Apply a function to the first element of a tuple
@@ -152,7 +133,7 @@ Tuple.map = curry((transform, tuple) =>
  * // mapLeft :: (a -> c) -> (a, b) -> (c, b)
  * import { Tuple } from 'zoomjs';
  *
- * const user = Tuple.of(1, 'Jake');
+ * const user = Tuple(1, 'Jake');
  *
  * Tuple.mapLeft(n => n + 1, user).toString(); // (2, 'Jake')
  *
@@ -171,30 +152,6 @@ Tuple.mapLeft = curry((transform, tuple) =>
  */
 
 /**
-* @description Create a two element tuple. The instance version of "Tuple.of"
-* @memberof Tuple
-* @since 1.0.0-beta
-* @implements Applicative
-* @method
-* @instance
-* @example
-* // of (a, b) :: c -> d -> (c, d)
-* import { Tuple } from 'zoomjs';
-*
-* const emptyTuple = Tuple.of();
-*
-* emptyTuple.of(1, 3).toString(); // (1, 3)
-*
-* @this Tuple
-* @param  {A} left The first element
-* @param  {B} right The second element
-* @return {Tuple<A, B>}
-*/
-Tuple.prototype.of = function of(left, right) {
-  return Tuple.of(left, right);
-};
-
-/**
 * @description Get the first element of a Tuple. Instance version of "Tuple.fst"
 * @memberof Tuple
 * @since 1.0.0-beta
@@ -204,7 +161,7 @@ Tuple.prototype.of = function of(left, right) {
 * // fst (a, b) :: c -> a
 * import { Tuple } from 'zoomjs';
 *
-* Tuple.of(1, 'Jake').fst(); // 1
+* Tuple(1, 'Jake').fst(); // 1
 *
 * @this Tuple
 * @return {A}
@@ -223,7 +180,7 @@ Tuple.prototype.fst = function fst() {
 * // snd (a, b) :: c -> b
 * import { Tuple } from 'zoomjs';
 *
-* Tuple.of(1, 'Jake').snd(); // 'Jake'
+* Tuple(1, 'Jake').snd(); // 'Jake'
 *
 * @this Tuple
 * @return {B}
@@ -244,9 +201,9 @@ Tuple.prototype.snd = function snd() {
  * // equals (a, b) :: (a, b) -> Bool
  * import { Tuple } from 'zoomjs';
  *
- * const userA = Tuple.of('male', 'Dustin');
- * const userB = Tuple.of('male', 'Dustin');
- * const userC = Tuple.of('male', 'Jimmy');
+ * const userA = Tuple('male', 'Dustin');
+ * const userB = Tuple('male', 'Dustin');
+ * const userC = Tuple('male', 'Jimmy');
  *
  * userA.equals(userB);
  * // => true
@@ -277,7 +234,7 @@ Tuple.prototype.equals = function equals(tuple) {
 * // map (a, b) :: (b -> c) -> (a, c)
 * import { Tuple } from 'zoomjs';
 *
-* const user = Tuple.of(1, 'Jake');
+* const user = Tuple(1, 'Jake');
 *
 * user.map(x => x.toUpperCase()).toString() // (1, 'JAKE')
 *
@@ -300,7 +257,7 @@ Tuple.prototype.map = function map(transform) {
 * // mapLeft (a, b) :: (a -> c) -> (c, b)
 * import { Tuple } from 'zoomjs';
 *
-* const user = Tuple.of(1, 'Jake');
+* const user = Tuple(1, 'Jake');
 *
 * user.mapLeft(n => n + 1).toString(); // (2, 'Jake')
 *
@@ -323,7 +280,7 @@ Tuple.prototype.mapLeft = function mapLeft(transform) {
 * // toString (a, b) :: c -> String
 * import { Tuple } from 'zoomjs';
 *
-* Tuple.of(1, 'Jake').toString(); // (1, 'Jake')
+* Tuple(1, 'Jake').toString(); // (1, 'Jake')
 *
 * @this Tuple
 * @return {String}
@@ -343,7 +300,7 @@ Tuple.prototype.toString = function toString() {
  * import { Tuple } from 'zoomjs';
  *
  * // user :: (Int, String)
- * const user = Tuple.of(1, 'Janet');
+ * const user = Tuple(1, 'Janet');
  *
  * // For-of loops
  * for (let element of user) {
