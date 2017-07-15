@@ -132,10 +132,9 @@ describe('Data.Task', () => {
 
     test('it should only call "reject" once', () => {
       let calls = 0;
-      const rejectHandler = (error) => {
+      const rejectHandler = () => {
         calls += 1;
 
-        console.log('Rejecting with:', error);
         if (calls > 1) {
           throw new Error('Called too many times.');
         }
