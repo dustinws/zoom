@@ -355,15 +355,24 @@ Task.recover = curry((transform, task) =>
  */
 Task.parallel = tasks =>
   Task((reject, resolve) => {
-    // The number of pending tasks.
     let remaining = tasks.length;
+    let rejected = false;
+    let rejectedError;
 
     // Create the results array.
     const results = Array(tasks.length);
 
     // Fork each task
     tasks.forEach((task, idx) => {
-      task.fork(reject, (value) => {
+      task.fork((error) => {
+        if (!rejected) {
+          rejected = true;
+          rejectedError = error;
+          return reject(error);
+        }
+
+        return rejectedError;
+      }, (value) => {
         // Decrement the pending count
         remaining -= 1;
 

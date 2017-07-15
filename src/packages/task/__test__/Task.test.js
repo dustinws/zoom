@@ -129,6 +129,30 @@ describe('Data.Task', () => {
           expect(value).toEqual('baz');
         });
     });
+
+    test('it should only call "reject" once', () => {
+      let calls = 0;
+      const rejectHandler = (error) => {
+        calls += 1;
+
+        console.log('Rejecting with:', error);
+        if (calls > 1) {
+          throw new Error('Called too many times.');
+        }
+      };
+      const fail = () =>
+        Task(reject => reject('bar'));
+
+      const tasks = [
+        Task.of('foo'),
+        fail(),
+        fail(),
+      ];
+
+      return Task
+        .parallel(tasks)
+        .fork(rejectHandler, () => {});
+    });
   });
 
   describe('Task.lift', () => {
