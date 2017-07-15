@@ -15,7 +15,7 @@ import { tag } from '../adt';
  *
  * ---
  * #### Fantasy Land Implementations
- * `Setoid`, `Applicative`, `Functor`
+ * `Setoid`, `Functor`
  * @example
  * import { Tuple } from 'zoomjs';
  *
