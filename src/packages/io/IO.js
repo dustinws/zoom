@@ -31,7 +31,7 @@ const IO = tag('IO', 'run');
  * @static
  * @implements Applicative
  * @example
- * // of :: a -> IO e a
+ * // of :: a -> IO a
  * import { IO } from 'zoomjs';
  *
  * IO.of('foo'); // IO(null, foo)
@@ -53,7 +53,7 @@ IO.of = value =>
  * @static
  * @implements Chain
  * @example
- * // chain :: (a -> IO e b) -> IO e a -> IO e b
+ * // chain :: (a -> IO b) -> IO a -> IO b
  * import { IO } from 'zoomjs';
  *
  * // query :: String -> IO Env [DbRow]
@@ -80,7 +80,7 @@ IO.chain = curry((transform, io) =>
  * @static
  * @implements Functor
  * @example
- * // map :: (a -> b) -> IO e a -> IO e b
+ * // map :: (a -> b) -> IO a -> IO b
  * import { IO } from 'zoomjs';
  *
  * const io = IO.of('foo');
@@ -105,7 +105,7 @@ IO.map = curry((transform, io) =>
  * @static
  * @implements Functor
  * @example
- * // ap :: Apply (a -> b) -> IO e a -> IO e b
+ * // ap :: Apply (a -> b) -> IO a -> IO b
  * import { IO } from 'zoomjs';
  *
  * const io = IO.of('foo');
@@ -139,7 +139,7 @@ IO.ap = curry((apply, io) =>
  * @instance
  * @implements Chain
  * @example
- * // chain IO e a :: (a -> IO e b) -> IO e b
+ * // chain IO a :: (a -> IO b) -> IO b
  * import { IO } from 'zoomjs';
  *
  * // query :: String -> IO Env [DbRow]
@@ -166,7 +166,7 @@ IO.prototype.chain = function chain(transform) {
  * @instance
  * @implements Functor
  * @example
- * // map IO e a :: (a -> b) -> IO e b
+ * // map IO a :: (a -> b) -> IO b
  * import { IO } from 'zoomjs';
  *
  * const io = IO.of('foo');
@@ -191,7 +191,7 @@ IO.prototype.map = function map(transform) {
  * @instance
  * @implements Functor
  * @example
- * // ap IO e a :: Apply (a -> b) -> IO e b
+ * // ap IO a :: Apply (a -> b) -> IO b
  * import { IO } from 'zoomjs';
  *
  * const io = IO.of('foo');
