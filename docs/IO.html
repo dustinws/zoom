@@ -158,7 +158,7 @@ as a database write.</p>
 
     
 
-    <h4 class="name" id=".ap"><span class="type-signature">(static) </span>ap<span class="signature">(apply, io)</span><span class="type-signature"> &rarr; {<a href="IO.html">IO</a>.&lt;E, B>}</span></h4>
+    <h4 class="name" id=".ap"><span class="type-signature">(static) </span>ap<span class="signature">(apply, io)</span><span class="type-signature"> &rarr; {<a href="IO.html">IO</a>.&lt;B>}</span></h4>
 
     
 
@@ -299,7 +299,7 @@ IO.ap(toUpper, io);
             <td class="type">
             
                 
-<span class="param-type"><a href="IO.html">IO</a>.&lt;E, A></span>
+<span class="param-type"><a href="IO.html">IO</a>.&lt;A></span>
 
 
             
@@ -340,7 +340,7 @@ IO.ap(toUpper, io);
     </dt>
     <dd>
         
-<span class="param-type"><a href="IO.html">IO</a>.&lt;E, B></span>
+<span class="param-type"><a href="IO.html">IO</a>.&lt;B></span>
 
 
     </dd>
@@ -354,7 +354,7 @@ IO.ap(toUpper, io);
 
     
 
-    <h4 class="name" id=".chain"><span class="type-signature">(static) </span>chain<span class="signature">(transform, io)</span><span class="type-signature"> &rarr; {<a href="IO.html">IO</a>.&lt;E, B>}</span></h4>
+    <h4 class="name" id=".chain"><span class="type-signature">(static) </span>chain<span class="signature">(transform, io)</span><span class="type-signature"> &rarr; {<a href="IO.html">IO</a>.&lt;B>}</span></h4>
 
     
 
@@ -501,7 +501,7 @@ IO.chain(log, IO.of('Hello!'));
             <td class="type">
             
                 
-<span class="param-type"><a href="IO.html">IO</a>.&lt;E, A></span>
+<span class="param-type"><a href="IO.html">IO</a>.&lt;A></span>
 
 
             
@@ -542,7 +542,7 @@ IO.chain(log, IO.of('Hello!'));
     </dt>
     <dd>
         
-<span class="param-type"><a href="IO.html">IO</a>.&lt;E, B></span>
+<span class="param-type"><a href="IO.html">IO</a>.&lt;B></span>
 
 
     </dd>
@@ -556,7 +556,7 @@ IO.chain(log, IO.of('Hello!'));
 
     
 
-    <h4 class="name" id=".map"><span class="type-signature">(static) </span>map<span class="signature">(transform, io)</span><span class="type-signature"> &rarr; {<a href="IO.html">IO</a>.&lt;E, B>}</span></h4>
+    <h4 class="name" id=".map"><span class="type-signature">(static) </span>map<span class="signature">(transform, io)</span><span class="type-signature"> &rarr; {<a href="IO.html">IO</a>.&lt;B>}</span></h4>
 
     
 
@@ -696,7 +696,7 @@ IO.map(x => x.toUpperCase(), io);
             <td class="type">
             
                 
-<span class="param-type"><a href="IO.html">IO</a>.&lt;E, A></span>
+<span class="param-type"><a href="IO.html">IO</a>.&lt;A></span>
 
 
             
@@ -737,7 +737,7 @@ IO.map(x => x.toUpperCase(), io);
     </dt>
     <dd>
         
-<span class="param-type"><a href="IO.html">IO</a>.&lt;E, B></span>
+<span class="param-type"><a href="IO.html">IO</a>.&lt;B></span>
 
 
     </dd>
@@ -751,7 +751,7 @@ IO.map(x => x.toUpperCase(), io);
 
     
 
-    <h4 class="name" id=".of"><span class="type-signature">(static) </span>of<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="IO.html">IO</a>.&lt;E, A>}</span></h4>
+    <h4 class="name" id=".of"><span class="type-signature">(static) </span>of<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="IO.html">IO</a>.&lt;A>}</span></h4>
 
     
 
@@ -906,7 +906,7 @@ IO.of('foo'); // IO(null, foo)</code></pre>
     </dt>
     <dd>
         
-<span class="param-type"><a href="IO.html">IO</a>.&lt;E, A></span>
+<span class="param-type"><a href="IO.html">IO</a>.&lt;A></span>
 
 
     </dd>
@@ -920,7 +920,7 @@ IO.of('foo'); // IO(null, foo)</code></pre>
 
     
 
-    <h4 class="name" id="ap"><span class="type-signature"></span>ap<span class="signature">(apply)</span><span class="type-signature"> &rarr; {<a href="IO.html">IO</a>.&lt;E, B>}</span></h4>
+    <h4 class="name" id="ap"><span class="type-signature"></span>ap<span class="signature">(apply)</span><span class="type-signature"> &rarr; {<a href="IO.html">IO</a>.&lt;B>}</span></h4>
 
     
 
@@ -1079,7 +1079,7 @@ io.ap(toUpper);
     </dt>
     <dd>
         
-<span class="param-type"><a href="IO.html">IO</a>.&lt;E, B></span>
+<span class="param-type"><a href="IO.html">IO</a>.&lt;B></span>
 
 
     </dd>
@@ -1093,7 +1093,7 @@ io.ap(toUpper);
 
     
 
-    <h4 class="name" id="chain"><span class="type-signature"></span>chain<span class="signature">(transform)</span><span class="type-signature"> &rarr; {<a href="IO.html">IO</a>.&lt;E, B>}</span></h4>
+    <h4 class="name" id="chain"><span class="type-signature"></span>chain<span class="signature">(transform)</span><span class="type-signature"> &rarr; {<a href="IO.html">IO</a>.&lt;B>}</span></h4>
 
     
 
@@ -1258,7 +1258,7 @@ IO.of('Hello!').chain(log);
     </dt>
     <dd>
         
-<span class="param-type"><a href="IO.html">IO</a>.&lt;E, B></span>
+<span class="param-type"><a href="IO.html">IO</a>.&lt;B></span>
 
 
     </dd>
@@ -1272,7 +1272,7 @@ IO.of('Hello!').chain(log);
 
     
 
-    <h4 class="name" id="map"><span class="type-signature"></span>map<span class="signature">(transform)</span><span class="type-signature"> &rarr; {<a href="IO.html">IO</a>.&lt;E, B>}</span></h4>
+    <h4 class="name" id="map"><span class="type-signature"></span>map<span class="signature">(transform)</span><span class="type-signature"> &rarr; {<a href="IO.html">IO</a>.&lt;B>}</span></h4>
 
     
 
@@ -1430,7 +1430,7 @@ io.map(x => x.toUpperCase());
     </dt>
     <dd>
         
-<span class="param-type"><a href="IO.html">IO</a>.&lt;E, B></span>
+<span class="param-type"><a href="IO.html">IO</a>.&lt;B></span>
 
 
     </dd>
@@ -1457,7 +1457,7 @@ io.map(x => x.toUpperCase());
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sat Jul 29 2017 21:50:56 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sat Jul 29 2017 21:53:17 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

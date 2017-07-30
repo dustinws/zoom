@@ -37,7 +37,7 @@ const IO = tag('IO', 'run');
  * IO.of('foo'); // IO(null, foo)
  *
  * @param  {A} value The value to put in the IO
- * @return {IO<E, A>}
+ * @return {IO<A>}
  */
 IO.of = value =>
   IO(() => value);
@@ -68,8 +68,8 @@ IO.of = value =>
  * // IO(Hello!)
  *
  * @param  {function} transform The function to chain
- * @param  {IO<E, A>} io The io instance
- * @return {IO<E, B>}
+ * @param  {IO<A>} io The io instance
+ * @return {IO<B>}
  */
 IO.chain = curry((transform, io) =>
   IO(env => transform(io.run(env)).run(env)));
@@ -93,8 +93,8 @@ IO.chain = curry((transform, io) =>
  * // => IO(null, FOO)
  *
  * @param  {function} transform The function to apply
- * @param  {IO<E, A>} io The io instance
- * @return {IO<E, B>}
+ * @param  {IO<A>} io The io instance
+ * @return {IO<B>}
  */
 IO.map = curry((transform, io) =>
   IO.chain(x => IO.of(transform(x)), io));
@@ -119,8 +119,8 @@ IO.map = curry((transform, io) =>
  * // => IO(null, FOO)
  *
  * @param  {Apply<function>} apply The apply instance.
- * @param  {IO<E, A>} io The io instance
- * @return {IO<E, B>}
+ * @param  {IO<A>} io The io instance
+ * @return {IO<B>}
  */
 IO.ap = curry((apply, io) =>
   IO.chain(IO.map(__, io), apply));
@@ -158,7 +158,7 @@ IO.ap = curry((apply, io) =>
  * // IO(Hello!)
  *
  * @param  {function} transform The function to chain
- * @return {IO<E, B>}
+ * @return {IO<B>}
  */
 IO.prototype.chain = function chain(transform) {
   return IO.chain(transform, this);
@@ -183,7 +183,7 @@ IO.prototype.chain = function chain(transform) {
  * // => IO(null, FOO)
  *
  * @param  {function} transform The function to apply
- * @return {IO<E, B>}
+ * @return {IO<B>}
  */
 IO.prototype.map = function map(transform) {
   return IO.map(transform, this);
@@ -209,7 +209,7 @@ IO.prototype.map = function map(transform) {
  * // => IO(null, FOO)
  *
  * @param  {Apply<function>} apply The apply instance.
- * @return {IO<E, B>}
+ * @return {IO<B>}
  */
 IO.prototype.ap = function ap(apply) {
   return IO.ap(apply, this);
