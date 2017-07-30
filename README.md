@@ -18,6 +18,7 @@ code that is easy to read and easy to refactor.
 
 #### Types
 - [Either](https://dustinws.github.io/zoom/Either.html)
+- [IO](https://dustinws.github.io/zoom/IO.html)
 - [Maybe](https://dustinws.github.io/zoom/Maybe.html)
 - [Reader](https://dustinws.github.io/zoom/Reader.html)
 - [Result](https://dustinws.github.io/zoom/Result.html)
