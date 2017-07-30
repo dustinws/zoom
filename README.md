@@ -25,6 +25,7 @@ code that is easy to read and easy to refactor.
 - [Task](https://dustinws.github.io/zoom/Task.html)
 - [Tuple](https://dustinws.github.io/zoom/Tuple.html)
 - [Validation](https://dustinws.github.io/zoom/Validation.html)
+- [Writer](https://dustinws.github.io/zoom/Writer.html)
 
 ---
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>adt/union.js - Documentation</title>
+    <title>writer/Writer.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">adt/union.js</h1>
+    <h1 class="page-title">writer/Writer.js</h1>
     
 
     
@@ -37,87 +37,266 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import tag from './tag';
+            <pre class="prettyprint source linenums"><code>import __ from 'ramda/src/__';
+import curry from 'ramda/src/curry';
+import Tuple from '../tuple';
+import { tag } from '../adt';
 
 /**
- * @memberof module:Zoom.ADT
- * @description Create a set of union types that all inherit from the returned
- * parent type. Adds a ".cata" method that acts as a switch between
- * the types. Instead of passing a type and a list of parameter names
- * like in "ADT.tag", an object is passed where the keys are the child
- * type names and the values are their associated parameter list.
- * If a type has no params (an empty array), an instance will be eagerly
- * created to act as a singleton.
+ * @class Writer
+ * @description
+ * #### Fantasy Land Implementations
+ * `Applicative`, `Functor`, `Apply`, `Chain`, `Monad`
  *
- * @since 1.0.0-beta
- * @function union
- * @example
- * import { union } from 'zoomjs/adt';
- *
- * const Maybe = union('Maybe', {
- *   Just: ['value'],
- *   Nothing: [],
- * });
- *
- * Maybe.prototype.getOrElse = function getOrElse(defaultValue) {
- *   return this.cata({
- *     Just(value) {
- *       return value;
- *     },
- *
- *     Nothing() {
- *       return defaultValue;
- *     },
- *   });
- * };
- *
- * const justFoo = Maybe.Just('foo');
- * const nothing = Maybe.Nothing;
- *
- * justFoo instanceof Maybe // true
- * justFoo instanceof Maybe.Just // true
- *
- * nothing instanceof Maybe // true
- *
- * justFoo.getOrElse('bar'); // 'foo'
- * nothing.getOrElse('bar'); // 'bar'
- *
- * @param  {String} parentType The name of the super type
- * @param  {Object} childTypes An object of case types and their param names
- * @return {Function}
+ * ---
+ * A `Writer` is way to attach metadata to function calls, such as
+ * logging.
  */
-function union(parentType, childTypes) {
-  // Create the parent type.
-  const Parent = tag(parentType);
+const Writer = tag('Writer', 'value');
 
-  Object.keys(childTypes).forEach((childType) => {
-    // Get any params defined for the child.
-    const params = childTypes[childType];
 
-    // Tag the child object.
-    const Child = tag(childType, ...params);
+/*
+ |------------------------------------------------------------------------------
+ | Static Members
+ |------------------------------------------------------------------------------
+ */
 
-    // Inherit from the parent type.
-    const ogProto = Child.prototype;
-    Child.prototype = Object.create(Parent.prototype);
-    Child.prototype.constructor = Child;
+/**
+ * @description
+ * Create a new writer that will return the given value.
+ *
+ * @since 2.6.0
+ * @memberof Writer
+ * @function of
+ * @static
+ * @implements Applicative
+ * @example
+ * // of :: a -> Writer w a
+ * import { Writer } from 'zoomjs';
+ *
+ * Writer.of('foo'); // Writer(null, foo)
+ *
+ * @param  {A} value The value to put in the Writer
+ * @return {Writer&lt;E, A>}
+ */
+Writer.of = value =>
+  Writer(Tuple(value, []));
 
-    Object.assign(Child.prototype, ogProto);
+/**
+ * @description
+ * Attach a new piece of metadata to a writer.
+ *
+ * @since 2.6.0
+ * @memberof Writer
+ * @function tell
+ * @static
+ * @example
+ * // tell :: w -> Writer w a -> Writer w a
+ * import { Writer } from 'zoomjs';
+ *
+ * Writer.tell('A log!', Writer.of('foo'));
+ * // Writer(Tuple('foo', ['A log!']))
+ *
+ * @param  {A} value The value to put in the Writer
+ * @return {Writer&lt;E, A>}
+ */
+Writer.tell = curry((value, writer) =>
+  Writer(Tuple(Tuple.fst(writer.value), Tuple.snd(writer.value).concat(value))));
 
-    // Add the cata method.
-    Child.prototype.cata = function cata(cases) {
-      return cases[childType](...params.map(p => this[p]));
-    };
+/**
+ * @description
+ * Run multiple writers in sequence. The function given to `.chain` must return
+ * a `Writer`.
+ *
+ * @since 2.6.0
+ * @memberof Writer
+ * @function chain
+ * @static
+ * @implements Chain
+ * @example
+ * // chain :: (a -> Writer w b) -> Writer w a -> Writer w b
+ * import { Tuple, Writer } from 'zoomjs';
+ *
+ * // half :: Number -> Writer [String] Number
+ * const half = n =>
+ *   Writer(Tuple(n / 2, `I just halved ${n}.`));
+ *
+ * Writer.chain(half, Writer.of(10));
+ * // Writer(Tuple(5, ['I just halved 10.']))
+ *
+ * @param  {function} transform The function to chain
+ * @param  {Writer&lt;W, A>} writer The writer instance
+ * @return {Writer&lt;W, B>}
+ */
+Writer.chain = curry((transform, writer) => {
+  const [value, currentLogs] = writer.value;
+  const [newVal, newLogs] = transform(value).value;
 
-    // Attach the child to the parent object. Eagerly create an
-    // instance if there are no instance variables.
-    Parent[childType] = params.length ? Child : Child();
-  });
+  return Writer(Tuple(newVal, currentLogs.concat(newLogs)));
+});
 
-  return Parent;
-}
+/**
+ * @description
+ * Apply a function to the value held by a `Writer`. Returns a new `Writer`.
+ *
+ * @since 2.6.0
+ * @memberof Writer
+ * @function map
+ * @static
+ * @implements Functor
+ * @example
+ * // map :: (a -> b) -> Writer w a -> Writer w b
+ * import { Writer } from 'zoomjs';
+ *
+ * const writer = Writer.of('foo');
+ *
+ * Writer.map(x => x.toUpperCase(), writer);
+ * // => Writer(Tuple('FOO', []))
+ *
+ * @param  {function} transform The function to apply
+ * @param  {Writer&lt;W, A>} writer The writer instance
+ * @return {Writer&lt;W, B>}
+ */
+Writer.map = curry((transform, writer) =>
+  Writer.chain(x => Writer.of(transform(x)), writer));
 
-export default union;
+/**
+ * @description
+ * Apply a function to the value held by a `Writer`. Returns a new `Writer`.
+ *
+ * @since 2.6.0
+ * @memberof Writer
+ * @function ap
+ * @static
+ * @implements Functor
+ * @example
+ * // ap :: Apply (a -> b) -> Writer w a -> Writer w b
+ * import { Writer } from 'zoomjs';
+ *
+ * const writer = Writer.of('foo');
+ * const toUpper = x =>
+ *  Writer(Tuple(x => x.toUpperCase(), `I just uppercased ${x}.`));
+ *
+ * Writer.ap(toUpper, writer);
+ * // => Writer(Tuple('FOO', ['I just uppercased foo.']))
+ *
+ * @param  {Apply&lt;function>} apply The apply instance.
+ * @param  {Writer&lt;W, A>} writer The writer instance
+ * @return {Writer&lt;W, B>}
+ */
+Writer.ap = curry((apply, writer) =>
+  Writer.chain(Writer.map(__, writer), apply));
+
+
+/*
+ |------------------------------------------------------------------------------
+ | Instance Members
+ |------------------------------------------------------------------------------
+ */
+
+
+/**
+ * @description
+ * Run multiple writers in sequence. The function given to `.chain` must return
+ * a `Writer`.
+ *
+ * @since 2.6.0
+ * @memberof Writer
+ * @method
+ * @instance
+ * @implements Chain
+ * @example
+ * // chain Writer w a :: (a -> Writer w b) -> Writer w b
+ * import { Writer } from 'zoomjs';
+ *
+ * // half :: Number -> Writer [String] Number
+ * const half = n =>
+ *   Writer(Tuple(n / 2, `I just halved ${n}.`));
+ *
+ * Writer.of(10).chain(half);
+ * // Writer(Tuple(5, ['I just halved 10.']))
+ *
+ * @param  {function} transform The function to chain
+ * @return {Writer&lt;W, B>}
+ */
+Writer.prototype.chain = function chain(transform) {
+  return Writer.chain(transform, this);
+};
+
+/**
+ * @description
+ * Attach a new piece of metadata to a writer.
+ *
+ * @since v2.6.0
+ * @memberof Writer
+ * @method
+ * @instance
+ * @example
+ * // tell Writer w a :: w -> Writer w a
+ * import { Writer } from 'zoomjs';
+ *
+ * Writer.of('foo').tell('A log!');
+ * // Writer(Tuple('foo', ['A log!']))
+ *
+ * @param  {function} transform The function to chain
+ * @return {Writer&lt;W, B>}
+ */
+Writer.prototype.tell = function tell(log) {
+  return Writer.tell(log, this);
+};
+
+/**
+ * @description
+ * Apply a function to the value held by a `Writer`. Returns a new `Writer`.
+ *
+ * @since 2.6.0
+ * @memberof Writer
+ * @method
+ * @instance
+ * @implements Functor
+ * @example
+ * // map Writer w a :: (a -> b) -> Writer w b
+ * import { Writer } from 'zoomjs';
+ *
+ * const writer = Writer.of('foo');
+ *
+ * writer.map(x => x.toUpperCase());
+ * // => Writer(Tuple('FOO', []))
+ *
+ * @param  {function} transform The function to apply
+ * @return {Writer&lt;W, B>}
+ */
+Writer.prototype.map = function map(transform) {
+  return Writer.map(transform, this);
+};
+
+/**
+ * @description
+ * Apply a function to the value held by a `Writer`. Returns a new `Writer`.
+ *
+ * @since 2.6.0
+ * @memberof Writer
+ * @method
+ * @instance
+ * @implements Functor
+ * @example
+ * // ap Writer w a :: Apply (a -> b) -> Writer w b
+ * import { Writer } from 'zoomjs';
+ *
+ * const writer = Writer.of('foo');
+ * const toUpper = Writer.of(x => x.toUpperCase());
+ *
+ * reaer.ap(toUpper);
+ * // => Writer(Tuple('FOO', []))
+ *
+ * @param  {Apply&lt;function>} apply The apply instance.
+ * @return {Writer&lt;E, B>}
+ */
+Writer.prototype.ap = function ap(apply) {
+  return Writer.ap(apply, this);
+};
+
+export default Writer;
 </code></pre>
         </article>
     </section>
