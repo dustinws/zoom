@@ -31,7 +31,6 @@
     "webpack": "^3.0.0"
   },
   "dependencies": {
-    "esdoc": "^0.5.2",
     "fantasy-land": "^3.3.0",
     "ramda": "^0.24.1"
   },
