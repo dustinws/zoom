@@ -56,12 +56,16 @@ IO.of = value =>
  * // chain :: (a -> IO b) -> IO a -> IO b
  * import { IO } from 'zoomjs';
  *
- * // query :: String -> IO Env [DbRow]
- * const query = sql =>
- *   IO(env => env.db.query(sql));
+ * // query :: String -> IO String
+ * const log = message =>
+ *   IO(() => {
+ *     console.log(message);
  *
- * IO.chain(query, IO.of('Select * from "users";'));
- * // IO(Env, [DbRow])
+ *     return message;
+ *   });
+ *
+ * IO.chain(log, IO.of('Hello!'));
+ * // IO(Hello!)
  *
  * @param  {function} transform The function to chain
  * @param  {IO<E, A>} io The io instance
@@ -142,12 +146,16 @@ IO.ap = curry((apply, io) =>
  * // chain IO a :: (a -> IO b) -> IO b
  * import { IO } from 'zoomjs';
  *
- * // query :: String -> IO Env [DbRow]
- * const query = sql =>
- *   IO(env => env.db.query(sql));
+ * // query :: String -> IO String
+ * const log = message =>
+ *   IO(() => {
+ *     console.log(message);
  *
- * IO.of('Select * from "users"').chain(query);
- * // IO(Env, [DbRow])
+ *     return message;
+ *   });
+ *
+ * IO.of('Hello!').chain(log);
+ * // IO(Hello!)
  *
  * @param  {function} transform The function to chain
  * @return {IO<E, B>}
