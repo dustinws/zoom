@@ -17,38 +17,38 @@ Result[FL.ap] = Result.ap;
 Result.prototype[FL.ap] = Result.prototype.ap;
 
 
-// Success Applicative
-Result.Success[FL.of] = Result.Success.of;
-Result.Success.prototype[FL.of] = Result.Success.prototype.of;
+// Ok Applicative
+Result.Ok[FL.of] = Result.Ok.of;
+Result.Ok.prototype[FL.of] = Result.Ok.prototype.of;
 
-// Result.Success Chain
-Result.Success[FL.chain] = Result.Success.chain;
-Result.Success.prototype[FL.chain] = Result.Success.prototype.chain;
+// Result.Ok Chain
+Result.Ok[FL.chain] = Result.Ok.chain;
+Result.Ok.prototype[FL.chain] = Result.Ok.prototype.chain;
 
-// Result.Success Functor
-Result.Success[FL.map] = Result.Success.map;
-Result.Success.prototype[FL.map] = Result.Success.prototype.map;
+// Result.Ok Functor
+Result.Ok[FL.map] = Result.Ok.map;
+Result.Ok.prototype[FL.map] = Result.Ok.prototype.map;
 
-// Result.Success Apply
-Result.Success[FL.ap] = Result.Success.ap;
-Result.Success.prototype[FL.ap] = Result.Success.prototype.ap;
+// Result.Ok Apply
+Result.Ok[FL.ap] = Result.Ok.ap;
+Result.Ok.prototype[FL.ap] = Result.Ok.prototype.ap;
 
 
-// Failure Applicative
-Result.Failure[FL.of] = Result.Failure.of;
-Result.Failure.prototype[FL.of] = Result.Failure.prototype.of;
+// Err Applicative
+Result.Err[FL.of] = Result.Err.of;
+Result.Err.prototype[FL.of] = Result.Err.prototype.of;
 
-// Result.Failure Chain
-Result.Failure[FL.chain] = Result.Failure.chain;
-Result.Failure.prototype[FL.chain] = Result.Failure.prototype.chain;
+// Result.Err Chain
+Result.Err[FL.chain] = Result.Err.chain;
+Result.Err.prototype[FL.chain] = Result.Err.prototype.chain;
 
-// Result.Failure Functor
-Result.Failure[FL.map] = Result.Failure.map;
-Result.Failure.prototype[FL.map] = Result.Failure.prototype.map;
+// Result.Err Functor
+Result.Err[FL.map] = Result.Err.map;
+Result.Err.prototype[FL.map] = Result.Err.prototype.map;
 
-// Result.Failure Apply
-Result.Failure[FL.ap] = Result.Failure.ap;
-Result.Failure.prototype[FL.ap] = Result.Failure.prototype.ap;
+// Result.Err Apply
+Result.Err[FL.ap] = Result.Err.ap;
+Result.Err.prototype[FL.ap] = Result.Err.prototype.ap;
 
 
 export default Result;

@@ -10,8 +10,8 @@ import { union } from '../adt';
  * @description
  * `Result` is an abstraction around error handling that allows the user
  * to return their errors instead of throw them. `Result` is a super class
- * with two constructors, `Failure` and `Success`. The `Success` constructor
- * represents a successful operation, and the `Failure` constructor represents
+ * with two constructors, `Err` and `Ok`. The `Ok` constructor
+ * represents a successful operation, and the `Err` constructor represents
  * an unsuccessful operation with an embedded error message. You can chain
  * functions that return `Result` instances by using `.chain` or `.andThen`.
  *
@@ -22,37 +22,37 @@ import { union } from '../adt';
  * import { Result } from 'zoomjs';
  *
  * // Expose the constructors
- * const { Failure, Success } = Result;
+ * const { Err, Ok } = Result;
  *
  * const toInteger = (number) => {
  *   const integer = parseInt(number, 10);
  *
  *   if (isNaN(integer)) {
- *     return Failure('Not a number!');
+ *     return Err('Not a number!');
  *   }
  *
- *   return Success(number);
+ *   return Ok(number);
  * };
  *
- * toInteger('32') // Success(32)
- * toInteger(null) // Failure(Not a number!)
+ * toInteger('32') // Ok(32)
+ * toInteger(null) // Err(Not a number!)
  */
 const Result = union('Result', {
   /**
-   * @class Result.Success
+   * @class Result.Ok
    * @extends Result
    */
-  Success: ['value'],
+  Ok: ['value'],
 
   /**
-   * @class Result.Failure
+   * @class Result.Err
    * @extends Result
    */
-  Failure: ['value'],
+  Err: ['value'],
 });
 
-const Success = Result.Success;
-const Failure = Result.Failure;
+const Ok = Result.Ok;
+const Err = Result.Err;
 
 /*
  |------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ const Failure = Result.Failure;
  */
 
 /**
- * @description Lift a value into a successful 'Success' context.
+ * @description Lift a value into a successful 'Ok' context.
  * @memberof Result
  * @since 1.0.0-beta
  * @implements Applicative
@@ -69,55 +69,55 @@ const Failure = Result.Failure;
  * import { Result } from 'zoomjs';
  *
  * Result.of(1).toString();
- * // => 'Success(1)'
+ * // => 'Ok(1)'
  *
  * @param  {B} value The value to put in the Result
  * @return {Result<A, B>}
  */
 Result.of = function of(value) {
-  return Success(value);
+  return Ok(value);
 };
 
 /**
- * @description Lift a value into a successful 'Success' context.
+ * @description Lift a value into a successful 'Ok' context.
  * @memberof Result
  * @since 1.0.0-beta
  * @implements Applicative
  * @example
- * import { Success } from 'zoomjs/result';
+ * import { Ok } from 'zoomjs/result';
  *
- * Success.of(1).toString();
- * // => 'Success(1)'
+ * Ok.of(1).toString();
+ * // => 'Ok(1)'
  *
  * @param  {B} value The value to put in the Result
  * @return {Result<A, B>}
  */
-Success.of = function of(value) {
-  return Success(value);
+Ok.of = function of(value) {
+  return Ok(value);
 };
 
 /**
- * @description Lift a value into an unsuccessful 'Failure' context.
+ * @description Lift a value into an unsuccessful 'Err' context.
  * @memberof Result
  * @since 1.0.0-beta
  * @implements Applicative
  * @example
- * import { Failure } from 'zoomjs/result';
+ * import { Err } from 'zoomjs/result';
  *
- * Failure.of(1).toString();
- * // => 'Failure(1)'
+ * Err.of(1).toString();
+ * // => 'Err(1)'
  *
  * @param  {A} value The value to put in the Result
  * @return {Result<A, B>}
  */
-Failure.of = function of(value) {
-  return Failure(value);
+Err.of = function of(value) {
+  return Err(value);
 };
 
 /**
  * @description Apply a transformation to the Result if it is an instance
- * of "Success". Otherwise, ignore the transformation and return the instance.
- * This is how you can switch from a 'Success' to 'Failure' instance and stop
+ * of "Ok". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Ok' to 'Err' instance and stop
  * subsequent transformations from being applied. An alias for {@link Result.andThen}
  * @memberof Result
  * @static
@@ -127,21 +127,21 @@ Failure.of = function of(value) {
  * @see {@link Result.andThen}
  * @example
  * // chain Result a b :: (b -> Result a c) -> Result a c
- * import { chain, Failure, Success } from 'zoomjs/result';
+ * import { chain, Err, Ok } from 'zoomjs/result';
  *
  * // toUpper :: String -> Result String String
  * const toUpper = x =>
  *   typeof x !== 'string'
- *     ? Failure.of('toUpper() recieved a non string.')
- *     : Success.of(x.toUpperCase());
+ *     ? Err.of('toUpper() recieved a non string.')
+ *     : Ok.of(x.toUpperCase());
  *
- * // A "Success" will apply the next operation
- * chain(toUpper, Success.of('boom'));
- * // => Success(BOOM)
+ * // A "Ok" will apply the next operation
+ * chain(toUpper, Ok.of('boom'));
+ * // => Ok(BOOM)
  *
- * // A "Failure" will ignore the next operation
- * chain(toUpper, Failure.of('yea right'));
- * // => Failure(yea right)
+ * // A "Err" will ignore the next operation
+ * chain(toUpper, Err.of('yea right'));
+ * // => Err(yea right)
  *
  * @param  {function} transform The transformation to apply to the inner value
  * @param  {Result<A, B>} result The result instance.
@@ -149,14 +149,14 @@ Failure.of = function of(value) {
  */
 Result.chain = curry((transform, result) =>
   result.cata({
-    Failure: always(result),
-    Success: transform,
+    Err: always(result),
+    Ok: transform,
   }));
 
 /**
  * @description Apply a transformation to the Result if it is an instance
- * of "Success". Otherwise, ignore the transformation and return the instance.
- * This is how you can switch from a 'Success' to 'Failure' instance and stop
+ * of "Ok". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Ok' to 'Err' instance and stop
  * subsequent transformations from being applied. An alias for {@link Result.chain}
  * @memberof Result
  * @since 1.0.0-beta
@@ -165,21 +165,21 @@ Result.chain = curry((transform, result) =>
  * @see {@link Result.chain}
  * @example
  * // andThen Result a b :: (b -> Result a c) -> Result a c
- * import { andThen, Failure, Success } from 'zoomjs/result';
+ * import { andThen, Err, Ok } from 'zoomjs/result';
  *
  * // toUpper :: String -> Result String String
  * const toUpper = x =>
  *   typeof x !== 'string'
- *     ? Failure.of('toUpper() recieved a non string.')
- *     : Success.of(x.toUpperCase());
+ *     ? Err.of('toUpper() recieved a non string.')
+ *     : Ok.of(x.toUpperCase());
  *
- * // A "Success" will apply the next operation
- * andThen(toUpper, Success.of('boom'));
- * // => Success(BOOM)
+ * // A "Ok" will apply the next operation
+ * andThen(toUpper, Ok.of('boom'));
+ * // => Ok(BOOM)
  *
- * // A "Failure" will ignore the next operation
- * andThen(toUpper, Failure.of('yea right'));
- * // => Failure(yea right)
+ * // A "Err" will ignore the next operation
+ * andThen(toUpper, Err.of('yea right'));
+ * // => Err(yea right)
  *
  * @param  {function} transform The transformation to apply to the inner value
  * @param  {Result<A, B>} result The result instance.
@@ -200,18 +200,18 @@ Result.andThen = Result.chain;
  * @static
  * @example
  * // map Result a b :: (b -> c) -> Result a c
- * import { map, Failure, Success } from 'zoomjs/result';
+ * import { map, Err, Ok } from 'zoomjs/result';
  *
  * // toUpper :: String -> String
  * const toUpper = x => x.toUpperCase();
  *
- * // A "Success" will run the next operation
- * map(toUpper, Success.of('yay'));
- * // => Success('YAY!');
+ * // A "Ok" will run the next operation
+ * map(toUpper, Ok.of('yay'));
+ * // => Ok('YAY!');
  *
- * // A "Failure" will ignore the next operation
- * map(toUpper, Failure.of('nay!'));
- * // => Failure('nay!');
+ * // A "Err" will ignore the next operation
+ * map(toUpper, Err.of('nay!'));
+ * // => Err('nay!');
  *
  * @param  {function} transform The transformation to apply to the inner value
  * @param  {Result<A, B>} result The result instance.
@@ -234,18 +234,18 @@ Result.map = curry((transform, result) =>
  * @static
  * @example
  * // ap :: Apply (b -> c) -> Result a b -> Result a c
- * import { ap, Failure, Success } from 'zoomjs/result';
+ * import { ap, Err, Ok } from 'zoomjs/result';
  *
  * // toUpperE :: Result a (String -> String)
- * const toUpperE = Success(x => x.toUpperCase());
+ * const toUpperE = Ok(x => x.toUpperCase());
  *
- * // A "Success" will apply the next operation
- * ap(toUpperE, Success.of('boom'));
- * // => Success(BOOM)
+ * // A "Ok" will apply the next operation
+ * ap(toUpperE, Ok.of('boom'));
+ * // => Ok(BOOM)
  *
- * // A "Failure" will ignore the next operation
- * ap(toUpperE, Failure.of('yea right'));
- * // => Failure(yea right)
+ * // A "Err" will ignore the next operation
+ * ap(toUpperE, Err.of('yea right'));
+ * // => Err(yea right)
  *
  * @param  {Result<A, function>} left The result containing a function to run on the value
  * @param  {Result<A, B>} right The result containing a value
@@ -255,46 +255,46 @@ Result.ap = curry((left, right) =>
   Result.chain(Result.map(__, right), left));
 
 /**
- * @description Determine if an Result is an instance of Failure
+ * @description Determine if an Result is an instance of Err
  * @memberof Result
  * @since 1.0.0-beta
- * @function isFailure
+ * @function isErr
  * @static
  * @example
- * // isFailure :: Result a b -> Bool
- * import { isFailure, Failure, Success } from 'zoomjs/result';
+ * // isErr :: Result a b -> Bool
+ * import { isErr, Err, Ok } from 'zoomjs/result';
  *
- * isFailure(Failure.of());
+ * isErr(Err.of());
  * // => true
  *
- * isFailure(Success.of());
+ * isErr(Ok.of());
  * // => false
  *
  * @param  {Result<A, B>} result The result to query
  * @return {Boolean}
  */
-Result.isFailure = result => result instanceof Result.Failure;
+Result.isErr = result => result instanceof Result.Err;
 
 /**
- * @description Determine if an Result is an instance of Success
+ * @description Determine if an Result is an instance of Ok
  * @memberof Result
  * @since 1.0.0-beta
- * @function isSuccess
+ * @function isOk
  * @static
  * @example
- * // isSuccess :: Result a b -> Bool
- * import { isSuccess, Failure, Success } from 'zoomjs/result';
+ * // isOk :: Result a b -> Bool
+ * import { isOk, Err, Ok } from 'zoomjs/result';
  *
- * isSuccess(Success.of());
+ * isOk(Ok.of());
  * // => true
  *
- * isSuccess(Failure.of());
+ * isOk(Err.of());
  * // => false
  *
  * @param  {Result<A, B>} result The result to query
  * @return {Boolean}
  */
-Result.isSuccess = result => result instanceof Result.Success;
+Result.isOk = result => result instanceof Result.Ok;
 
 
 /*
@@ -305,8 +305,8 @@ Result.isSuccess = result => result instanceof Result.Success;
 
  /**
   * @description A function that accepts an object with two functions, one
-  * to run if the result is an instance of `Success`, and one to run if the
-  * result is an instance of `Failure`. The return value will be returned
+  * to run if the result is an instance of `Ok`, and one to run if the
+  * result is an instance of `Err`. The return value will be returned
   * directly, with no wrapper instance. This name is short for `catamorphism`.
   * An alias for {@link Result#caseOf}
   * @memberof Result
@@ -315,31 +315,31 @@ Result.isSuccess = result => result instanceof Result.Success;
   * @instance
   * @see {@link Result#caseOf}
   * @example
-  * // cata Result a b :: { Failure: a -> c, Success: b -> c } -> c
+  * // cata Result a b :: { Err: a -> c, Ok: b -> c } -> c
   * import { Result } from 'zoomjs';
   *
   * Result.of(1).cata({
-  *   Success(one) {
+  *   Ok(one) {
   *     // Do something with one
   *   },
   *
-  *   Failure(error) {
+  *   Err(error) {
   *     // Handle the error
   *   },
   * });
   *
   * @this Result
-  * @param  {object} cases `{ Failure: a -> c, Success: b -> c }`
-  * @param  {function} cases.Failure The `Failure` case
-  * @param  {function} cases.Success The `Success` case
+  * @param  {object} cases `{ Err: a -> c, Ok: b -> c }`
+  * @param  {function} cases.Err The `Err` case
+  * @param  {function} cases.Ok The `Ok` case
   * @return {Result<A, C>}
   */
 Result.prototype.cata = Result.prototype.cata;
 
  /**
   * @description A function that accepts an object with two functions, one
-  * to run if the result is an instance of `Success`, and one to run if the
-  * result is an instance of `Failure`. The return value will be returned
+  * to run if the result is an instance of `Ok`, and one to run if the
+  * result is an instance of `Err`. The return value will be returned
   * directly, with no wrapper instance. An alias for An alias for {@link Result#cata}
   * @memberof Result
   * @since 1.0.0-beta
@@ -347,75 +347,75 @@ Result.prototype.cata = Result.prototype.cata;
   * @method
   * @instance
   * @example
-  * // caseOf Result a b :: { Failure: a -> c, Success: b -> c } -> c
+  * // caseOf Result a b :: { Err: a -> c, Ok: b -> c } -> c
   * import { Result } from 'zoomjs';
   *
   * Result.of(1).caseOf({
-  *   Success(one) {
+  *   Ok(one) {
   *     // Do something with one
   *   },
   *
-  *   Failure(error) {
+  *   Err(error) {
   *     // Handle the error
   *   },
   * });
   *
   * @this Result
-  * @param  {object} cases `{ Failure: a -> c, Success: b -> c }`
-  * @param  {function} cases.Failure The `Failure` case
-  * @param  {function} cases.Success The `Success` case
+  * @param  {object} cases `{ Err: a -> c, Ok: b -> c }`
+  * @param  {function} cases.Err The `Err` case
+  * @param  {function} cases.Ok The `Ok` case
   * @return {Result<A, C>}
   */
 Result.prototype.caseOf = Result.prototype.cata;
 
 /**
- * @description Lift a value into a successful 'Success' context.
- * @memberof Result.Success
+ * @description Lift a value into a successful 'Ok' context.
+ * @memberof Result.Ok
  * @since 1.0.0-beta
  * @implements Applicative
  * @method of
  * @instance
  * @example
  * // of Result a b :: c -> Result d c
- * import { Success } from 'zoomjs/result';
+ * import { Ok } from 'zoomjs/result';
  *
- * Success.of(1);
- * // => Success(1)
+ * Ok.of(1);
+ * // => Ok(1)
  *
  * @this Result
  * @param  {B} value The value to put in the Result
  * @return {Result<A, B>}
  */
-Success.prototype.of = function of(value) {
-  return Success.of(value);
+Ok.prototype.of = function of(value) {
+  return Ok.of(value);
 };
 
 /**
- * @description Lift a value into an unsuccessful 'Failure' context.
- * @memberof Result.Failure
+ * @description Lift a value into an unsuccessful 'Err' context.
+ * @memberof Result.Err
  * @since 1.0.0-beta
  * @implements Applicative
  * @method of
  * @instance
  * @example
  * // of Result a b :: c -> Result c d
- * import { Failure } from 'zoomjs/result';
+ * import { Err } from 'zoomjs/result';
  *
- * Failure.of(1);
- * // => Failure(1)
+ * Err.of(1);
+ * // => Err(1)
  *
  * @this Result
  * @param  {A} value The value to put in the Result
  * @return {Result<A, B>}
  */
-Failure.prototype.of = function of(value) {
-  return Failure.of(value);
+Err.prototype.of = function of(value) {
+  return Err.of(value);
 };
 
 /**
  * @description Apply a transformation to the Result if it is an instance
- * of "Success". Otherwise, ignore the transformation and return the instance.
- * This is how you can switch from a 'Success' to 'Failure' instance and stop
+ * of "Ok". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Ok' to 'Err' instance and stop
  * subsequent transformations from being applied. An alias for {@link Result#andThen}
  *
  * @memberof Result
@@ -426,21 +426,21 @@ Failure.prototype.of = function of(value) {
  * @see {@link Result#andThen}
  * @example
  * // chain Result a b :: (b -> Result a c) -> Result a c
- * import { Failure, Success } from 'zoomjs/result';
+ * import { Err, Ok } from 'zoomjs/result';
  *
  * // toUpper :: String -> Result String String
  * const toUpper = x =>
  *   typeof x !== 'string'
- *     ? Failure.of('toUpper() recieved a non string.')
- *     : Success.of(x.toUpperCase());
+ *     ? Err.of('toUpper() recieved a non string.')
+ *     : Ok.of(x.toUpperCase());
  *
- * // A "Success" will apply the next operation
- * Success.of('boom').chain(toUpper);
- * // => Success(BOOM)
+ * // A "Ok" will apply the next operation
+ * Ok.of('boom').chain(toUpper);
+ * // => Ok(BOOM)
  *
- * // A "Failure" will ignore the next operation
- * Failure.of('yea right').chain(toUpper);
- * // => Failure(yea right)
+ * // A "Err" will ignore the next operation
+ * Err.of('yea right').chain(toUpper);
+ * // => Err(yea right)
  *
  * @this Result
  * @param  {function} transform The transformation to apply to the inner value
@@ -452,8 +452,8 @@ Result.prototype.chain = function chain(transform) {
 
 /**
  * @description Apply a transformation to the Result if it is an instance
- * of "Success". Otherwise, ignore the transformation and return the instance.
- * This is how you can switch from a 'Success' to 'Failure' instance and stop
+ * of "Ok". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Ok' to 'Err' instance and stop
  * subsequent transformations from being applied. An alias for {@link Result#chain}
  *
  * @memberof Result
@@ -463,21 +463,21 @@ Result.prototype.chain = function chain(transform) {
  * @see {@link Result#chain}
  * @example
  * // andThen Result a b :: (b -> Result a c) -> Result a c
- * import { Failure, Success } from 'zoomjs/result';
+ * import { Err, Ok } from 'zoomjs/result';
  *
  * // toUpper :: String -> Result String String
  * const toUpper = x =>
  *   typeof x !== 'string'
- *     ? Failure.of('toUpper() recieved a non string.')
- *     : Success.of(x.toUpperCase());
+ *     ? Err.of('toUpper() recieved a non string.')
+ *     : Ok.of(x.toUpperCase());
  *
- * // A "Success" will apply the next operation
- * Success.of('boom').andThen(toUpper);
- * // => Success(BOOM)
+ * // A "Ok" will apply the next operation
+ * Ok.of('boom').andThen(toUpper);
+ * // => Ok(BOOM)
  *
- * // A "Failure" will ignore the next operation
- * Failure.of('yea right').andThen(toUpper);
- * // => Failure(yea right)
+ * // A "Err" will ignore the next operation
+ * Err.of('yea right').andThen(toUpper);
+ * // => Err(yea right)
  *
  * @this Result
  * @param  {function} transform The transformation to apply to the inner value
@@ -501,18 +501,18 @@ Result.prototype.andThen = function andThen(transform) {
  * @instance
  * @example
  * // map Result a b :: (b -> c) -> Result a c
- * import { Failure, Success } from 'zoomjs/result';
+ * import { Err, Ok } from 'zoomjs/result';
  *
  * // toUpper :: String -> String
  * const toUpper = x => x.toUpperCase();
  *
- * // A "Success" will run the next operation
- * Success.of('yay').map(toUpper);
- * // => Success('YAY!');
+ * // A "Ok" will run the next operation
+ * Ok.of('yay').map(toUpper);
+ * // => Ok('YAY!');
  *
- * // A "Failure" will ignore the next operation
- * Failure.of('nay!').map(toUpper);
- * // => Failure('nay!');
+ * // A "Err" will ignore the next operation
+ * Err.of('nay!').map(toUpper);
+ * // => Err('nay!');
  *
  * @this Result
  * @param  {function} transform The transformation to apply to the inner value
@@ -536,18 +536,18 @@ Result.prototype.map = function map(transform) {
  * @implements Apply
  * @example
  * // ap Result a b :: Apply (b -> c) -> Result a c
- * import { ap, Failure, Success } from 'zoomjs';
+ * import { ap, Err, Ok } from 'zoomjs';
  *
  * // toUpperE :: Result a (String -> String)
- * const toUpperE = Success(x => x.toUpperCase());
+ * const toUpperE = Ok(x => x.toUpperCase());
  *
- * // A "Success" will apply the next operation
- * Success.of('boom').ap(toUpperE);
- * // => Success(BOOM)
+ * // A "Ok" will apply the next operation
+ * Ok.of('boom').ap(toUpperE);
+ * // => Ok(BOOM)
  *
- * // A "Failure" will ignore the next operation
- * Failure.of('yea right').ap(toUpperE);
- * // => Failure(yea right)
+ * // A "Err" will ignore the next operation
+ * Err.of('yea right').ap(toUpperE);
+ * // => Err(yea right)
  *
  * @this Result
  * @param  {Result<A, function>} apply An result containing a function to run on the value
@@ -558,43 +558,43 @@ Result.prototype.ap = function ap(apply) {
 };
 
 /**
- * @description Determine if an Result is an instance of Failure
+ * @description Determine if an Result is an instance of Err
  * @memberof Result
  * @since 1.0.0-beta
  * @method
  * @instance
  * @example
- * // isFailure Result a b :: c -> Bool
- * import { Failure, Success } from 'zoomjs/result';
+ * // isErr Result a b :: c -> Bool
+ * import { Err, Ok } from 'zoomjs/result';
  *
- * Failure.of(1).isFailure(); // true
- * Success.of(1).isFailure(); // false
+ * Err.of(1).isErr(); // true
+ * Ok.of(1).isErr(); // false
  *
  * @this Result
  * @return {Boolean}
  */
-Result.prototype.isFailure = function isFailure() {
-  return Result.isFailure(this);
+Result.prototype.isErr = function isErr() {
+  return Result.isErr(this);
 };
 
 /**
- * @description Determine if an Result is an instance of Success
+ * @description Determine if an Result is an instance of Ok
  * @memberof Result
  * @since 1.0.0-beta
  * @method
  * @instance
  * @example
- * // isSuccess Result a b :: c -> Bool
- * import { Failure, Success } from 'zoomjs/result';
+ * // isOk Result a b :: c -> Bool
+ * import { Err, Ok } from 'zoomjs/result';
  *
- * Success.of(1).isSuccess(); // true
- * Failure.of(1).isSuccess(); // false
+ * Ok.of(1).isOk(); // true
+ * Err.of(1).isOk(); // false
  *
  * @this Result
  * @return {Boolean}
  */
-Result.prototype.isSuccess = function isSuccess() {
-  return Result.isSuccess(this);
+Result.prototype.isOk = function isOk() {
+  return Result.isOk(this);
 };
 
 export default Result;
