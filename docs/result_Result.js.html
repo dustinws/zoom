@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>either/Either.js - Documentation</title>
+    <title>result/Result.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">either/Either.js</h1>
+    <h1 class="page-title">result/Result.js</h1>
     
 
     
@@ -44,66 +44,54 @@ import compose from 'ramda/src/compose';
 import { union } from '../adt';
 
 /**
- * @class Either
+ * @class Result
  * @abstract
  * @description
- * `Either` is an abstraction around error handling that allows the user
- * to return their errors instead of throw them. `Either` is a super class
- * with two constructors, `Left` and `Right`. The `Right` constructor
- * represents a successful operation, and the `Left` constructor represents
+ * `Result` is an abstraction around error handling that allows the user
+ * to return their errors instead of throw them. `Result` is a super class
+ * with two constructors, `Failure` and `Success`. The `Success` constructor
+ * represents a successful operation, and the `Failure` constructor represents
  * an unsuccessful operation with an embedded error message. You can chain
- * functions that return `Either` instances by using `.chain` or `.andThen`.
+ * functions that return `Result` instances by using `.chain` or `.andThen`.
  *
  * ---
  *  #### Fantasy Land Implementations
  *  `Applicative`, `Functor`, `Apply`, `Chain`, `Monad`
  * @example
- * import { Either } from 'zoomjs';
+ * import { Result } from 'zoomjs';
  *
  * // Expose the constructors
- * const { Left, Right } = Either;
+ * const { Failure, Success } = Result;
  *
- * // `Either.try` is a convenience function that wraps functions
- * // that can potentially throw in an Either.
- * const parseJson = Either.try(JSON.parse);
+ * const toInteger = (number) => {
+ *   const integer = parseInt(number, 10);
  *
- * // Ensure a user is an admin before going any further
- * const enforeAdminAccess = (user) => {
- *   if (!user.admin) {
- *     return Left('Must be an admin to continue');
+ *   if (isNaN(integer)) {
+ *     return Failure('Not a number!');
  *   }
  *
- *   return Right(user);
+ *   return Success(number);
  * };
  *
- * parseJson('{ "admin": false }')
- *   .andThen(enforceAdminAccess)
- *   .cata({
- *     Right(adminUser) {
- *       // Do something with the admin
- *     },
- *
- *     Left(error) {
- *       // Handle the error
- *     },
- *   });
+ * toInteger('32') // Success(32)
+ * toInteger(null) // Failure(Not a number!)
  */
-const Either = union('Either', {
+const Result = union('Result', {
   /**
-   * @class Either.Right
-   * @extends Either
+   * @class Result.Success
+   * @extends Result
    */
-  Right: ['value'],
+  Success: ['value'],
 
   /**
-   * @class Either.Left
-   * @extends Either
+   * @class Result.Failure
+   * @extends Result
    */
-  Left: ['value'],
+  Failure: ['value'],
 });
 
-const Right = Either.Right;
-const Left = Either.Left;
+const Success = Result.Success;
+const Failure = Result.Failure;
 
 /*
  |------------------------------------------------------------------------------
@@ -112,306 +100,240 @@ const Left = Either.Left;
  */
 
 /**
- * @description Lift a value into a successful 'Right' context.
- * @memberof Either
+ * @description Lift a value into a successful 'Success' context.
+ * @memberof Result
  * @since 1.0.0-beta
  * @implements Applicative
  * @example
- * import { Either } from 'zoomjs';
+ * import { Result } from 'zoomjs';
  *
- * Either.of(1).toString();
- * // => 'Right(1)'
+ * Result.of(1).toString();
+ * // => 'Success(1)'
  *
- * @param  {B} value The value to put in the Either
- * @return {Either&lt;A, B>}
+ * @param  {B} value The value to put in the Result
+ * @return {Result&lt;A, B>}
  */
-Either.of = function of(value) {
-  return Right(value);
+Result.of = function of(value) {
+  return Success(value);
 };
 
 /**
- * @description Lift a value into a successful 'Right' context.
- * @memberof Either
+ * @description Lift a value into a successful 'Success' context.
+ * @memberof Result
  * @since 1.0.0-beta
  * @implements Applicative
  * @example
- * import { Right } from 'zoomjs/either';
+ * import { Success } from 'zoomjs/result';
  *
- * Right.of(1).toString();
- * // => 'Right(1)'
+ * Success.of(1).toString();
+ * // => 'Success(1)'
  *
- * @param  {B} value The value to put in the Either
- * @return {Either&lt;A, B>}
+ * @param  {B} value The value to put in the Result
+ * @return {Result&lt;A, B>}
  */
-Right.of = function of(value) {
-  return Right(value);
+Success.of = function of(value) {
+  return Success(value);
 };
 
 /**
- * @description Lift a value into an unsuccessful 'Left' context.
- * @memberof Either
+ * @description Lift a value into an unsuccessful 'Failure' context.
+ * @memberof Result
  * @since 1.0.0-beta
  * @implements Applicative
  * @example
- * import { Left } from 'zoomjs/either';
+ * import { Failure } from 'zoomjs/result';
  *
- * Left.of(1).toString();
- * // => 'Left(1)'
+ * Failure.of(1).toString();
+ * // => 'Failure(1)'
  *
- * @param  {A} value The value to put in the Either
- * @return {Either&lt;A, B>}
+ * @param  {A} value The value to put in the Result
+ * @return {Result&lt;A, B>}
  */
-Left.of = function of(value) {
-  return Left(value);
+Failure.of = function of(value) {
+  return Failure(value);
 };
 
 /**
- * @description Apply a transformation to the Either if it is an instance
- * of "Right". Otherwise, ignore the transformation and return the instance.
- * This is how you can switch from a 'Right' to 'Left' instance and stop
- * subsequent transformations from being applied. An alias for {@link Either.andThen}
- * @memberof Either
+ * @description Apply a transformation to the Result if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Success' to 'Failure' instance and stop
+ * subsequent transformations from being applied. An alias for {@link Result.andThen}
+ * @memberof Result
  * @static
  * @function
  * @since 1.0.0-beta
  * @implements Chain
- * @see {@link Either.andThen}
+ * @see {@link Result.andThen}
  * @example
- * // chain Either a b :: (b -> Either a c) -> Either a c
- * import { chain, Left, Right } from 'zoomjs/either';
+ * // chain Result a b :: (b -> Result a c) -> Result a c
+ * import { chain, Failure, Success } from 'zoomjs/result';
  *
- * // toUpper :: String -> Either String String
+ * // toUpper :: String -> Result String String
  * const toUpper = x =>
  *   typeof x !== 'string'
- *     ? Left.of('toUpper() recieved a non string.')
- *     : Right.of(x.toUpperCase());
+ *     ? Failure.of('toUpper() recieved a non string.')
+ *     : Success.of(x.toUpperCase());
  *
- * // A "Right" will apply the next operation
- * chain(toUpper, Right.of('boom'));
- * // => Right(BOOM)
+ * // A "Success" will apply the next operation
+ * chain(toUpper, Success.of('boom'));
+ * // => Success(BOOM)
  *
- * // A "Left" will ignore the next operation
- * chain(toUpper, Left.of('yea right'));
- * // => Left(yea right)
+ * // A "Failure" will ignore the next operation
+ * chain(toUpper, Failure.of('yea right'));
+ * // => Failure(yea right)
  *
  * @param  {function} transform The transformation to apply to the inner value
- * @param  {Either&lt;A, B>} either The either instance.
- * @return {Either&lt;A, C>}
+ * @param  {Result&lt;A, B>} result The result instance.
+ * @return {Result&lt;A, C>}
  */
-Either.chain = curry((transform, either) =>
-  either.cata({
-    Left: always(either),
-    Right: transform,
+Result.chain = curry((transform, result) =>
+  result.cata({
+    Failure: always(result),
+    Success: transform,
   }));
 
 /**
- * @description Apply a transformation to the Either if it is an instance
- * of "Right". Otherwise, ignore the transformation and return the instance.
- * This is how you can switch from a 'Right' to 'Left' instance and stop
- * subsequent transformations from being applied. An alias for {@link Either.chain}
- * @memberof Either
+ * @description Apply a transformation to the Result if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Success' to 'Failure' instance and stop
+ * subsequent transformations from being applied. An alias for {@link Result.chain}
+ * @memberof Result
  * @since 1.0.0-beta
  * @function andThen
  * @static
- * @see {@link Either.chain}
+ * @see {@link Result.chain}
  * @example
- * // andThen Either a b :: (b -> Either a c) -> Either a c
- * import { andThen, Left, Right } from 'zoomjs/either';
+ * // andThen Result a b :: (b -> Result a c) -> Result a c
+ * import { andThen, Failure, Success } from 'zoomjs/result';
  *
- * // toUpper :: String -> Either String String
+ * // toUpper :: String -> Result String String
  * const toUpper = x =>
  *   typeof x !== 'string'
- *     ? Left.of('toUpper() recieved a non string.')
- *     : Right.of(x.toUpperCase());
+ *     ? Failure.of('toUpper() recieved a non string.')
+ *     : Success.of(x.toUpperCase());
  *
- * // A "Right" will apply the next operation
- * andThen(toUpper, Right.of('boom'));
- * // => Right(BOOM)
+ * // A "Success" will apply the next operation
+ * andThen(toUpper, Success.of('boom'));
+ * // => Success(BOOM)
  *
- * // A "Left" will ignore the next operation
- * andThen(toUpper, Left.of('yea right'));
- * // => Left(yea right)
+ * // A "Failure" will ignore the next operation
+ * andThen(toUpper, Failure.of('yea right'));
+ * // => Failure(yea right)
  *
  * @param  {function} transform The transformation to apply to the inner value
- * @param  {Either&lt;A, B>} either The either instance.
- * @return {Either&lt;A, C>}
+ * @param  {Result&lt;A, B>} result The result instance.
+ * @return {Result&lt;A, C>}
  */
-Either.andThen = Either.chain;
+Result.andThen = Result.chain;
 
 /**
- * @description `map` is very similar to {@link Either.andThen} and
- * {@link Either.chain} in that it only runs the function if the
- * either is an instance of `Just`. The main difference is that {@link Either.andThen}
- * and {@link Either.chain} expect the functions you give them to return
- * new `Either` instances, and map let's you use plain old functions.
- * @memberof Either
+ * @description `map` is very similar to {@link Result.andThen} and
+ * {@link Result.chain} in that it only runs the function if the
+ * result is an instance of `Just`. The main difference is that {@link Result.andThen}
+ * and {@link Result.chain} expect the functions you give them to return
+ * new `Result` instances, and map let's you use plain old functions.
+ * @memberof Result
  * @since 1.0.0-beta
  * @implements Functor
  * @function map
  * @static
  * @example
- * // map Either a b :: (b -> c) -> Either a c
- * import { map, Left, Right } from 'zoomjs/either';
+ * // map Result a b :: (b -> c) -> Result a c
+ * import { map, Failure, Success } from 'zoomjs/result';
  *
  * // toUpper :: String -> String
  * const toUpper = x => x.toUpperCase();
  *
- * // A "Right" will run the next operation
- * map(toUpper, Right.of('yay'));
- * // => Right('YAY!');
+ * // A "Success" will run the next operation
+ * map(toUpper, Success.of('yay'));
+ * // => Success('YAY!');
  *
- * // A "Left" will ignore the next operation
- * map(toUpper, Left.of('nay!'));
- * // => Left('nay!');
+ * // A "Failure" will ignore the next operation
+ * map(toUpper, Failure.of('nay!'));
+ * // => Failure('nay!');
  *
  * @param  {function} transform The transformation to apply to the inner value
- * @param  {Either&lt;A, B>} either The either instance.
- * @return {Either&lt;A, C>}
+ * @param  {Result&lt;A, B>} result The result instance.
+ * @return {Result&lt;A, C>}
  */
-Either.map = curry((transform, either) =>
-  Either.chain(compose(Either.of, transform), either));
+Result.map = curry((transform, result) =>
+  Result.chain(compose(Result.of, transform), result));
 
 /**
  * @description
  * `ap` is just like `map`, allowing a user to use plain old functions to
- * transform values hidden away in `Either`s. The only difference is that
- * instead of giving it the function, you give it an `Either` of the function.
+ * transform values hidden away in `Result`s. The only difference is that
+ * instead of giving it the function, you give it an `Result` of the function.
  * This is known as the `Apply` type in fantasy land JS.
  *
- * @memberof Either
+ * @memberof Result
  * @since 1.0.0-beta
  * @implements Apply
  * @function ap
  * @static
  * @example
- * // ap :: Apply (b -> c) -> Either a b -> Either a c
- * import { ap, Left, Right } from 'zoomjs/either';
+ * // ap :: Apply (b -> c) -> Result a b -> Result a c
+ * import { ap, Failure, Success } from 'zoomjs/result';
  *
- * // toUpperE :: Either a (String -> String)
- * const toUpperE = Right(x => x.toUpperCase());
+ * // toUpperE :: Result a (String -> String)
+ * const toUpperE = Success(x => x.toUpperCase());
  *
- * // A "Right" will apply the next operation
- * ap(toUpperE, Right.of('boom'));
- * // => Right(BOOM)
+ * // A "Success" will apply the next operation
+ * ap(toUpperE, Success.of('boom'));
+ * // => Success(BOOM)
  *
- * // A "Left" will ignore the next operation
- * ap(toUpperE, Left.of('yea right'));
- * // => Left(yea right)
+ * // A "Failure" will ignore the next operation
+ * ap(toUpperE, Failure.of('yea right'));
+ * // => Failure(yea right)
  *
- * @param  {Either&lt;A, function>} left The either containing a function to run on the value
- * @param  {Either&lt;A, B>} right The either containing a value
- * @return {Either&lt;A, C>}
+ * @param  {Result&lt;A, function>} left The result containing a function to run on the value
+ * @param  {Result&lt;A, B>} right The result containing a value
+ * @return {Result&lt;A, C>}
  */
-Either.ap = curry((left, right) =>
-  Either.chain(Either.map(__, right), left));
+Result.ap = curry((left, right) =>
+  Result.chain(Result.map(__, right), left));
 
 /**
- * @description Determine if an Either is an instance of Left
- * @memberof Either
+ * @description Determine if an Result is an instance of Failure
+ * @memberof Result
  * @since 1.0.0-beta
- * @function isLeft
+ * @function isFailure
  * @static
  * @example
- * // isLeft :: Either a b -> Bool
- * import { isLeft, Left, Right } from 'zoomjs/either';
+ * // isFailure :: Result a b -> Bool
+ * import { isFailure, Failure, Success } from 'zoomjs/result';
  *
- * isLeft(Left.of());
+ * isFailure(Failure.of());
  * // => true
  *
- * isLeft(Right.of());
+ * isFailure(Success.of());
  * // => false
  *
- * @param  {Either&lt;A, B>} either The either to query
+ * @param  {Result&lt;A, B>} result The result to query
  * @return {Boolean}
  */
-Either.isLeft = either => either instanceof Either.Left;
+Result.isFailure = result => result instanceof Result.Failure;
 
 /**
- * @description Determine if an Either is an instance of Right
- * @memberof Either
+ * @description Determine if an Result is an instance of Success
+ * @memberof Result
  * @since 1.0.0-beta
- * @function isRight
+ * @function isSuccess
  * @static
  * @example
- * // isRight :: Either a b -> Bool
- * import { isRight, Left, Right } from 'zoomjs/either';
+ * // isSuccess :: Result a b -> Bool
+ * import { isSuccess, Failure, Success } from 'zoomjs/result';
  *
- * isRight(Right.of());
+ * isSuccess(Success.of());
  * // => true
  *
- * isRight(Left.of());
+ * isSuccess(Failure.of());
  * // => false
  *
- * @param  {Either&lt;A, B>} either The either to query
+ * @param  {Result&lt;A, B>} result The result to query
  * @return {Boolean}
  */
-Either.isRight = either => either instanceof Either.Right;
-
-/**
- * @description
- * A helper function for wrapping a potential `throwable`. Returns a new
- * function that will wrap the original one in a try / catch block
- * and return a `Right` or `Left` for successful or unsuccessful values,
- * respectively.
- * @since 1.0.0-beta
- * @deprecated
- * This will be removed in v3 in favor of {@link Either.lift}
- * @memberof Either
- * @function try
- * @static
- * @example
- * import { Either } from 'zoomjs';
- *
- * const parse = Either.try(JSON.parse);
- *
- * parse('{ "foo": "bar" }');
- * // => Right({ foo: 'bar' })
- *
- * parse('wuT is json?');
- * // => Left(SyntaxError)
- *
- * @param  {function} func
- * @return {function}
- */
-Either.try = func => (...args) => {
-  try {
-    return Either.Right(func(...args));
-  } catch (error) {
-    return Either.Left(error);
-  }
-};
-
-/**
- * @description
- * A helper function for wrapping a potential `throwable`. Returns a new
- * function that will wrap the original one in a try / catch block
- * and return a `Right` or `Left` for successful or unsuccessful values,
- * respectively.
- * @since 1.0.0-beta
- * @memberof Either
- * @function lift
- * @static
- * @example
- * import { lift } from 'zoomjs/either';
- *
- * const parse = lift(JSON.parse);
- *
- * parse('{ "foo": "bar" }');
- * // => Right({ foo: 'bar' })
- *
- * parse('wuT is json?');
- * // => Left(SyntaxError)
- *
- * @param  {function} func
- * @return {function}
- */
-Either.lift = func => (...args) => {
-  try {
-    return Either.Right(func(...args));
-  } catch (error) {
-    return Either.Left(error);
-  }
-};
+Result.isSuccess = result => result instanceof Result.Success;
 
 
 /*
@@ -422,299 +344,299 @@ Either.lift = func => (...args) => {
 
  /**
   * @description A function that accepts an object with two functions, one
-  * to run if the either is an instance of `Right`, and one to run if the
-  * either is an instance of `Left`. The return value will be returned
+  * to run if the result is an instance of `Success`, and one to run if the
+  * result is an instance of `Failure`. The return value will be returned
   * directly, with no wrapper instance. This name is short for `catamorphism`.
-  * An alias for {@link Either#caseOf}
-  * @memberof Either
+  * An alias for {@link Result#caseOf}
+  * @memberof Result
   * @since 1.0.0-beta
   * @method
   * @instance
-  * @see {@link Either#caseOf}
+  * @see {@link Result#caseOf}
   * @example
-  * // cata Either a b :: { Left: a -> c, Right: b -> c } -> c
-  * import { Either } from 'zoomjs';
+  * // cata Result a b :: { Failure: a -> c, Success: b -> c } -> c
+  * import { Result } from 'zoomjs';
   *
-  * Either.of(1).cata({
-  *   Right(one) {
+  * Result.of(1).cata({
+  *   Success(one) {
   *     // Do something with one
   *   },
   *
-  *   Left(error) {
+  *   Failure(error) {
   *     // Handle the error
   *   },
   * });
   *
-  * @this Either
-  * @param  {object} cases `{ Left: a -> c, Right: b -> c }`
-  * @param  {function} cases.Left The `Left` case
-  * @param  {function} cases.Right The `Right` case
-  * @return {Either&lt;A, C>}
+  * @this Result
+  * @param  {object} cases `{ Failure: a -> c, Success: b -> c }`
+  * @param  {function} cases.Failure The `Failure` case
+  * @param  {function} cases.Success The `Success` case
+  * @return {Result&lt;A, C>}
   */
-Either.prototype.cata = Either.prototype.cata;
+Result.prototype.cata = Result.prototype.cata;
 
  /**
   * @description A function that accepts an object with two functions, one
-  * to run if the either is an instance of `Right`, and one to run if the
-  * either is an instance of `Left`. The return value will be returned
-  * directly, with no wrapper instance. An alias for An alias for {@link Either#cata}
-  * @memberof Either
+  * to run if the result is an instance of `Success`, and one to run if the
+  * result is an instance of `Failure`. The return value will be returned
+  * directly, with no wrapper instance. An alias for An alias for {@link Result#cata}
+  * @memberof Result
   * @since 1.0.0-beta
-  * @see {@link Either#cata}
+  * @see {@link Result#cata}
   * @method
   * @instance
   * @example
-  * // caseOf Either a b :: { Left: a -> c, Right: b -> c } -> c
-  * import { Either } from 'zoomjs';
+  * // caseOf Result a b :: { Failure: a -> c, Success: b -> c } -> c
+  * import { Result } from 'zoomjs';
   *
-  * Either.of(1).caseOf({
-  *   Right(one) {
+  * Result.of(1).caseOf({
+  *   Success(one) {
   *     // Do something with one
   *   },
   *
-  *   Left(error) {
+  *   Failure(error) {
   *     // Handle the error
   *   },
   * });
   *
-  * @this Either
-  * @param  {object} cases `{ Left: a -> c, Right: b -> c }`
-  * @param  {function} cases.Left The `Left` case
-  * @param  {function} cases.Right The `Right` case
-  * @return {Either&lt;A, C>}
+  * @this Result
+  * @param  {object} cases `{ Failure: a -> c, Success: b -> c }`
+  * @param  {function} cases.Failure The `Failure` case
+  * @param  {function} cases.Success The `Success` case
+  * @return {Result&lt;A, C>}
   */
-Either.prototype.caseOf = Either.prototype.cata;
+Result.prototype.caseOf = Result.prototype.cata;
 
 /**
- * @description Lift a value into a successful 'Right' context.
- * @memberof Either.Right
+ * @description Lift a value into a successful 'Success' context.
+ * @memberof Result.Success
  * @since 1.0.0-beta
  * @implements Applicative
  * @method of
  * @instance
  * @example
- * // of Either a b :: c -> Either d c
- * import { Right } from 'zoomjs/either';
+ * // of Result a b :: c -> Result d c
+ * import { Success } from 'zoomjs/result';
  *
- * Right.of(1);
- * // => Right(1)
+ * Success.of(1);
+ * // => Success(1)
  *
- * @this Either
- * @param  {B} value The value to put in the Either
- * @return {Either&lt;A, B>}
+ * @this Result
+ * @param  {B} value The value to put in the Result
+ * @return {Result&lt;A, B>}
  */
-Right.prototype.of = function of(value) {
-  return Right.of(value);
+Success.prototype.of = function of(value) {
+  return Success.of(value);
 };
 
 /**
- * @description Lift a value into an unsuccessful 'Left' context.
- * @memberof Either.Left
+ * @description Lift a value into an unsuccessful 'Failure' context.
+ * @memberof Result.Failure
  * @since 1.0.0-beta
  * @implements Applicative
  * @method of
  * @instance
  * @example
- * // of Either a b :: c -> Either c d
- * import { Left } from 'zoomjs/either';
+ * // of Result a b :: c -> Result c d
+ * import { Failure } from 'zoomjs/result';
  *
- * Left.of(1);
- * // => Left(1)
+ * Failure.of(1);
+ * // => Failure(1)
  *
- * @this Either
- * @param  {A} value The value to put in the Either
- * @return {Either&lt;A, B>}
+ * @this Result
+ * @param  {A} value The value to put in the Result
+ * @return {Result&lt;A, B>}
  */
-Left.prototype.of = function of(value) {
-  return Left.of(value);
+Failure.prototype.of = function of(value) {
+  return Failure.of(value);
 };
 
 /**
- * @description Apply a transformation to the Either if it is an instance
- * of "Right". Otherwise, ignore the transformation and return the instance.
- * This is how you can switch from a 'Right' to 'Left' instance and stop
- * subsequent transformations from being applied. An alias for {@link Either#andThen}
+ * @description Apply a transformation to the Result if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Success' to 'Failure' instance and stop
+ * subsequent transformations from being applied. An alias for {@link Result#andThen}
  *
- * @memberof Either
+ * @memberof Result
  * @since 1.0.0-beta
  * @implements Chain
  * @method
  * @instance
- * @see {@link Either#andThen}
+ * @see {@link Result#andThen}
  * @example
- * // chain Either a b :: (b -> Either a c) -> Either a c
- * import { Left, Right } from 'zoomjs/either';
+ * // chain Result a b :: (b -> Result a c) -> Result a c
+ * import { Failure, Success } from 'zoomjs/result';
  *
- * // toUpper :: String -> Either String String
+ * // toUpper :: String -> Result String String
  * const toUpper = x =>
  *   typeof x !== 'string'
- *     ? Left.of('toUpper() recieved a non string.')
- *     : Right.of(x.toUpperCase());
+ *     ? Failure.of('toUpper() recieved a non string.')
+ *     : Success.of(x.toUpperCase());
  *
- * // A "Right" will apply the next operation
- * Right.of('boom').chain(toUpper);
- * // => Right(BOOM)
+ * // A "Success" will apply the next operation
+ * Success.of('boom').chain(toUpper);
+ * // => Success(BOOM)
  *
- * // A "Left" will ignore the next operation
- * Left.of('yea right').chain(toUpper);
- * // => Left(yea right)
+ * // A "Failure" will ignore the next operation
+ * Failure.of('yea right').chain(toUpper);
+ * // => Failure(yea right)
  *
- * @this Either
+ * @this Result
  * @param  {function} transform The transformation to apply to the inner value
- * @return {Either&lt;A, C>}
+ * @return {Result&lt;A, C>}
  */
-Either.prototype.chain = function chain(transform) {
-  return Either.chain(transform, this);
+Result.prototype.chain = function chain(transform) {
+  return Result.chain(transform, this);
 };
 
 /**
- * @description Apply a transformation to the Either if it is an instance
- * of "Right". Otherwise, ignore the transformation and return the instance.
- * This is how you can switch from a 'Right' to 'Left' instance and stop
- * subsequent transformations from being applied. An alias for {@link Either#chain}
+ * @description Apply a transformation to the Result if it is an instance
+ * of "Success". Otherwise, ignore the transformation and return the instance.
+ * This is how you can switch from a 'Success' to 'Failure' instance and stop
+ * subsequent transformations from being applied. An alias for {@link Result#chain}
  *
- * @memberof Either
+ * @memberof Result
  * @since 1.0.0-beta
  * @method
  * @instance
- * @see {@link Either#chain}
+ * @see {@link Result#chain}
  * @example
- * // andThen Either a b :: (b -> Either a c) -> Either a c
- * import { Left, Right } from 'zoomjs/either';
+ * // andThen Result a b :: (b -> Result a c) -> Result a c
+ * import { Failure, Success } from 'zoomjs/result';
  *
- * // toUpper :: String -> Either String String
+ * // toUpper :: String -> Result String String
  * const toUpper = x =>
  *   typeof x !== 'string'
- *     ? Left.of('toUpper() recieved a non string.')
- *     : Right.of(x.toUpperCase());
+ *     ? Failure.of('toUpper() recieved a non string.')
+ *     : Success.of(x.toUpperCase());
  *
- * // A "Right" will apply the next operation
- * Right.of('boom').andThen(toUpper);
- * // => Right(BOOM)
+ * // A "Success" will apply the next operation
+ * Success.of('boom').andThen(toUpper);
+ * // => Success(BOOM)
  *
- * // A "Left" will ignore the next operation
- * Left.of('yea right').andThen(toUpper);
- * // => Left(yea right)
+ * // A "Failure" will ignore the next operation
+ * Failure.of('yea right').andThen(toUpper);
+ * // => Failure(yea right)
  *
- * @this Either
+ * @this Result
  * @param  {function} transform The transformation to apply to the inner value
- * @return {Either&lt;A, C>}
+ * @return {Result&lt;A, C>}
  */
-Either.prototype.andThen = function andThen(transform) {
-  return Either.chain(transform, this);
+Result.prototype.andThen = function andThen(transform) {
+  return Result.chain(transform, this);
 };
 
 /**
- * @description `map` is very similar to {@link Either.andThen} and
- * {@link Either.chain} in that it only runs the function if the
- * either is an instance of `Just`. The main difference is that {@link Either.andThen}
- * and {@link Either.chain} expect the functions you give them to return
- * new `Either` instances, and map let's you use plain old functions.
+ * @description `map` is very similar to {@link Result.andThen} and
+ * {@link Result.chain} in that it only runs the function if the
+ * result is an instance of `Just`. The main difference is that {@link Result.andThen}
+ * and {@link Result.chain} expect the functions you give them to return
+ * new `Result` instances, and map let's you use plain old functions.
  *
- * @memberof Either
+ * @memberof Result
  * @since 1.0.0-beta
  * @implements Functor
  * @method
  * @instance
  * @example
- * // map Either a b :: (b -> c) -> Either a c
- * import { Left, Right } from 'zoomjs/either';
+ * // map Result a b :: (b -> c) -> Result a c
+ * import { Failure, Success } from 'zoomjs/result';
  *
  * // toUpper :: String -> String
  * const toUpper = x => x.toUpperCase();
  *
- * // A "Right" will run the next operation
- * Right.of('yay').map(toUpper);
- * // => Right('YAY!');
+ * // A "Success" will run the next operation
+ * Success.of('yay').map(toUpper);
+ * // => Success('YAY!');
  *
- * // A "Left" will ignore the next operation
- * Left.of('nay!').map(toUpper);
- * // => Left('nay!');
+ * // A "Failure" will ignore the next operation
+ * Failure.of('nay!').map(toUpper);
+ * // => Failure('nay!');
  *
- * @this Either
+ * @this Result
  * @param  {function} transform The transformation to apply to the inner value
- * @return {Either&lt;A, C>}
+ * @return {Result&lt;A, C>}
  */
-Either.prototype.map = function map(transform) {
-  return Either.map(transform, this);
+Result.prototype.map = function map(transform) {
+  return Result.map(transform, this);
 };
 
 /**
  * @description
  * `ap` is just like `map`, allowing a user to use plain old functions to
- * transform values hidden away in `Either`s. The only difference is that
- * instead of giving it the function, you give it an `Either` of the function.
+ * transform values hidden away in `Result`s. The only difference is that
+ * instead of giving it the function, you give it an `Result` of the function.
  * This is known as the `Apply` type in fantasy land JS.
  *
- * @memberof Either
+ * @memberof Result
  * @method
  * @instance
  * @since 1.0.0-beta
  * @implements Apply
  * @example
- * // ap Either a b :: Apply (b -> c) -> Either a c
- * import { ap, Left, Right } from 'zoomjs';
+ * // ap Result a b :: Apply (b -> c) -> Result a c
+ * import { ap, Failure, Success } from 'zoomjs';
  *
- * // toUpperE :: Either a (String -> String)
- * const toUpperE = Right(x => x.toUpperCase());
+ * // toUpperE :: Result a (String -> String)
+ * const toUpperE = Success(x => x.toUpperCase());
  *
- * // A "Right" will apply the next operation
- * Right.of('boom').ap(toUpperE);
- * // => Right(BOOM)
+ * // A "Success" will apply the next operation
+ * Success.of('boom').ap(toUpperE);
+ * // => Success(BOOM)
  *
- * // A "Left" will ignore the next operation
- * Left.of('yea right').ap(toUpperE);
- * // => Left(yea right)
+ * // A "Failure" will ignore the next operation
+ * Failure.of('yea right').ap(toUpperE);
+ * // => Failure(yea right)
  *
- * @this Either
- * @param  {Either&lt;A, function>} apply An either containing a function to run on the value
- * @return {Either&lt;A, C>}
+ * @this Result
+ * @param  {Result&lt;A, function>} apply An result containing a function to run on the value
+ * @return {Result&lt;A, C>}
  */
-Either.prototype.ap = function ap(apply) {
-  return Either.ap(apply, this);
+Result.prototype.ap = function ap(apply) {
+  return Result.ap(apply, this);
 };
 
 /**
- * @description Determine if an Either is an instance of Left
- * @memberof Either
+ * @description Determine if an Result is an instance of Failure
+ * @memberof Result
  * @since 1.0.0-beta
  * @method
  * @instance
  * @example
- * // isLeft Either a b :: c -> Bool
- * import { Left, Right } from 'zoomjs/either';
+ * // isFailure Result a b :: c -> Bool
+ * import { Failure, Success } from 'zoomjs/result';
  *
- * Left.of(1).isLeft(); // true
- * Right.of(1).isLeft(); // false
+ * Failure.of(1).isFailure(); // true
+ * Success.of(1).isFailure(); // false
  *
- * @this Either
+ * @this Result
  * @return {Boolean}
  */
-Either.prototype.isLeft = function isLeft() {
-  return Either.isLeft(this);
+Result.prototype.isFailure = function isFailure() {
+  return Result.isFailure(this);
 };
 
 /**
- * @description Determine if an Either is an instance of Right
- * @memberof Either
+ * @description Determine if an Result is an instance of Success
+ * @memberof Result
  * @since 1.0.0-beta
  * @method
  * @instance
  * @example
- * // isRight Either a b :: c -> Bool
- * import { Left, Right } from 'zoomjs/either';
+ * // isSuccess Result a b :: c -> Bool
+ * import { Failure, Success } from 'zoomjs/result';
  *
- * Right.of(1).isRight(); // true
- * Left.of(1).isRight(); // false
+ * Success.of(1).isSuccess(); // true
+ * Failure.of(1).isSuccess(); // false
  *
- * @this Either
+ * @this Result
  * @return {Boolean}
  */
-Either.prototype.isRight = function isRight() {
-  return Either.isRight(this);
+Result.prototype.isSuccess = function isSuccess() {
+  return Result.isSuccess(this);
 };
 
-export default Either;
+export default Result;
 </code></pre>
         </article>
     </section>

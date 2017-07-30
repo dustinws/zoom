@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Right - Documentation</title>
+    <title>Success - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Right</h1>
+    <h1 class="page-title">Success</h1>
     
 
     
@@ -40,9 +40,9 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="Either.html">Either</a>.</span>
+            <span class="ancestors"><a href="Result.html">Result</a>.</span>
         
-        Right
+        Success
         </h2>
         
     
@@ -55,7 +55,7 @@
 
     
 
-    <h4 class="name" id="Right"><span class="type-signature"></span>new Right<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Success"><span class="type-signature"></span>new Success<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -67,7 +67,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="either_Either.js.html">either/Either.js</a>, <a href="either_Either.js.html#line53">line 53</a>
+        <a href="result_Result.js.html">result/Result.js</a>, <a href="result_Result.js.html#line41">line 41</a>
     </li></ul></dd>
     
 
@@ -140,7 +140,7 @@
 
 
     <ul>
-        <li><a href="Either.html">Either</a></li>
+        <li><a href="Result.html">Result</a></li>
     </ul>
 
 
@@ -164,7 +164,7 @@
 
     
 
-    <h4 class="name" id="andThen"><span class="type-signature"></span>andThen<span class="signature">(transform)</span><span class="type-signature"> &rarr; {<a href="Either.html">Either</a>.&lt;A, C>}</span></h4>
+    <h4 class="name" id="andThen"><span class="type-signature"></span>andThen<span class="signature">(transform)</span><span class="type-signature"> &rarr; {<a href="Result.html">Result</a>.&lt;A, C>}</span></h4>
 
     
 
@@ -176,7 +176,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="either_Either.js.html">either/Either.js</a>, <a href="either_Either.js.html#line564">line 564</a>
+        <a href="result_Result.js.html">result/Result.js</a>, <a href="result_Result.js.html#line486">line 486</a>
     </li></ul></dd>
     
 
@@ -190,7 +190,7 @@
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
-        <a href="Either.html#andThen">Either#andThen</a>
+        <a href="Result.html#andThen">Result#andThen</a>
     </li></ul></dd>
     
 
@@ -218,7 +218,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="Either.html#chain">Either#chain</a></li>
+            <li><a href="Result.html#chain">Result#chain</a></li>
         </ul>
     </dd>
     
@@ -231,10 +231,10 @@
 
 
 <div class="description">
-    <p>Apply a transformation to the Either if it is an instance
-of &quot;Right&quot;. Otherwise, ignore the transformation and return the instance.
-This is how you can switch from a 'Right' to 'Left' instance and stop
-subsequent transformations from being applied. An alias for <a href="Either.html#chain">Either#chain</a></p>
+    <p>Apply a transformation to the Result if it is an instance
+of &quot;Success&quot;. Otherwise, ignore the transformation and return the instance.
+This is how you can switch from a 'Success' to 'Failure' instance and stop
+subsequent transformations from being applied. An alias for <a href="Result.html#chain">Result#chain</a></p>
 </div>
 
 
@@ -244,28 +244,28 @@ subsequent transformations from being applied. An alias for <a href="Either.html
 
 
     <h5>This:</h5>
-    <ul><li><a href="Either.html">Either</a></li></ul>
+    <ul><li><a href="Result.html">Result</a></li></ul>
 
 
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// andThen Either a b :: (b -> Either a c) -> Either a c
-import { Left, Right } from 'zoomjs/either';
+    <pre class="prettyprint"><code>// andThen Result a b :: (b -> Result a c) -> Result a c
+import { Failure, Success } from 'zoomjs/result';
 
-// toUpper :: String -> Either String String
+// toUpper :: String -> Result String String
 const toUpper = x =>
   typeof x !== 'string'
-    ? Left.of('toUpper() recieved a non string.')
-    : Right.of(x.toUpperCase());
+    ? Failure.of('toUpper() recieved a non string.')
+    : Success.of(x.toUpperCase());
 
-// A "Right" will apply the next operation
-Right.of('boom').andThen(toUpper);
-// => Right(BOOM)
+// A "Success" will apply the next operation
+Success.of('boom').andThen(toUpper);
+// => Success(BOOM)
 
-// A "Left" will ignore the next operation
-Left.of('yea right').andThen(toUpper);
-// => Left(yea right)</code></pre>
+// A "Failure" will ignore the next operation
+Failure.of('yea right').andThen(toUpper);
+// => Failure(yea right)</code></pre>
 
 
 
@@ -342,7 +342,7 @@ Left.of('yea right').andThen(toUpper);
     </dt>
     <dd>
         
-<span class="param-type"><a href="Either.html">Either</a>.&lt;A, C></span>
+<span class="param-type"><a href="Result.html">Result</a>.&lt;A, C></span>
 
 
     </dd>
@@ -356,7 +356,7 @@ Left.of('yea right').andThen(toUpper);
 
     
 
-    <h4 class="name" id="ap"><span class="type-signature"></span>ap<span class="signature">(apply)</span><span class="type-signature"> &rarr; {<a href="Either.html">Either</a>.&lt;A, C>}</span></h4>
+    <h4 class="name" id="ap"><span class="type-signature"></span>ap<span class="signature">(apply)</span><span class="type-signature"> &rarr; {<a href="Result.html">Result</a>.&lt;A, C>}</span></h4>
 
     
 
@@ -368,7 +368,7 @@ Left.of('yea right').andThen(toUpper);
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="either_Either.js.html">either/Either.js</a>, <a href="either_Either.js.html#line634">line 634</a>
+        <a href="result_Result.js.html">result/Result.js</a>, <a href="result_Result.js.html#line556">line 556</a>
     </li></ul></dd>
     
 
@@ -382,7 +382,7 @@ Left.of('yea right').andThen(toUpper);
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
-        <a href="Either.html#ap">Either#ap</a>
+        <a href="Result.html#ap">Result#ap</a>
     </li></ul></dd>
     
 
@@ -424,8 +424,8 @@ Left.of('yea right').andThen(toUpper);
 
 <div class="description">
     <p><code>ap</code> is just like <code>map</code>, allowing a user to use plain old functions to
-transform values hidden away in <code>Either</code>s. The only difference is that
-instead of giving it the function, you give it an <code>Either</code> of the function.
+transform values hidden away in <code>Result</code>s. The only difference is that
+instead of giving it the function, you give it an <code>Result</code> of the function.
 This is known as the <code>Apply</code> type in fantasy land JS.</p>
 </div>
 
@@ -436,25 +436,25 @@ This is known as the <code>Apply</code> type in fantasy land JS.</p>
 
 
     <h5>This:</h5>
-    <ul><li><a href="Either.html">Either</a></li></ul>
+    <ul><li><a href="Result.html">Result</a></li></ul>
 
 
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// ap Either a b :: Apply (b -> c) -> Either a c
-import { ap, Left, Right } from 'zoomjs';
+    <pre class="prettyprint"><code>// ap Result a b :: Apply (b -> c) -> Result a c
+import { ap, Failure, Success } from 'zoomjs';
 
-// toUpperE :: Either a (String -> String)
-const toUpperE = Right(x => x.toUpperCase());
+// toUpperE :: Result a (String -> String)
+const toUpperE = Success(x => x.toUpperCase());
 
-// A "Right" will apply the next operation
-Right.of('boom').ap(toUpperE);
-// => Right(BOOM)
+// A "Success" will apply the next operation
+Success.of('boom').ap(toUpperE);
+// => Success(BOOM)
 
-// A "Left" will ignore the next operation
-Left.of('yea right').ap(toUpperE);
-// => Left(yea right)</code></pre>
+// A "Failure" will ignore the next operation
+Failure.of('yea right').ap(toUpperE);
+// => Failure(yea right)</code></pre>
 
 
 
@@ -490,7 +490,7 @@ Left.of('yea right').ap(toUpperE);
             <td class="type">
             
                 
-<span class="param-type"><a href="Either.html">Either</a>.&lt;A, function()></span>
+<span class="param-type"><a href="Result.html">Result</a>.&lt;A, function()></span>
 
 
             
@@ -500,7 +500,7 @@ Left.of('yea right').ap(toUpperE);
 
             
 
-            <td class="description last"><p>An either containing a function to run on the value</p></td>
+            <td class="description last"><p>An result containing a function to run on the value</p></td>
         </tr>
 
     
@@ -531,7 +531,7 @@ Left.of('yea right').ap(toUpperE);
     </dt>
     <dd>
         
-<span class="param-type"><a href="Either.html">Either</a>.&lt;A, C></span>
+<span class="param-type"><a href="Result.html">Result</a>.&lt;A, C></span>
 
 
     </dd>
@@ -545,7 +545,7 @@ Left.of('yea right').ap(toUpperE);
 
     
 
-    <h4 class="name" id="caseOf"><span class="type-signature"></span>caseOf<span class="signature">(cases)</span><span class="type-signature"> &rarr; {<a href="Either.html">Either</a>.&lt;A, C>}</span></h4>
+    <h4 class="name" id="caseOf"><span class="type-signature"></span>caseOf<span class="signature">(cases)</span><span class="type-signature"> &rarr; {<a href="Result.html">Result</a>.&lt;A, C>}</span></h4>
 
     
 
@@ -557,7 +557,7 @@ Left.of('yea right').ap(toUpperE);
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="either_Either.js.html">either/Either.js</a>, <a href="either_Either.js.html#line447">line 447</a>
+        <a href="result_Result.js.html">result/Result.js</a>, <a href="result_Result.js.html#line369">line 369</a>
     </li></ul></dd>
     
 
@@ -571,7 +571,7 @@ Left.of('yea right').ap(toUpperE);
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
-        <a href="Either.html#caseOf">Either#caseOf</a>
+        <a href="Result.html#caseOf">Result#caseOf</a>
     </li></ul></dd>
     
 
@@ -599,7 +599,7 @@ Left.of('yea right').ap(toUpperE);
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="Either.html#cata">Either#cata</a></li>
+            <li><a href="Result.html#cata">Result#cata</a></li>
         </ul>
     </dd>
     
@@ -613,9 +613,9 @@ Left.of('yea right').ap(toUpperE);
 
 <div class="description">
     <p>A function that accepts an object with two functions, one
-to run if the either is an instance of <code>Right</code>, and one to run if the
-either is an instance of <code>Left</code>. The return value will be returned
-directly, with no wrapper instance. An alias for An alias for <a href="Either.html#cata">Either#cata</a></p>
+to run if the result is an instance of <code>Success</code>, and one to run if the
+result is an instance of <code>Failure</code>. The return value will be returned
+directly, with no wrapper instance. An alias for An alias for <a href="Result.html#cata">Result#cata</a></p>
 </div>
 
 
@@ -625,21 +625,21 @@ directly, with no wrapper instance. An alias for An alias for <a href="Either.ht
 
 
     <h5>This:</h5>
-    <ul><li><a href="Either.html">Either</a></li></ul>
+    <ul><li><a href="Result.html">Result</a></li></ul>
 
 
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// caseOf Either a b :: { Left: a -> c, Right: b -> c } -> c
-import { Either } from 'zoomjs';
+    <pre class="prettyprint"><code>// caseOf Result a b :: { Failure: a -> c, Success: b -> c } -> c
+import { Result } from 'zoomjs';
 
-Either.of(1).caseOf({
-  Right(one) {
+Result.of(1).caseOf({
+  Success(one) {
     // Do something with one
   },
 
-  Left(error) {
+  Failure(error) {
     // Handle the error
   },
 });</code></pre>
@@ -688,7 +688,7 @@ Either.of(1).caseOf({
 
             
 
-            <td class="description last"><p><code>{ Left: a -&gt; c, Right: b -&gt; c }</code></p>
+            <td class="description last"><p><code>{ Failure: a -&gt; c, Success: b -&gt; c }</code></p>
                 <h6>Properties</h6>
                 
 
@@ -714,7 +714,7 @@ Either.of(1).caseOf({
 
         <tr>
             
-                <td class="name"><code>Left</code></td>
+                <td class="name"><code>Failure</code></td>
             
 
             <td class="type">
@@ -730,14 +730,14 @@ Either.of(1).caseOf({
 
             
 
-            <td class="description last"><p>The <code>Left</code> case</p></td>
+            <td class="description last"><p>The <code>Failure</code> case</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>Right</code></td>
+                <td class="name"><code>Success</code></td>
             
 
             <td class="type">
@@ -753,7 +753,7 @@ Either.of(1).caseOf({
 
             
 
-            <td class="description last"><p>The <code>Right</code> case</p></td>
+            <td class="description last"><p>The <code>Success</code> case</p></td>
         </tr>
 
     
@@ -791,7 +791,7 @@ Either.of(1).caseOf({
     </dt>
     <dd>
         
-<span class="param-type"><a href="Either.html">Either</a>.&lt;A, C></span>
+<span class="param-type"><a href="Result.html">Result</a>.&lt;A, C></span>
 
 
     </dd>
@@ -805,7 +805,7 @@ Either.of(1).caseOf({
 
     
 
-    <h4 class="name" id="cata"><span class="type-signature"></span>cata<span class="signature">(cases)</span><span class="type-signature"> &rarr; {<a href="Either.html">Either</a>.&lt;A, C>}</span></h4>
+    <h4 class="name" id="cata"><span class="type-signature"></span>cata<span class="signature">(cases)</span><span class="type-signature"> &rarr; {<a href="Result.html">Result</a>.&lt;A, C>}</span></h4>
 
     
 
@@ -817,7 +817,7 @@ Either.of(1).caseOf({
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="either_Either.js.html">either/Either.js</a>, <a href="either_Either.js.html#line415">line 415</a>
+        <a href="result_Result.js.html">result/Result.js</a>, <a href="result_Result.js.html#line337">line 337</a>
     </li></ul></dd>
     
 
@@ -831,7 +831,7 @@ Either.of(1).caseOf({
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
-        <a href="Either.html#cata">Either#cata</a>
+        <a href="Result.html#cata">Result#cata</a>
     </li></ul></dd>
     
 
@@ -859,7 +859,7 @@ Either.of(1).caseOf({
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="Either.html#caseOf">Either#caseOf</a></li>
+            <li><a href="Result.html#caseOf">Result#caseOf</a></li>
         </ul>
     </dd>
     
@@ -873,10 +873,10 @@ Either.of(1).caseOf({
 
 <div class="description">
     <p>A function that accepts an object with two functions, one
-to run if the either is an instance of <code>Right</code>, and one to run if the
-either is an instance of <code>Left</code>. The return value will be returned
+to run if the result is an instance of <code>Success</code>, and one to run if the
+result is an instance of <code>Failure</code>. The return value will be returned
 directly, with no wrapper instance. This name is short for <code>catamorphism</code>.
-An alias for <a href="Either.html#caseOf">Either#caseOf</a></p>
+An alias for <a href="Result.html#caseOf">Result#caseOf</a></p>
 </div>
 
 
@@ -886,21 +886,21 @@ An alias for <a href="Either.html#caseOf">Either#caseOf</a></p>
 
 
     <h5>This:</h5>
-    <ul><li><a href="Either.html">Either</a></li></ul>
+    <ul><li><a href="Result.html">Result</a></li></ul>
 
 
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// cata Either a b :: { Left: a -> c, Right: b -> c } -> c
-import { Either } from 'zoomjs';
+    <pre class="prettyprint"><code>// cata Result a b :: { Failure: a -> c, Success: b -> c } -> c
+import { Result } from 'zoomjs';
 
-Either.of(1).cata({
-  Right(one) {
+Result.of(1).cata({
+  Success(one) {
     // Do something with one
   },
 
-  Left(error) {
+  Failure(error) {
     // Handle the error
   },
 });</code></pre>
@@ -949,7 +949,7 @@ Either.of(1).cata({
 
             
 
-            <td class="description last"><p><code>{ Left: a -&gt; c, Right: b -&gt; c }</code></p>
+            <td class="description last"><p><code>{ Failure: a -&gt; c, Success: b -&gt; c }</code></p>
                 <h6>Properties</h6>
                 
 
@@ -975,7 +975,7 @@ Either.of(1).cata({
 
         <tr>
             
-                <td class="name"><code>Left</code></td>
+                <td class="name"><code>Failure</code></td>
             
 
             <td class="type">
@@ -991,14 +991,14 @@ Either.of(1).cata({
 
             
 
-            <td class="description last"><p>The <code>Left</code> case</p></td>
+            <td class="description last"><p>The <code>Failure</code> case</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>Right</code></td>
+                <td class="name"><code>Success</code></td>
             
 
             <td class="type">
@@ -1014,7 +1014,7 @@ Either.of(1).cata({
 
             
 
-            <td class="description last"><p>The <code>Right</code> case</p></td>
+            <td class="description last"><p>The <code>Success</code> case</p></td>
         </tr>
 
     
@@ -1052,7 +1052,7 @@ Either.of(1).cata({
     </dt>
     <dd>
         
-<span class="param-type"><a href="Either.html">Either</a>.&lt;A, C></span>
+<span class="param-type"><a href="Result.html">Result</a>.&lt;A, C></span>
 
 
     </dd>
@@ -1066,7 +1066,7 @@ Either.of(1).cata({
 
     
 
-    <h4 class="name" id="chain"><span class="type-signature"></span>chain<span class="signature">(transform)</span><span class="type-signature"> &rarr; {<a href="Either.html">Either</a>.&lt;A, C>}</span></h4>
+    <h4 class="name" id="chain"><span class="type-signature"></span>chain<span class="signature">(transform)</span><span class="type-signature"> &rarr; {<a href="Result.html">Result</a>.&lt;A, C>}</span></h4>
 
     
 
@@ -1078,7 +1078,7 @@ Either.of(1).cata({
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="either_Either.js.html">either/Either.js</a>, <a href="either_Either.js.html#line527">line 527</a>
+        <a href="result_Result.js.html">result/Result.js</a>, <a href="result_Result.js.html#line449">line 449</a>
     </li></ul></dd>
     
 
@@ -1092,7 +1092,7 @@ Either.of(1).cata({
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
-        <a href="Either.html#chain">Either#chain</a>
+        <a href="Result.html#chain">Result#chain</a>
     </li></ul></dd>
     
 
@@ -1127,7 +1127,7 @@ Either.of(1).cata({
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="Either.html#andThen">Either#andThen</a></li>
+            <li><a href="Result.html#andThen">Result#andThen</a></li>
         </ul>
     </dd>
     
@@ -1140,10 +1140,10 @@ Either.of(1).cata({
 
 
 <div class="description">
-    <p>Apply a transformation to the Either if it is an instance
-of &quot;Right&quot;. Otherwise, ignore the transformation and return the instance.
-This is how you can switch from a 'Right' to 'Left' instance and stop
-subsequent transformations from being applied. An alias for <a href="Either.html#andThen">Either#andThen</a></p>
+    <p>Apply a transformation to the Result if it is an instance
+of &quot;Success&quot;. Otherwise, ignore the transformation and return the instance.
+This is how you can switch from a 'Success' to 'Failure' instance and stop
+subsequent transformations from being applied. An alias for <a href="Result.html#andThen">Result#andThen</a></p>
 </div>
 
 
@@ -1153,28 +1153,28 @@ subsequent transformations from being applied. An alias for <a href="Either.html
 
 
     <h5>This:</h5>
-    <ul><li><a href="Either.html">Either</a></li></ul>
+    <ul><li><a href="Result.html">Result</a></li></ul>
 
 
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// chain Either a b :: (b -> Either a c) -> Either a c
-import { Left, Right } from 'zoomjs/either';
+    <pre class="prettyprint"><code>// chain Result a b :: (b -> Result a c) -> Result a c
+import { Failure, Success } from 'zoomjs/result';
 
-// toUpper :: String -> Either String String
+// toUpper :: String -> Result String String
 const toUpper = x =>
   typeof x !== 'string'
-    ? Left.of('toUpper() recieved a non string.')
-    : Right.of(x.toUpperCase());
+    ? Failure.of('toUpper() recieved a non string.')
+    : Success.of(x.toUpperCase());
 
-// A "Right" will apply the next operation
-Right.of('boom').chain(toUpper);
-// => Right(BOOM)
+// A "Success" will apply the next operation
+Success.of('boom').chain(toUpper);
+// => Success(BOOM)
 
-// A "Left" will ignore the next operation
-Left.of('yea right').chain(toUpper);
-// => Left(yea right)</code></pre>
+// A "Failure" will ignore the next operation
+Failure.of('yea right').chain(toUpper);
+// => Failure(yea right)</code></pre>
 
 
 
@@ -1251,7 +1251,7 @@ Left.of('yea right').chain(toUpper);
     </dt>
     <dd>
         
-<span class="param-type"><a href="Either.html">Either</a>.&lt;A, C></span>
+<span class="param-type"><a href="Result.html">Result</a>.&lt;A, C></span>
 
 
     </dd>
@@ -1265,7 +1265,7 @@ Left.of('yea right').chain(toUpper);
 
     
 
-    <h4 class="name" id="isLeft"><span class="type-signature"></span>isLeft<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="isFailure"><span class="type-signature"></span>isFailure<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
 
     
 
@@ -1277,7 +1277,7 @@ Left.of('yea right').chain(toUpper);
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="either_Either.js.html">either/Either.js</a>, <a href="either_Either.js.html#line654">line 654</a>
+        <a href="result_Result.js.html">result/Result.js</a>, <a href="result_Result.js.html#line576">line 576</a>
     </li></ul></dd>
     
 
@@ -1291,7 +1291,7 @@ Left.of('yea right').chain(toUpper);
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
-        <a href="Either.html#isLeft">Either#isLeft</a>
+        <a href="Result.html#isFailure">Result#isFailure</a>
     </li></ul></dd>
     
 
@@ -1325,7 +1325,7 @@ Left.of('yea right').chain(toUpper);
 
 
 <div class="description">
-    <p>Determine if an Either is an instance of Left</p>
+    <p>Determine if an Result is an instance of Failure</p>
 </div>
 
 
@@ -1335,17 +1335,17 @@ Left.of('yea right').chain(toUpper);
 
 
     <h5>This:</h5>
-    <ul><li><a href="Either.html">Either</a></li></ul>
+    <ul><li><a href="Result.html">Result</a></li></ul>
 
 
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// isLeft Either a b :: c -> Bool
-import { Left, Right } from 'zoomjs/either';
+    <pre class="prettyprint"><code>// isFailure Result a b :: c -> Bool
+import { Failure, Success } from 'zoomjs/result';
 
-Left.of(1).isLeft(); // true
-Right.of(1).isLeft(); // false</code></pre>
+Failure.of(1).isFailure(); // true
+Success.of(1).isFailure(); // false</code></pre>
 
 
 
@@ -1387,7 +1387,7 @@ Right.of(1).isLeft(); // false</code></pre>
 
     
 
-    <h4 class="name" id="isRight"><span class="type-signature"></span>isRight<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="isSuccess"><span class="type-signature"></span>isSuccess<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
 
     
 
@@ -1399,7 +1399,7 @@ Right.of(1).isLeft(); // false</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="either_Either.js.html">either/Either.js</a>, <a href="either_Either.js.html#line674">line 674</a>
+        <a href="result_Result.js.html">result/Result.js</a>, <a href="result_Result.js.html#line596">line 596</a>
     </li></ul></dd>
     
 
@@ -1413,7 +1413,7 @@ Right.of(1).isLeft(); // false</code></pre>
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
-        <a href="Either.html#isRight">Either#isRight</a>
+        <a href="Result.html#isSuccess">Result#isSuccess</a>
     </li></ul></dd>
     
 
@@ -1447,7 +1447,7 @@ Right.of(1).isLeft(); // false</code></pre>
 
 
 <div class="description">
-    <p>Determine if an Either is an instance of Right</p>
+    <p>Determine if an Result is an instance of Success</p>
 </div>
 
 
@@ -1457,17 +1457,17 @@ Right.of(1).isLeft(); // false</code></pre>
 
 
     <h5>This:</h5>
-    <ul><li><a href="Either.html">Either</a></li></ul>
+    <ul><li><a href="Result.html">Result</a></li></ul>
 
 
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// isRight Either a b :: c -> Bool
-import { Left, Right } from 'zoomjs/either';
+    <pre class="prettyprint"><code>// isSuccess Result a b :: c -> Bool
+import { Failure, Success } from 'zoomjs/result';
 
-Right.of(1).isRight(); // true
-Left.of(1).isRight(); // false</code></pre>
+Success.of(1).isSuccess(); // true
+Failure.of(1).isSuccess(); // false</code></pre>
 
 
 
@@ -1509,7 +1509,7 @@ Left.of(1).isRight(); // false</code></pre>
 
     
 
-    <h4 class="name" id="map"><span class="type-signature"></span>map<span class="signature">(transform)</span><span class="type-signature"> &rarr; {<a href="Either.html">Either</a>.&lt;A, C>}</span></h4>
+    <h4 class="name" id="map"><span class="type-signature"></span>map<span class="signature">(transform)</span><span class="type-signature"> &rarr; {<a href="Result.html">Result</a>.&lt;A, C>}</span></h4>
 
     
 
@@ -1521,7 +1521,7 @@ Left.of(1).isRight(); // false</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="either_Either.js.html">either/Either.js</a>, <a href="either_Either.js.html#line599">line 599</a>
+        <a href="result_Result.js.html">result/Result.js</a>, <a href="result_Result.js.html#line521">line 521</a>
     </li></ul></dd>
     
 
@@ -1535,7 +1535,7 @@ Left.of(1).isRight(); // false</code></pre>
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
-        <a href="Either.html#map">Either#map</a>
+        <a href="Result.html#map">Result#map</a>
     </li></ul></dd>
     
 
@@ -1576,11 +1576,11 @@ Left.of(1).isRight(); // false</code></pre>
 
 
 <div class="description">
-    <p><code>map</code> is very similar to <a href="Either.html#.andThen">Either.andThen</a> and
-<a href="Either.html#.chain">Either.chain</a> in that it only runs the function if the
-either is an instance of <code>Just</code>. The main difference is that <a href="Either.html#.andThen">Either.andThen</a>
-and <a href="Either.html#.chain">Either.chain</a> expect the functions you give them to return
-new <code>Either</code> instances, and map let's you use plain old functions.</p>
+    <p><code>map</code> is very similar to <a href="Result.html#.andThen">Result.andThen</a> and
+<a href="Result.html#.chain">Result.chain</a> in that it only runs the function if the
+result is an instance of <code>Just</code>. The main difference is that <a href="Result.html#.andThen">Result.andThen</a>
+and <a href="Result.html#.chain">Result.chain</a> expect the functions you give them to return
+new <code>Result</code> instances, and map let's you use plain old functions.</p>
 </div>
 
 
@@ -1590,25 +1590,25 @@ new <code>Either</code> instances, and map let's you use plain old functions.</p
 
 
     <h5>This:</h5>
-    <ul><li><a href="Either.html">Either</a></li></ul>
+    <ul><li><a href="Result.html">Result</a></li></ul>
 
 
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// map Either a b :: (b -> c) -> Either a c
-import { Left, Right } from 'zoomjs/either';
+    <pre class="prettyprint"><code>// map Result a b :: (b -> c) -> Result a c
+import { Failure, Success } from 'zoomjs/result';
 
 // toUpper :: String -> String
 const toUpper = x => x.toUpperCase();
 
-// A "Right" will run the next operation
-Right.of('yay').map(toUpper);
-// => Right('YAY!');
+// A "Success" will run the next operation
+Success.of('yay').map(toUpper);
+// => Success('YAY!');
 
-// A "Left" will ignore the next operation
-Left.of('nay!').map(toUpper);
-// => Left('nay!');</code></pre>
+// A "Failure" will ignore the next operation
+Failure.of('nay!').map(toUpper);
+// => Failure('nay!');</code></pre>
 
 
 
@@ -1685,7 +1685,7 @@ Left.of('nay!').map(toUpper);
     </dt>
     <dd>
         
-<span class="param-type"><a href="Either.html">Either</a>.&lt;A, C></span>
+<span class="param-type"><a href="Result.html">Result</a>.&lt;A, C></span>
 
 
     </dd>
@@ -1699,7 +1699,7 @@ Left.of('nay!').map(toUpper);
 
     
 
-    <h4 class="name" id="of"><span class="type-signature"></span>of<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="Either.html">Either</a>.&lt;A, B>}</span></h4>
+    <h4 class="name" id="of"><span class="type-signature"></span>of<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="Result.html">Result</a>.&lt;A, B>}</span></h4>
 
     
 
@@ -1711,7 +1711,7 @@ Left.of('nay!').map(toUpper);
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="either_Either.js.html">either/Either.js</a>, <a href="either_Either.js.html#line449">line 449</a>
+        <a href="result_Result.js.html">result/Result.js</a>, <a href="result_Result.js.html#line371">line 371</a>
     </li></ul></dd>
     
 
@@ -1761,7 +1761,7 @@ Left.of('nay!').map(toUpper);
 
 
 <div class="description">
-    <p>Lift a value into a successful 'Right' context.</p>
+    <p>Lift a value into a successful 'Success' context.</p>
 </div>
 
 
@@ -1771,17 +1771,17 @@ Left.of('nay!').map(toUpper);
 
 
     <h5>This:</h5>
-    <ul><li><a href="Either.html">Either</a></li></ul>
+    <ul><li><a href="Result.html">Result</a></li></ul>
 
 
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// of Either a b :: c -> Either d c
-import { Right } from 'zoomjs/either';
+    <pre class="prettyprint"><code>// of Result a b :: c -> Result d c
+import { Success } from 'zoomjs/result';
 
-Right.of(1);
-// => Right(1)</code></pre>
+Success.of(1);
+// => Success(1)</code></pre>
 
 
 
@@ -1827,7 +1827,7 @@ Right.of(1);
 
             
 
-            <td class="description last"><p>The value to put in the Either</p></td>
+            <td class="description last"><p>The value to put in the Result</p></td>
         </tr>
 
     
@@ -1858,7 +1858,7 @@ Right.of(1);
     </dt>
     <dd>
         
-<span class="param-type"><a href="Either.html">Either</a>.&lt;A, B></span>
+<span class="param-type"><a href="Result.html">Result</a>.&lt;A, B></span>
 
 
     </dd>
