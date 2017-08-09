@@ -74,6 +74,11 @@ Writer.ap = (0, _curry2.default)(function (apply, writer) {
  |------------------------------------------------------------------------------
  */
 
+// of :: Writer w a ~> b -> Writer w b
+Writer.prototype.of = function of(value) {
+  return Writer.of(value);
+};
+
 // chain :: Writer w a ~> (a -> Writer w b) -> Writer w b
 Writer.prototype.chain = function chain(transform) {
   return Writer.chain(transform, this);
@@ -103,19 +108,16 @@ Writer.prototype.ap = function ap(apply) {
 |------------------------------------------------------------------------------
 */
 
-// Writer Applicative
+// Static Monad
 Writer[_fantasyLand2.default.of] = Writer.of;
-
-// Writer Chain
 Writer[_fantasyLand2.default.chain] = Writer.chain;
-Writer.prototype[_fantasyLand2.default.chain] = Writer.prototype.chain;
-
-// Writer Functor
 Writer[_fantasyLand2.default.map] = Writer.map;
-Writer.prototype[_fantasyLand2.default.map] = Writer.prototype.map;
-
-// Writer Apply
 Writer[_fantasyLand2.default.ap] = Writer.ap;
+
+// Instance Monad
+Writer.prototype[_fantasyLand2.default.of] = Writer.prototype.of;
+Writer.prototype[_fantasyLand2.default.chain] = Writer.prototype.chain;
+Writer.prototype[_fantasyLand2.default.map] = Writer.prototype.map;
 Writer.prototype[_fantasyLand2.default.ap] = Writer.prototype.ap;
 
 module.exports = Writer;

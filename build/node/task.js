@@ -154,6 +154,11 @@ Task.liftNode = function (func) {
  |------------------------------------------------------------------------------
  */
 
+// of :: Task a b ~> c -> Task f c
+Task.prototype.of = function of(value) {
+  return Task.of(value);
+};
+
 // chain :: Task a b ~> (b -> Task a c) -> Task a c
 Task.prototype.chain = function chain(transform) {
   return Task.chain(transform, this);
@@ -190,16 +195,16 @@ Task.prototype.recover = function recover(transform) {
  |------------------------------------------------------------------------------
  */
 
-// Task Applicative
+// Static Monad
 Task[_fantasyLand2.default.of] = Task.of;
-Task.prototype[_fantasyLand2.default.of] = Task.prototype.of;
-
-// Task Chain
 Task[_fantasyLand2.default.chain] = Task.chain;
-Task.prototype[_fantasyLand2.default.chain] = Task.prototype.chain;
-
-// Task Functor
 Task[_fantasyLand2.default.map] = Task.map;
+Task[_fantasyLand2.default.ap] = Task.ap;
+
+// Instance Monad
+Task.prototype[_fantasyLand2.default.of] = Task.prototype.of;
+Task.prototype[_fantasyLand2.default.chain] = Task.prototype.chain;
 Task.prototype[_fantasyLand2.default.map] = Task.prototype.map;
+Task.prototype[_fantasyLand2.default.ap] = Task.prototype.ap;
 
 module.exports = Task;
