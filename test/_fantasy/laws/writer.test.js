@@ -1,5 +1,6 @@
 /* global describe, expect, test */
 
+import { deepEqual } from 'assert';
 import { add, compose, multiply } from 'ramda';
 import * as applicative from 'fantasy-land/laws/applicative';
 import * as apply from 'fantasy-land/laws/apply';
@@ -10,8 +11,14 @@ import * as monad from 'fantasy-land/laws/monad';
 import Writer from '../../../src/writer';
 
 // Writer EQ checks === for both return values.
-const eq = (a, b) =>
-  a.value === b.value;
+const eq = (a, b) => {
+  try {
+    deepEqual(a.value, b.value);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
 
 // A costant we can use to check equality.
 const VAL = 1;
