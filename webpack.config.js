@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: './src/packages/index.js',
+  entry: './src/index.js',
 
   output: {
     path: path.join(__dirname, 'build', 'browser'),
