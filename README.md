@@ -16,17 +16,19 @@ code that is easy to read and easy to refactor.
 ###### Zoom <3's [Fantasy Land JS](https://github.com/fantasyland/fantasy-land).
 
 ---
+#### Helpers
+- [ADT](https://github.com/dustinws/zoom/blob/master/docs/ADT.md)
 
 #### Types
-- [Either](https://dustinws.github.io/zoom/Either.html)
-- [IO](https://dustinws.github.io/zoom/IO.html)
-- [Maybe](https://dustinws.github.io/zoom/Maybe.html)
-- [Reader](https://dustinws.github.io/zoom/Reader.html)
-- [Result](https://dustinws.github.io/zoom/Result.html)
-- [Task](https://dustinws.github.io/zoom/Task.html)
-- [Tuple](https://dustinws.github.io/zoom/Tuple.html)
-- [Validation](https://dustinws.github.io/zoom/Validation.html)
-- [Writer](https://dustinws.github.io/zoom/Writer.html)
+- [Either](https://github.com/dustinws/zoom/blob/master/docs/Either.md)
+- [IO](https://github.com/dustinws/zoom/blob/master/docs/IO.md)
+- [Maybe](https://github.com/dustinws/zoom/blob/master/docs/Maybe.md)
+- [Reader](https://github.com/dustinws/zoom/blob/master/docs/Reader.md)
+- [Result](https://github.com/dustinws/zoom/blob/master/docs/Result.md)
+- [Task](https://github.com/dustinws/zoom/blob/master/docs/Task.md)
+- [Tuple](https://github.com/dustinws/zoom/blob/master/docs/Tuple.md)
+- [Validation](https://github.com/dustinws/zoom/blob/master/docs/Validation.md)
+- [Writer](https://github.com/dustinws/zoom/blob/master/docs/Writer.md)
 
 ---
 
