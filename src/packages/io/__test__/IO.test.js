@@ -37,6 +37,14 @@ describe('IO', () => {
     });
   });
 
+  describe('IO#of', () => {
+    test('it should create a new io that will return the given value', () => {
+      const io = IO.of().of('foo');
+
+      expect(io.run()).toBe('foo');
+    });
+  });
+
   describe('IO#chain', () => {
     test('it should apply the transformation and flatten the IO that was returned', () => {
       const io = IO.of('foo');
