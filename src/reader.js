@@ -41,6 +41,11 @@ Reader.ap = curry((apply, reader) =>
  |------------------------------------------------------------------------------
  */
 
+// of :: reader e a ~> b -> Either f b
+Reader.prototype.of = function of(value) {
+  return Reader.of(value);
+};
+
 // chain :: Reader e a ~> (a -> Reader e b) -> Reader e b
 Reader.prototype.chain = function chain(transform) {
   return Reader.chain(transform, this);
@@ -69,6 +74,9 @@ Reader.prototype.ap = function ap(apply) {
 Reader.T = (M) => {
   const ReaderT = tag(`Reader[${M[symbol]}]`, 'run');
 
+  // Static
+  // ------
+
   // ask :: Monad m => ReaderT e m a
   ReaderT.ask = ReaderT(M.of);
 
@@ -79,36 +87,58 @@ Reader.T = (M) => {
   ReaderT.of = value =>
     ReaderT(() => M.of(value));
 
+  // chain :: Monad m => (a -> ReaderT e m b) -> ReaderT e m a -> ReaderT e m b
+  ReaderT.chain = curry((callback, readerT) =>
+    ReaderT(e => readerT.run(e).chain(a => callback(a).run(e))));
+
+  // andThen :: Monad m => (a -> ReaderT e m b) -> ReaderT e m a -> ReaderT e m b
+  ReaderT.andThen = ReaderT.chain;
+
+  // map :: Monad m => (a -> b) -> ReaderT e m a -> ReaderT e m b
+  ReaderT.map = curry((callback, readerT) =>
+    readerT.chain(x => ReaderT.of(callback(x))));
+
+  // ap :: Monad m => Apply (a -> b) -> ReaderT e m a -> ReaderT e m b
+  ReaderT.ap = curry((apply, readerT) =>
+    ReaderT(e => readerT.run(e).ap(apply.run(e))));
+
+
+  // Instance
+  // --------
+
+  // of :: Monad m => ReaderT e m a ~> b -> ReaderT f m b
+  ReaderT.prototype.of = function of(value) {
+    return ReaderT.of(value);
+  };
+
   // chain :: Monad m => ReaderT e m a ~> (a -> ReaderT e m b) -> ReaderT e m b
-  ReaderT.prototype.chain = function chain(transform) {
-    return ReaderT(e => this.run(e).chain(a => transform(a).run(e)));
+  ReaderT.prototype.chain = function chain(callback) {
+    return ReaderT.chain(callback, this);
   };
 
   // andThen :: Monad m => ReaderT e m a ~> (a -> ReaderT e m b) -> ReaderT e m b
-  ReaderT.prototype.andThen = function andThen(transform) {
-    return this.chain(transform);
-  };
+  ReaderT.prototype.andThen = ReaderT.prototype.chain;
 
   // map :: Monad m => ReaderT e m a ~> (a -> b) -> ReaderT e m b
-  ReaderT.prototype.map = function map(transform) {
-    return this.chain(x => ReaderT.of(transform(x)));
+  ReaderT.prototype.map = function map(callback) {
+    return ReaderT.map(callback, this);
   };
 
   // ap :: Monad m => ReaderT e m a ~> Apply (a -> b) -> ReaderT e m b
   ReaderT.prototype.ap = function ap(apply) {
-    return ReaderT(e => this.run(e).ap(apply.run(e)));
+    return ReaderT.ap(apply, this);
   };
 
-  // Reader Applicative
+  // Static Monad
   ReaderT[fl.of] = ReaderT.of;
+  ReaderT[fl.chain] = ReaderT.chain;
+  ReaderT[fl.map] = ReaderT.map;
+  ReaderT[fl.ap] = ReaderT.ap;
 
-  // ReaderT Chain
+  // Instance Monad
+  ReaderT.prototype[fl.of] = ReaderT.prototype.of;
   ReaderT.prototype[fl.chain] = ReaderT.prototype.chain;
-
-  // ReaderT Functor
   ReaderT.prototype[fl.map] = ReaderT.prototype.map;
-
-  // ReaderT Apply
   ReaderT.prototype[fl.ap] = ReaderT.prototype.ap;
 
   return ReaderT;
@@ -123,6 +153,7 @@ Reader.T = (M) => {
 
 // Reader Applicative
 Reader[fl.of] = Reader.of;
+Reader.prototype[fl.of] = Reader.prototype.of;
 
 // Reader Chain
 Reader[fl.chain] = Reader.chain;

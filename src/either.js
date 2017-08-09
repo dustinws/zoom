@@ -1,5 +1,4 @@
 import fl from 'fantasy-land';
-import __ from 'ramda/src/__';
 import curry from 'ramda/src/curry';
 import always from 'ramda/src/always';
 import compose from 'ramda/src/compose';
@@ -10,8 +9,7 @@ const Either = union('Either', {
   Left: ['value'],
 });
 
-const Right = Either.Right;
-const Left = Either.Left;
+const { Left, Right } = Either;
 
 /*
  |------------------------------------------------------------------------------
@@ -20,19 +18,16 @@ const Left = Either.Left;
  */
 
 // of :: b -> Either a b
-Either.of = function of(value) {
-  return Right(value);
-};
+Either.of = value =>
+  Right(value);
 
 // of :: b -> Either a b
-Right.of = function of(value) {
-  return Right(value);
-};
+Right.of = value =>
+  Right(value);
 
 // of :: a -> Either a b
-Left.of = function of(value) {
-  return Left(value);
-};
+Left.of = value =>
+  Left(value);
 
 // chain :: (b -> Either a c) -> Either a b -> Either a c
 Either.chain = curry((transform, either) =>
@@ -46,17 +41,49 @@ Either.andThen = Either.chain;
 
 // map :: (b -> c) -> Either a b -> Either a c
 Either.map = curry((transform, either) =>
-  Either.chain(compose(Either.of, transform), either));
+  Either.chain(compose(Right, transform), either));
 
 // ap :: Apply (b -> c) -> Either a b -> Either a c
-Either.ap = curry((left, right) =>
-  Either.chain(Either.map(__, right), left));
+Either.ap = curry((left, right) => {
+  if (left.isLeft() && right.isLeft()) return right;
+  if (left.isLeft()) return left;
+  if (right.isLeft()) return right;
+
+  return Right(left.value(right.value));
+});
+
+// concat :: Either a b -> Either a b -> Either a b
+Either.concat = curry((left, right) => {
+  if (left.isLeft() && right.isLeft())
+    return Left(left.value.concat(right.value));
+
+  if (left.isLeft()) return left;
+  if (right.isLeft()) return right;
+
+  return Right(left.value.concat(right.value));
+});
+
+// reduce :: ((c, b) -> c) -> c -> Either a b -> c
+Either.reduce = curry((callback, seed, either) =>
+  either.cata({
+    Left: always(seed),
+    Right: v => callback(seed, v),
+  }));
+
+// equals :: Either a b -> Either a b -> Bool
+Either.equals = curry((left, right) => {
+  if (!(left.isLeft() && right.isLeft()))
+    if (!(left.isRight() && right.isRight()))
+      return false;
+
+  return left.value === right.value;
+});
 
 // isLeft :: Either a b -> Bool
-Either.isLeft = either => either instanceof Either.Left;
+Either.isLeft = either => either instanceof Left;
 
 // isRight :: Either a b -> Bool
-Either.isRight = either => either instanceof Either.Right;
+Either.isRight = either => either instanceof Right;
 
 
 /*
@@ -65,21 +92,20 @@ Either.isRight = either => either instanceof Either.Right;
  |------------------------------------------------------------------------------
  */
 
-// cata :: Either a b ~> { Left: a -> c, Right: b -> c } -> c
-Either.prototype.cata = Either.prototype.cata;
+// of :: Either a b ~> d -> Either c d
+Either.prototype.of = value =>
+  Right(value);
+
+// of :: Either a b ~> d -> Either c d
+Right.prototype.of = value =>
+  Right(value);
+
+// of :: Either a b ~> c -> Either c d
+Left.prototype.of = value =>
+  Left(value);
 
 // caseOf :: Either a b ~> { Left: a -> c, Right: b -> c } -> c
 Either.prototype.caseOf = Either.prototype.cata;
-
-// of :: Either a b ~> d -> Either c d
-Right.prototype.of = function of(value) {
-  return Right.of(value);
-};
-
-// of :: Either a b ~> c -> Either c d
-Left.prototype.of = function of(value) {
-  return Left.of(value);
-};
 
 // chain :: Either a b ~> (b -> Either a c) -> Either a c
 Either.prototype.chain = function chain(transform) {
@@ -101,6 +127,21 @@ Either.prototype.ap = function ap(apply) {
   return Either.ap(apply, this);
 };
 
+// concat :: Either a b ~> Either a b -> Either a b
+Either.prototype.concat = function concat(other) {
+  return Either.concat(this, other);
+};
+
+// reduce :: Either a b ~> ((c, b) -> c) -> c -> c
+Either.prototype.reduce = function reduce(callback, seed) {
+  return Either.reduce(callback, seed, this);
+};
+
+// equals :: Either a b ~> Either a b -> Bool
+Either.prototype.equals = function equals(other) {
+  return Either.equals(other, this);
+};
+
 // isLeft :: Either a b ~> c -> Bool
 Either.prototype.isLeft = function isLeft() {
   return Either.isLeft(this);
@@ -120,6 +161,7 @@ Either.prototype.isRight = function isRight() {
 
 // Either Applicative
 Either[fl.of] = Either.of;
+Either.prototype[fl.of] = Either.prototype.of;
 
 // Either Chain
 Either[fl.chain] = Either.chain;
@@ -133,38 +175,27 @@ Either.prototype[fl.map] = Either.prototype.map;
 Either[fl.ap] = Either.ap;
 Either.prototype[fl.ap] = Either.prototype.ap;
 
+// Either Semigroup
+Either[fl.concat] = Either.concat;
+Either.prototype[fl.concat] = Either.prototype.concat;
+
+// Either Setoid
+Either[fl.equals] = Either.equals;
+Either.prototype[fl.equals] = Either.prototype.equals;
+
+// Either Foldable
+Either[fl.reduce] = Either.reduce;
+Either.prototype[fl.reduce] = Either.prototype.reduce;
+
 
 // Right Applicative
-Either.Right[fl.of] = Either.Right.of;
-Either.Right.prototype[fl.of] = Either.Right.prototype.of;
-
-// Either.Right Chain
-Either.Right[fl.chain] = Either.Right.chain;
-Either.Right.prototype[fl.chain] = Either.Right.prototype.chain;
-
-// Either.Right Functor
-Either.Right[fl.map] = Either.Right.map;
-Either.Right.prototype[fl.map] = Either.Right.prototype.map;
-
-// Either.Right Apply
-Either.Right[fl.ap] = Either.Right.ap;
-Either.Right.prototype[fl.ap] = Either.Right.prototype.ap;
+Right[fl.of] = Right.of;
+Right.prototype[fl.of] = Right.prototype.of;
 
 
 // Left Applicative
-Either.Left[fl.of] = Either.Left.of;
-Either.Left.prototype[fl.of] = Either.Left.prototype.of;
+Left[fl.of] = Left.of;
+Left.prototype[fl.of] = Left.prototype.of;
 
-// Either.Left Chain
-Either.Left[fl.chain] = Either.Left.chain;
-Either.Left.prototype[fl.chain] = Either.Left.prototype.chain;
-
-// Either.Left Functor
-Either.Left[fl.map] = Either.Left.map;
-Either.Left.prototype[fl.map] = Either.Left.prototype.map;
-
-// Either.Left Apply
-Either.Left[fl.ap] = Either.Left.ap;
-Either.Left.prototype[fl.ap] = Either.Left.prototype.ap;
 
 module.exports = Either;

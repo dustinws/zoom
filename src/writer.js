@@ -49,6 +49,10 @@ Writer.ap = curry((apply, writer) =>
  |------------------------------------------------------------------------------
  */
 
+// of :: Writer w a ~> b -> Writer w b
+Writer.prototype.of = function of(value) {
+  return Writer.of(value);
+};
 
 // chain :: Writer w a ~> (a -> Writer w b) -> Writer w b
 Writer.prototype.chain = function chain(transform) {
@@ -80,19 +84,16 @@ Writer.prototype.ap = function ap(apply) {
 |------------------------------------------------------------------------------
 */
 
-// Writer Applicative
+// Static Monad
 Writer[fl.of] = Writer.of;
-
-// Writer Chain
 Writer[fl.chain] = Writer.chain;
-Writer.prototype[fl.chain] = Writer.prototype.chain;
-
-// Writer Functor
 Writer[fl.map] = Writer.map;
-Writer.prototype[fl.map] = Writer.prototype.map;
-
-// Writer Apply
 Writer[fl.ap] = Writer.ap;
+
+// Instance Monad
+Writer.prototype[fl.of] = Writer.prototype.of;
+Writer.prototype[fl.chain] = Writer.prototype.chain;
+Writer.prototype[fl.map] = Writer.prototype.map;
 Writer.prototype[fl.ap] = Writer.prototype.ap;
 
 
