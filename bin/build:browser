@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Clean existing build files
-if [ -d build/node ]; then
-  echo "Removing 'build/node' files..."
-  rm -rf build/node
-  echo "Removed 'build/node' files."
+if [ -d build/browser ]; then
+  echo "Removing 'build/browser' files..."
+  rm -rf build/browser
+  echo "Removed 'build/browser' files."
 fi
 
 # Build source files with webpack.

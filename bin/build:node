@@ -9,7 +9,7 @@ fi
 
 # Build source files with babel.
 echo "Building source files..."
-./node_modules/.bin/babel --ignore **/*.test.js -d build/node src
+./node_modules/.bin/babel --ignore test -d build/node src
 echo "Source files built successfully."
 
 # Copy essential files into .tmp/deploy
