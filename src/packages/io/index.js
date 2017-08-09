@@ -3,6 +3,7 @@ import IO from './IO';
 
 // IO Applicative
 IO[FL.of] = IO.of;
+IO.prototype[FL.of] = IO.prototype.of;
 
 // IO Chain
 IO[FL.chain] = IO.chain;

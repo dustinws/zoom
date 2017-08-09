@@ -112,20 +112,6 @@ describe('Data.Either', () => {
     });
   });
 
-  describe('Either.try', () => {
-    test('It should a Right if the function was successful', () => {
-      const fromJson = Either.try(JSON.parse);
-      const result = fromJson('{ "foo": "bar" }');
-      expect(Either.isRight(result)).toBe(true);
-    });
-
-    test('It should return Left if it was not successful', () => {
-      const fromJson = Either.try(JSON.parse);
-      const result = fromJson('...');
-      expect(result instanceof Either.Left).toBe(true);
-    });
-  });
-
   describe('Either#of', () => {
     test('It should return an instance of Either', () => {
       expect(Either.of().of(1).isRight()).toBe(true);

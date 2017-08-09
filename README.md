@@ -3,6 +3,7 @@
 [![CircleCI](https://circleci.com/gh/dustinws/zoom/tree/master.svg?style=shield)](https://circleci.com/gh/dustinws/zoom/tree/master)
 [![npm version](https://badge.fury.io/js/zoomjs.svg)](https://badge.fury.io/js/zoomjs)
 [![deps](https://david-dm.org/dustinws/zoom.svg)](https://david-dm.org/dustinws/zoom.svg)
+[![Coverage Status](https://coveralls.io/repos/github/dustinws/zoom/badge.svg?branch=feature%2Fmarkdown-docs)](https://coveralls.io/github/dustinws/zoom?branch=feature%2Fmarkdown-docs)
 
 ---
 ### Overview
@@ -33,10 +34,7 @@ code that is easy to read and easy to refactor.
 Use direct require / import statements to only require the code that you need.
 
 ---
-### Documentation
-Documentation can be found [here](https://dustinws.github.io/zoom/).
 
----
 ### Installation
 
 ##### npm
