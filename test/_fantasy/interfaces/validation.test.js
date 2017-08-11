@@ -26,8 +26,9 @@ describe('Fantasy Check - Validation', () => {
       expect(typeof Validation.Failure.prototype[fl.chain]).toBe('function');
     });
 
-    test('Instance Semigroup', () => {
+    test('Instance Monoid', () => {
       expect(typeof Validation.Failure.prototype[fl.concat]).toBe('function');
+      expect(typeof Validation.Failure.prototype[fl.empty]).toBe('function');
     });
   });
 
@@ -39,8 +40,9 @@ describe('Fantasy Check - Validation', () => {
       expect(typeof Validation.Success.prototype[fl.chain]).toBe('function');
     });
 
-    test('Instance Semigroup', () => {
+    test('Instance Monoid', () => {
       expect(typeof Validation.Success.prototype[fl.concat]).toBe('function');
+      expect(typeof Validation.Success.prototype[fl.empty]).toBe('function');
     });
   });
 });
