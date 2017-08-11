@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Writer = exports.Validation = exports.Tuple = exports.Task = exports.Result = exports.Reader = exports.Maybe = exports.IO = exports.Either = exports.ADT = undefined;
+exports.Writer = exports.Validation = exports.Tuple = exports.Task = exports.Result = exports.RemoteData = exports.Reader = exports.Maybe = exports.IO = exports.Either = exports.ADT = undefined;
 
 var _adt = require('./adt');
 
@@ -24,6 +24,10 @@ var _maybe2 = _interopRequireDefault(_maybe);
 var _reader = require('./reader');
 
 var _reader2 = _interopRequireDefault(_reader);
+
+var _remoteData = require('./remote-data');
+
+var _remoteData2 = _interopRequireDefault(_remoteData);
 
 var _result = require('./result');
 
@@ -54,6 +58,7 @@ exports.Either = _either2.default;
 exports.IO = _io2.default;
 exports.Maybe = _maybe2.default;
 exports.Reader = _reader2.default;
+exports.RemoteData = _remoteData2.default;
 exports.Result = _result2.default;
 exports.Task = _task2.default;
 exports.Tuple = _tuple2.default;
