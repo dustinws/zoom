@@ -86,11 +86,10 @@ Validation.empty = () =>
  |------------------------------------------------------------------------------
  */
 
-// cata :: Validation a b ~> { Failure: a -> c, Success: b -> c } -> c
-Validation.prototype.cata = Validation.prototype.cata;
-
 // caseOf :: Validation a b ~> { Failure: a -> c, Success: b -> c } -> c
-Validation.prototype.caseOf = Validation.prototype.cata;
+Validation.prototype.caseOf = function caseOf(cases) {
+  return this.cata(cases);
+};
 
 // of :: Validation a b ~> d -> Validation c d
 Success.prototype.of = function of(value) {

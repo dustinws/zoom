@@ -83,11 +83,10 @@ Maybe.withDefault = curry((defaultValue, maybe) =>
  |------------------------------------------------------------------------------
  */
 
-// cata :: Maybe a ~> { Nothing: b -> c, Just: a -> c } -> c
-Maybe.prototype.cata = Maybe.prototype.cata;
-
 // caseOf :: Maybe a ~> { Nothing: b -> c, Just: a -> c } -> c
-Maybe.prototype.caseOf = Maybe.prototype.cata;
+Maybe.prototype.caseOf = function caseOf(cases) {
+  return this.cata(cases);
+};
 
 // of :: a -> Maybe a
 Just.prototype.of = function of(value) {

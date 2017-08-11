@@ -66,11 +66,10 @@ Result.isOk = result => result instanceof Result.Ok;
  |------------------------------------------------------------------------------
  */
 
-// cata :: Result a b ~> { Err: a -> c, Ok: b -> c } -> c
-Result.prototype.cata = Result.prototype.cata;
-
 // caseOf :: Result a b ~> { Err: a -> c, Ok: b -> c } -> c
-Result.prototype.caseOf = Result.prototype.cata;
+Result.prototype.caseOf = function caseOf(cases) {
+  return this.cata(cases);
+};
 
 // of :: Result a b ~> d -> Result c d
 Ok.prototype.of = function of(value) {

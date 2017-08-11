@@ -105,7 +105,9 @@ Left.prototype.of = value =>
   Left(value);
 
 // caseOf :: Either a b ~> { Left: a -> c, Right: b -> c } -> c
-Either.prototype.caseOf = Either.prototype.cata;
+Either.prototype.caseOf = function caseOf(cases) {
+  return this.cata(cases);
+};
 
 // chain :: Either a b ~> (b -> Either a c) -> Either a c
 Either.prototype.chain = function chain(transform) {
