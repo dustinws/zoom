@@ -160,32 +160,8 @@ Result.prototype[_fantasyLand2.default.ap] = Result.prototype.ap;
 Result.Ok[_fantasyLand2.default.of] = Result.Ok.of;
 Result.Ok.prototype[_fantasyLand2.default.of] = Result.Ok.prototype.of;
 
-// Result.Ok Chain
-Result.Ok[_fantasyLand2.default.chain] = Result.Ok.chain;
-Result.Ok.prototype[_fantasyLand2.default.chain] = Result.Ok.prototype.chain;
-
-// Result.Ok Functor
-Result.Ok[_fantasyLand2.default.map] = Result.Ok.map;
-Result.Ok.prototype[_fantasyLand2.default.map] = Result.Ok.prototype.map;
-
-// Result.Ok Apply
-Result.Ok[_fantasyLand2.default.ap] = Result.Ok.ap;
-Result.Ok.prototype[_fantasyLand2.default.ap] = Result.Ok.prototype.ap;
-
 // Err Applicative
 Result.Err[_fantasyLand2.default.of] = Result.Err.of;
 Result.Err.prototype[_fantasyLand2.default.of] = Result.Err.prototype.of;
-
-// Result.Err Chain
-Result.Err[_fantasyLand2.default.chain] = Result.Err.chain;
-Result.Err.prototype[_fantasyLand2.default.chain] = Result.Err.prototype.chain;
-
-// Result.Err Functor
-Result.Err[_fantasyLand2.default.map] = Result.Err.map;
-Result.Err.prototype[_fantasyLand2.default.map] = Result.Err.prototype.map;
-
-// Result.Err Apply
-Result.Err[_fantasyLand2.default.ap] = Result.Err.ap;
-Result.Err.prototype[_fantasyLand2.default.ap] = Result.Err.prototype.ap;
 
 module.exports = Result;

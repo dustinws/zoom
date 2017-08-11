@@ -181,28 +181,7 @@ Maybe.prototype[_fantasyLand2.default.ap] = Maybe.prototype.ap;
 Maybe.Just[_fantasyLand2.default.of] = Maybe.Just.of;
 Maybe.Just.prototype[_fantasyLand2.default.of] = Maybe.Just.prototype.of;
 
-// Maybe.Just Chain
-Maybe.Just[_fantasyLand2.default.chain] = Maybe.Just.chain;
-Maybe.Just.prototype[_fantasyLand2.default.chain] = Maybe.Just.prototype.chain;
-
-// Maybe.Just Functor
-Maybe.Just[_fantasyLand2.default.map] = Maybe.Just.map;
-Maybe.Just.prototype[_fantasyLand2.default.map] = Maybe.Just.prototype.map;
-
-// Maybe.Just Apply
-Maybe.Just[_fantasyLand2.default.ap] = Maybe.Just.ap;
-Maybe.Just.prototype[_fantasyLand2.default.ap] = Maybe.Just.prototype.ap;
-
 // Nothing Applicative
 Maybe.Nothing[_fantasyLand2.default.of] = Maybe.Nothing.of;
-
-// Maybe.Nothing Chain
-Maybe.Nothing[_fantasyLand2.default.chain] = Maybe.Nothing.chain;
-
-// Maybe.Nothing Functor
-Maybe.Nothing[_fantasyLand2.default.map] = Maybe.Nothing.map;
-
-// Maybe.Nothing Apply
-Maybe.Nothing[_fantasyLand2.default.ap] = Maybe.Nothing.ap;
 
 module.exports = Maybe;

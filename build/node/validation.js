@@ -118,6 +118,11 @@ Validation.empty = function () {
  |------------------------------------------------------------------------------
  */
 
+// of :: Validation a b ~> d -> Validation c d
+Validation.prototype.of = function of(value) {
+  return Validation.of(value);
+};
+
 // caseOf :: Validation a b ~> { Failure: a -> c, Success: b -> c } -> c
 Validation.prototype.caseOf = function caseOf(cases) {
   return this.cata(cases);
@@ -166,6 +171,11 @@ Validation.prototype.concat = function concat(other) {
   return Validation.concat(other, this);
 };
 
+// empty :: Validation a b ~> c -> Validation d [e]
+Validation.prototype.empty = function empty() {
+  return Validation.empty();
+};
+
 /*
  |------------------------------------------------------------------------------
  | Fantasy Land
@@ -174,6 +184,7 @@ Validation.prototype.concat = function concat(other) {
 
 // Validation Applicative
 Validation[_fantasyLand2.default.of] = Validation.of;
+Validation.prototype[_fantasyLand2.default.of] = Validation.prototype.of;
 
 // Validation Chain
 Validation[_fantasyLand2.default.chain] = Validation.chain;
@@ -193,45 +204,14 @@ Validation.prototype[_fantasyLand2.default.concat] = Validation.prototype.concat
 
 // Validation Monoid
 Validation[_fantasyLand2.default.empty] = Validation.empty;
+Validation.prototype[_fantasyLand2.default.empty] = Validation.prototype.empty;
 
 // Success Applicative
 Validation.Success[_fantasyLand2.default.of] = Validation.Success.of;
 Validation.Success.prototype[_fantasyLand2.default.of] = Validation.Success.prototype.of;
 
-// Success Chain
-Validation.Success[_fantasyLand2.default.chain] = Validation.Success.chain;
-Validation.Success.prototype[_fantasyLand2.default.chain] = Validation.Success.prototype.chain;
-
-// Success Functor
-Validation.Success[_fantasyLand2.default.map] = Validation.Success.map;
-Validation.Success.prototype[_fantasyLand2.default.map] = Validation.Success.prototype.map;
-
-// Success Apply
-Validation.Success[_fantasyLand2.default.ap] = Validation.Success.ap;
-Validation.Success.prototype[_fantasyLand2.default.ap] = Validation.Success.prototype.ap;
-
-// Success Semigroup
-Validation.Success[_fantasyLand2.default.concat] = Validation.Success.concat;
-Validation.Success.prototype[_fantasyLand2.default.concat] = Validation.Success.prototype.concat;
-
 // Failure Applicative
 Validation.Failure[_fantasyLand2.default.of] = Validation.Failure.of;
 Validation.Failure.prototype[_fantasyLand2.default.of] = Validation.Failure.prototype.of;
-
-// Failure Chain
-Validation.Failure[_fantasyLand2.default.chain] = Validation.Failure.chain;
-Validation.Failure.prototype[_fantasyLand2.default.chain] = Validation.Failure.prototype.chain;
-
-// Failure Functor
-Validation.Failure[_fantasyLand2.default.map] = Validation.Failure.map;
-Validation.Failure.prototype[_fantasyLand2.default.map] = Validation.Failure.prototype.map;
-
-// Failure Apply
-Validation.Failure[_fantasyLand2.default.ap] = Validation.Failure.ap;
-Validation.Failure.prototype[_fantasyLand2.default.ap] = Validation.Failure.prototype.ap;
-
-// Failure Semigroup
-Validation.Failure[_fantasyLand2.default.concat] = Validation.Failure.concat;
-Validation.Failure.prototype[_fantasyLand2.default.concat] = Validation.Failure.prototype.concat;
 
 module.exports = Validation;
