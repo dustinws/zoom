@@ -138,34 +138,9 @@ Result.prototype[fl.ap] = Result.prototype.ap;
 Result.Ok[fl.of] = Result.Ok.of;
 Result.Ok.prototype[fl.of] = Result.Ok.prototype.of;
 
-// Result.Ok Chain
-Result.Ok[fl.chain] = Result.Ok.chain;
-Result.Ok.prototype[fl.chain] = Result.Ok.prototype.chain;
-
-// Result.Ok Functor
-Result.Ok[fl.map] = Result.Ok.map;
-Result.Ok.prototype[fl.map] = Result.Ok.prototype.map;
-
-// Result.Ok Apply
-Result.Ok[fl.ap] = Result.Ok.ap;
-Result.Ok.prototype[fl.ap] = Result.Ok.prototype.ap;
-
-
 // Err Applicative
 Result.Err[fl.of] = Result.Err.of;
 Result.Err.prototype[fl.of] = Result.Err.prototype.of;
-
-// Result.Err Chain
-Result.Err[fl.chain] = Result.Err.chain;
-Result.Err.prototype[fl.chain] = Result.Err.prototype.chain;
-
-// Result.Err Functor
-Result.Err[fl.map] = Result.Err.map;
-Result.Err.prototype[fl.map] = Result.Err.prototype.map;
-
-// Result.Err Apply
-Result.Err[fl.ap] = Result.Err.ap;
-Result.Err.prototype[fl.ap] = Result.Err.prototype.ap;
 
 
 module.exports = Result;

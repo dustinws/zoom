@@ -86,6 +86,11 @@ Validation.empty = () =>
  |------------------------------------------------------------------------------
  */
 
+// of :: Validation a b ~> d -> Validation c d
+Validation.prototype.of = function of(value) {
+  return Validation.of(value);
+};
+
 // caseOf :: Validation a b ~> { Failure: a -> c, Success: b -> c } -> c
 Validation.prototype.caseOf = function caseOf(cases) {
   return this.cata(cases);
@@ -134,6 +139,11 @@ Validation.prototype.concat = function concat(other) {
   return Validation.concat(other, this);
 };
 
+// empty :: Validation a b ~> c -> Validation d [e]
+Validation.prototype.empty = function empty() {
+  return Validation.empty();
+};
+
 
 /*
  |------------------------------------------------------------------------------
@@ -143,6 +153,7 @@ Validation.prototype.concat = function concat(other) {
 
 // Validation Applicative
 Validation[fl.of] = Validation.of;
+Validation.prototype[fl.of] = Validation.prototype.of;
 
 // Validation Chain
 Validation[fl.chain] = Validation.chain;
@@ -162,48 +173,16 @@ Validation.prototype[fl.concat] = Validation.prototype.concat;
 
 // Validation Monoid
 Validation[fl.empty] = Validation.empty;
+Validation.prototype[fl.empty] = Validation.prototype.empty;
 
 
 // Success Applicative
 Validation.Success[fl.of] = Validation.Success.of;
 Validation.Success.prototype[fl.of] = Validation.Success.prototype.of;
 
-// Success Chain
-Validation.Success[fl.chain] = Validation.Success.chain;
-Validation.Success.prototype[fl.chain] = Validation.Success.prototype.chain;
-
-// Success Functor
-Validation.Success[fl.map] = Validation.Success.map;
-Validation.Success.prototype[fl.map] = Validation.Success.prototype.map;
-
-// Success Apply
-Validation.Success[fl.ap] = Validation.Success.ap;
-Validation.Success.prototype[fl.ap] = Validation.Success.prototype.ap;
-
-// Success Semigroup
-Validation.Success[fl.concat] = Validation.Success.concat;
-Validation.Success.prototype[fl.concat] = Validation.Success.prototype.concat;
-
-
 // Failure Applicative
 Validation.Failure[fl.of] = Validation.Failure.of;
 Validation.Failure.prototype[fl.of] = Validation.Failure.prototype.of;
-
-// Failure Chain
-Validation.Failure[fl.chain] = Validation.Failure.chain;
-Validation.Failure.prototype[fl.chain] = Validation.Failure.prototype.chain;
-
-// Failure Functor
-Validation.Failure[fl.map] = Validation.Failure.map;
-Validation.Failure.prototype[fl.map] = Validation.Failure.prototype.map;
-
-// Failure Apply
-Validation.Failure[fl.ap] = Validation.Failure.ap;
-Validation.Failure.prototype[fl.ap] = Validation.Failure.prototype.ap;
-
-// Failure Semigroup
-Validation.Failure[fl.concat] = Validation.Failure.concat;
-Validation.Failure.prototype[fl.concat] = Validation.Failure.prototype.concat;
 
 
 module.exports = Validation;

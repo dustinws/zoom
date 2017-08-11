@@ -52,38 +52,19 @@ Either.ap = curry((left, right) => {
   return Right(left.value(right.value));
 });
 
-// concat :: Either a b -> Either a b -> Either a b
-Either.concat = curry((left, right) => {
-  if (left.isLeft() && right.isLeft())
-    return Left(left.value.concat(right.value));
-
-  if (left.isLeft()) return left;
-  if (right.isLeft()) return right;
-
-  return Right(left.value.concat(right.value));
-});
-
-// reduce :: ((c, b) -> c) -> c -> Either a b -> c
-Either.reduce = curry((callback, seed, either) =>
-  either.cata({
-    Left: always(seed),
-    Right: v => callback(seed, v),
-  }));
-
-// equals :: Either a b -> Either a b -> Bool
-Either.equals = curry((left, right) => {
-  if (!(left.isLeft() && right.isLeft()))
-    if (!(left.isRight() && right.isRight()))
-      return false;
-
-  return left.value === right.value;
-});
-
 // isLeft :: Either a b -> Bool
 Either.isLeft = either => either instanceof Left;
 
 // isRight :: Either a b -> Bool
 Either.isRight = either => either instanceof Right;
+
+Either.try = callback => (...args) => {
+  try {
+    return Right(callback(...args));
+  } catch (e) {
+    return Left(e);
+  }
+};
 
 
 /*
@@ -129,21 +110,6 @@ Either.prototype.ap = function ap(apply) {
   return Either.ap(apply, this);
 };
 
-// concat :: Either a b ~> Either a b -> Either a b
-Either.prototype.concat = function concat(other) {
-  return Either.concat(this, other);
-};
-
-// reduce :: Either a b ~> ((c, b) -> c) -> c -> c
-Either.prototype.reduce = function reduce(callback, seed) {
-  return Either.reduce(callback, seed, this);
-};
-
-// equals :: Either a b ~> Either a b -> Bool
-Either.prototype.equals = function equals(other) {
-  return Either.equals(other, this);
-};
-
 // isLeft :: Either a b ~> c -> Bool
 Either.prototype.isLeft = function isLeft() {
   return Either.isLeft(this);
@@ -176,18 +142,6 @@ Either.prototype[fl.map] = Either.prototype.map;
 // Either Apply
 Either[fl.ap] = Either.ap;
 Either.prototype[fl.ap] = Either.prototype.ap;
-
-// Either Semigroup
-Either[fl.concat] = Either.concat;
-Either.prototype[fl.concat] = Either.prototype.concat;
-
-// Either Setoid
-Either[fl.equals] = Either.equals;
-Either.prototype[fl.equals] = Either.prototype.equals;
-
-// Either Foldable
-Either[fl.reduce] = Either.reduce;
-Either.prototype[fl.reduce] = Either.prototype.reduce;
 
 
 // Right Applicative
