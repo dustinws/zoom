@@ -217,6 +217,21 @@ isRight(Left.of());
 
 ---
 
+#### try
+
+Wraps a function in a try / catch block. If the function is successful, a `Right` will be returned with the result. Otherwise, a `Left` will be returned with the error.
+
+```JavaScript
+import { Either } from 'zoomjs';
+
+const parseJson = Either.try(JSON.parse);
+
+parseJson('...'); // Left(SyntaxError)
+parseJson('{ "a": 1 }'); // Right({ a: 1 })
+```
+
+---
+
 ### Instance
 
 ---
