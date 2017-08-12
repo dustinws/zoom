@@ -33,7 +33,9 @@ user.toString(); // (1, 'Dustin')
 ---
 
 #### fst
-`fst :: (a, b) -> a`
+```hs
+fst :: (a, b) -> a
+```
 
 Get the first element of a Tuple
 
@@ -46,7 +48,9 @@ Tuple.fst(Tuple(1, 'Jake')); // 1
 ---
 
 #### snd
-`snd :: (a, b) -> b`
+```hs
+snd :: (a, b) -> b
+```
 
 Get the second element of a Tuple
 
@@ -59,7 +63,9 @@ Tuple.snd(Tuple(1, 'Jake')); // 'Jake'
 ---
 
 #### equals
-`equals :: (a, b) -> (a, b) -> Bool`
+```hs
+equals :: (a, b) -> (a, b) -> Bool
+```
 
 Determine if one tuple is the same as another. Both elements are checked with the `===` comparison operator.
 
@@ -83,7 +89,9 @@ Tuple.equals(userB, userC);
 ---
 
 #### map
-`map :: (b -> c) -> (a, b) -> (a, c)`
+```hs
+map :: (b -> c) -> (a, b) -> (a, c)
+```
 
 Apply a function to the second element of a tuple and return a new, modified tuple.
 
@@ -100,7 +108,9 @@ Tuple.map(toUpper, Tuple(1, 'jake'));
 ---
 
 #### mapLeft
-`mapLeft :: (a -> c) -> (a, b) -> (c, b)`
+```hs
+mapLeft :: (a -> c) -> (a, b) -> (c, b)
+```
 
 Apply a function to the first element of a tuple and return a new, modified tuple.
 
@@ -119,7 +129,9 @@ Tuple.mapLeft(n => n + 1, user); // (2, 'Jake')
 ---
 
 #### fst
-`fst :: (a, b) ~> c -> a`
+```hs
+fst :: (a, b) ~> c -> a
+```
 
 Get the first element of a Tuple. Instance version of "Tuple.fst"
 
@@ -132,7 +144,9 @@ Tuple(1, 'Jake').fst(); // 1
 ---
 
 #### snd
-`snd :: (a, b) ~> c -> b`
+```hs
+snd :: (a, b) ~> c -> b
+```
 
 Get the second element of a Tuple. Instance version of "Tuple.snd"
 
@@ -145,7 +159,9 @@ Tuple(1, 'Jake').snd(); // 'Jake'
 ---
 
 #### equals
-`equals :: (a, b) ~> (a, b) -> Bool`
+```hs
+equals :: (a, b) ~> (a, b) -> Bool
+```
 
 Determine if one tuple is the same as another. Both elements are checked with the `===` comparison operator.
 
@@ -169,7 +185,9 @@ userB.equals(userC);
 ---
 
 #### map
-`map :: (a, b) ~> (b -> c) -> (a, c)`
+```hs
+map :: (a, b) ~> (b -> c) -> (a, c)
+```
 
 Apply a function to the second element of a tuple and return a new, modified tuple. Instance version of "Tuple.map"
 
@@ -184,7 +202,9 @@ user.map(x => x.toUpperCase()).toString() // (1, 'JAKE')
 ---
 
 #### mapLeft
-`mapLeft :: (a, b) ~> (a -> c) -> (c, b)`
+```hs
+mapLeft :: (a, b) ~> (a -> c) -> (c, b)
+```
 
 Apply a function to the first element of a tuple and return a new, modified tuple. Instance version of `Tuple.mapLeft`
 
