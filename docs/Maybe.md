@@ -1,5 +1,11 @@
 # Maybe
 
+```hs
+type Maybe a = Just a | Nothing
+```
+
+---
+
 #### Fantasy Land Implementations
 `Applicative`, `Functor`, `Apply`, `Chain`, `Monad`
 
@@ -49,11 +55,11 @@ function getStreetNumber(data, defaultValue) {
       if (data.location.address.streetNumber != null) {
         return data.location.address.streetNumber;
       }
-      return defaultValue;;
+      return defaultValue;
     }
-    return defaultValue;;
+    return defaultValue;
   }
-  return defaultValue;;
+  return defaultValue;
 }
 
 getStreetNumber(data, 'No Address'); // '43'
@@ -87,7 +93,9 @@ getStreetNumber({}, 'No Addres'); // 'No Address'
 ---
 
 #### of
-`of :: a -> Maybe a`
+```hs
+of :: a -> Maybe a
+```
 
 Lift a value into a successful 'Just' context.
 
@@ -102,7 +110,9 @@ val.toString() // 'Just(1)'
 ---
 
 #### Just.of
-`of :: a -> Maybe a`
+```hs
+of :: a -> Maybe a
+```
 
 Lift a value into a successful 'Just' context.
 
@@ -117,7 +127,9 @@ val.toString() // 'Just(1)'
 ---
 
 #### Nothing.of
-`of :: a -> Maybe a`
+```hs
+of :: a -> Maybe a
+```
 
 Return a reference to the `Nothing` singleton. This function only exists to maintain a consistent interface with `Just`.
 
@@ -133,7 +145,9 @@ Nothing === Nothing.of(); // true
 ---
 
 #### chain
-`chain :: (a -> Maybe b) -> Maybe a -> Maybe b`
+```hs
+chain :: (a -> Maybe b) -> Maybe a -> Maybe b
+```
 
 Apply a transformation to the Maybe if it is an instance of "Just". Otherwise, ignore the transformation and return the instance.
 This is how you can switch from a 'Just' to 'Nothing' instance and stop subsequent transformations from being applied. An alias for `Maybe.andThen`
@@ -151,7 +165,9 @@ chain(toUpper, Nothing); // Nothing
 ---
 
 #### andThen
-`andThen :: (a -> Maybe b) -> Maybe a -> Maybe b`
+```hs
+andThen :: (a -> Maybe b) -> Maybe a -> Maybe b
+```
 
 Apply a transformation to the Maybe if it is an instance of "Just". Otherwise, ignore the transformation and return the instance.
 This is how you can switch from a 'Just' to 'Nothing' instance and stop subsequent transformations from being applied. An alias for `Maybe.chain`
@@ -167,7 +183,9 @@ andThen(toUpper, Nothing); // Nothing
 ```
 
 #### map
-`map :: (a -> b) -> Maybe a -> Maybe b`
+```hs
+map :: (a -> b) -> Maybe a -> Maybe b
+```
 
 Apply a transformation to the Maybe if it is an instance
 of "Just". Otherwise, ignore the transformation and return the instance.
@@ -185,7 +203,9 @@ map(toUpper, invalid); // Nothing
 ```
 
 #### ap
-`ap :: Apply (a -> b) -> Maybe a -> Maybe b`
+```hs
+ap :: Apply (a -> b) -> Maybe a -> Maybe b
+```
 
 Apply a transformation to the Maybe if it is an instance of "Just". Otherwise, ignore the transformation and return the instance.
 
@@ -204,7 +224,9 @@ ap(toUpper, invalid); // Nothing
 ---
 
 #### isNothing
-`isNothing :: Maybe a -> Bool`
+```hs
+isNothing :: Maybe a -> Bool
+```
 
 Determine if an Maybe is an instance of Nothing
 
@@ -218,7 +240,9 @@ isNothing(Just.of(1)); // false
 ---
 
 #### isJust
-`isJust :: Maybe a -> Bool`
+```hs
+isJust :: Maybe a -> Bool
+```
 
 Determine if an Maybe is an instance of Just
 
@@ -232,7 +256,9 @@ isJust(Nothing); // false
 ---
 
 #### fromNullable
-`fromNullable :: a -> Maybe a`
+```hs
+fromNullable :: a -> Maybe a
+```
 
 Create a maybe from a potentially null or undefined value.
 
@@ -247,7 +273,9 @@ fromNullable(); // Nothing
 ---
 
 #### withDefault
-`withDefault :: a -> Maybe a -> a`
+```hs
+withDefault :: a -> Maybe a -> a
+```
 
 Extract the value from a Maybe, with a default value in
 case it is `Nothing`.
@@ -266,7 +294,9 @@ withDefault('bar', Just('foo')); // 'foo'
 ---
 
 #### cata
-`cata :: Maybe a ~> { Nothing: a -> b, Just: a -> b } -> b`
+```hs
+cata :: Maybe a ~> { Nothing: a -> b, Just: a -> b } -> b
+```
 
 A function that accepts an object with two functions, one to run if the either is an instance of `Just`, and one to run if the either is an instance of `Nothing`. The return value will be returned directly, with no wrapper instance. This name is short for `catamorphism`.
 
@@ -287,7 +317,9 @@ Just.of('foobar').cata({
 ---
 
 #### caseOf
-`caseOf :: Maybe a ~> { Nothing: a -> b, Just: a -> b } -> b`
+```hs
+caseOf :: Maybe a ~> { Nothing: a -> b, Just: a -> b } -> b
+```
 
 A function that accepts an object with two functions, one to run if the either is an instance of `Just`, and one to run if the either is an instance of `Nothing`. The return value will be returned directly, with no wrapper instance. Alias for `Maybe#cata`.
 
@@ -308,7 +340,9 @@ Just.of('foobar').caseOf({
 ---
 
 #### Just.of
-`of :: Maybe a ~> b -> Maybe b`
+```hs
+of :: Maybe a ~> b -> Maybe b
+```
 
 Lift a value into a successful 'Just' context.
 
@@ -323,7 +357,9 @@ val.toString() // 'Just(1)'
 ---
 
 #### chain
-`chain :: Maybe a ~> (a -> Maybe b) -> Maybe b`
+```hs
+chain :: Maybe a ~> (a -> Maybe b) -> Maybe b
+```
 
 Apply a transformation to the Maybe if it is an instance
 of "Just". Otherwise, ignore the transformation and return the instance.
@@ -342,7 +378,9 @@ Nothing.chain(toUpper); // Nothing
 ---
 
 #### andThen
-`andThen :: Maybe a ~> (a -> Maybe b) -> Maybe b`
+```hs
+andThen :: Maybe a ~> (a -> Maybe b) -> Maybe b
+```
 
 Apply a transformation to the Maybe if it is an instance
 of "Just". Otherwise, ignore the transformation and return the instance.
@@ -361,7 +399,9 @@ Nothing.andThen(toUpper); // Nothing
 ---
 
 #### map
-`map :: Maybe a ~> (a -> b) -> Maybe b`
+```hs
+map :: Maybe a ~> (a -> b) -> Maybe b
+```
 
 Apply a transformation to the Maybe if it is an instance of "Just". Otherwise, ignore the transformation and return the instance.
 This is how you can switch from a 'Just' to 'Nothing' instance and stop subsequent transformations from being applied. An alias for `Maybe#chain`
@@ -379,7 +419,9 @@ Nothing.map(toUpper); // Nothing
 ---
 
 #### ap
-`ap :: Maybe a ~> Apply (a -> b) -> Maybe b`
+```hs
+ap :: Maybe a ~> Apply (a -> b) -> Maybe b
+```
 
 Apply a transformation to the Maybe if it is an instance of "Just". Otherwise, ignore the transformation and return the instance.
 
@@ -395,7 +437,9 @@ Nothing.ap(toUpper); // Nothing
 ---
 
 #### isNothing
-`isNothing :: Maybe a ~> b -> Bool`
+```hs
+isNothing :: Maybe a ~> b -> Bool
+```
 
 Determine if an Maybe is an instance of Nothing
 
@@ -409,7 +453,9 @@ Just.of().isNothing(); // false
 ---
 
 #### isJust
-`isJust :: Maybe a ~> b -> Bool`
+```hs
+isJust :: Maybe a ~> b -> Bool
+```
 
 Determine if an Maybe is an instance of Just
 
@@ -423,7 +469,9 @@ Nothing.isNothing(); // false
 ---
 
 #### withDefault
-`withDefault :: Maybe a ~> a -> a`
+```hs
+withDefault :: Maybe a ~> a -> a
+```
 
 Extract the value from a Maybe, with a default value in case it is `Nothing`.
 
