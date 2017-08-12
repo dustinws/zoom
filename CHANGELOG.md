@@ -1,7 +1,30 @@
-#### 3.0.0-beta (2017-08-12)
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/dustinws/zoom/compare/v3.0.0-beta...v3.0.0) (2017-08-12)
 
-##### Continuous Integration
 
-* **badge:** update CI badge url ([63fdef73](https://github.com/dustinws/zoom/commit/63fdef73456233428e3aa73e603f83b5d5292aae))
-* **deployment:** remove auto deployment from CI ([594c19ad](https://github.com/dustinws/zoom/commit/594c19ad21fa32fd8632af3b54d6de8658a188af))
+### Features
+
+* **core:** add core utilities ([69ff5f6](https://github.com/dustinws/zoom/commit/69ff5f6))
+
+
+
+<a name="3.0.0-beta"></a>
+# [3.0.0-beta](https://github.com/dustinws/zoom/compare/v2.0.0...v3.0.0-beta) (2017-08-11)
+
+
+
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/dustinws/zoom/compare/v1.1.0-beta...v2.0.0) (2017-07-15)
+
+
+
+<a name="1.1.0-beta"></a>
+# [1.1.0-beta](https://github.com/dustinws/zoom/compare/v1.0.0-beta...v1.1.0-beta) (2017-07-06)
+
+
+
+<a name="1.0.0-beta"></a>
+# 1.0.0-beta (2017-07-04)
+
+
 
