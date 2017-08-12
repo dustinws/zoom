@@ -25,6 +25,7 @@ code that is easy to read and easy to refactor.
 - [IO](https://github.com/dustinws/zoom/blob/master/docs/IO.md)
 - [Maybe](https://github.com/dustinws/zoom/blob/master/docs/Maybe.md)
 - [Reader](https://github.com/dustinws/zoom/blob/master/docs/Reader.md)
+- [RemoteData](https://github.com/dustinws/zoom/blob/master/docs/RemoteData.md)
 - [Result](https://github.com/dustinws/zoom/blob/master/docs/Result.md)
 - [Task](https://github.com/dustinws/zoom/blob/master/docs/Task.md)
 - [Tuple](https://github.com/dustinws/zoom/blob/master/docs/Tuple.md)
