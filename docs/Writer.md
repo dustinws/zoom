@@ -15,7 +15,9 @@ logging.
 ---
 
 #### of
-`of :: a -> Writer w a`
+```hs
+of :: a -> Writer w a
+```
 
 Create a new writer that will return the given value.
 
@@ -28,7 +30,9 @@ Writer.of('foo'); // Writer(null, foo)
 ---
 
 #### tell
-`tell :: w -> Writer w a -> Writer w a`
+```hs
+tell :: w -> Writer w a -> Writer w a
+```
 
 Attach a new piece of metadata to a writer.
 
@@ -42,7 +46,9 @@ Writer.tell('A log!', Writer.of('foo'));
 ---
 
 #### chain
-`chain :: (a -> Writer w b) -> Writer w a -> Writer w b`
+```hs
+chain :: (a -> Writer w b) -> Writer w a -> Writer w b
+```
 
 Run multiple writers in sequence. The function given to `.chain` must return a `Writer`.
 
@@ -60,7 +66,9 @@ Writer.chain(half, Writer.of(10));
 ---
 
 #### map
-`map :: (a -> b) -> Writer w a -> Writer w b`
+```hs
+map :: (a -> b) -> Writer w a -> Writer w b
+```
 
 Apply a function to the value held by a `Writer`. Returns a new `Writer`.
 
@@ -76,7 +84,9 @@ Writer.map(x => x.toUpperCase(), writer);
 ---
 
 #### ap
-`ap :: Apply (a -> b) -> Writer w a -> Writer w b`
+```hs
+ap :: Apply (a -> b) -> Writer w a -> Writer w b
+```
 
 Apply a function in an `Apply` to the value held by a `Writer`. Returns a new `Writer`.
 
@@ -98,7 +108,9 @@ Writer.ap(toUpper, writer);
 ---
 
 #### chain
-`chain :: Writer w a ~> (a -> Writer w b) -> Writer w b`
+```hs
+chain :: Writer w a ~> (a -> Writer w b) -> Writer w b
+```
 
 Run multiple writers in sequence. The function given to `.chain` must return a `Writer`.
 
@@ -116,7 +128,9 @@ Writer.of(10).chain(half);
 ---
 
 #### tell
-`tell :: Writer w a ~> w -> Writer w a`
+```hs
+tell :: Writer w a ~> w -> Writer w a
+```
 
 Attach a new piece of metadata to a writer.
 
@@ -130,7 +144,9 @@ Writer.of('foo').tell('A log!');
 ---
 
 #### map
-`map :: Writer w a ~> (a -> b) -> Writer w b`
+```hs
+map :: Writer w a ~> (a -> b) -> Writer w b
+```
 
 Apply a function to the value held by a `Writer`. Returns a new `Writer`.
 
@@ -146,7 +162,9 @@ writer.map(x => x.toUpperCase());
 ---
 
 #### ap
-`ap :: Writer w a ~> Apply (a -> b) -> Writer w b`
+```hs
+ap :: Writer w a ~> Apply (a -> b) -> Writer w b
+```
 
 Apply a function in an `Apply` to the value held by a `Writer`. Returns a new `Writer`.
 
