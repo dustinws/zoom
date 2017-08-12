@@ -11,10 +11,18 @@ describe('Fantasy Check - RemoteData', () => {
     expect(typeof RemoteData[fl.chain]).toBe('function');
   });
 
+  test('Instance Semigroup', () => {
+    expect(typeof RemoteData[fl.concat]).toBe('function');
+  });
+
   test('Instance Monad', () => {
     expect(typeof RemoteData.prototype[fl.map]).toBe('function');
     expect(typeof RemoteData.prototype[fl.ap]).toBe('function');
     expect(typeof RemoteData.prototype[fl.of]).toBe('function');
     expect(typeof RemoteData.prototype[fl.chain]).toBe('function');
+  });
+
+  test('Instance Semigroup', () => {
+    expect(typeof RemoteData.prototype[fl.concat]).toBe('function');
   });
 });
