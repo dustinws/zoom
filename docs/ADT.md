@@ -8,7 +8,9 @@ Helpers for creating abstract data types.
 ---
 
 #### symbol
-`symbol :: Symbol`
+```hs
+symbol :: Symbol
+```
 
 The identifier used to get an object's type.
 
