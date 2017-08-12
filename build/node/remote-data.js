@@ -12,10 +12,6 @@ var _curry = require('ramda/src/curry');
 
 var _curry2 = _interopRequireDefault(_curry);
 
-var _identity = require('ramda/src/identity');
-
-var _identity2 = _interopRequireDefault(_identity);
-
 var _always = require('ramda/src/always');
 
 var _always2 = _interopRequireDefault(_always);
@@ -46,20 +42,25 @@ var NotAsked = RemoteData.NotAsked,
  |------------------------------------------------------------------------------
  */
 
-// of :: b -> RemoteData a b
+RemoteData.NotAsked.of = (0, _always2.default)(RemoteData.NotAsked);
+RemoteData.Loading.of = (0, _always2.default)(RemoteData.Loading);
+RemoteData.Success.of = function (v) {
+  return Success(v);
+};
+RemoteData.Failure.of = function (v) {
+  return Failure(v);
+};
 
+// of :: b -> RemoteData a b
 RemoteData.of = function of(value) {
   return Success(value);
 };
 
 // chain :: (b -> RemoteData a c) -> RemoteData a b -> RemoteData a c
 RemoteData.chain = (0, _curry2.default)(function (callback, remote) {
-  return remote.cata({
-    NotAsked: (0, _always2.default)(remote),
-    Loading: (0, _always2.default)(remote),
-    Failure: (0, _always2.default)(remote),
-    Success: callback
-  });
+  return (// eslint-disable-line no-confusing-arrow
+    remote.isSuccess() ? callback(remote.value) : remote
+  );
 });
 
 // andThen :: (b -> RemoteData a c) -> RemoteData a b -> RemoteData a b
@@ -73,6 +74,23 @@ RemoteData.map = (0, _curry2.default)(function (transform, maybe) {
 // ap :: Apply (b -> c) -> RemoteData a b -> RemoteData a c
 RemoteData.ap = (0, _curry2.default)(function (left, right) {
   return RemoteData.chain(RemoteData.map(_2.default, right), left);
+});
+
+// concat :: RemoteData e a -> RemoteData e a -> RemoteData e a
+RemoteData.concat = (0, _curry2.default)(function (left, right) {
+  // Priority one
+  if (left.isNotAsked()) return left;
+  if (right.isNotAsked()) return right;
+
+  // Priority 2
+  if (left.isLoading()) return left;
+  if (right.isLoading()) return right;
+
+  // Priority 3
+  if (left.isFailure()) return left;
+  if (right.isFailure()) return right;
+
+  return Success(left.value.concat(right.value));
 });
 
 // isNotAsked :: RemoteData a b -> Bool
@@ -96,13 +114,10 @@ RemoteData.isSuccess = function (remote) {
 };
 
 // withDefault :: b -> RemoteData a b -> b
-RemoteData.withDefault = (0, _curry2.default)(function (defaultValue, maybe) {
-  return maybe.cata({
-    NotAsked: (0, _always2.default)(defaultValue),
-    Loading: (0, _always2.default)(defaultValue),
-    Failure: (0, _always2.default)(defaultValue),
-    Success: _identity2.default
-  });
+RemoteData.withDefault = (0, _curry2.default)(function (defaultValue, remote) {
+  return (// eslint-disable-line no-confusing-arrow
+    remote.isSuccess() ? remote.value : defaultValue
+  );
 });
 
 /*
@@ -139,6 +154,11 @@ RemoteData.prototype.map = function map(transform) {
 // ap :: RemoteData a b ~> Apply (b -> c) -> RemoteData a c
 RemoteData.prototype.ap = function ap(transform) {
   return RemoteData.ap(transform, this);
+};
+
+// concat :: RemoteData a b ~> RemoteData a b -> RemoteData a b
+RemoteData.prototype.concat = function concat(other) {
+  return RemoteData.concat(this, other);
 };
 
 // isNotAsked :: RemoteData a b ~> c -> Bool
@@ -187,5 +207,9 @@ RemoteData.prototype[_fantasyLand2.default.map] = RemoteData.prototype.map;
 // RemoteData Apply
 RemoteData[_fantasyLand2.default.ap] = RemoteData.ap;
 RemoteData.prototype[_fantasyLand2.default.ap] = RemoteData.prototype.ap;
+
+// RemoteData Semigroup
+RemoteData[_fantasyLand2.default.concat] = RemoteData.concat;
+RemoteData.prototype[_fantasyLand2.default.concat] = RemoteData.prototype.concat;
 
 module.exports = RemoteData;

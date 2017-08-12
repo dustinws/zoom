@@ -3,11 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Writer = exports.Validation = exports.Tuple = exports.Task = exports.Result = exports.RemoteData = exports.Reader = exports.Maybe = exports.IO = exports.Either = exports.ADT = undefined;
+exports.Writer = exports.Validation = exports.Tuple = exports.Task = exports.Result = exports.RemoteData = exports.Reader = exports.Maybe = exports.IO = exports.Either = exports.core = exports.ADT = undefined;
 
 var _adt = require('./adt');
 
 var ADT = _interopRequireWildcard(_adt);
+
+var _core = require('./core');
+
+var core = _interopRequireWildcard(_core);
 
 var _either = require('./either');
 
@@ -54,6 +58,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 exports.ADT = ADT;
+exports.core = core;
 exports.Either = _either2.default;
 exports.IO = _io2.default;
 exports.Maybe = _maybe2.default;
