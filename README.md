@@ -18,6 +18,7 @@ code that is easy to read and easy to refactor.
 ---
 #### Helpers
 - [ADT](https://github.com/dustinws/zoom/blob/master/docs/ADT.md)
+- [Core](https://github.com/dustinws/zoom/blob/master/docs/Core.md)
 
 #### Types
 - [Either](https://github.com/dustinws/zoom/blob/master/docs/Either.md)
