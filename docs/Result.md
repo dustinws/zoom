@@ -7,6 +7,10 @@ represents a successful operation, and the `Err` constructor represents
 an unsuccessful operation with an embedded error message. You can chain
 functions that return `Result` instances by using `.chain` or `.andThen`.
 
+```hs
+type Result e a = Err e | Ok a
+```
+
 ---
 
 #### Fantasy Land Implementations
@@ -42,7 +46,9 @@ toInteger(null) // Err(Not a number!)
 ---
 
 #### of
-`of :: b -> Result a b`
+```hs
+of :: b -> Result a b
+```
 
 Lift a value into a successful 'Ok' context.
 
@@ -56,7 +62,9 @@ Result.of(1).toString();
 ---
 
 #### Ok.of
-`of :: b -> Result a b`
+```hs
+of :: b -> Result a b
+```
 
 Lift a value into a successful 'Ok' context.
 
@@ -70,7 +78,9 @@ Ok.of(1).toString();
 ---
 
 #### Err.of
-`of :: a -> Result a b`
+```hs
+of :: a -> Result a b
+```
 
 Lift a value into an unsuccessful 'Err' context.
 
@@ -84,7 +94,9 @@ Err.of(1).toString();
 ---
 
 #### chain
-`chain :: (b -> Result a c) -> Result a b -> Result a c`
+```hs
+chain :: (b -> Result a c) -> Result a b -> Result a c
+```
 
 Apply a transformation to the Result if it is an instance of "Ok". Otherwise, ignore the transformation and return the instance.
 This is how you can switch from a 'Ok' to 'Err' instance and stop subsequent transformations from being applied. An alias for `Result.andThen`
@@ -110,7 +122,9 @@ chain(toUpper, Err.of('yea right'));
 ---
 
 #### andThen
-`andThen :: (b -> Result a c) -> Result a b -> Result a c`
+```hs
+andThen :: (b -> Result a c) -> Result a b -> Result a c
+```
 
 Apply a transformation to the Result if it is an instance of "Ok". Otherwise, ignore the transformation and return the instance.
 This is how you can switch from a 'Ok' to 'Err' instance and stop subsequent transformations from being applied. An alias for `Result.chain`
@@ -136,7 +150,9 @@ andThen(toUpper, Err.of('yea right'));
 ---
 
 #### map
-`map :: (b -> c) -> Result a b -> Result a c`
+```hs
+map :: (b -> c) -> Result a b -> Result a c
+```
 
 `map` is very similar to `Result.andThen` and `Result.chain` in that it only runs the function if the result is an instance of `Just`. The main difference is that `Result.andThen` and `Result.chain` expect the functions you give them to return new `Result` instances, and map let's you use plain old functions.
 
@@ -158,7 +174,9 @@ map(toUpper, Err.of('nay!'));
 ---
 
 #### ap
-`ap :: Apply (b -> c) -> Result a b -> Result a c`
+```hs
+ap :: Apply (b -> c) -> Result a b -> Result a c
+```
 
 `ap` is just like `map`, allowing a user to use plain old functions to transform values hidden away in `Result`s. The only difference is that instead of giving it the function, you give it an `Result` of the function.
 This is known as the `Apply` type in fantasy land JS.
@@ -181,7 +199,9 @@ ap(toUpperE, Err.of('yea right'));
 ---
 
 #### isErr
-`isErr :: Result a b -> Bool`
+```hs
+isErr :: Result a b -> Bool
+```
 
 Determine if an Result is an instance of Err
 
@@ -198,7 +218,9 @@ isErr(Ok.of());
 ---
 
 #### isOk
-`isOk :: Result a b -> Bool`
+```hs
+isOk :: Result a b -> Bool
+```
 
 Determine if an Result is an instance of Ok
 
@@ -219,7 +241,9 @@ isOk(Err.of());
 ---
 
 #### cata
-`cata :: Result a b ~> { Err: a -> c, Ok: b -> c } -> c`
+```hs
+cata :: Result a b ~> { Err: a -> c, Ok: b -> c } -> c
+```
 
 A function that accepts an object with two functions, one to run if the result is an instance of `Ok`, and one to run if the result is an instance of `Err`. The return value will be returned directly, with no wrapper instance. This name is short for `catamorphism`.
 An alias for `Result#caseOf`
@@ -241,7 +265,9 @@ Result.of(1).cata({
 ---
 
 #### caseOf
-`caseOf :: Result a b ~> { Err: a -> c, Ok: b -> c } -> c`
+```hs
+caseOf :: Result a b ~> { Err: a -> c, Ok: b -> c } -> c
+```
 
 A function that accepts an object with two functions, one to run if the result is an instance of `Ok`, and one to run if the result is an instance of `Err`. The return value will be returned directly, with no wrapper instance.
 An alias for `Result#cata`
@@ -263,7 +289,9 @@ Result.of(1).caseOf({
 ---
 
 #### Ok#of
-`of :: Result a b ~> c -> Result d c`
+```hs
+of :: Result a b ~> c -> Result d c
+```
 
 Lift a value into a successful 'Ok' context.
 
@@ -277,7 +305,9 @@ Ok.of(1);
 ---
 
 #### Left#of
-`of :: Result a b ~> c -> Result c d`
+```hs
+of :: Result a b ~> c -> Result c d
+```
 
 Lift a value into an unsuccessful 'Err' context.
 
@@ -291,7 +321,9 @@ Err.of(1);
 ---
 
 #### chain
-`chain :: Result a b ~> (b -> Result a c) -> Result a c`
+```hs
+chain :: Result a b ~> (b -> Result a c) -> Result a c
+```
 
 Apply a transformation to the Result if it is an instance of "Ok". Otherwise, ignore the transformation and return the instance.
 This is how you can switch from a 'Ok' to 'Err' instance and stop subsequent transformations from being applied. An alias for `Result#andThen`
@@ -317,7 +349,9 @@ Err.of('yea right').chain(toUpper);
 ---
 
 #### andThen
-`andThen :: Result a b ~> (b -> Result a c) -> Result a c`
+```hs
+andThen :: Result a b ~> (b -> Result a c) -> Result a c
+```
 
 Apply a transformation to the Result if it is an instance of "Ok". Otherwise, ignore the transformation and return the instance.
 This is how you can switch from a 'Ok' to 'Err' instance and stop subsequent transformations from being applied. An alias for `Result#chain`
@@ -343,7 +377,9 @@ Err.of('yea right').andThen(toUpper);
 ---
 
 #### map
-`map :: Result a b ~> (b -> c) -> Result a c`
+```hs
+map :: Result a b ~> (b -> c) -> Result a c
+```
 
 `map` is very similar to `Result.andThen` and `Result.chain` in that it only runs the function if the result is an instance of `Just`. The main difference is that `Result.andThen` and `Result.chain` expect the functions you give them to return new `Result` instances, and map let's you use plain old functions.
 
@@ -365,7 +401,9 @@ Err.of('nay!').map(toUpper);
 ---
 
 #### ap
-`ap :: Result a b ~> Apply (b -> c) -> Result a c`
+```hs
+ap :: Result a b ~> Apply (b -> c) -> Result a c
+```
 
 `ap` is just like `map`, allowing a user to use plain old functions to transform values hidden away in `Result`s. The only difference is that instead of giving it the function, you give it an `Result` of the function.
 This is known as the `Apply` type in fantasy land JS.
@@ -388,7 +426,9 @@ Err.of('yea right').ap(toUpperE);
 ---
 
 #### isErr
-`isErr :: Result a b ~> c -> Bool`
+```hs
+isErr :: Result a b ~> c -> Bool
+```
 
 Determine if an Result is an instance of Err
 
@@ -402,7 +442,9 @@ Ok.of(1).isErr(); // false
 ---
 
 #### isOk
-`isOk :: Result a b ~> c -> Bool`
+```hs
+isOk :: Result a b ~> c -> Bool
+```
 
 Determine if an Result is an instance of Ok
 
