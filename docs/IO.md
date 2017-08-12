@@ -14,7 +14,9 @@ as a database write.
 ---
 
 #### of
-`of :: a -> IO a`
+```hs
+of :: a -> IO a
+```
 
 Create a new io that will return the given value.
 
@@ -28,7 +30,9 @@ IO.of('foo');
 ---
 
 #### chain
-`chain :: (a -> IO b) -> IO a -> IO b`
+```hs
+chain :: (a -> IO b) -> IO a -> IO b
+```
 
 Run multiple IOs in sequence. The function given to `.chain` must return a new `IO`.
 
@@ -54,7 +58,9 @@ IO.chain(log, readFile('package.json'));
 ---
 
 #### map
-`map :: (a -> b) -> IO a -> IO b`
+```hs
+map :: (a -> b) -> IO a -> IO b
+```
 
 Apply a function to the value held by a `IO`. Returns a new `IO`.
 
@@ -71,7 +77,9 @@ IO.map(toUpper, IO.of('foo'));
 ---
 
 #### ap
-`ap :: Apply (a -> b) -> IO a -> IO b`
+```hs
+ap :: Apply (a -> b) -> IO a -> IO b
+```
 
 Apply a function contained in an `Apply` to the value held by a `IO`. Returns a new `IO`.
 
@@ -92,7 +100,9 @@ IO.ap(IO.of(toUpper), IO.of('foo'));
 ---
 
 #### chain
-`chain :: IO a ~> (a -> IO b) -> IO b`
+```hs
+chain :: IO a ~> (a -> IO b) -> IO b
+```
 
 Run multiple IOs in sequence. The function given to `.chain` must return a new `IO`.
 
@@ -118,7 +128,9 @@ readFile('package.json').chain(log);
 ---
 
 #### map
-`map :: IO a ~> (a -> b) -> IO b`
+```hs
+map :: IO a ~> (a -> b) -> IO b
+```
 
 Apply a function to the value held by a `IO`. Returns a new `IO`.
 
@@ -135,7 +147,9 @@ IO.of('foo').map(toUpper);
 ---
 
 #### ap
-`ap :: IO a ~> Apply (a -> b) -> IO b`
+```hs
+ap :: IO a ~> Apply (a -> b) -> IO b
+```
 
 Apply a function contained in an `Apply` to the value held by a `IO`. Returns a new `IO`.
 
