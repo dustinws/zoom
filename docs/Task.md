@@ -143,7 +143,9 @@ Task((reject, resolve) => {
 ---
 
 #### of
-`of :: b -> Task a b`
+```hs
+of :: b -> Task a b
+```
 
 Create a new Task with the given value.
 
@@ -156,7 +158,9 @@ Task.of(1); // Task(null, 1)
 ---
 
 #### reject
-`reject :: a -> Task a b`
+```hs
+reject :: a -> Task a b
+```
 
 Create a rejected Task with the given value.
 
@@ -169,7 +173,9 @@ Task.reject(1); // Task(1, null)
 ---
 
 #### fork
-`fork :: (a -> c) -> (b -> c) -> Task a b -> d`
+```hs
+fork :: (a -> c) -> (b -> c) -> Task a b -> d
+```
 
 Fork a task. This is the only way to run the code contained in the task.
 
@@ -188,7 +194,9 @@ Task.fork(
 ---
 
 #### chain
-`chain :: (b -> Task a c) -> Task a b -> Task a c`
+```hs
+chain :: (b -> Task a c) -> Task a b -> Task a c
+```
 
 Run a function that returns a nested task and flatten the result into a single task. An alias for `Task.andThen`.
 
@@ -201,7 +209,9 @@ Task.chain(Task.lift(n => n + 1), Task.of(1)); // Task(null, 2)
 ---
 
 #### andThen
-`andThen :: (b -> Task a c) -> Task a b -> Task a c`
+```hs
+andThen :: (b -> Task a c) -> Task a b -> Task a c
+```
 
 Run a function that returns a nested task and flatten the result into a single task. An alias for `Task.chain`.
 
@@ -214,7 +224,9 @@ Task.andThen(Task.lift(n => n + 1), Task.of(1)); // Task(null, 2)
 ---
 
 #### map
-`map :: (b -> c) -> Task a b -> Task a c`
+```hs
+map :: (b -> c) -> Task a b -> Task a c
+```
 
 Run a function on a value contained in a Task.
 
@@ -227,7 +239,9 @@ Task.map(x => x + x, Task.of(1)) // Task(null, 2)
 ---
 
 #### ap
-`ap :: Apply (b -> c) -> Task a b -> Task a c`
+```hs
+ap :: Apply (b -> c) -> Task a b -> Task a c
+```
 
 Run a function contained in an Apply on a value contained in a Task.
 
@@ -239,7 +253,9 @@ Task.ap(Task.of(x => x + x), Task.of(1)) // Task(null, 2)
 ---
 
 #### toPromise
-`toPromise :: Task a b -> Promise b`
+```hs
+toPromise :: Task a b -> Promise b
+```
 
 Convert a Task to a Promise. This implicitly calls "fork"
 
@@ -254,7 +270,9 @@ Task.toPromise(Task.of(1), Promise) // Bluebird(1)
 ---
 
 #### recover
-`recover :: (a -> Task d c) -> Task a b -> Task d c`
+```hs
+recover :: (a -> Task d c) -> Task a b -> Task d c
+```
 
 Define a function to run if the Task is rejected, which will accept the error and return a new, valid Task.
 
@@ -268,7 +286,9 @@ Task.recover(err => Task.of('Recovered!'), rejected); // Task(null, 'Recovered!'
 ---
 
 #### parallel
-// parallel :: [Task a b] -> Task a [b]
+```hs
+parallel :: [Task a b] -> Task a [b]
+```
 
 Run many Tasks in parallel. If any Task rejects, it will reject the top level Task immediately.
 
@@ -288,7 +308,9 @@ const tasks = Task
 ---
 
 #### lift
-`lift :: (a -> b) -> (a -> Task b)`
+```hs
+lift :: (a -> b) -> (a -> Task b)
+```
 
 Convert a regular function into a function that returns a task.
 
@@ -303,7 +325,9 @@ addTask(1, 4); // Task(null, 5)
 ---
 
 #### liftNode
-`liftNode :: (a, (b, c) -> d) -> (a -> Task b c)`
+```hs
+liftNode :: (a, (b, c) -> d) -> (a -> Task b c)
+```
 
 Convert a node style callback into a function that returns a task.
 
@@ -323,7 +347,9 @@ readFile('foo.js'); // Task(Error, Buffer)
 ---
 
 #### chain
-`chain :: Task a b ~> (b -> Task a c) -> Task a c`
+```hs
+chain :: Task a b ~> (b -> Task a c) -> Task a c
+```
 
 Run a function that returns a nested task and flatten the result into a single task. An alias for `Task#andThen`.
 
@@ -336,7 +362,9 @@ Task.of(1).chain(x => Task.of(x + x)); // Task(null, 2)
 ---
 
 #### andThen
-`andThen :: Task a b ~> (b -> Task a c) -> Task a c`
+```hs
+andThen :: Task a b ~> (b -> Task a c) -> Task a c
+```
 
 Run a function that returns a nested task and flatten the result into a single task. An alias for `Task#chain`.
 
@@ -349,7 +377,9 @@ Task.of(1).andThen(x => Task.of(x + x)); // Task(null, 2)
 ---
 
 #### map
-`map :: Task a b ~> (b -> c) -> Task a c`
+```hs
+map :: Task a b ~> (b -> c) -> Task a c
+```
 
 Run a function on a value contained in a Task.
 
@@ -362,7 +392,9 @@ Task.of(1).map(x => x + x); // Task(null, 2)
 ---
 
 #### ap
-`ap :: Task a b ~> Apply (b -> c) -> Task a c`
+```hs
+ap :: Task a b ~> Apply (b -> c) -> Task a c
+```
 
 Run a function contained in an Apply on a value contained in a Task.
 
@@ -376,7 +408,9 @@ Task.of(1).ap(Task.of(x => x + x));
 ---
 
 #### toPromise
-`toPromise :: Task a b ~> Task a b -> Promise b`
+```hs
+toPromise :: Task a b ~> Task a b -> Promise b
+```
 
 Convert a Task to a Promise. This implicitly calls "fork"
 
@@ -389,7 +423,9 @@ Task.of(1).toPromise(); // Promise(1)
 ---
 
 #### recover
-`recover :: Task a b ~> (a -> Task c d) -> Task c d`
+```hs
+recover :: Task a b ~> (a -> Task c d) -> Task c d
+```
 
 Define a function to run if the Task is rejected, which will accept the error and return a new, valid Task.
 
