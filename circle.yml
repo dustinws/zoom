@@ -16,9 +16,3 @@ test:
 compile:
   override:
     - npm run build:node && npm run build:browser
-
-deployment:
-  feature:
-    branch: master
-    commands:
-      - bin/publish
