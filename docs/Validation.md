@@ -1,5 +1,11 @@
 # Validation
 
+```hs
+type Validation e a = Failure e | Success a
+```
+
+---
+
 #### Fantasy Land Implementations
 `Semigroup`, `Monoid`, `Applicative`, `Functor`, `Apply`, `Chain`, `Monad`
 
@@ -82,7 +88,9 @@ validateGuest({
 ---
 
 #### of
-`of :: a -> Validation b a`
+```hs
+of :: a -> Validation b a
+```
 
 Lift a value into a successful 'Success' context.
 
@@ -97,7 +105,9 @@ valid.toString() // 'Success(1)'
 ---
 
 #### Success.of
-`of :: a -> Validation b a`
+```hs
+of :: a -> Validation b a
+```
 
 Lift a value into a successful 'Success' context.
 
@@ -112,7 +122,9 @@ valid.toString() // 'Success(1)'
 ---
 
 #### Failure.of
-`of :: a -> Validation a b`
+```hs
+of :: a -> Validation a b
+```
 
 Lift a value into an unsuccessful 'Failure' context.
 
@@ -127,7 +139,9 @@ valid.toString() // 'Failure(1)'
 ---
 
 #### chain
-`chain :: Validation v =>  (b -> v a c) -> v a b -> v a c`
+```hs
+chain :: Validation v =>  (b -> v a c) -> v a b -> v a c
+```
 
 Apply a transformation to the Validation if it is an instance of "Success". Otherwise, ignore the transformation and return the instance.
 This is how you can switch from a 'Success' to 'Failure' instance and stop subsequent transformations from being applied. An alias for `Validation.andThen`
@@ -147,7 +161,9 @@ Validation.chain(toUpper, invalid); // Failure('nay!');
 ---
 
 #### andThen
-`andThen :: Validation v =>  (b -> v a c) -> v a b -> v a c`
+```hs
+andThen :: Validation v =>  (b -> v a c) -> v a b -> v a c
+```
 
 Apply a transformation to the Validation if it is an instance of "Success". Otherwise, ignore the transformation and return the instance.
 This is how you can switch from a 'Success' to 'Failure' instance and stop subsequent transformations from being applied. An alias for `Validation.chain`
@@ -167,7 +183,9 @@ Validation.andThen(toUpper, invalid); // Failure('nay!');
 ---
 
 #### map
-`map :: Validation v => (b -> c) -> v a b -> v a c`
+```hs
+map :: Validation v => (b -> c) -> v a b -> v a c
+```
 
 Apply a transformation to the Validation if it is an instance of "Success". Otherwise, ignore the transformation and return the instance.
 
@@ -186,7 +204,9 @@ Validation.map(toUpper, invalid); // Failure('nay!');
 ---
 
 #### ap
-`ap :: Validation v => Apply (b -> c) -> v a b -> v a c`
+```hs
+ap :: Validation v => Apply (b -> c) -> v a b -> v a c
+```
 
 Apply a transformation to the Validation if it is an instance of "Success". Otherwise, ignore the transformation and return the instance.
 
@@ -205,7 +225,9 @@ Validation.ap(toUpper, invalid); // Failure('nay!');
 ---
 
 #### isFailure
-`isFailure :: Validation a b -> Bool`
+```hs
+isFailure :: Validation a b -> Bool
+```
 
 Determine if an Validation is an instance of Failure
 
@@ -219,7 +241,9 @@ Validation.isFailure(Validation.Success.of(1)); // false
 ---
 
 #### isSuccess
-`isSuccess :: Validation a b -> Bool`
+```hs
+isSuccess :: Validation a b -> Bool
+```
 
 Determine if an Validation is an instance of Success
 
@@ -233,7 +257,9 @@ Validation.isSuccess(Validation.Failure.of(1)); // false
 ---
 
 #### concat
-`concat :: Validation v => v a b -> v a b -> v a b`
+```hs
+concat :: Validation v => v a b -> v a b -> v a b
+```
 
 Combine two validations into one with a bias towards Failures.
 If both values are the same type (both Failures, etc..) then their values will be concatenated and a single instance of that type will be returned.
@@ -253,7 +279,9 @@ Validation.concat(success, success); // Success(['win!', 'win!'])
 ---
 
 #### empty
-`empty :: a -> Validation b [c]`
+```hs
+empty :: a -> Validation b [c]
+```
 
 Create an empty Validation. Used as the "identity" element for the Validation monoid.
 
@@ -270,7 +298,9 @@ Validation.empty(); // Success([])
 ---
 
 #### cata
-`cata :: Validation a b ~> { Failure: a -> c, Success: b -> c } -> c`
+```hs
+cata :: Validation a b ~> { Failure: a -> c, Success: b -> c } -> c
+```
 
 A function that accepts an object with two functions, one to run if the either is an instance of `Success`, and one to run if the either is an instance of `Failure`. The return value will be returned directly, with no wrapper instance. This name is short for `catamorphism`.
 An alias for `Validation#caseOf`
@@ -292,7 +322,9 @@ Validation.of('foobar').cata({
 ---
 
 #### caseOf
-`caseOf :: Validation a b ~> { Failure: a -> c, Success: b -> c } -> c`
+```hs
+caseOf :: Validation a b ~> { Failure: a -> c, Success: b -> c } -> c
+```
 
 A function that accepts an object with two functions, one to run if the either is an instance of `Success`, and one to run if the either is an instance of `Failure`. The return value will be returned directly, with no wrapper instance.
 An alias for `Either#cata`.
@@ -314,7 +346,9 @@ Validation.of('foobar').caseOf({
 ---
 
 #### Success#of
-`of :: Validation a b ~> d -> Validation c d`
+```hs
+of :: Validation a b ~> d -> Validation c d
+```
 
 Lift a value into a successful 'Success' context.
 
@@ -329,7 +363,9 @@ valid.of(1); // Success(1)
 ---
 
 #### Failure#of
-`of :: Validation a b ~> c -> Validation c d`
+```hs
+of :: Validation a b ~> c -> Validation c d
+```
 
 Lift a value into an unsuccessful 'Failure' context.
 
@@ -344,7 +380,9 @@ invalid.of(1); // Failure(1)
 ---
 
 #### chain
-`chain :: Validation a b ~> (b -> Validation a c) -> Validation a c`
+```hs
+chain :: Validation a b ~> (b -> Validation a c) -> Validation a c
+```
 
 Apply a transformation to the Validation if it is an instance of "Success". Otherwise, ignore the transformation and return the instance.
 This is how you can switch from a 'Success' to 'Failure' instance and stop subsequent transformations from being applied. An alias for `Validation#andThen`.
@@ -364,7 +402,9 @@ invalid.chain(toUpper); // Failure('nay!');
 ---
 
 #### andThen
-`andThen :: Validation a b ~> (b -> Validation a c) -> Validation a c`
+```hs
+andThen :: Validation a b ~> (b -> Validation a c) -> Validation a c
+```
 
 Apply a transformation to the Validation if it is an instance of "Success". Otherwise, ignore the transformation and return the instance.
 This is how you can switch from a 'Success' to 'Failure' instance and stop subsequent transformations from being applied. An alias for `Validation#chain`.
@@ -384,7 +424,9 @@ invalid.andThen(toUpper); // Failure('nay!');
 ---
 
 #### map
+```hs
 map :: Validation a b ~> (b -> c) -> Validation a c
+```
 
 Apply a transformation to the Validation if it is an instance of "Success". Otherwise, ignore the transformation and return the instance.
 
@@ -403,7 +445,9 @@ invalid.map(toUpper); // Failure('nay!');
 ---
 
 #### ap
-`ap :: Validation a b ~> Apply (b -> c) -> Validation a c`
+```hs
+ap :: Validation a b ~> Apply (b -> c) -> Validation a c
+```
 
 Apply a transformation to the Validation in the Apply if it is an instance of "Success". Otherwise, ignore the transformation and return the instance.
 
@@ -422,7 +466,9 @@ invalid.ap(toUpper); // Failure('nay!');
 ---
 
 #### isFailure
-`isFailure :: Validation a b ~> c -> Bool`
+```hs
+isFailure :: Validation a b ~> c -> Bool
+```
 
 Determine if an Validation is an instance of Failure
 
@@ -436,7 +482,9 @@ Validation.Success.of(1).isFailure(); // false
 ---
 
 #### isSuccess
-`isSuccess :: Validation a b ~> c -> Bool`
+```hs
+isSuccess :: Validation a b ~> c -> Bool
+```
 
 Determine if an Validation is an instance of Success
 
@@ -450,7 +498,9 @@ Validation.Failure.of(1).isSuccess(); // false
 ---
 
 #### concat
-`concat :: Validation a b ~> Validation a b -> Validation a b`
+```hs
+concat :: Validation a b ~> Validation a b -> Validation a b
+```
 
 Combine two validations into one with a bias towards Failures.
 If both values are the same type (both Failures, etc..) then their values will be concatenated and a single instance of that type will be returned.
