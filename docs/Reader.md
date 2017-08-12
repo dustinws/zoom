@@ -13,7 +13,9 @@ for testing, since it is easy to mock stateful operations.
 ---
 
 #### of
-`of :: a -> Reader e a`
+```hs
+of :: a -> Reader e a
+```
 
 Create a new reader that will return the given value.
 
@@ -26,7 +28,9 @@ Reader.of('foo'); // Reader(null, foo)
 ---
 
 #### chain
-`chain :: (a -> Reader e b) -> Reader e a -> Reader e b`
+```hs
+chain :: (a -> Reader e b) -> Reader e a -> Reader e b
+```
 
 Run multiple readers in sequence. The function given to `.chain` must return a `Reader`.
 
@@ -44,7 +48,9 @@ Reader.chain(query, Reader.of('Select from "users";'));
 ---
 
 #### map
-`map :: (a -> b) -> Reader e a -> Reader e b`
+```hs
+map :: (a -> b) -> Reader e a -> Reader e b
+```
 
 Apply a function to the value held by a `Reader`. Returns a new `Reader`.
 
@@ -60,7 +66,9 @@ Reader.map(x => x.toUpperCase(), reader);
 ---
 
 #### ap
-`ap :: Apply (a -> b) -> Reader e a -> Reader e b`
+```hs
+ap :: Apply (a -> b) -> Reader e a -> Reader e b
+```
 
 Apply a function to the value held by a `Reader`. Returns a new `Reader`.
 
@@ -81,7 +89,9 @@ Reader.ap(toUpper, reader);
 ---
 
 #### chain
-`chain :: Reader e a ~> (a -> Reader e b) -> Reader e b`
+```hs
+chain :: Reader e a ~> (a -> Reader e b) -> Reader e b
+```
 
 Run multiple readers in sequence. The function given to `.chain` must return a `Reader`.
 
@@ -99,7 +109,9 @@ Reader.of('Select from "users"').chain(query);
 ---
 
 #### map
-`map :: Reader e a ~> (a -> b) -> Reader e b`
+```hs
+map :: Reader e a ~> (a -> b) -> Reader e b
+```
 
 Apply a function to the value held by a `Reader`. Returns a new `Reader`.
 
@@ -115,7 +127,9 @@ reader.map(x => x.toUpperCase());
 ---
 
 #### ap
-`ap :: Reader e a ~> Apply (a -> b) -> Reader e b`
+```hs
+ap :: Reader e a ~> Apply (a -> b) -> Reader e b
+```
 
 Apply a function to the value held by a `Reader`. Returns a new `Reader`.
 
