@@ -7,7 +7,9 @@
 ---
 
 #### liftA2
-`liftA2 :: Monad m => (a -> b -> c) -> m a -> m b -> m c`
+```hs
+liftA2 :: Monad m => (a -> b -> c) -> m a -> m b -> m c
+```
 
 Call a regular function with two arguments with the values contained in two separate monads of the same type. Returns a monad of the same type with the result.
 
@@ -27,7 +29,9 @@ liftA2(add, Just(1), Just(1)); // Just(2)
 ---
 
 #### liftA3
-`liftA3 :: Monad m => (a -> b -> c -> d) -> m a -> m b -> m c -> m d`
+```hs
+liftA3 :: Monad m => (a -> b -> c -> d) -> m a -> m b -> m c -> m d
+```
 
 Call a regular function with three arguments with the values contained in three separate monads of the same type. Returns a monad of the same type with the result.
 
@@ -48,7 +52,9 @@ liftA3(add3, Just(1), Just(1), Just(1)); // Just(3)
 ---
 
 #### liftA4
-`liftA4 :: Monad m => (a -> b -> c -> d -> e) -> m a -> m b -> m c -> m d -> m e`
+```hs
+liftA4 :: Monad m => (a -> b -> c -> d -> e) -> m a -> m b -> m c -> m d -> m e
+```
 
 Call a regular function with four arguments with the values contained in four separate monads of the same type. Returns a monad of the same type with the result.
 
