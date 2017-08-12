@@ -1,4 +1,5 @@
 import * as ADT from './adt';
+import * as core from './core';
 import Either from './either';
 import IO from './io';
 import Maybe from './maybe';
@@ -12,6 +13,7 @@ import Writer from './writer';
 
 export {
   ADT,
+  core,
   Either,
   IO,
   Maybe,

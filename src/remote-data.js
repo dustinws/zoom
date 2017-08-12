@@ -1,7 +1,6 @@
 import FL from 'fantasy-land';
 import __ from 'ramda/src/__';
 import curry from 'ramda/src/curry';
-import identity from 'ramda/src/identity';
 import always from 'ramda/src/always';
 import compose from 'ramda/src/compose';
 import { union } from './adt';
@@ -28,19 +27,19 @@ const {
  |------------------------------------------------------------------------------
  */
 
+RemoteData.NotAsked.of = always(RemoteData.NotAsked);
+RemoteData.Loading.of = always(RemoteData.Loading);
+RemoteData.Success.of = v => Success(v);
+RemoteData.Failure.of = v => Failure(v);
+
 // of :: b -> RemoteData a b
 RemoteData.of = function of(value) {
   return Success(value);
 };
 
 // chain :: (b -> RemoteData a c) -> RemoteData a b -> RemoteData a c
-RemoteData.chain = curry((callback, remote) =>
-  remote.cata({
-    NotAsked: always(remote),
-    Loading: always(remote),
-    Failure: always(remote),
-    Success: callback,
-  }));
+RemoteData.chain = curry((callback, remote) => // eslint-disable-line no-confusing-arrow
+  remote.isSuccess() ? callback(remote.value) : remote);
 
 // andThen :: (b -> RemoteData a c) -> RemoteData a b -> RemoteData a b
 RemoteData.andThen = RemoteData.chain;
@@ -52,6 +51,23 @@ RemoteData.map = curry((transform, maybe) =>
 // ap :: Apply (b -> c) -> RemoteData a b -> RemoteData a c
 RemoteData.ap = curry((left, right) =>
   RemoteData.chain(RemoteData.map(__, right), left));
+
+// concat :: RemoteData e a -> RemoteData e a -> RemoteData e a
+RemoteData.concat = curry((left, right) => {
+  // Priority one
+  if (left.isNotAsked()) return left;
+  if (right.isNotAsked()) return right;
+
+  // Priority 2
+  if (left.isLoading()) return left;
+  if (right.isLoading()) return right;
+
+  // Priority 3
+  if (left.isFailure()) return left;
+  if (right.isFailure()) return right;
+
+  return Success(left.value.concat(right.value));
+});
 
 // isNotAsked :: RemoteData a b -> Bool
 RemoteData.isNotAsked = remote => remote === NotAsked;
@@ -66,13 +82,8 @@ RemoteData.isFailure = remote => remote instanceof Failure;
 RemoteData.isSuccess = remote => remote instanceof Success;
 
 // withDefault :: b -> RemoteData a b -> b
-RemoteData.withDefault = curry((defaultValue, maybe) =>
-  maybe.cata({
-    NotAsked: always(defaultValue),
-    Loading: always(defaultValue),
-    Failure: always(defaultValue),
-    Success: identity,
-  }));
+RemoteData.withDefault = curry((defaultValue, remote) => // eslint-disable-line no-confusing-arrow
+  remote.isSuccess() ? remote.value : defaultValue);
 
 
 /*
@@ -109,6 +120,11 @@ RemoteData.prototype.map = function map(transform) {
 // ap :: RemoteData a b ~> Apply (b -> c) -> RemoteData a c
 RemoteData.prototype.ap = function ap(transform) {
   return RemoteData.ap(transform, this);
+};
+
+// concat :: RemoteData a b ~> RemoteData a b -> RemoteData a b
+RemoteData.prototype.concat = function concat(other) {
+  return RemoteData.concat(this, other);
 };
 
 // isNotAsked :: RemoteData a b ~> c -> Bool
@@ -158,6 +174,10 @@ RemoteData.prototype[FL.map] = RemoteData.prototype.map;
 // RemoteData Apply
 RemoteData[FL.ap] = RemoteData.ap;
 RemoteData.prototype[FL.ap] = RemoteData.prototype.ap;
+
+// RemoteData Semigroup
+RemoteData[FL.concat] = RemoteData.concat;
+RemoteData.prototype[FL.concat] = RemoteData.prototype.concat;
 
 
 module.exports = RemoteData;
