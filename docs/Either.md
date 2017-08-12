@@ -2,6 +2,10 @@
 
 `Either` is an abstraction around error handling that allows the user to return their errors instead of throw them. `Either` is a super class with two constructors, `Left` and `Right`. The `Right` constructor represents a successful operation, and the `Left` constructor represents an unsuccessful operation with an embedded error message. You can chain functions that return `Either` instances by using `.chain` or `.andThen`.
 
+```hs
+type Either a b = Left a | Right b
+```
+
 ---
 
 #### Fantasy Land Implementations
@@ -48,7 +52,9 @@ parseJson('{ "admin": false }')
 ---
 
 #### of
-`of :: b -> Either a b`
+```hs
+of :: b -> Either a b
+```
 
 Lift a value into a successful 'Right' context.
 
@@ -62,7 +68,9 @@ Either.of(1).toString();
 ---
 
 #### Right.of
-`of :: b -> Either a b`
+```hs
+of :: b -> Either a b
+```
 
 Lift a value into a successful 'Right' context.
 
@@ -76,7 +84,9 @@ Right.of(1).toString();
 ---
 
 #### Left.of
-`of :: a -> Either a b`
+```hs
+of :: a -> Either a b
+```
 
 Lift a value into an unsuccessful 'Left' context.
 
@@ -90,7 +100,9 @@ Left.of(1).toString();
 ---
 
 #### chain
-`chain :: (b -> Either a c) -> Either a b -> Either a c`
+```hs
+chain :: (b -> Either a c) -> Either a b -> Either a c
+```
 
 Apply a transformation to the Either if it is an instance of "Right". Otherwise, ignore the transformation and return the instance. This is how you can switch from a 'Right' to 'Left' instance and stop subsequent transformations from being applied. An alias for `Either.andThen`.
 
@@ -115,7 +127,9 @@ chain(toUpper, Left.of('yea right'));
 ---
 
 #### andThen
-`andThen :: (b -> Either a c) -> Either a b -> Either a c`
+```hs
+andThen :: (b -> Either a c) -> Either a b -> Either a c
+```
 
 Apply a transformation to the Either if it is an instance of "Right". Otherwise, ignore the transformation and return the instance. This is how you can switch from a 'Right' to 'Left' instance and stop subsequent transformations from being applied. An alias for `Either.chain`.
 
@@ -140,7 +154,9 @@ andThen(toUpper, Left.of('yea right'));
 ---
 
 #### map
-`map :: (b -> c) -> Either a b -> Either a c`
+```hs
+map :: (b -> c) -> Either a b -> Either a c
+```
 
 `map` is very similar to `Either.andThen` and `Either.chain` in that it only runs the function if the either is an instance of `Just`. The main difference is that `Either.andThen` and `Either.chain` expect the functions you give them to return new `Either` instances, and map let's you use plain old functions.
 
@@ -162,7 +178,9 @@ map(toUpper, Left.of('nay!'));
 ---
 
 #### ap
-`ap :: Apply (b -> c) -> Either a b -> Either a c`
+```hs
+ap :: Apply (b -> c) -> Either a b -> Either a c
+```
 
 `ap` is just like `map`, allowing a user to use plain old functions to transform values hidden away in `Either`s. The only difference is that instead of giving it the function, you give it an `Either` of the function. This is known as the `Apply` type in fantasy land JS.
 
@@ -184,7 +202,9 @@ ap(toUpperE, Left.of('yea right'));
 ---
 
 #### isLeft
-`isLeft :: Either a b -> Bool`
+```hs
+isLeft :: Either a b -> Bool
+```
 
 Determine if an Either is an instance of Left.
 
@@ -201,7 +221,9 @@ isLeft(Right.of());
 ---
 
 #### isRight
-`isRight :: Either a b -> Bool`
+```hs
+isRight :: Either a b -> Bool
+```
 
 Determine if an Either is an instance of Right.
 
@@ -237,7 +259,9 @@ parseJson('{ "a": 1 }'); // Right({ a: 1 })
 ---
 
 #### cata
-`cata :: Either a b ~> { Left: a -> c, Right: b -> c } -> c`
+```hs
+cata :: Either a b ~> { Left: a -> c, Right: b -> c } -> c
+```
 
 A function that accepts an object with two functions, one to run if the either is an instance of `Right`, and one to run if the either is an instance of `Left`. The return value will be returned directly, with no wrapper instance. This name is short for `catamorphism`. An alias for `Either#caseOf`
 
@@ -258,7 +282,9 @@ Right.of(1).cata({
 ---
 
 #### caseOf
-`caseOf :: Either a b ~> { Left: a -> c, Right: b -> c } -> c`
+```hs
+caseOf :: Either a b ~> { Left: a -> c, Right: b -> c } -> c
+```
 
 A function that accepts an object with two functions, one to run if the either is an instance of `Right`, and one to run if the either is an instance of `Left`. The return value will be returned directly, with no wrapper instance. An alias for An alias for `Either#cata`
 
@@ -279,7 +305,9 @@ Right.of(1).caseOf({
 ---
 
 #### Right#of
-`of :: Either a b ~> c -> Either d c`
+```hs
+of :: Either a b ~> c -> Either d c
+```
 
 Lift a value into a successful 'Right' context.
 
@@ -294,7 +322,9 @@ Right.of(1);
 ---
 
 #### Left#of
-`of :: Either a b ~> c -> Either d c`
+```hs
+of :: Either a b ~> c -> Either d c
+```
 
 Lift a value into a unsuccessful 'Left' context.
 
@@ -309,7 +339,9 @@ Left.of(1);
 ---
 
 #### chain
-`chain :: Either a b ~> (b -> Either a c) -> Either a c`
+```hs
+chain :: Either a b ~> (b -> Either a c) -> Either a c
+```
 
 Apply a transformation to the Either if it is an instance of "Right". Otherwise, ignore the transformation and return the instance. This is how you can switch from a 'Right' to 'Left' instance and stop subsequent transformations from being applied. An alias for `Either#andThen`
 
@@ -334,7 +366,9 @@ Left.of('yea right').chain(toUpper);
 ---
 
 #### andThen
-`andThen :: Either a b ~> (b -> Either a c) -> Either a c`
+```hs
+andThen :: Either a b ~> (b -> Either a c) -> Either a c
+```
 
 Apply a transformation to the Either if it is an instance of "Right". Otherwise, ignore the transformation and return the instance. This is how you can switch from a 'Right' to 'Left' instance and stop subsequent transformations from being applied. An alias for `Either#chain`
 
@@ -359,7 +393,9 @@ Left.of('yea right').andThen(toUpper);
 ---
 
 #### map
-`map :: Either a b ~> (b -> c) -> Either a c`
+```hs
+map :: Either a b ~> (b -> c) -> Either a c
+```
 
 `map` is very similar to `Either.andThen` and `Either.chain` in that it only runs the function if the either is an instance of `Just`. The main difference is that `Either.andThen` and `Either.chain` expect the functions you give them to return new `Either` instances, and map let's you use plain old functions.
 
@@ -381,7 +417,9 @@ Left.of('nay!').map(toUpper);
 ---
 
 #### ap
-`ap :: Either a b ~> Apply (b -> c) -> Either a c`
+```hs
+ap :: Either a b ~> Apply (b -> c) -> Either a c
+```
 
 `ap` is just like `map`, allowing a user to use plain old functions to transform values hidden away in `Either`s. The only difference is that instead of giving it the function, you give it an `Either` of the function. This is known as the `Apply` type in fantasy land JS.
 
@@ -403,7 +441,9 @@ Left.of('yea right').ap(toUpperE);
 ---
 
 ### isLeft
-`isLeft :: Either a b ~> c -> Bool`
+```hs
+isLeft :: Either a b ~> c -> Bool
+```
 
 Determine if an Either is an instance of Left
 
@@ -417,7 +457,9 @@ Right.of(1).isLeft(); // false
 ---
 
 ### isRight
-`isRight :: Either a b ~> c -> Bool`
+```hs
+isRight :: Either a b ~> c -> Bool
+```
 
 Determine if an Either is an instance of Right
 
