@@ -45,8 +45,8 @@ RemoteData.chain = curry((callback, remote) => // eslint-disable-line no-confusi
 RemoteData.andThen = RemoteData.chain;
 
 // map :: (b -> c) -> RemoteData a b -> RemoteData a c
-RemoteData.map = curry((transform, maybe) =>
-  RemoteData.chain(compose(RemoteData.of, transform), maybe));
+RemoteData.map = curry((transform, remote) =>
+  RemoteData.chain(compose(RemoteData.of, transform), remote));
 
 // ap :: Apply (b -> c) -> RemoteData a b -> RemoteData a c
 RemoteData.ap = curry((left, right) =>
