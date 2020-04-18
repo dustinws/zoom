@@ -10,13 +10,13 @@ dependencies:
 
 jobs:
   test:
-    override:
-      - rm -rf $CIRCLE_ARTIFACTS/coverage
-      - npm run lint
-      - npm run test
-      - cp -r coverage $CIRCLE_ARTIFACTS
-      - npm run coverage
+    steps:
+      - run: rm -rf $CIRCLE_ARTIFACTS/coverage
+      - run: npm run lint
+      - run: npm run test
+      - run: cp -r coverage $CIRCLE_ARTIFACTS
+      - run: npm run coverage
 
   compile:
-    override:
-      - npm run build:node && npm run build:browser
+    steps:
+      - run: npm run build:node && npm run build:browser
