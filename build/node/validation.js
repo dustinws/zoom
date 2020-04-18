@@ -1,36 +1,16 @@
-'use strict';
+const FL = require('fantasy-land');
 
-var _fantasyLand = require('fantasy-land');
+const { union } = require('./adt');
+const { __, curry, always, compose } = require('./_tools');
 
-var _fantasyLand2 = _interopRequireDefault(_fantasyLand);
 
-var _ = require('ramda/src/__');
-
-var _2 = _interopRequireDefault(_);
-
-var _curry = require('ramda/src/curry');
-
-var _curry2 = _interopRequireDefault(_curry);
-
-var _compose = require('ramda/src/compose');
-
-var _compose2 = _interopRequireDefault(_compose);
-
-var _always = require('ramda/src/always');
-
-var _always2 = _interopRequireDefault(_always);
-
-var _adt = require('./adt');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Validation = (0, _adt.union)('Validation', {
+const Validation = union('Validation', {
   Success: ['value'],
-  Failure: ['value']
+  Failure: ['value'],
 });
 
-var Success = Validation.Success;
-var Failure = Validation.Failure;
+const Success = Validation.Success;
+const Failure = Validation.Failure;
 
 /*
  |------------------------------------------------------------------------------
@@ -54,63 +34,49 @@ Failure.of = function of(value) {
 };
 
 // chain :: Validation v =>  (b -> v a c) -> v a b -> v a c
-Validation.chain = (0, _curry2.default)(function (transform, validation) {
-  return validation.cata({
-    Failure: (0, _always2.default)(validation),
-    Success: transform
-  });
-});
+Validation.chain = curry((transform, validation) =>
+  validation.cata({
+    Failure: always(validation),
+    Success: transform,
+  }));
 
 // andThen :: Validation v =>  (b -> v a c) -> v a b -> v a c
 Validation.andThen = Validation.chain;
 
 // map :: Validation v =>  (b -> c) -> v a b -> v a c
-Validation.map = (0, _curry2.default)(function (transform, validation) {
-  return Validation.chain((0, _compose2.default)(Validation.of, transform), validation);
-});
+Validation.map = curry((transform, validation) =>
+  Validation.chain(compose(Validation.of, transform), validation));
 
 // ap :: Validation v =>  Apply (b -> c) -> v a b -> v a c
-Validation.ap = (0, _curry2.default)(function (left, right) {
-  return Validation.chain(Validation.map(_2.default, right), left);
-});
+Validation.ap = curry((left, right) =>
+  Validation.chain(Validation.map(__, right), left));
 
 // isFailure :: Validation a b -> Bool
-Validation.isFailure = function (validation) {
-  return validation instanceof Validation.Failure;
-};
+Validation.isFailure = validation => validation instanceof Validation.Failure;
 
 // isSuccess :: Validation a b -> Bool
-Validation.isSuccess = function (validation) {
-  return validation instanceof Validation.Success;
-};
+Validation.isSuccess = validation => validation instanceof Validation.Success;
 
 // concat :: Validation v => v a b -> v a b -> v a b
-Validation.concat = (0, _curry2.default)(function (left, right) {
-  return left.cata({
-    Failure: function Failure(value) {
-      return right.cata({
-        Success: (0, _always2.default)(left),
-        Failure: function Failure(x) {
-          return Validation.Failure(value.concat(x));
-        }
-      });
-    },
+Validation.concat = curry((left, right) =>
+  left.cata({
+    Failure: value =>
+      right.cata({
+        Success: always(left),
+        Failure: x => Validation.Failure(value.concat(x)),
+      }),
 
-    Success: function Success(value) {
-      return right.cata({
-        Success: function Success(x) {
-          return Validation.Success(value.concat(x));
-        },
-        Failure: (0, _always2.default)(right)
-      });
-    }
-  });
-});
+    Success: value =>
+      right.cata({
+        Success: x => Validation.Success(value.concat(x)),
+        Failure: always(right),
+      }),
+  }));
 
 // empty :: a -> Validation b [c]
-Validation.empty = function () {
-  return Validation.Success([]);
-};
+Validation.empty = () =>
+  Validation.Success([]);
+
 
 /*
  |------------------------------------------------------------------------------
@@ -183,35 +149,37 @@ Validation.prototype.empty = function empty() {
  */
 
 // Validation Applicative
-Validation[_fantasyLand2.default.of] = Validation.of;
-Validation.prototype[_fantasyLand2.default.of] = Validation.prototype.of;
+Validation[FL.of] = Validation.of;
+Validation.prototype[FL.of] = Validation.prototype.of;
 
 // Validation Chain
-Validation[_fantasyLand2.default.chain] = Validation.chain;
-Validation.prototype[_fantasyLand2.default.chain] = Validation.prototype.chain;
+Validation[FL.chain] = Validation.chain;
+Validation.prototype[FL.chain] = Validation.prototype.chain;
 
 // Validation Functor
-Validation[_fantasyLand2.default.map] = Validation.map;
-Validation.prototype[_fantasyLand2.default.map] = Validation.prototype.map;
+Validation[FL.map] = Validation.map;
+Validation.prototype[FL.map] = Validation.prototype.map;
 
 // Validation Apply
-Validation[_fantasyLand2.default.ap] = Validation.ap;
-Validation.prototype[_fantasyLand2.default.ap] = Validation.prototype.ap;
+Validation[FL.ap] = Validation.ap;
+Validation.prototype[FL.ap] = Validation.prototype.ap;
 
 // Validation Semigroup
-Validation[_fantasyLand2.default.concat] = Validation.concat;
-Validation.prototype[_fantasyLand2.default.concat] = Validation.prototype.concat;
+Validation[FL.concat] = Validation.concat;
+Validation.prototype[FL.concat] = Validation.prototype.concat;
 
 // Validation Monoid
-Validation[_fantasyLand2.default.empty] = Validation.empty;
-Validation.prototype[_fantasyLand2.default.empty] = Validation.prototype.empty;
+Validation[FL.empty] = Validation.empty;
+Validation.prototype[FL.empty] = Validation.prototype.empty;
+
 
 // Success Applicative
-Validation.Success[_fantasyLand2.default.of] = Validation.Success.of;
-Validation.Success.prototype[_fantasyLand2.default.of] = Validation.Success.prototype.of;
+Validation.Success[FL.of] = Validation.Success.of;
+Validation.Success.prototype[FL.of] = Validation.Success.prototype.of;
 
 // Failure Applicative
-Validation.Failure[_fantasyLand2.default.of] = Validation.Failure.of;
-Validation.Failure.prototype[_fantasyLand2.default.of] = Validation.Failure.prototype.of;
+Validation.Failure[FL.of] = Validation.Failure.of;
+Validation.Failure.prototype[FL.of] = Validation.Failure.prototype.of;
+
 
 module.exports = Validation;

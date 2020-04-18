@@ -10,10 +10,8 @@
 
 <img src="https://cdn.pixabay.com/photo/2017/02/21/21/14/unicorn-2087452_1280.png" width="200px" />
 
-Zoom is a collection tools to help javascript developers write safe, reliable
+Zoom is a collection of tools to help javascript developers write safe, reliable
 code that is easy to read and easy to refactor.
-
-###### Zoom <3's [Fantasy Land JS](https://github.com/fantasyland/fantasy-land).
 
 ---
 #### Helpers
@@ -43,6 +41,3 @@ Use direct require / import statements to only require the code that you need.
 
 ##### npm
 `$ npm install --save zoomjs`
-
-##### bower
-`$ bower --save install zoom`

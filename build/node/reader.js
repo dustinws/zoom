@@ -1,30 +1,11 @@
-'use strict';
+const FL = require('fantasy-land');
 
-var _fantasyLand = require('fantasy-land');
+const { tag, symbol } = require('./adt');
+const { __, curry, always, compose } = require('./_tools');
 
-var _fantasyLand2 = _interopRequireDefault(_fantasyLand);
 
-var _ = require('ramda/src/__');
+const Reader = tag('Reader', 'run');
 
-var _2 = _interopRequireDefault(_);
-
-var _curry = require('ramda/src/curry');
-
-var _curry2 = _interopRequireDefault(_curry);
-
-var _always = require('ramda/src/always');
-
-var _always2 = _interopRequireDefault(_always);
-
-var _compose = require('ramda/src/compose');
-
-var _compose2 = _interopRequireDefault(_compose);
-
-var _adt = require('./adt');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Reader = (0, _adt.tag)('Reader', 'run');
 
 /*
  |------------------------------------------------------------------------------
@@ -33,33 +14,24 @@ var Reader = (0, _adt.tag)('Reader', 'run');
  */
 
 // of :: a -> Reader e a
-Reader.of = function (value) {
-  return Reader(function () {
-    return value;
-  });
-};
+Reader.of = value =>
+  Reader(() => value);
 
 // chain :: (a -> Reader e b) -> Reader e a -> Reader e b
-Reader.chain = (0, _curry2.default)(function (transform, reader) {
-  return Reader(function (env) {
-    return transform(reader.run(env)).run(env);
-  });
-});
+Reader.chain = curry((transform, reader) =>
+  Reader(env => transform(reader.run(env)).run(env)));
 
 // andThen :: (a -> Reader e b) -> Reader e a -> Reader e b
 Reader.andThen = Reader.chain;
 
 // map :: (a -> b) -> Reader e a -> Reader e b
-Reader.map = (0, _curry2.default)(function (transform, reader) {
-  return Reader.chain(function (x) {
-    return Reader.of(transform(x));
-  }, reader);
-});
+Reader.map = curry((transform, reader) =>
+  Reader.chain(x => Reader.of(transform(x)), reader));
 
 // ap :: Apply (a -> b) -> Reader e a -> Reader e b
-Reader.ap = (0, _curry2.default)(function (apply, reader) {
-  return Reader.chain(Reader.map(_2.default, reader), apply);
-});
+Reader.ap = curry((apply, reader) =>
+  Reader.chain(Reader.map(__, reader), apply));
+
 
 /*
  |------------------------------------------------------------------------------
@@ -90,14 +62,15 @@ Reader.prototype.ap = function ap(apply) {
   return Reader.ap(apply, this);
 };
 
+
 /*
  |------------------------------------------------------------------------------
  | Monad Transformer
  |------------------------------------------------------------------------------
  */
 
-Reader.T = function (M) {
-  var ReaderT = (0, _adt.tag)('Reader[' + M[_adt.symbol] + ']', 'run');
+Reader.T = (M) => {
+  const ReaderT = tag(`Reader[${M[symbol]}]`, 'run');
 
   // Static
   // ------
@@ -106,40 +79,27 @@ Reader.T = function (M) {
   ReaderT.ask = ReaderT(M.of);
 
   // lift :: Monad m => m a -> ReaderT e m a
-  ReaderT.lift = (0, _compose2.default)(ReaderT, _always2.default);
+  ReaderT.lift = compose(ReaderT, always);
 
   // of :: Monad m => a -> ReaderT e m a
-  ReaderT.of = function (value) {
-    return ReaderT(function () {
-      return M.of(value);
-    });
-  };
+  ReaderT.of = value =>
+    ReaderT(() => M.of(value));
 
   // chain :: Monad m => (a -> ReaderT e m b) -> ReaderT e m a -> ReaderT e m b
-  ReaderT.chain = (0, _curry2.default)(function (callback, readerT) {
-    return ReaderT(function (e) {
-      return readerT.run(e).chain(function (a) {
-        return callback(a).run(e);
-      });
-    });
-  });
+  ReaderT.chain = curry((callback, readerT) =>
+    ReaderT(e => readerT.run(e).chain(a => callback(a).run(e))));
 
   // andThen :: Monad m => (a -> ReaderT e m b) -> ReaderT e m a -> ReaderT e m b
   ReaderT.andThen = ReaderT.chain;
 
   // map :: Monad m => (a -> b) -> ReaderT e m a -> ReaderT e m b
-  ReaderT.map = (0, _curry2.default)(function (callback, readerT) {
-    return readerT.chain(function (x) {
-      return ReaderT.of(callback(x));
-    });
-  });
+  ReaderT.map = curry((callback, readerT) =>
+    readerT.chain(x => ReaderT.of(callback(x))));
 
   // ap :: Monad m => Apply (a -> b) -> ReaderT e m a -> ReaderT e m b
-  ReaderT.ap = (0, _curry2.default)(function (apply, readerT) {
-    return ReaderT(function (e) {
-      return readerT.run(e).ap(apply.run(e));
-    });
-  });
+  ReaderT.ap = curry((apply, readerT) =>
+    ReaderT(e => readerT.run(e).ap(apply.run(e))));
+
 
   // Instance
   // --------
@@ -167,20 +127,23 @@ Reader.T = function (M) {
     return ReaderT.ap(apply, this);
   };
 
+
   // Static Monad
-  ReaderT[_fantasyLand2.default.of] = ReaderT.of;
-  ReaderT[_fantasyLand2.default.chain] = ReaderT.chain;
-  ReaderT[_fantasyLand2.default.map] = ReaderT.map;
-  ReaderT[_fantasyLand2.default.ap] = ReaderT.ap;
+  ReaderT[FL.of] = ReaderT.of;
+  ReaderT[FL.chain] = ReaderT.chain;
+  ReaderT[FL.map] = ReaderT.map;
+  ReaderT[FL.ap] = ReaderT.ap;
 
   // Instance Monad
-  ReaderT.prototype[_fantasyLand2.default.of] = ReaderT.prototype.of;
-  ReaderT.prototype[_fantasyLand2.default.chain] = ReaderT.prototype.chain;
-  ReaderT.prototype[_fantasyLand2.default.map] = ReaderT.prototype.map;
-  ReaderT.prototype[_fantasyLand2.default.ap] = ReaderT.prototype.ap;
+  ReaderT.prototype[FL.of] = ReaderT.prototype.of;
+  ReaderT.prototype[FL.chain] = ReaderT.prototype.chain;
+  ReaderT.prototype[FL.map] = ReaderT.prototype.map;
+  ReaderT.prototype[FL.ap] = ReaderT.prototype.ap;
+
 
   return ReaderT;
 };
+
 
 /*
  |------------------------------------------------------------------------------
@@ -189,19 +152,20 @@ Reader.T = function (M) {
  */
 
 // Reader Applicative
-Reader[_fantasyLand2.default.of] = Reader.of;
-Reader.prototype[_fantasyLand2.default.of] = Reader.prototype.of;
+Reader[FL.of] = Reader.of;
+Reader.prototype[FL.of] = Reader.prototype.of;
 
 // Reader Chain
-Reader[_fantasyLand2.default.chain] = Reader.chain;
-Reader.prototype[_fantasyLand2.default.chain] = Reader.prototype.chain;
+Reader[FL.chain] = Reader.chain;
+Reader.prototype[FL.chain] = Reader.prototype.chain;
 
 // Reader Functor
-Reader[_fantasyLand2.default.map] = Reader.map;
-Reader.prototype[_fantasyLand2.default.map] = Reader.prototype.map;
+Reader[FL.map] = Reader.map;
+Reader.prototype[FL.map] = Reader.prototype.map;
 
 // Reader Apply
-Reader[_fantasyLand2.default.ap] = Reader.ap;
-Reader.prototype[_fantasyLand2.default.ap] = Reader.prototype.ap;
+Reader[FL.ap] = Reader.ap;
+Reader.prototype[FL.ap] = Reader.prototype.ap;
+
 
 module.exports = Reader;

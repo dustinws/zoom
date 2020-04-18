@@ -1,36 +1,16 @@
-'use strict';
+const FL = require('fantasy-land');
 
-var _fantasyLand = require('fantasy-land');
+const { union } = require('./adt');
+const { __, curry, always, compose } = require('./_tools');
 
-var _fantasyLand2 = _interopRequireDefault(_fantasyLand);
 
-var _ = require('ramda/src/__');
-
-var _2 = _interopRequireDefault(_);
-
-var _curry = require('ramda/src/curry');
-
-var _curry2 = _interopRequireDefault(_curry);
-
-var _always = require('ramda/src/always');
-
-var _always2 = _interopRequireDefault(_always);
-
-var _compose = require('ramda/src/compose');
-
-var _compose2 = _interopRequireDefault(_compose);
-
-var _adt = require('./adt');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Result = (0, _adt.union)('Result', {
+const Result = union('Result', {
   Ok: ['value'],
-  Err: ['value']
+  Err: ['value'],
 });
 
-var Ok = Result.Ok;
-var Err = Result.Err;
+const Ok = Result.Ok;
+const Err = Result.Err;
 
 /*
  |------------------------------------------------------------------------------
@@ -54,35 +34,29 @@ Err.of = function of(value) {
 };
 
 // chain :: (b -> Result a c) -> Result a b -> Result a c
-Result.chain = (0, _curry2.default)(function (transform, result) {
-  return result.cata({
-    Err: (0, _always2.default)(result),
-    Ok: transform
-  });
-});
+Result.chain = curry((transform, result) =>
+  result.cata({
+    Err: always(result),
+    Ok: transform,
+  }));
 
 // andThen :: (b -> Result a c) -> Result a b -> Result a c
 Result.andThen = Result.chain;
 
 // map :: (b -> c) -> Result a b -> Result a c
-Result.map = (0, _curry2.default)(function (transform, result) {
-  return Result.chain((0, _compose2.default)(Result.of, transform), result);
-});
+Result.map = curry((transform, result) =>
+  Result.chain(compose(Result.of, transform), result));
 
 // map :: Apply (b -> c) -> Result a b -> Result a c
-Result.ap = (0, _curry2.default)(function (left, right) {
-  return Result.chain(Result.map(_2.default, right), left);
-});
+Result.ap = curry((left, right) =>
+  Result.chain(Result.map(__, right), left));
 
 // isErr :: Result a b -> Bool
-Result.isErr = function (result) {
-  return result instanceof Result.Err;
-};
+Result.isErr = result => result instanceof Result.Err;
 
 // isOk :: Result a b -> Bool
-Result.isOk = function (result) {
-  return result instanceof Result.Ok;
-};
+Result.isOk = result => result instanceof Result.Ok;
+
 
 /*
  |------------------------------------------------------------------------------
@@ -142,26 +116,28 @@ Result.prototype.isOk = function isOk() {
  */
 
 // Result Applicative
-Result[_fantasyLand2.default.of] = Result.of;
+Result[FL.of] = Result.of;
 
 // Result Chain
-Result[_fantasyLand2.default.chain] = Result.chain;
-Result.prototype[_fantasyLand2.default.chain] = Result.prototype.chain;
+Result[FL.chain] = Result.chain;
+Result.prototype[FL.chain] = Result.prototype.chain;
 
 // Result Functor
-Result[_fantasyLand2.default.map] = Result.map;
-Result.prototype[_fantasyLand2.default.map] = Result.prototype.map;
+Result[FL.map] = Result.map;
+Result.prototype[FL.map] = Result.prototype.map;
 
 // Result Apply
-Result[_fantasyLand2.default.ap] = Result.ap;
-Result.prototype[_fantasyLand2.default.ap] = Result.prototype.ap;
+Result[FL.ap] = Result.ap;
+Result.prototype[FL.ap] = Result.prototype.ap;
+
 
 // Ok Applicative
-Result.Ok[_fantasyLand2.default.of] = Result.Ok.of;
-Result.Ok.prototype[_fantasyLand2.default.of] = Result.Ok.prototype.of;
+Result.Ok[FL.of] = Result.Ok.of;
+Result.Ok.prototype[FL.of] = Result.Ok.prototype.of;
 
 // Err Applicative
-Result.Err[_fantasyLand2.default.of] = Result.Err.of;
-Result.Err.prototype[_fantasyLand2.default.of] = Result.Err.prototype.of;
+Result.Err[FL.of] = Result.Err.of;
+Result.Err.prototype[FL.of] = Result.Err.prototype.of;
+
 
 module.exports = Result;

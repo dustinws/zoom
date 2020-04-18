@@ -1,18 +1,10 @@
-'use strict';
+const FL = require('fantasy-land');
 
-var _fantasyLand = require('fantasy-land');
+const { tag } = require('./adt');
+const { curry } = require('./_tools');
 
-var _fantasyLand2 = _interopRequireDefault(_fantasyLand);
+const Tuple = tag('Tuple', 'left', 'right');
 
-var _curry = require('ramda/src/curry');
-
-var _curry2 = _interopRequireDefault(_curry);
-
-var _adt = require('./adt');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Tuple = (0, _adt.tag)('Tuple', 'left', 'right');
 
 /*
  |------------------------------------------------------------------------------
@@ -21,29 +13,23 @@ var Tuple = (0, _adt.tag)('Tuple', 'left', 'right');
  */
 
 // fst :: (a, b) -> a
-Tuple.fst = function (tuple) {
-  return tuple.left;
-};
+Tuple.fst = tuple => tuple.left;
 
 // snd :: (a, b) -> b
-Tuple.snd = function (tuple) {
-  return tuple.right;
-};
+Tuple.snd = tuple => tuple.right;
 
 // equals :: (a, b) -> (a, b) -> Bool
-Tuple.equals = (0, _curry2.default)(function (left, right) {
-  return left.left === right.left && left.right === right.right;
-});
+Tuple.equals = curry((left, right) =>
+  left.left === right.left && left.right === right.right);
 
 // map :: (b -> c) -> (a, b) -> (a, c)
-Tuple.map = (0, _curry2.default)(function (transform, tuple) {
-  return Tuple(tuple.left, transform(tuple.right));
-});
+Tuple.map = curry((transform, tuple) =>
+  Tuple(tuple.left, transform(tuple.right)));
 
 // mapLeft :: (a -> c) -> (a, b) -> (c, b)
-Tuple.mapLeft = (0, _curry2.default)(function (transform, tuple) {
-  return Tuple(transform(tuple.left), tuple.right);
-});
+Tuple.mapLeft = curry((transform, tuple) =>
+  Tuple(transform(tuple.left), tuple.right));
+
 
 /*
  |------------------------------------------------------------------------------
@@ -78,22 +64,23 @@ Tuple.prototype.mapLeft = function mapLeft(transform) {
 
 // toString :: (a, b) ~> c -> String
 Tuple.prototype.toString = function toString() {
-  return '(' + this.left.toString() + ', ' + this.right.toString() + ')';
+  return `(${this.left.toString()}, ${this.right.toString()})`;
 };
 
 // Symbol.iterator :: (a, b) ~> c -> Iterator
 Tuple.prototype[Symbol.iterator] = function iterator() {
-  var pending = ['left', 'right'];
-  var tuple = this;
+  const pending = ['left', 'right'];
+  const tuple = this;
   return {
-    next: function next() {
+    next() {
       if (pending.length) {
         return { value: tuple[pending.shift()] };
       }
       return { done: true };
-    }
+    },
   };
 };
+
 
 /*
  |------------------------------------------------------------------------------
@@ -102,11 +89,12 @@ Tuple.prototype[Symbol.iterator] = function iterator() {
  */
 
 // Tuple Applicative
-Tuple[_fantasyLand2.default.equals] = Tuple.equals;
-Tuple.prototype[_fantasyLand2.default.equals] = Tuple.prototype.equals;
+Tuple[FL.equals] = Tuple.equals;
+Tuple.prototype[FL.equals] = Tuple.prototype.equals;
 
 // Tuple Functor
-Tuple[_fantasyLand2.default.map] = Tuple.map;
-Tuple.prototype[_fantasyLand2.default.map] = Tuple.prototype.map;
+Tuple[FL.map] = Tuple.map;
+Tuple.prototype[FL.map] = Tuple.prototype.map;
+
 
 module.exports = Tuple;

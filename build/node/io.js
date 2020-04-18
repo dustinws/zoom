@@ -1,22 +1,11 @@
-'use strict';
+const FL = require('fantasy-land');
 
-var _fantasyLand = require('fantasy-land');
+const { tag } = require('./adt');
+const { __, curry } = require('./_tools');
 
-var _fantasyLand2 = _interopRequireDefault(_fantasyLand);
 
-var _ = require('ramda/src/__');
+const IO = tag('IO', 'run');
 
-var _2 = _interopRequireDefault(_);
-
-var _curry = require('ramda/src/curry');
-
-var _curry2 = _interopRequireDefault(_curry);
-
-var _adt = require('./adt');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var IO = (0, _adt.tag)('IO', 'run');
 
 /*
  |------------------------------------------------------------------------------
@@ -25,33 +14,24 @@ var IO = (0, _adt.tag)('IO', 'run');
  */
 
 // of :: a -> IO a
-IO.of = function (value) {
-  return IO(function () {
-    return value;
-  });
-};
+IO.of = value =>
+  IO(() => value);
 
 // chain :: (a -> IO b) -> IO a -> IO b
-IO.chain = (0, _curry2.default)(function (transform, io) {
-  return IO(function (env) {
-    return transform(io.run(env)).run(env);
-  });
-});
+IO.chain = curry((transform, io) =>
+  IO(env => transform(io.run(env)).run(env)));
 
 // andThen :: (a -> IO b) -> IO a -> IO b
 IO.andThen = IO.chain;
 
 // map :: (a -> b) -> IO a -> IO b
-IO.map = (0, _curry2.default)(function (transform, io) {
-  return IO.chain(function (x) {
-    return IO.of(transform(x));
-  }, io);
-});
+IO.map = curry((transform, io) =>
+  IO.chain(x => IO.of(transform(x)), io));
 
 // ap :: Apply (a -> b) -> IO a -> IO b
-IO.ap = (0, _curry2.default)(function (apply, io) {
-  return IO.chain(IO.map(_2.default, io), apply);
-});
+IO.ap = curry((apply, io) =>
+  IO.chain(IO.map(__, io), apply));
+
 
 /*
  |------------------------------------------------------------------------------
@@ -82,6 +62,7 @@ IO.prototype.ap = function ap(apply) {
   return IO.ap(apply, this);
 };
 
+
 /*
  |------------------------------------------------------------------------------
  | Fantasy Land
@@ -89,19 +70,20 @@ IO.prototype.ap = function ap(apply) {
  */
 
 // IO Applicative
-IO[_fantasyLand2.default.of] = IO.of;
-IO.prototype[_fantasyLand2.default.of] = IO.prototype.of;
+IO[FL.of] = IO.of;
+IO.prototype[FL.of] = IO.prototype.of;
 
 // IO Chain
-IO[_fantasyLand2.default.chain] = IO.chain;
-IO.prototype[_fantasyLand2.default.chain] = IO.prototype.chain;
+IO[FL.chain] = IO.chain;
+IO.prototype[FL.chain] = IO.prototype.chain;
 
 // IO Functor
-IO[_fantasyLand2.default.map] = IO.map;
-IO.prototype[_fantasyLand2.default.map] = IO.prototype.map;
+IO[FL.map] = IO.map;
+IO.prototype[FL.map] = IO.prototype.map;
 
 // IO Apply
-IO[_fantasyLand2.default.ap] = IO.ap;
-IO.prototype[_fantasyLand2.default.ap] = IO.prototype.ap;
+IO[FL.ap] = IO.ap;
+IO.prototype[FL.ap] = IO.prototype.ap;
+
 
 module.exports = IO;

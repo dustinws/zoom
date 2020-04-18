@@ -1,40 +1,23 @@
-'use strict';
+const FL = require('fantasy-land');
 
-var _fantasyLand = require('fantasy-land');
+const { union } = require('./adt');
+const { __, curry, always, compose } = require('./_tools');
 
-var _fantasyLand2 = _interopRequireDefault(_fantasyLand);
 
-var _ = require('ramda/src/__');
-
-var _2 = _interopRequireDefault(_);
-
-var _curry = require('ramda/src/curry');
-
-var _curry2 = _interopRequireDefault(_curry);
-
-var _always = require('ramda/src/always');
-
-var _always2 = _interopRequireDefault(_always);
-
-var _compose = require('ramda/src/compose');
-
-var _compose2 = _interopRequireDefault(_compose);
-
-var _adt = require('./adt');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var RemoteData = (0, _adt.union)('RemoteData', {
+const RemoteData = union('RemoteData', {
   NotAsked: [],
   Loading: [],
   Failure: ['value'],
-  Success: ['value']
+  Success: ['value'],
 });
 
-var NotAsked = RemoteData.NotAsked,
-    Loading = RemoteData.Loading,
-    Failure = RemoteData.Failure,
-    Success = RemoteData.Success;
+const {
+  NotAsked,
+  Loading,
+  Failure,
+  Success,
+} = RemoteData;
+
 
 /*
  |------------------------------------------------------------------------------
@@ -42,14 +25,10 @@ var NotAsked = RemoteData.NotAsked,
  |------------------------------------------------------------------------------
  */
 
-RemoteData.NotAsked.of = (0, _always2.default)(RemoteData.NotAsked);
-RemoteData.Loading.of = (0, _always2.default)(RemoteData.Loading);
-RemoteData.Success.of = function (v) {
-  return Success(v);
-};
-RemoteData.Failure.of = function (v) {
-  return Failure(v);
-};
+RemoteData.NotAsked.of = always(RemoteData.NotAsked);
+RemoteData.Loading.of = always(RemoteData.Loading);
+RemoteData.Success.of = v => Success(v);
+RemoteData.Failure.of = v => Failure(v);
 
 // of :: b -> RemoteData a b
 RemoteData.of = function of(value) {
@@ -57,27 +36,22 @@ RemoteData.of = function of(value) {
 };
 
 // chain :: (b -> RemoteData a c) -> RemoteData a b -> RemoteData a c
-RemoteData.chain = (0, _curry2.default)(function (callback, remote) {
-  return (// eslint-disable-line no-confusing-arrow
-    remote.isSuccess() ? callback(remote.value) : remote
-  );
-});
+RemoteData.chain = curry((callback, remote) => // eslint-disable-line no-confusing-arrow
+  remote.isSuccess() ? callback(remote.value) : remote);
 
 // andThen :: (b -> RemoteData a c) -> RemoteData a b -> RemoteData a b
 RemoteData.andThen = RemoteData.chain;
 
 // map :: (b -> c) -> RemoteData a b -> RemoteData a c
-RemoteData.map = (0, _curry2.default)(function (transform, maybe) {
-  return RemoteData.chain((0, _compose2.default)(RemoteData.of, transform), maybe);
-});
+RemoteData.map = curry((transform, remote) =>
+  RemoteData.chain(compose(RemoteData.of, transform), remote));
 
 // ap :: Apply (b -> c) -> RemoteData a b -> RemoteData a c
-RemoteData.ap = (0, _curry2.default)(function (left, right) {
-  return RemoteData.chain(RemoteData.map(_2.default, right), left);
-});
+RemoteData.ap = curry((left, right) =>
+  RemoteData.chain(RemoteData.map(__, right), left));
 
 // concat :: RemoteData e a -> RemoteData e a -> RemoteData e a
-RemoteData.concat = (0, _curry2.default)(function (left, right) {
+RemoteData.concat = curry((left, right) => {
   // Priority one
   if (left.isNotAsked()) return left;
   if (right.isNotAsked()) return right;
@@ -94,31 +68,21 @@ RemoteData.concat = (0, _curry2.default)(function (left, right) {
 });
 
 // isNotAsked :: RemoteData a b -> Bool
-RemoteData.isNotAsked = function (remote) {
-  return remote === NotAsked;
-};
+RemoteData.isNotAsked = remote => remote === NotAsked;
 
 // isLoading :: RemoteData a b -> Bool
-RemoteData.isLoading = function (remote) {
-  return remote === Loading;
-};
+RemoteData.isLoading = remote => remote === Loading;
 
 // isFailure :: RemoteData a b -> Bool
-RemoteData.isFailure = function (remote) {
-  return remote instanceof Failure;
-};
+RemoteData.isFailure = remote => remote instanceof Failure;
 
 // isSuccess :: RemoteData a b -> Bool
-RemoteData.isSuccess = function (remote) {
-  return remote instanceof Success;
-};
+RemoteData.isSuccess = remote => remote instanceof Success;
 
 // withDefault :: b -> RemoteData a b -> b
-RemoteData.withDefault = (0, _curry2.default)(function (defaultValue, remote) {
-  return (// eslint-disable-line no-confusing-arrow
-    remote.isSuccess() ? remote.value : defaultValue
-  );
-});
+RemoteData.withDefault = curry((defaultValue, remote) => // eslint-disable-line no-confusing-arrow
+  remote.isSuccess() ? remote.value : defaultValue);
+
 
 /*
  |------------------------------------------------------------------------------
@@ -186,6 +150,7 @@ RemoteData.prototype.withDefault = function withDefault(defaultValue) {
   return RemoteData.withDefault(defaultValue, this);
 };
 
+
 /*
  |------------------------------------------------------------------------------
  | Fantasy Land
@@ -193,23 +158,24 @@ RemoteData.prototype.withDefault = function withDefault(defaultValue) {
  */
 
 // RemoteData Applicative
-RemoteData[_fantasyLand2.default.of] = RemoteData.of;
-RemoteData.prototype[_fantasyLand2.default.of] = RemoteData.prototype.of;
+RemoteData[FL.of] = RemoteData.of;
+RemoteData.prototype[FL.of] = RemoteData.prototype.of;
 
 // RemoteData Chain
-RemoteData[_fantasyLand2.default.chain] = RemoteData.chain;
-RemoteData.prototype[_fantasyLand2.default.chain] = RemoteData.prototype.chain;
+RemoteData[FL.chain] = RemoteData.chain;
+RemoteData.prototype[FL.chain] = RemoteData.prototype.chain;
 
 // RemoteData Functor
-RemoteData[_fantasyLand2.default.map] = RemoteData.map;
-RemoteData.prototype[_fantasyLand2.default.map] = RemoteData.prototype.map;
+RemoteData[FL.map] = RemoteData.map;
+RemoteData.prototype[FL.map] = RemoteData.prototype.map;
 
 // RemoteData Apply
-RemoteData[_fantasyLand2.default.ap] = RemoteData.ap;
-RemoteData.prototype[_fantasyLand2.default.ap] = RemoteData.prototype.ap;
+RemoteData[FL.ap] = RemoteData.ap;
+RemoteData.prototype[FL.ap] = RemoteData.prototype.ap;
 
 // RemoteData Semigroup
-RemoteData[_fantasyLand2.default.concat] = RemoteData.concat;
-RemoteData.prototype[_fantasyLand2.default.concat] = RemoteData.prototype.concat;
+RemoteData[FL.concat] = RemoteData.concat;
+RemoteData.prototype[FL.concat] = RemoteData.prototype.concat;
+
 
 module.exports = RemoteData;
