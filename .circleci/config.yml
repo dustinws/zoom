@@ -1,14 +1,16 @@
 version: 2
 
+machine:
+  node:
+    version: 12.16.2
+
 dependencies:
   pre:
     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
 
 jobs:
   test:
-    machine:
-      node:
-        version: 12.16.2
+    machine: true
     steps:
       - run: rm -rf $CIRCLE_ARTIFACTS/coverage
       - run: npm run lint
@@ -17,8 +19,6 @@ jobs:
       - run: npm run coverage
 
   compile:
-    machine:
-      node:
-        version: 12.16.2
+    machine: true
     steps:
       - run: npm run build:node && npm run build:browser
