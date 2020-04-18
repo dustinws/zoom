@@ -9,8 +9,8 @@ dependencies:
     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
 
 jobs:
-  install:
   test:
+    working_directory: ~/zoom
     docker:
       - image: node:10
     steps:
@@ -28,6 +28,7 @@ jobs:
       - image: node:10
     steps:
       - checkout
+      - run: npm install
       - run: npm run build:node && npm run build:browser
 
 workflows:
