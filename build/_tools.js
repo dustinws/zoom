@@ -13,7 +13,7 @@ const _hasPlaceholder = list =>
 // Create a curried function
 const curry = fn =>
   function curried(...a) {
-    if (a.length >= fn.length && !_hasPlaceholder(a))
+    if (a.length === fn.length && !_hasPlaceholder(a))
       return fn(...a);
 
     return (...b) =>
