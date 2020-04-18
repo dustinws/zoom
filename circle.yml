@@ -1,18 +1,22 @@
+version: 2
+
 machine:
   node:
-    version: 8.0.0
+    version: 12.16.2
 
 dependencies:
   pre:
     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
-test:
-  override:
-    - rm -rf $CIRCLE_ARTIFACTS/coverage
-    - npm run lint
-    - npm run test
-    - cp -r coverage $CIRCLE_ARTIFACTS
-    - npm run coverage
 
-compile:
-  override:
-    - npm run build:node && npm run build:browser
+jobs:
+  test:
+    override:
+      - rm -rf $CIRCLE_ARTIFACTS/coverage
+      - npm run lint
+      - npm run test
+      - cp -r coverage $CIRCLE_ARTIFACTS
+      - npm run coverage
+
+  compile:
+    override:
+      - npm run build:node && npm run build:browser
