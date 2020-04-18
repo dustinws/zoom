@@ -1,6 +1,6 @@
 /* global describe, expect, test */
 
-import Result from '../../src/result';
+const Result = require('../../src/result');
 
 describe('Data.Result', () => {
   describe('Result.chain', () => {

@@ -1,6 +1,6 @@
 /* global describe, expect, test */
 
-import Validation from '../../src/validation';
+const Validation = require('../../src/validation');
 
 describe('Data.Validation', () => {
   describe('Validation.ap', () => {

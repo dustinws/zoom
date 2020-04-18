@@ -1,6 +1,6 @@
 /* global describe, expect, test */
 
-import Maybe from '../../src/maybe';
+const Maybe = require('../../src/maybe');
 
 describe('Data.Maybe', () => {
   describe('Maybe.chain', () => {

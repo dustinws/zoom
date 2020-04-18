@@ -1,9 +1,7 @@
-import fl from 'fantasy-land';
-import __ from 'ramda/src/__';
-import curry from 'ramda/src/curry';
-import always from 'ramda/src/always';
-import compose from 'ramda/src/compose';
-import { union } from './adt';
+const FL = require('fantasy-land');
+
+const { union } = require('./adt');
+const { __, curry, always, compose } = require('./_tools');
 
 
 const Result = union('Result', {
@@ -111,7 +109,6 @@ Result.prototype.isOk = function isOk() {
   return Result.isOk(this);
 };
 
-
 /*
  |------------------------------------------------------------------------------
  | Fantasy Land
@@ -119,28 +116,28 @@ Result.prototype.isOk = function isOk() {
  */
 
 // Result Applicative
-Result[fl.of] = Result.of;
+Result[FL.of] = Result.of;
 
 // Result Chain
-Result[fl.chain] = Result.chain;
-Result.prototype[fl.chain] = Result.prototype.chain;
+Result[FL.chain] = Result.chain;
+Result.prototype[FL.chain] = Result.prototype.chain;
 
 // Result Functor
-Result[fl.map] = Result.map;
-Result.prototype[fl.map] = Result.prototype.map;
+Result[FL.map] = Result.map;
+Result.prototype[FL.map] = Result.prototype.map;
 
 // Result Apply
-Result[fl.ap] = Result.ap;
-Result.prototype[fl.ap] = Result.prototype.ap;
+Result[FL.ap] = Result.ap;
+Result.prototype[FL.ap] = Result.prototype.ap;
 
 
 // Ok Applicative
-Result.Ok[fl.of] = Result.Ok.of;
-Result.Ok.prototype[fl.of] = Result.Ok.prototype.of;
+Result.Ok[FL.of] = Result.Ok.of;
+Result.Ok.prototype[FL.of] = Result.Ok.prototype.of;
 
 // Err Applicative
-Result.Err[fl.of] = Result.Err.of;
-Result.Err.prototype[fl.of] = Result.Err.prototype.of;
+Result.Err[FL.of] = Result.Err.of;
+Result.Err.prototype[FL.of] = Result.Err.prototype.of;
 
 
 module.exports = Result;

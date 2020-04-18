@@ -1,9 +1,7 @@
-import fl from 'fantasy-land';
-import __ from 'ramda/src/__';
-import curry from 'ramda/src/curry';
-import always from 'ramda/src/always';
-import compose from 'ramda/src/compose';
-import { tag, symbol } from './adt';
+const FL = require('fantasy-land');
+
+const { tag, symbol } = require('./adt');
+const { __, curry, always, compose } = require('./_tools');
 
 
 const Reader = tag('Reader', 'run');
@@ -129,17 +127,19 @@ Reader.T = (M) => {
     return ReaderT.ap(apply, this);
   };
 
+
   // Static Monad
-  ReaderT[fl.of] = ReaderT.of;
-  ReaderT[fl.chain] = ReaderT.chain;
-  ReaderT[fl.map] = ReaderT.map;
-  ReaderT[fl.ap] = ReaderT.ap;
+  ReaderT[FL.of] = ReaderT.of;
+  ReaderT[FL.chain] = ReaderT.chain;
+  ReaderT[FL.map] = ReaderT.map;
+  ReaderT[FL.ap] = ReaderT.ap;
 
   // Instance Monad
-  ReaderT.prototype[fl.of] = ReaderT.prototype.of;
-  ReaderT.prototype[fl.chain] = ReaderT.prototype.chain;
-  ReaderT.prototype[fl.map] = ReaderT.prototype.map;
-  ReaderT.prototype[fl.ap] = ReaderT.prototype.ap;
+  ReaderT.prototype[FL.of] = ReaderT.prototype.of;
+  ReaderT.prototype[FL.chain] = ReaderT.prototype.chain;
+  ReaderT.prototype[FL.map] = ReaderT.prototype.map;
+  ReaderT.prototype[FL.ap] = ReaderT.prototype.ap;
+
 
   return ReaderT;
 };
@@ -152,20 +152,20 @@ Reader.T = (M) => {
  */
 
 // Reader Applicative
-Reader[fl.of] = Reader.of;
-Reader.prototype[fl.of] = Reader.prototype.of;
+Reader[FL.of] = Reader.of;
+Reader.prototype[FL.of] = Reader.prototype.of;
 
 // Reader Chain
-Reader[fl.chain] = Reader.chain;
-Reader.prototype[fl.chain] = Reader.prototype.chain;
+Reader[FL.chain] = Reader.chain;
+Reader.prototype[FL.chain] = Reader.prototype.chain;
 
 // Reader Functor
-Reader[fl.map] = Reader.map;
-Reader.prototype[fl.map] = Reader.prototype.map;
+Reader[FL.map] = Reader.map;
+Reader.prototype[FL.map] = Reader.prototype.map;
 
 // Reader Apply
-Reader[fl.ap] = Reader.ap;
-Reader.prototype[fl.ap] = Reader.prototype.ap;
+Reader[FL.ap] = Reader.ap;
+Reader.prototype[FL.ap] = Reader.prototype.ap;
 
 
 module.exports = Reader;

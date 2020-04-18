@@ -1,6 +1,6 @@
 /* global describe, test, expect */
 
-import Task from '../../src/task';
+const Task = require('../../src/task');
 
 describe('Data.Task', () => {
   describe('Task.of', () => {

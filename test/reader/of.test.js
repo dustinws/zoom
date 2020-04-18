@@ -1,6 +1,6 @@
 /* global describe, expect, test */
 
-import Reader from '../../src/reader';
+const Reader = require('../../src/reader');
 
 describe('Reader', () => {
   describe('Reader.of', () => {

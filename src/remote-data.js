@@ -1,9 +1,7 @@
-import FL from 'fantasy-land';
-import __ from 'ramda/src/__';
-import curry from 'ramda/src/curry';
-import always from 'ramda/src/always';
-import compose from 'ramda/src/compose';
-import { union } from './adt';
+const FL = require('fantasy-land');
+
+const { union } = require('./adt');
+const { __, curry, always, compose } = require('./_tools');
 
 
 const RemoteData = union('RemoteData', {

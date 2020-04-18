@@ -1,9 +1,8 @@
-import fl from 'fantasy-land';
-import __ from 'ramda/src/__';
-import curry from 'ramda/src/curry';
+const FL = require('fantasy-land');
 
-import Tuple from './tuple';
-import { tag } from './adt';
+const Tuple = require('./tuple');
+const { tag } = require('./adt');
+const { __, curry } = require('./_tools');
 
 
 const Writer = tag('Writer', 'value');
@@ -77,7 +76,6 @@ Writer.prototype.ap = function ap(apply) {
   return Writer.ap(apply, this);
 };
 
-
 /*
 |------------------------------------------------------------------------------
 | Fantasy Land
@@ -85,16 +83,16 @@ Writer.prototype.ap = function ap(apply) {
 */
 
 // Static Monad
-Writer[fl.of] = Writer.of;
-Writer[fl.chain] = Writer.chain;
-Writer[fl.map] = Writer.map;
-Writer[fl.ap] = Writer.ap;
+Writer[FL.of] = Writer.of;
+Writer[FL.chain] = Writer.chain;
+Writer[FL.map] = Writer.map;
+Writer[FL.ap] = Writer.ap;
 
 // Instance Monad
-Writer.prototype[fl.of] = Writer.prototype.of;
-Writer.prototype[fl.chain] = Writer.prototype.chain;
-Writer.prototype[fl.map] = Writer.prototype.map;
-Writer.prototype[fl.ap] = Writer.prototype.ap;
+Writer.prototype[FL.of] = Writer.prototype.of;
+Writer.prototype[FL.chain] = Writer.prototype.chain;
+Writer.prototype[FL.map] = Writer.prototype.map;
+Writer.prototype[FL.ap] = Writer.prototype.ap;
 
 
 module.exports = Writer;

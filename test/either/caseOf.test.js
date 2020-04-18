@@ -1,6 +1,6 @@
 /* global describe, expect, jest, test */
 
-import Either from '../../src/either';
+const Either = require('../../src/either');
 
 const { Left, Right } = Either;
 

@@ -1,6 +1,6 @@
 /* global describe, expect, jest, test */
 
-import Maybe from '../../src/maybe';
+const Maybe = require('../../src/maybe');
 
 const { Nothing, Just } = Maybe;
 

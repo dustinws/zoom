@@ -1,5 +1,5 @@
 /* global describe, expect, test */
-import { tag } from '../../src/adt';
+const { tag } = require('../../src/adt');
 
 describe('Adt.tag', () => {
   test('It should return a constructor function', () => {

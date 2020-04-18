@@ -1,27 +1,12 @@
-import * as ADT from './adt';
-import * as core from './core';
-import Either from './either';
-import IO from './io';
-import Maybe from './maybe';
-import Reader from './reader';
-import RemoteData from './remote-data';
-import Result from './result';
-import Task from './task';
-import Tuple from './tuple';
-import Validation from './validation';
-import Writer from './writer';
-
-export {
-  ADT,
-  core,
-  Either,
-  IO,
-  Maybe,
-  Reader,
-  RemoteData,
-  Result,
-  Task,
-  Tuple,
-  Validation,
-  Writer,
-};
+exports.ADT = require('./adt');
+exports.core = require('./core');
+exports.Either = require('./either');
+exports.IO = require('./io');
+exports.Maybe = require('./maybe');
+exports.Reader = require('./reader');
+exports.RemoteData = require('./remote-data');
+exports.Result = require('./result');
+exports.Task = require('./task');
+exports.Tuple = require('./tuple');
+exports.Validation = require('./validation');
+exports.Writer = require('./writer');

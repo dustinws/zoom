@@ -1,6 +1,6 @@
 /* global describe, expect, test */
 
-import Tuple from '../../src/tuple';
+const Tuple = require('../../src/tuple');
 
 describe('Data.Tuple', () => {
   describe('Tuple.fst', () => {

@@ -1,48 +1,48 @@
 /* global describe, expect, test */
 
-import fl from 'fantasy-land';
-import Validation from '../../../src/validation';
+const FL = require('fantasy-land');
+const Validation = require('../../../src/validation');
 
 describe('Fantasy Check - Validation', () => {
   describe('Validation', () => {
     test('Static Monad', () => {
-      expect(typeof Validation[fl.map]).toBe('function');
-      expect(typeof Validation[fl.ap]).toBe('function');
-      expect(typeof Validation[fl.of]).toBe('function');
-      expect(typeof Validation[fl.chain]).toBe('function');
+      expect(typeof Validation[FL.map]).toBe('function');
+      expect(typeof Validation[FL.ap]).toBe('function');
+      expect(typeof Validation[FL.of]).toBe('function');
+      expect(typeof Validation[FL.chain]).toBe('function');
     });
 
     test('Static Monoid', () => {
-      expect(typeof Validation[fl.concat]).toBe('function');
-      expect(typeof Validation[fl.empty]).toBe('function');
+      expect(typeof Validation[FL.concat]).toBe('function');
+      expect(typeof Validation[FL.empty]).toBe('function');
     });
   });
 
   describe('Validation.Failure', () => {
     test('Instance Monad', () => {
-      expect(typeof Validation.Failure.prototype[fl.map]).toBe('function');
-      expect(typeof Validation.Failure.prototype[fl.ap]).toBe('function');
-      expect(typeof Validation.Failure.prototype[fl.of]).toBe('function');
-      expect(typeof Validation.Failure.prototype[fl.chain]).toBe('function');
+      expect(typeof Validation.Failure.prototype[FL.map]).toBe('function');
+      expect(typeof Validation.Failure.prototype[FL.ap]).toBe('function');
+      expect(typeof Validation.Failure.prototype[FL.of]).toBe('function');
+      expect(typeof Validation.Failure.prototype[FL.chain]).toBe('function');
     });
 
     test('Instance Monoid', () => {
-      expect(typeof Validation.Failure.prototype[fl.concat]).toBe('function');
-      expect(typeof Validation.Failure.prototype[fl.empty]).toBe('function');
+      expect(typeof Validation.Failure.prototype[FL.concat]).toBe('function');
+      expect(typeof Validation.Failure.prototype[FL.empty]).toBe('function');
     });
   });
 
   describe('Validation.Success', () => {
     test('Instance Monad', () => {
-      expect(typeof Validation.Success.prototype[fl.map]).toBe('function');
-      expect(typeof Validation.Success.prototype[fl.ap]).toBe('function');
-      expect(typeof Validation.Success.prototype[fl.of]).toBe('function');
-      expect(typeof Validation.Success.prototype[fl.chain]).toBe('function');
+      expect(typeof Validation.Success.prototype[FL.map]).toBe('function');
+      expect(typeof Validation.Success.prototype[FL.ap]).toBe('function');
+      expect(typeof Validation.Success.prototype[FL.of]).toBe('function');
+      expect(typeof Validation.Success.prototype[FL.chain]).toBe('function');
     });
 
     test('Instance Monoid', () => {
-      expect(typeof Validation.Success.prototype[fl.concat]).toBe('function');
-      expect(typeof Validation.Success.prototype[fl.empty]).toBe('function');
+      expect(typeof Validation.Success.prototype[FL.concat]).toBe('function');
+      expect(typeof Validation.Success.prototype[FL.empty]).toBe('function');
     });
   });
 });

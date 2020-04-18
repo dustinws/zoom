@@ -1,9 +1,7 @@
-import fl from 'fantasy-land';
-import __ from 'ramda/src/__';
-import curry from 'ramda/src/curry';
-import compose from 'ramda/src/compose';
-import always from 'ramda/src/always';
-import { union } from './adt';
+const FL = require('fantasy-land');
+
+const { union } = require('./adt');
+const { __, curry, always, compose } = require('./_tools');
 
 
 const Validation = union('Validation', {
@@ -144,7 +142,6 @@ Validation.prototype.empty = function empty() {
   return Validation.empty();
 };
 
-
 /*
  |------------------------------------------------------------------------------
  | Fantasy Land
@@ -152,37 +149,37 @@ Validation.prototype.empty = function empty() {
  */
 
 // Validation Applicative
-Validation[fl.of] = Validation.of;
-Validation.prototype[fl.of] = Validation.prototype.of;
+Validation[FL.of] = Validation.of;
+Validation.prototype[FL.of] = Validation.prototype.of;
 
 // Validation Chain
-Validation[fl.chain] = Validation.chain;
-Validation.prototype[fl.chain] = Validation.prototype.chain;
+Validation[FL.chain] = Validation.chain;
+Validation.prototype[FL.chain] = Validation.prototype.chain;
 
 // Validation Functor
-Validation[fl.map] = Validation.map;
-Validation.prototype[fl.map] = Validation.prototype.map;
+Validation[FL.map] = Validation.map;
+Validation.prototype[FL.map] = Validation.prototype.map;
 
 // Validation Apply
-Validation[fl.ap] = Validation.ap;
-Validation.prototype[fl.ap] = Validation.prototype.ap;
+Validation[FL.ap] = Validation.ap;
+Validation.prototype[FL.ap] = Validation.prototype.ap;
 
 // Validation Semigroup
-Validation[fl.concat] = Validation.concat;
-Validation.prototype[fl.concat] = Validation.prototype.concat;
+Validation[FL.concat] = Validation.concat;
+Validation.prototype[FL.concat] = Validation.prototype.concat;
 
 // Validation Monoid
-Validation[fl.empty] = Validation.empty;
-Validation.prototype[fl.empty] = Validation.prototype.empty;
+Validation[FL.empty] = Validation.empty;
+Validation.prototype[FL.empty] = Validation.prototype.empty;
 
 
 // Success Applicative
-Validation.Success[fl.of] = Validation.Success.of;
-Validation.Success.prototype[fl.of] = Validation.Success.prototype.of;
+Validation.Success[FL.of] = Validation.Success.of;
+Validation.Success.prototype[FL.of] = Validation.Success.prototype.of;
 
 // Failure Applicative
-Validation.Failure[fl.of] = Validation.Failure.of;
-Validation.Failure.prototype[fl.of] = Validation.Failure.prototype.of;
+Validation.Failure[FL.of] = Validation.Failure.of;
+Validation.Failure.prototype[FL.of] = Validation.Failure.prototype.of;
 
 
 module.exports = Validation;

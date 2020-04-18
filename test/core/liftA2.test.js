@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 
-import { liftA2 } from '../../src/core';
-import { Just, Nothing } from '../../src/maybe';
+const { liftA2 } = require('../../src/core');
+const { Just, Nothing } = require('../../src/maybe');
 
 
 describe('Core.liftA2', () => {

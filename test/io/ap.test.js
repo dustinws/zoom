@@ -1,6 +1,6 @@
 /* global describe, expect, test */
 
-import IO from '../../src/io';
+const IO = require('../../src/io');
 
 describe('IO', () => {
   describe('IO.ap', () => {

@@ -1,7 +1,8 @@
 // symbol :: Symbol
-export const symbol = Symbol('ADT.tag');
+const symbol = Symbol('ADT.tag');
 
-export function tag(type, ...params) {
+
+function tag(type, ...params) {
   // Store the constructor on a temporary object so that
   // the constructor name will correctly match the type.
   let tmp = {
@@ -39,7 +40,7 @@ export function tag(type, ...params) {
   return Adt;
 }
 
-export function union(parentType, childTypes) {
+function union(parentType, childTypes) {
   // Create the parent type.
   const Parent = tag(parentType);
 
@@ -69,3 +70,10 @@ export function union(parentType, childTypes) {
 
   return Parent;
 }
+
+
+module.exports = {
+  symbol,
+  tag,
+  union,
+};

@@ -1,20 +1,20 @@
 /* global describe, expect, test */
 
-import fl from 'fantasy-land';
-import Reader from '../../../src/reader';
+const FL = require('fantasy-land');
+const Reader = require('../../../src/reader');
 
 describe('Fantasy Check - Reader', () => {
   test('Static Monad', () => {
-    expect(typeof Reader[fl.map]).toBe('function');
-    expect(typeof Reader[fl.ap]).toBe('function');
-    expect(typeof Reader[fl.of]).toBe('function');
-    expect(typeof Reader[fl.chain]).toBe('function');
+    expect(typeof Reader[FL.map]).toBe('function');
+    expect(typeof Reader[FL.ap]).toBe('function');
+    expect(typeof Reader[FL.of]).toBe('function');
+    expect(typeof Reader[FL.chain]).toBe('function');
   });
 
   test('Instance Monad', () => {
-    expect(typeof Reader.prototype[fl.map]).toBe('function');
-    expect(typeof Reader.prototype[fl.ap]).toBe('function');
-    expect(typeof Reader.prototype[fl.of]).toBe('function');
-    expect(typeof Reader.prototype[fl.chain]).toBe('function');
+    expect(typeof Reader.prototype[FL.map]).toBe('function');
+    expect(typeof Reader.prototype[FL.ap]).toBe('function');
+    expect(typeof Reader.prototype[FL.of]).toBe('function');
+    expect(typeof Reader.prototype[FL.chain]).toBe('function');
   });
 });

@@ -1,6 +1,7 @@
-import fl from 'fantasy-land';
-import curry from 'ramda/src/curry';
-import { tag } from './adt';
+const FL = require('fantasy-land');
+
+const { tag } = require('./adt');
+const { curry } = require('./_tools');
 
 
 const Task = tag('Task', 'fork');
@@ -140,7 +141,6 @@ Task.prototype.recover = function recover(transform) {
   return Task.recover(transform, this);
 };
 
-
 /*
  |------------------------------------------------------------------------------
  | Fantasy Land
@@ -148,16 +148,16 @@ Task.prototype.recover = function recover(transform) {
  */
 
 // Static Monad
-Task[fl.of] = Task.of;
-Task[fl.chain] = Task.chain;
-Task[fl.map] = Task.map;
-Task[fl.ap] = Task.ap;
+Task[FL.of] = Task.of;
+Task[FL.chain] = Task.chain;
+Task[FL.map] = Task.map;
+Task[FL.ap] = Task.ap;
 
 // Instance Monad
-Task.prototype[fl.of] = Task.prototype.of;
-Task.prototype[fl.chain] = Task.prototype.chain;
-Task.prototype[fl.map] = Task.prototype.map;
-Task.prototype[fl.ap] = Task.prototype.ap;
+Task.prototype[FL.of] = Task.prototype.of;
+Task.prototype[FL.chain] = Task.prototype.chain;
+Task.prototype[FL.map] = Task.prototype.map;
+Task.prototype[FL.ap] = Task.prototype.ap;
 
 
 module.exports = Task;

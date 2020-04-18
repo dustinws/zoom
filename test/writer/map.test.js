@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 
-import Writer from '../../src/writer';
-import Tuple from '../../src/tuple';
+const Writer = require('../../src/writer');
+const Tuple = require('../../src/tuple');
 
 describe('Writer', () => {
   describe('Writer.map', () => {

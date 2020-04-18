@@ -1,7 +1,7 @@
-import fl from 'fantasy-land';
-import __ from 'ramda/src/__';
-import curry from 'ramda/src/curry';
-import { tag } from './adt';
+const FL = require('fantasy-land');
+
+const { tag } = require('./adt');
+const { __, curry } = require('./_tools');
 
 
 const IO = tag('IO', 'run');
@@ -70,20 +70,20 @@ IO.prototype.ap = function ap(apply) {
  */
 
 // IO Applicative
-IO[fl.of] = IO.of;
-IO.prototype[fl.of] = IO.prototype.of;
+IO[FL.of] = IO.of;
+IO.prototype[FL.of] = IO.prototype.of;
 
 // IO Chain
-IO[fl.chain] = IO.chain;
-IO.prototype[fl.chain] = IO.prototype.chain;
+IO[FL.chain] = IO.chain;
+IO.prototype[FL.chain] = IO.prototype.chain;
 
 // IO Functor
-IO[fl.map] = IO.map;
-IO.prototype[fl.map] = IO.prototype.map;
+IO[FL.map] = IO.map;
+IO.prototype[FL.map] = IO.prototype.map;
 
 // IO Apply
-IO[fl.ap] = IO.ap;
-IO.prototype[fl.ap] = IO.prototype.ap;
+IO[FL.ap] = IO.ap;
+IO.prototype[FL.ap] = IO.prototype.ap;
 
 
 module.exports = IO;

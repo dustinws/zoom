@@ -1,20 +1,20 @@
 /* global describe, expect, test */
 
-import fl from 'fantasy-land';
-import Task from '../../../src/task';
+const FL = require('fantasy-land');
+const Task = require('../../../src/task');
 
 describe('Fantasy Check - Task', () => {
   test('Static Monad', () => {
-    expect(typeof Task[fl.map]).toBe('function');
-    expect(typeof Task[fl.ap]).toBe('function');
-    expect(typeof Task[fl.of]).toBe('function');
-    expect(typeof Task[fl.chain]).toBe('function');
+    expect(typeof Task[FL.map]).toBe('function');
+    expect(typeof Task[FL.ap]).toBe('function');
+    expect(typeof Task[FL.of]).toBe('function');
+    expect(typeof Task[FL.chain]).toBe('function');
   });
 
   test('Instance Monad', () => {
-    expect(typeof Task.prototype[fl.map]).toBe('function');
-    expect(typeof Task.prototype[fl.ap]).toBe('function');
-    expect(typeof Task.prototype[fl.of]).toBe('function');
-    expect(typeof Task.prototype[fl.chain]).toBe('function');
+    expect(typeof Task.prototype[FL.map]).toBe('function');
+    expect(typeof Task.prototype[FL.ap]).toBe('function');
+    expect(typeof Task.prototype[FL.of]).toBe('function');
+    expect(typeof Task.prototype[FL.chain]).toBe('function');
   });
 });

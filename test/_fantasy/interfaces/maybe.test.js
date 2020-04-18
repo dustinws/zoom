@@ -1,33 +1,33 @@
 /* global describe, expect, test */
 
-import fl from 'fantasy-land';
-import Maybe from '../../../src/maybe';
+const FL = require('fantasy-land');
+const Maybe = require('../../../src/maybe');
 
 describe('Fantasy Check - Maybe', () => {
   describe('Maybe', () => {
     test('Static Monad', () => {
-      expect(typeof Maybe[fl.map]).toBe('function');
-      expect(typeof Maybe[fl.ap]).toBe('function');
-      expect(typeof Maybe[fl.of]).toBe('function');
-      expect(typeof Maybe[fl.chain]).toBe('function');
+      expect(typeof Maybe[FL.map]).toBe('function');
+      expect(typeof Maybe[FL.ap]).toBe('function');
+      expect(typeof Maybe[FL.of]).toBe('function');
+      expect(typeof Maybe[FL.chain]).toBe('function');
     });
   });
 
   describe('Maybe.Nothing', () => {
     test('Static Monad', () => {
-      expect(typeof Maybe.Nothing[fl.map]).toBe('function');
-      expect(typeof Maybe.Nothing[fl.ap]).toBe('function');
-      expect(typeof Maybe.Nothing[fl.of]).toBe('function');
-      expect(typeof Maybe.Nothing[fl.chain]).toBe('function');
+      expect(typeof Maybe.Nothing[FL.map]).toBe('function');
+      expect(typeof Maybe.Nothing[FL.ap]).toBe('function');
+      expect(typeof Maybe.Nothing[FL.of]).toBe('function');
+      expect(typeof Maybe.Nothing[FL.chain]).toBe('function');
     });
   });
 
   describe('Maybe.Just', () => {
     test('Instance Monad', () => {
-      expect(typeof Maybe.Just.prototype[fl.map]).toBe('function');
-      expect(typeof Maybe.Just.prototype[fl.ap]).toBe('function');
-      expect(typeof Maybe.Just.prototype[fl.of]).toBe('function');
-      expect(typeof Maybe.Just.prototype[fl.chain]).toBe('function');
+      expect(typeof Maybe.Just.prototype[FL.map]).toBe('function');
+      expect(typeof Maybe.Just.prototype[FL.ap]).toBe('function');
+      expect(typeof Maybe.Just.prototype[FL.of]).toBe('function');
+      expect(typeof Maybe.Just.prototype[FL.chain]).toBe('function');
     });
   });
 });

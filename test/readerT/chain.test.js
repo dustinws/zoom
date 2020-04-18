@@ -1,7 +1,7 @@
 /* global describe, expect, test */
 
-import Reader from '../../src/reader';
-import Maybe from '../../src/maybe';
+const Reader = require('../../src/reader');
+const Maybe = require('../../src/maybe');
 
 const ReaderT = Reader.T(Maybe);
 

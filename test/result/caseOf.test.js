@@ -1,6 +1,6 @@
 /* global describe, expect, jest, test */
 
-import Result from '../../src/result';
+const Result = require('../../src/result');
 
 const { Err, Ok } = Result;
 

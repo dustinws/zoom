@@ -1,6 +1,7 @@
-import fl from 'fantasy-land';
-import curry from 'ramda/src/curry';
-import { tag } from './adt';
+const FL = require('fantasy-land');
+
+const { tag } = require('./adt');
+const { curry } = require('./_tools');
 
 const Tuple = tag('Tuple', 'left', 'right');
 
@@ -88,12 +89,12 @@ Tuple.prototype[Symbol.iterator] = function iterator() {
  */
 
 // Tuple Applicative
-Tuple[fl.equals] = Tuple.equals;
-Tuple.prototype[fl.equals] = Tuple.prototype.equals;
+Tuple[FL.equals] = Tuple.equals;
+Tuple.prototype[FL.equals] = Tuple.prototype.equals;
 
 // Tuple Functor
-Tuple[fl.map] = Tuple.map;
-Tuple.prototype[fl.map] = Tuple.prototype.map;
+Tuple[FL.map] = Tuple.map;
+Tuple.prototype[FL.map] = Tuple.prototype.map;
 
 
 module.exports = Tuple;

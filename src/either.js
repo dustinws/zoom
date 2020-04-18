@@ -1,8 +1,8 @@
-import fl from 'fantasy-land';
-import curry from 'ramda/src/curry';
-import always from 'ramda/src/always';
-import compose from 'ramda/src/compose';
-import { union } from './adt';
+const FL = require('fantasy-land');
+
+const { union } = require('./adt');
+const { always, curry, compose } = require('./_tools');
+
 
 const Either = union('Either', {
   Right: ['value'],
@@ -128,30 +128,30 @@ Either.prototype.isRight = function isRight() {
  */
 
 // Either Applicative
-Either[fl.of] = Either.of;
-Either.prototype[fl.of] = Either.prototype.of;
+Either[FL.of] = Either.of;
+Either.prototype[FL.of] = Either.prototype.of;
 
 // Either Chain
-Either[fl.chain] = Either.chain;
-Either.prototype[fl.chain] = Either.prototype.chain;
+Either[FL.chain] = Either.chain;
+Either.prototype[FL.chain] = Either.prototype.chain;
 
 // Either Functor
-Either[fl.map] = Either.map;
-Either.prototype[fl.map] = Either.prototype.map;
+Either[FL.map] = Either.map;
+Either.prototype[FL.map] = Either.prototype.map;
 
 // Either Apply
-Either[fl.ap] = Either.ap;
-Either.prototype[fl.ap] = Either.prototype.ap;
+Either[FL.ap] = Either.ap;
+Either.prototype[FL.ap] = Either.prototype.ap;
 
 
 // Right Applicative
-Right[fl.of] = Right.of;
-Right.prototype[fl.of] = Right.prototype.of;
+Right[FL.of] = Right.of;
+Right.prototype[FL.of] = Right.prototype.of;
 
 
 // Left Applicative
-Left[fl.of] = Left.of;
-Left.prototype[fl.of] = Left.prototype.of;
+Left[FL.of] = Left.of;
+Left.prototype[FL.of] = Left.prototype.of;
 
 
 module.exports = Either;

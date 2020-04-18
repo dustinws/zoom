@@ -1,6 +1,6 @@
 /* global describe, expect, test */
 
-import RemoteData from '../../src/remote-data';
+const RemoteData = require('../../src/remote-data');
 
 const {
   NotAsked,

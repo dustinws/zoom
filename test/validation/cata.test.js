@@ -1,6 +1,6 @@
 /* global describe, expect, jest, test */
 
-import Validation from '../../src/validation';
+const Validation = require('../../src/validation');
 
 const { Failure, Success } = Validation;
 
