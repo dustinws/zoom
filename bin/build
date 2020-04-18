@@ -1,28 +1,27 @@
 #!/bin/bash
 
 # Clean existing build files
-if [ -d build/node ]; then
-  echo "Removing 'build/node' files..."
-  rm -rf build/node
-  echo "Removed 'build/node' files."
+if [ -d build ]; then
+  echo "Removing 'build' files..."
+  rm -rf build
+  echo "Removed 'build' files."
 fi
 
 # Build source files with babel.
 echo "Building source files..."
 mkdir build
-mkdir build/node
-cp -r src/ build/node
+cp -r src/ build
 echo "Source files built successfully."
 
 # Copy essential files into .tmp/deploy
 echo "Copying package.json..."
-cp package.json build/node
+cp package.json build
 
 echo "Copying package-lock.json..."
-cp package-lock.json build/node
+cp package-lock.json build
 
 echo "Copying LICENSE..."
-cp LICENSE build/node
+cp LICENSE build
 
 echo "Copying README.md..."
-cp README.md build/node
+cp README.md build

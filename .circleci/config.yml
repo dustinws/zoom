@@ -29,7 +29,7 @@ jobs:
     steps:
       - checkout
       - run: npm install
-      - run: npm run build:node && npm run build:browser
+      - run: npm run build
 
 workflows:
   version: 2
