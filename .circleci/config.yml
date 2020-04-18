@@ -10,8 +10,8 @@ dependencies:
 
 jobs:
   test:
-    machine: true
-    working_directory: ~/zoom
+    docker:
+      - image: circleci/ruby:2.4.2-jessie-node
     steps:
       - checkout
       - run: rm -rf $CIRCLE_ARTIFACTS/coverage
@@ -21,8 +21,8 @@ jobs:
       - run: npm run coverage
 
   build:
-    machine: true
-    working_directory: ~/zoom
+    docker:
+      - image: circleci/ruby:2.4.2-jessie-node
     steps:
       - checkout
       - run: npm run build:node && npm run build:browser
