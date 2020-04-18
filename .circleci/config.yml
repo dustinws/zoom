@@ -18,7 +18,16 @@ jobs:
       - run: cp -r coverage $CIRCLE_ARTIFACTS
       - run: npm run coverage
 
-  compile:
+  build:
     machine: true
     steps:
       - run: npm run build:node && npm run build:browser
+
+workflows:
+  version: 2
+    build_and_test:
+      jobs:
+        - build
+        - test:
+            requires:
+              - build
