@@ -9,11 +9,13 @@ dependencies:
     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
 
 jobs:
+  install:
   test:
     docker:
       - image: node:10
     steps:
       - checkout
+      - run: npm install
       - run: rm -rf $CIRCLE_ARTIFACTS/coverage
       - run: npm run lint
       - run: npm run test
@@ -21,6 +23,7 @@ jobs:
       - run: npm run coverage
 
   build:
+    working_directory: ~/zoom
     docker:
       - image: node:10
     steps:
