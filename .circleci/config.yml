@@ -13,7 +13,7 @@ jobs:
     machine: true
     working_directory: ~/zoom
     steps:
-      - run: ls
+      - checkout
       - run: rm -rf $CIRCLE_ARTIFACTS/coverage
       - run: npm run lint
       - run: npm run test
@@ -24,7 +24,7 @@ jobs:
     machine: true
     working_directory: ~/zoom
     steps:
-      - run: ls
+      - checkout
       - run: npm run build:node && npm run build:browser
 
 workflows:
