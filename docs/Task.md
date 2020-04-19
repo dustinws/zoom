@@ -340,6 +340,22 @@ const readFile = Task.liftNode(fs.readFile);
 readFile('foo.js'); // Task(Error, Buffer)
 ```
 
+#### liftPromise
+```hs
+liftPromise :: (a -> Promise b c) -> (a -> Task b c)
+```
+
+Convert a function that returns a Promise into a function that returns a Task.
+
+```JavaScript
+import bcrypt from 'bcrypt';
+import { Task } from 'zoomjs';
+
+const hash = Task.liftPromise(bcrypt.hash);
+
+hash('password', 10) // Task(Error, String)
+```
+
 ---
 
 ### Instance
