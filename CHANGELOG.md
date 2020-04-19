@@ -1,3 +1,8 @@
+<a name="3.0.4"></a>
+## [3.0.4](https://github.com/dustinws/zoom/compare/v3.0.0...v3.0.4) (2020-04-19)
+
+
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/dustinws/zoom/compare/v3.0.0-beta...v3.0.0) (2017-08-12)
 
