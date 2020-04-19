@@ -101,6 +101,11 @@ Task.liftNode = func => (...args) =>
       return resolve(data);
     }));
 
+// liftPromise :: (a -> Promise b c) -> (a -> Task b c)
+Task.liftPromise = func => (...args) =>
+  Task((reject, resolve) =>
+    func(...args).then(resolve).catch(reject));
+
 
 /*
  |------------------------------------------------------------------------------
