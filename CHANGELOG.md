@@ -1,3 +1,13 @@
+<a name="3.2.0"></a>
+# [3.2.0](https://github.com/dustinws/zoom/compare/v3.1.0...v3.2.0) (2020-04-21)
+
+
+### Features
+
+* **Validation:** add Validation.combine ([6ba0f40](https://github.com/dustinws/zoom/commit/6ba0f40))
+
+
+
 <a name="3.0.4"></a>
 ## [3.0.4](https://github.com/dustinws/zoom/compare/v3.0.0...v3.0.4) (2020-04-21)
 
