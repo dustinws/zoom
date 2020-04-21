@@ -1,5 +1,9 @@
 const FL = require('fantasy-land');
 
+const Task = require('./task');
+const Either = require('./either');
+const Result = require('./result');
+
 const { union } = require('./adt');
 const { __, curry, always, compose } = require('./_tools');
 
@@ -74,6 +78,27 @@ Maybe.withDefault = curry((defaultValue, maybe) =>
     Nothing: () => defaultValue,
   }));
 
+// toEither :: Maybe b -> Either a b
+Maybe.toEither = maybe =>
+  maybe.cata({
+    Nothing: Either.Left,
+    Just: Either.Right,
+  });
+
+// toResult :: Maybe b -> Result a b
+Maybe.toResult = maybe =>
+  maybe.cata({
+    Nothing: Result.Err,
+    Just: Result.Ok,
+  });
+
+// toTask :: Maybe b -> Task a b
+Maybe.toTask = maybe =>
+  maybe.cata({
+    Nothing: Task.reject,
+    Just: Task.of,
+  });
+
 
 /*
  |------------------------------------------------------------------------------
@@ -124,6 +149,21 @@ Maybe.prototype.isJust = function isJust() {
 // withDefault :: Maybe a ~> a -> a
 Maybe.prototype.withDefault = function withDefault(value) {
   return Maybe.withDefault(value, this);
+};
+
+// toEither :: Maybe b ~> Either a b
+Maybe.prototype.toEither = function toEither() {
+  return Maybe.toEither(this);
+};
+
+// toResult :: Maybe b ~> Result a b
+Maybe.prototype.toResult = function toResult() {
+  return Maybe.toResult(this);
+};
+
+// toTask :: Maybe b ~> Maybe b
+Maybe.prototype.toTask = function toTask() {
+  return Maybe.toTask(this);
 };
 
 

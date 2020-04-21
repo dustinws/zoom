@@ -1,12 +1,12 @@
 /* global describe, expect, test, jest */
 
-const Either = require('../../src/either');
+const Maybe = require('../../src/maybe');
 
 
-describe('Data.Either', () => {
-  describe('Either.toTask', () => {
-    test('It should return a resolved task if the Either is Right', () => {
-      const task = Either.toTask(Either.Right(1));
+describe('Data.Maybe', () => {
+  describe('Maybe.toTask', () => {
+    test('It should return a resolved task if the Maybe is Just', () => {
+      const task = Maybe.toTask(Maybe.Just(1));
       const rejectedCallback = jest.fn();
       const resolvedCallback = jest.fn();
 
@@ -16,8 +16,8 @@ describe('Data.Either', () => {
       expect(resolvedCallback).toHaveBeenCalled();
     });
 
-    test('It should return a rejected teask if the Either is Left', () => {
-      const task = Either.toTask(Either.Left(1));
+    test('It should return a rejected teask if the Maybe is Nothing', () => {
+      const task = Maybe.toTask(Maybe.Nothing);
       const rejectedCallback = jest.fn();
       const resolvedCallback = jest.fn();
 
@@ -28,9 +28,9 @@ describe('Data.Either', () => {
     });
   });
 
-  describe('Either#toTask', () => {
-    test('It should return a resolved task if the instance is a Right', () => {
-      const task = Either.Right.of(1).toTask();
+  describe('Maybe#toTask', () => {
+    test('It should return a resolved task if the instance is a Just', () => {
+      const task = Maybe.Just.of(1).toTask();
       const rejectedCallback = jest.fn();
       const resolvedCallback = jest.fn();
 
@@ -40,8 +40,8 @@ describe('Data.Either', () => {
       expect(resolvedCallback).toHaveBeenCalled();
     });
 
-    test('It should return a rejected task if the instance is a Left', () => {
-      const task = Either.Left.of(1).toTask();
+    test('It should return a rejected task if the instance is a Nothing', () => {
+      const task = Maybe.Nothing.of().toTask();
       const rejectedCallback = jest.fn();
       const resolvedCallback = jest.fn();
 

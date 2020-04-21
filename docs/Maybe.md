@@ -289,6 +289,57 @@ withDefault('bar', Just('foo')); // 'foo'
 
 ---
 
+#### toEither
+```hs
+toEither :: Maybe b -> Either a b
+```
+
+Convert a Maybe into an [Either](https://github.com/dustinws/zoom/blob/master/docs/Either.md).
+
+```JavaScript
+import { toEither, Nothing, Just } from 'zoomjs/maybe';
+
+
+toEither(Nothing.of()); // Either.Left(null)
+toEither(Just.of('Success!')); // Either.Right('Success!')
+```
+
+---
+
+#### toResult
+```hs
+toResult :: Maybe b -> Result a b
+```
+
+Convert a Maybe into a [Result](https://github.com/dustinws/zoom/blob/master/docs/Result.md).
+
+```JavaScript
+import { toResult, Nothing, Just } from 'zoomjs/maybe';
+
+
+toResult(Nothing.of()); // Result.Err(null)
+toResult(Just.of('Success!')); // Result.Ok('Success!')
+```
+
+---
+
+#### toTask
+```hs
+toTask :: Maybe b -> Task a b
+```
+
+Convert a Maybe into a [Task](https://github.com/dustinws/zoom/blob/master/docs/Task.md).
+
+```JavaScript
+import { toTask, Nothing, Just } from 'zoomjs/maybe';
+
+
+toTask(Nothing.of()); // Task(null, null) [rejected]
+toTask(Just.of('Success!')); // Task(null, 'Success!')
+```
+
+---
+
 ### Instance
 
 ---
@@ -480,4 +531,55 @@ import { Just, Nothing } from 'zoomjs';
 
 Nothing.withDefault('bar'); // 'bar'
 Just('foo').withDefault('bar'); // 'foo'
+```
+
+---
+
+#### toEither
+```hs
+toEither :: Maybe b ~> Either a b
+```
+
+Convert a Maybe into an [Either](https://github.com/dustinws/zoom/blob/master/docs/Either.md).
+
+```JavaScript
+import { Nothing, Just } from 'zoomjs/maybe';
+
+
+Nothing.of().toEither(); // Either.Left(null)
+Just.of('Success!').toEither(); // Either.Right('Success!')
+```
+
+---
+
+#### toResult
+```hs
+toResult :: Maybe b ~> Result a b
+```
+
+Convert a Maybe into a [Result](https://github.com/dustinws/zoom/blob/master/docs/Result.md).
+
+```JavaScript
+import { Nothing, Just } from 'zoomjs/maybe';
+
+
+Nothing.of().toResult(); // Result.Err(null)
+Just.of('Success!').toResult(); // Result.Ok('Success!')
+```
+
+---
+
+#### toTask
+```hs
+toTask :: Maybe b ~> Task a b
+```
+
+Convert a Maybe into a [Task](https://github.com/dustinws/zoom/blob/master/docs/Task.md).
+
+```JavaScript
+import { Nothing, Just } from 'zoomjs/maybe';
+
+
+Nothing.of().toTask(); // Task(null, null) [rejected]
+Just.of('Success!').toTask(); // Task(null, 'Success!')
 ```
