@@ -32,12 +32,6 @@ const pipe = (...fns) => initialValue =>
 const compose = (...fns) =>
   pipe(...fns.reverse());
 
-// Add two numbers together.
-const add = curry((a, b) => a + b);
-
-// Multiply two numbers together.
-const multiply = curry((a, b) => a * b);
-
 
 module.exports = {
   __,
@@ -45,6 +39,4 @@ module.exports = {
   curry,
   compose,
   pipe,
-  add,
-  multiply,
 };
