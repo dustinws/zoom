@@ -323,6 +323,23 @@ toResult(Just.of('Success!')); // Result.Ok('Success!')
 
 ---
 
+#### toValidation
+```hs
+toValidation :: Maybe b -> Validation a b
+```
+
+Convert a Maybe into a [Validation](https://github.com/dustinws/zoom/blob/master/docs/Validation.md).
+
+```JavaScript
+import { toValidation, Nothing, Just } from 'zoomjs/maybe';
+
+
+toValidation(Nothing.of()); // Validation.Failure(null)
+toValidation(Just.of('Success!')); // Validation.Success('Success!')
+```
+
+---
+
 #### toTask
 ```hs
 toTask :: Maybe b -> Task a b
@@ -565,6 +582,23 @@ import { Nothing, Just } from 'zoomjs/maybe';
 
 Nothing.of().toResult(); // Result.Err(null)
 Just.of('Success!').toResult(); // Result.Ok('Success!')
+```
+
+---
+
+#### toValidation
+```hs
+toValidation :: Maybe b ~> Validation a b
+```
+
+Convert a Maybe into a [Validation](https://github.com/dustinws/zoom/blob/master/docs/Validation.md).
+
+```JavaScript
+import { Nothing, Just } from 'zoomjs/maybe';
+
+
+Nothing.of().toValidation(); // Validation.Failure(null)
+Just.of('Success!').toValidation(); // Validation.Success('Success!')
 ```
 
 ---

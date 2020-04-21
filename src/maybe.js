@@ -3,6 +3,7 @@ const FL = require('fantasy-land');
 const Task = require('./task');
 const Either = require('./either');
 const Result = require('./result');
+const Validation = require('./validation');
 
 const { union } = require('./adt');
 const { __, curry, always, compose } = require('./_tools');
@@ -92,6 +93,13 @@ Maybe.toResult = maybe =>
     Just: Result.Ok,
   });
 
+// toValidation :: Maybe b -> Validation a b
+Maybe.toValidation = maybe =>
+  maybe.cata({
+    Nothing: Validation.Failure,
+    Just: Validation.Success,
+  });
+
 // toTask :: Maybe b -> Task a b
 Maybe.toTask = maybe =>
   maybe.cata({
@@ -159,6 +167,11 @@ Maybe.prototype.toEither = function toEither() {
 // toResult :: Maybe b ~> Result a b
 Maybe.prototype.toResult = function toResult() {
   return Maybe.toResult(this);
+};
+
+// toValidation :: Maybe b ~> Validation a b
+Maybe.prototype.toValidation = function toValidation() {
+  return Maybe.toValidation(this);
 };
 
 // toTask :: Maybe b ~> Maybe b
