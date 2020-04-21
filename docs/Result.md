@@ -272,7 +272,7 @@ toMaybe(Ok.of('Success!')); // Maybe.Just('Success!')
 
 #### toValidation
 ```hs
-toMaybe :: Result a b -> Validation a b
+toValidation :: Result a b -> Validation a b
 ```
 
 Convert a Result into a [Validation](https://github.com/dustinws/zoom/blob/master/docs/Validation.md).
@@ -561,7 +561,7 @@ Ok.of('Success!').toMaybe(); // Maybe.Just('Success!')
 
 #### toValidation
 ```hs
-toMaybe :: Result a b ~> Validation a b
+toValidation :: Result a b ~> Validation a b
 ```
 
 Convert a Result into a [Validation](https://github.com/dustinws/zoom/blob/master/docs/Validation.md).
