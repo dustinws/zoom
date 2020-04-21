@@ -11,7 +11,7 @@ describe('Data.Result', () => {
       expect(maybe.isJust()).toBe(true);
     });
 
-    test('It should return a Nothing if the Result is Left', () => {
+    test('It should return a Nothing if the Result is an Err', () => {
       const maybe = Result.toMaybe(Result.Err());
 
       expect(maybe.isNothing()).toBe(true);
