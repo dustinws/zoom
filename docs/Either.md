@@ -520,3 +520,54 @@ import { Left, Right } from 'zoomjs/either';
 Right.of(1).isRight(); // true
 Left.of(1).isRight(); // false
 ```
+
+---
+
+#### toMaybe
+```hs
+toMaybe :: Either a b ~> Maybe b
+```
+
+Convert an Either into a [Maybe](https://github.com/dustinws/zoom/blob/master/docs/Maybe.md).
+
+```JavaScript
+import { Left, Right } from 'zoomjs/either';
+
+
+Left.of('ouch!').toMaybe(); // Maybe.Nothing
+Right.of('Success!').toMaybe(); // Maybe.Just('Success!')
+```
+
+---
+
+#### toResult
+```hs
+toResult :: Either a b ~> Result a b
+```
+
+Convert an Either into a [Result](https://github.com/dustinws/zoom/blob/master/docs/Result.md).
+
+```JavaScript
+import { Left, Right } from 'zoomjs/either';
+
+
+Left.of('ouch!').toResult(); // Result.Err('ouch!')
+Right.of('Success!').toResult(); // Result.Ok('Success!')
+```
+
+---
+
+#### toTask
+```hs
+toTask :: Either a b ~> Task a b
+```
+
+Convert an Either into a [Task](https://github.com/dustinws/zoom/blob/master/docs/Task.md).
+
+```JavaScript
+import { Left, Right } from 'zoomjs/either';
+
+
+Left.of('ouch!').toTask(); // Task('ouch!', null)
+Right.of('Success!').toTask(); // Task(null, 'Success!')
+```
