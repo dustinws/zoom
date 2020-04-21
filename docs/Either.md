@@ -239,6 +239,57 @@ isRight(Left.of());
 
 ---
 
+#### toMaybe
+```hs
+toMaybe :: Either a b -> Maybe b
+```
+
+Convert an Either into a [Maybe](https://github.com/dustinws/zoom/blob/master/docs/Maybe.md).
+
+```JavaScript
+import { toMaybe, Left, Right } from 'zoomjs/either';
+
+
+toMaybe(Left('ouch!')); // Maybe.Nothing
+toMaybe(Right('Success!')); // Maybe.Just('Success!')
+```
+
+---
+
+#### toResult
+```hs
+toResult :: Either a b -> Result a b
+```
+
+Convert an Either into a [Result](https://github.com/dustinws/zoom/blob/master/docs/Result.md).
+
+```JavaScript
+import { toResult, Left, Right } from 'zoomjs/either';
+
+
+toResult(Left('ouch!')); // Result.Err('ouch!')
+toResult(Right('Success!')); // Result.Ok('Success!')
+```
+
+---
+
+#### toTask
+```hs
+toTask :: Either a b -> Task a b
+```
+
+Convert an Either into a [Task](https://github.com/dustinws/zoom/blob/master/docs/Task.md).
+
+```JavaScript
+import { toTask, Left, Right } from 'zoomjs/either';
+
+
+toTask(Left('ouch!')); // Task('ouch!', null)
+toTask(Right('Success!')); // Task(null, 'Success!')
+```
+
+---
+
 #### try
 
 Wraps a function in a try / catch block. If the function is successful, a `Right` will be returned with the result. Otherwise, a `Left` will be returned with the error.
