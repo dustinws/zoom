@@ -16,7 +16,7 @@ describe('Data.Maybe', () => {
       expect(resolvedCallback).toHaveBeenCalled();
     });
 
-    test('It should return a rejected teask if the Maybe is Nothing', () => {
+    test('It should return a rejected task if the Maybe is Nothing', () => {
       const task = Maybe.toTask(Maybe.Nothing);
       const rejectedCallback = jest.fn();
       const resolvedCallback = jest.fn();

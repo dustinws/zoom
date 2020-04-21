@@ -16,7 +16,7 @@ describe('Data.Either', () => {
       expect(resolvedCallback).toHaveBeenCalled();
     });
 
-    test('It should return a rejected teask if the Either is Left', () => {
+    test('It should return a rejected task if the Either is Left', () => {
       const task = Either.toTask(Either.Left(1));
       const rejectedCallback = jest.fn();
       const resolvedCallback = jest.fn();
