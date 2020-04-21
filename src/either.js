@@ -1,5 +1,9 @@
 const FL = require('fantasy-land');
 
+const Task = require('./task');
+const Maybe = require('./maybe');
+const Result = require('./result');
+
 const { union } = require('./adt');
 const { always, curry, compose } = require('./_tools');
 
@@ -57,6 +61,27 @@ Either.isLeft = either => either instanceof Left;
 
 // isRight :: Either a b -> Bool
 Either.isRight = either => either instanceof Right;
+
+// toMaybe :: Either a b -> Maybe b
+Either.toMaybe = either =>
+  either.cata({
+    Left: always(Maybe.Nothing),
+    Right: Maybe.Just,
+  });
+
+// toResult :: Either a b -> Result a b
+Either.toResult = either =>
+  either.cata({
+    Left: Result.Err,
+    Right: Result.Ok,
+  });
+
+// toTask :: Either a b -> Task a b
+Either.toTask = either =>
+  either.cata({
+    Left: Task.reject,
+    Right: Task.of,
+  });
 
 Either.try = callback => (...args) => {
   try {
@@ -118,6 +143,21 @@ Either.prototype.isLeft = function isLeft() {
 // isRight :: Either a b ~> c -> Bool
 Either.prototype.isRight = function isRight() {
   return Either.isRight(this);
+};
+
+// toMaybe :: Either a b ~> Maybe b
+Either.prototype.toMaybe = function toMaybe() {
+  return Either.toMaybe(this);
+};
+
+// toResult :: Either a b ~> Result a b
+Either.prototype.toResult = function toResult() {
+  return Either.toResult(this);
+};
+
+// toTask :: Either a b ~> Maybe b
+Either.prototype.toTask = function toTask() {
+  return Either.toTask(this);
 };
 
 
