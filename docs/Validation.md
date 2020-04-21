@@ -361,6 +361,31 @@ toTask(Success.of('Success!')); // Task(null, 'Success!')
 
 ---
 
+#### combine
+```hs
+combine :: [Validation a b] -> Validation a b
+```
+
+Turns a list of validations into a single validation. If all validations are a success, then a Success will be returned containing an array of all of the successful values. If any Failures are present, then a Failure will be returned containing an array of all of the failure values.
+
+```JavaScript
+import { combine, Success, Failure } from 'zoomjs/maybe';
+
+combine([
+  Success(1),
+  Success(2),  // This will evaluate to Success([1, 2, 3])
+  Success(3),
+]);
+
+combine([
+  Success(1),
+  Failure(2),   // This will evaluate to Failure([2])
+  Success(3),
+]);
+```
+
+---
+
 ### Instance
 
 ---

@@ -110,6 +110,10 @@ Validation.toTask = validation =>
     Success: Task.of,
   });
 
+// combine :: [Validation a b] -> Validation a b
+Validation.combine = list =>
+  list.reduce(Validation.concat, Validation.empty());
+
 
 /*
  |------------------------------------------------------------------------------
