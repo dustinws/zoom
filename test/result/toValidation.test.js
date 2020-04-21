@@ -6,15 +6,15 @@ const Result = require('../../src/result');
 describe('Data.Result', () => {
   describe('Result.toValidation', () => {
     test('It should return a Success if the Result is Ok', () => {
-      const either = Result.toValidation(Result.Ok());
+      const validation = Result.toValidation(Result.Ok());
 
-      expect(either.isSuccess()).toBe(true);
+      expect(validation.isSuccess()).toBe(true);
     });
 
     test('It should return a Failure if the Result is an Err', () => {
-      const either = Result.toValidation(Result.Err());
+      const validation = Result.toValidation(Result.Err());
 
-      expect(either.isFailure()).toBe(true);
+      expect(validation.isFailure()).toBe(true);
     });
   });
 
