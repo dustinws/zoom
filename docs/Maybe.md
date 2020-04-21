@@ -83,7 +83,7 @@ function getStreetNumber(data, defaultValue) {
 }
 
 getStreetNumber(data, 'No Address'); // '43'
-getStreetNumber({}, 'No Addres'); // 'No Address'
+getStreetNumber({}, 'No Address'); // 'No Address'
 ```
 
 ---
