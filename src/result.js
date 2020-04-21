@@ -1,5 +1,10 @@
 const FL = require('fantasy-land');
 
+const Task = require('./task');
+const Either = require('./either');
+const Maybe = require('./maybe');
+const Validation = require('./validation');
+
 const { union } = require('./adt');
 const { __, curry, always, compose } = require('./_tools');
 
@@ -57,6 +62,34 @@ Result.isErr = result => result instanceof Result.Err;
 // isOk :: Result a b -> Bool
 Result.isOk = result => result instanceof Result.Ok;
 
+// toMaybe :: Result a b -> Maybe b
+Result.toMaybe = result =>
+  result.cata({
+    Err: Maybe.Nothing.of,
+    Ok: Maybe.Just.of,
+  });
+
+// toEither :: Result a b -> Either a b
+Result.toEither = result =>
+  result.cata({
+    Err: Either.Left.of,
+    Ok: Either.Right.of,
+  });
+
+  // toTask :: Result a b -> Task a b
+Result.toTask = result =>
+  result.cata({
+    Err: Task.reject,
+    Ok: Task.of,
+  });
+
+  // toValidation :: Result a b -> Validation a b
+Result.toValidation = result =>
+  result.cata({
+    Err: Validation.Failure.of,
+    Ok: Validation.Success.of,
+  });
+
 
 /*
  |------------------------------------------------------------------------------
@@ -107,6 +140,26 @@ Result.prototype.isErr = function isErr() {
 // isOk :: Result a b ~> c -> Bool
 Result.prototype.isOk = function isOk() {
   return Result.isOk(this);
+};
+
+// toMaybe :: Result a b ~> Maybe b
+Result.prototype.toMaybe = function toMaybe() {
+  return Result.toMaybe(this);
+};
+
+// toEither :: Result a b ~> Either a b
+Result.prototype.toEither = function toEither() {
+  return Result.toEither(this);
+};
+
+// toTask :: Result a b ~> Task a b
+Result.prototype.toTask = function toTask() {
+  return Result.toTask(this);
+};
+
+// toValidation :: Result a b ~> Validation a b
+Result.prototype.toValidation = function toValidation() {
+  return Result.toValidation(this);
 };
 
 /*

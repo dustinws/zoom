@@ -236,6 +236,74 @@ isOk(Err.of());
 
 ---
 
+#### toEither
+```hs
+toEither :: Result a b -> Either a b
+```
+
+Convert a Result into an [Either](https://github.com/dustinws/zoom/blob/master/docs/Either.md).
+
+```JavaScript
+import { toEither, Ok, Err } from 'zoomjs/result';
+
+
+toEither(Err.of(1)); // Either.Left(1)
+toEither(Ok.of('Success!')); // Either.Right('Success!')
+```
+
+---
+
+#### toMaybe
+```hs
+toMaybe :: Result a b -> Maybe b
+```
+
+Convert a Result into a [Maybe](https://github.com/dustinws/zoom/blob/master/docs/Maybe.md).
+
+```JavaScript
+import { toMaybe, Ok, Err } from 'zoomjs/maybe';
+
+
+toMaybe(Err.of()); // Maybe.Nothing
+toMaybe(Ok.of('Success!')); // Maybe.Just('Success!')
+```
+
+---
+
+#### toValidation
+```hs
+toMaybe :: Result a b -> Validation a b
+```
+
+Convert a Result into a [Validation](https://github.com/dustinws/zoom/blob/master/docs/Validation.md).
+
+```JavaScript
+import { toValidation, Ok, Err } from 'zoomjs/maybe';
+
+
+toValidation(Err.of(1)); // Validation.Failure(1)
+toValidation(Ok.of('Success!')); // Validation.Success('Success!')
+```
+
+---
+
+#### toTask
+```hs
+toTask :: Result a b -> Task a b
+```
+
+Convert a Result into a [Task](https://github.com/dustinws/zoom/blob/master/docs/Task.md).
+
+```JavaScript
+import { toTask, Ok, Err } from 'zoomjs/maybe';
+
+
+toTask(Err.of()); // Task(null, null) [rejected]
+toTask(Ok.of('Success!')); // Task(null, 'Success!')
+```
+
+---
+
 ### Instance
 
 ---
@@ -456,3 +524,69 @@ Err.of(1).isOk(); // false
 ```
 
 ---
+
+#### toEither
+```hs
+toEither :: Result a b ~> Either a b
+```
+
+Convert a Result into an [Either](https://github.com/dustinws/zoom/blob/master/docs/Either.md).
+
+```JavaScript
+import { Ok, Err } from 'zoomjs/result';
+
+
+Err.of(1).toEither(); // Either.Left(1)
+Ok.of('Success!').toEither(); // Either.Right('Success!')
+```
+
+---
+
+#### toMaybe
+```hs
+toMaybe :: Result a b ~> Maybe b
+```
+
+Convert a Result into a [Maybe](https://github.com/dustinws/zoom/blob/master/docs/Maybe.md).
+
+```JavaScript
+import { Ok, Err } from 'zoomjs/maybe';
+
+
+Err.of().toMaybe(); // Maybe.Nothing
+Ok.of('Success!').toMaybe(); // Maybe.Just('Success!')
+```
+
+---
+
+#### toValidation
+```hs
+toMaybe :: Result a b ~> Validation a b
+```
+
+Convert a Result into a [Validation](https://github.com/dustinws/zoom/blob/master/docs/Validation.md).
+
+```JavaScript
+import { Ok, Err } from 'zoomjs/maybe';
+
+
+Err.of(1).toValidation(); // Validation.Failure(1)
+Ok.of('Success!').toValidation(); // Validation.Success('Success!')
+```
+
+---
+
+#### toTask
+```hs
+toTask :: Result a b ~> Task a b
+```
+
+Convert a Result into a [Task](https://github.com/dustinws/zoom/blob/master/docs/Task.md).
+
+```JavaScript
+import { Ok, Err } from 'zoomjs/maybe';
+
+
+Err.of().toTask(); // Task(null, null) [rejected]
+Ok.of('Success!').toTask(); // Task(null, 'Success!')
+```
