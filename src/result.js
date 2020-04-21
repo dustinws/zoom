@@ -76,14 +76,14 @@ Result.toEither = result =>
     Ok: Either.Right.of,
   });
 
-  // toTask :: Result a b -> Task a b
+// toTask :: Result a b -> Task a b
 Result.toTask = result =>
   result.cata({
     Err: Task.reject,
     Ok: Task.of,
   });
 
-  // toValidation :: Result a b -> Validation a b
+// toValidation :: Result a b -> Validation a b
 Result.toValidation = result =>
   result.cata({
     Err: Validation.Failure.of,
