@@ -293,6 +293,74 @@ Validation.empty(); // Success([])
 
 ---
 
+#### toEither
+```hs
+toEither :: Validation a b -> Either a b
+```
+
+Convert a Validation into an [Either](https://github.com/dustinws/zoom/blob/master/docs/Either.md).
+
+```JavaScript
+import { toEither, Success, Failure } from 'zoomjs/validation';
+
+
+toEither(Failure.of(1)); // Either.Left(1)
+toEither(Success.of('Success!')); // Either.Right('Success!')
+```
+
+---
+
+#### toMaybe
+```hs
+toMaybe :: Validation a b -> Maybe b
+```
+
+Convert a Validation into a [Maybe](https://github.com/dustinws/zoom/blob/master/docs/Maybe.md).
+
+```JavaScript
+import { toMaybe, Success, Failure } from 'zoomjs/validation';
+
+
+toMaybe(Failure.of()); // Maybe.Nothing
+toMaybe(Success.of('Success!')); // Maybe.Just('Success!')
+```
+
+---
+
+#### toResult
+```hs
+toResult :: Validation a b -> Result a b
+```
+
+Convert a Validation into a [Result](https://github.com/dustinws/zoom/blob/master/docs/Result.md).
+
+```JavaScript
+import { toResult, Success, Failure } from 'zoomjs/validation';
+
+
+toResult(Failure.of(1)); // Result.Err(1)
+toResult(Success.of('Success!')); // Result.Ok('Success!')
+```
+
+---
+
+#### toTask
+```hs
+toTask :: Validation a b -> Task a b
+```
+
+Convert a Validation into a [Task](https://github.com/dustinws/zoom/blob/master/docs/Task.md).
+
+```JavaScript
+import { toTask, Success, Failure } from 'zoomjs/maybe';
+
+
+toTask(Failure.of()); // Task(null, null) [rejected]
+toTask(Success.of('Success!')); // Task(null, 'Success!')
+```
+
+---
+
 ### Instance
 
 ---
@@ -515,4 +583,72 @@ success.concat(failure); // failure
 failure.concat(success); // failure
 failure.concat(failure); // Failure(['fail!', 'fail!'])
 success.concat(success); // Success(['win!', 'win!'])
+```
+
+---
+
+#### toEither
+```hs
+toEither :: Validation a b ~> Either a b
+```
+
+Convert a Validation into an [Either](https://github.com/dustinws/zoom/blob/master/docs/Either.md).
+
+```JavaScript
+import { Success, Failure } from 'zoomjs/validation';
+
+
+Failure.of(1).toEither(); // Either.Left(1)
+Success.of('Success!').toEither(); // Either.Right('Success!')
+```
+
+---
+
+#### toMaybe
+```hs
+toMaybe :: Validation a b ~> Maybe b
+```
+
+Convert a Validation into a [Maybe](https://github.com/dustinws/zoom/blob/master/docs/Maybe.md).
+
+```JavaScript
+import { Success, Failure } from 'zoomjs/validation';
+
+
+Failure.of().toMaybe(); // Maybe.Nothing
+Success.of('Success!').toMaybe(); // Maybe.Just('Success!')
+```
+
+---
+
+#### toResult
+```hs
+toResult :: Validation a b ~> Result a b
+```
+
+Convert a Validation into a [Result](https://github.com/dustinws/zoom/blob/master/docs/Result.md).
+
+```JavaScript
+import { Success, Failure } from 'zoomjs/validation';
+
+
+Failure.of(1).toResult(); // Result.Err(1)
+Success.of('Success!').toResult(); // Result.Ok('Success!')
+```
+
+---
+
+#### toTask
+```hs
+toTask :: Validation a b ~> Task a b
+```
+
+Convert a Validation into a [Task](https://github.com/dustinws/zoom/blob/master/docs/Task.md).
+
+```JavaScript
+import { Success, Failure } from 'zoomjs/maybe';
+
+
+Failure.of().toTask(); // Task(null, null) [rejected]
+Success.of('Success!').toTask(); // Task(null, 'Success!')
 ```

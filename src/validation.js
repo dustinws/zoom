@@ -1,5 +1,10 @@
 const FL = require('fantasy-land');
 
+const Task = require('./task');
+const Either = require('./either');
+const Maybe = require('./maybe');
+const Result = require('./result');
+
 const { union } = require('./adt');
 const { __, curry, always, compose } = require('./_tools');
 
@@ -77,6 +82,34 @@ Validation.concat = curry((left, right) =>
 Validation.empty = () =>
   Validation.Success([]);
 
+// toEither ::Validation a b -> Either a b
+Validation.toEither = validation =>
+  validation.cata({
+    Failure: Either.Left.of,
+    Success: Either.Right.of,
+  });
+
+// toMaybe ::Validation a b -> Maybe b
+Validation.toMaybe = validation =>
+  validation.cata({
+    Failure: Maybe.Nothing.of,
+    Success: Maybe.Just.of,
+  });
+
+// toResult ::Validation a b -> Result a b
+Validation.toResult = validation =>
+  validation.cata({
+    Failure: Result.Err.of,
+    Success: Result.Ok.of,
+  });
+
+// toTask ::Validation a b -> Task a b
+Validation.toTask = validation =>
+  validation.cata({
+    Failure: Task.reject,
+    Success: Task.of,
+  });
+
 
 /*
  |------------------------------------------------------------------------------
@@ -141,6 +174,27 @@ Validation.prototype.concat = function concat(other) {
 Validation.prototype.empty = function empty() {
   return Validation.empty();
 };
+
+// toEither :: Validation a b ~> Either a b
+Validation.prototype.toEither = function toEither() {
+  return Validation.toEither(this);
+};
+
+// toMaybe :: Validation a b ~> Maybe b
+Validation.prototype.toMaybe = function toMaybe() {
+  return Validation.toMaybe(this);
+};
+
+// toResult :: Validation a b ~> Result a b
+Validation.prototype.toResult = function toResult() {
+  return Validation.toResult(this);
+};
+
+// toTask :: Validation a b ~> Task a b
+Validation.prototype.toTask = function toTask() {
+  return Validation.toTask(this);
+};
+
 
 /*
  |------------------------------------------------------------------------------
