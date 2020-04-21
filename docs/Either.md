@@ -273,6 +273,23 @@ toResult(Right('Success!')); // Result.Ok('Success!')
 
 ---
 
+#### toValidation
+```hs
+toValidation :: Either a b -> Validation a b
+```
+
+Convert an Either into a [Validation](https://github.com/dustinws/zoom/blob/master/docs/Validation.md).
+
+```JavaScript
+import { toValidation, Left, Right } from 'zoomjs/either';
+
+
+toValidation(Left('ouch!')); // Validation.Failure('ouch!')
+toValidation(Right('Success!')); // Validation.Success('Success!')
+```
+
+---
+
 #### toTask
 ```hs
 toTask :: Either a b -> Task a b
@@ -570,4 +587,21 @@ import { Left, Right } from 'zoomjs/either';
 
 Left.of('ouch!').toTask(); // Task('ouch!', null)
 Right.of('Success!').toTask(); // Task(null, 'Success!')
+```
+
+---
+
+#### toValidation
+```hs
+toValidation :: Either a b ~> Validation a b
+```
+
+Convert an Either into a [Validation](https://github.com/dustinws/zoom/blob/master/docs/Validation.md).
+
+```JavaScript
+import { Left, Right } from 'zoomjs/either';
+
+
+Left.of('ouch!').toValidation(); // Validation.Failure('ouch!')
+Right.of('Success!').toValidation(); // Validation.Success('Success!')
 ```
