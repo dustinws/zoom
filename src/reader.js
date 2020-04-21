@@ -50,7 +50,7 @@ Reader.prototype.chain = function chain(transform) {
 };
 
 // andThen :: Reader e a ~> (a -> Reader e b) -> Reader e b
-Reader.prototype.andThen = Reader.prototype.andThen;
+Reader.prototype.andThen = Reader.prototype.chain;
 
 // map :: Reader e a ~> (a -> b) -> Reader e b
 Reader.prototype.map = function map(transform) {
