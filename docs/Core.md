@@ -72,3 +72,45 @@ liftA4(add4, Nothing, Nothing, Nothing, Just(1)); // Nothing
 
 liftA4(add4, Just(1), Just(1), Just(1), Just(1)); // Just(4)
 ```
+
+---
+
+#### composeC
+```hs
+composeC :: Chain m => ((y -> m z), (x -> m y), …, (a -> m b)) -> (a -> m z)
+```
+
+Create a right to left composition of functions that return the same type of `Chain`.
+
+```JavaScript
+import { composeC } from 'zoomjs/core';
+import Task from 'zoomjs/task';
+
+const add = a => b => Task.of(a + b);
+const multiply = a => b => Task.of(a * b);
+
+const doStuff = composeC(multiply(10), add(5));
+
+doStuff(5) // Task(null, 100)
+```
+
+---
+
+#### pipeC
+```hs
+pipeC :: Chain m => ((a -> m b), (b -> m c), …, (y -> m z)) -> (a -> m z)
+```
+
+Create a left to right composition of functions that return the same type of `Chain`.
+
+```JavaScript
+import { pipeC } from 'zoomjs/core';
+import Task from 'zoomjs/task';
+
+const add = a => b => Task.of(a + b);
+const multiply = a => b => Task.of(a * b);
+
+const doStuff = pipeC(add(5), multiply(10));
+
+doStuff(5) // Task(null, 100)
+```
