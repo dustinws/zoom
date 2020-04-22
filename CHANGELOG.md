@@ -1,3 +1,13 @@
+<a name="3.3.0"></a>
+# [3.3.0](https://github.com/dustinws/zoom/compare/v3.2.0...v3.3.0) (2020-04-22)
+
+
+### Features
+
+* **Core:** add pipeC and composeC helpers ([8c7d30b](https://github.com/dustinws/zoom/commit/8c7d30b))
+
+
+
 <a name="3.2.0"></a>
 # [3.2.0](https://github.com/dustinws/zoom/compare/v3.1.0...v3.2.0) (2020-04-21)
 
