@@ -53,7 +53,7 @@ describe('Data.RemoteData', () => {
     test('It should return itself without calling the callback', () => {
       const callback = jest.fn(x => x);
 
-      const result = RemoteData.andThen(callback, Failure(1));
+      const result = RemoteData.Failure(1).andThen(callback);
 
       expect(result).toEqual(Failure(1));
       expect(callback.mock.calls.length).toBe(0);
@@ -64,7 +64,7 @@ describe('Data.RemoteData', () => {
     test('It should call the callback and return the result', () => {
       const callback = jest.fn(x => x);
 
-      const result = RemoteData.andThen(callback, Success(1));
+      const result = RemoteData.Success(1).andThen(callback);
 
       expect(result).toEqual(1);
       expect(callback.mock.calls.length).toBe(1);

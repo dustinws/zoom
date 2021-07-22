@@ -49,13 +49,7 @@ Either.map = curry((transform, either) =>
   Either.chain(compose(Right, transform), either));
 
 // ap :: Apply (b -> c) -> Either a b -> Either a c
-Either.ap = curry((left, right) => {
-  if (left.isLeft() && right.isLeft()) return right;
-  if (left.isLeft()) return left;
-  if (right.isLeft()) return right;
-
-  return Right(left.value(right.value));
-});
+Either.ap = curry((left, right) => left.chain(f => right.map(f)));
 
 // isLeft :: Either a b -> Bool
 Either.isLeft = either => either instanceof Left;
@@ -108,10 +102,6 @@ Either.try = callback => (...args) => {
 
 // of :: Either a b ~> d -> Either c d
 Either.prototype.of = value =>
-  Right(value);
-
-// of :: Either a b ~> d -> Either c d
-Right.prototype.of = value =>
   Right(value);
 
 // of :: Either a b ~> c -> Either c d

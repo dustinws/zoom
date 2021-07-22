@@ -24,4 +24,16 @@ describe('Data.RemoteData', () => {
       expect(withDefault(DEFAULT, Success(FINAL))).toBe(FINAL);
     });
   });
+
+  describe('RemoteData.withDefault', () => {
+    test('It should return the default unless the instance is a "Success"', () => {
+      const DEFAULT = 'default';
+      const FINAL = 'final';
+
+      expect(NotAsked.withDefault(DEFAULT)).toBe(DEFAULT);
+      expect(Loading.withDefault(DEFAULT)).toBe(DEFAULT);
+      expect(Failure(FINAL).withDefault(DEFAULT)).toBe(DEFAULT);
+      expect(Success(FINAL).withDefault(DEFAULT)).toBe(FINAL);
+    });
+  });
 });

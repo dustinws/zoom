@@ -11,4 +11,12 @@ describe('Writer', () => {
       expect(writer).toEqual({ value: Tuple('foo', []) });
     });
   });
+
+  describe('Writer#of', () => {
+    test('it should create a new writer that will return the given value', () => {
+      const writer = Writer.of();
+
+      expect(writer.of('foo')).toEqual({ value: Tuple('foo', []) });
+    });
+  });
 });

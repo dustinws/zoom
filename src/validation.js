@@ -123,17 +123,12 @@ Validation.combine = list =>
 
 // of :: Validation a b ~> d -> Validation c d
 Validation.prototype.of = function of(value) {
-  return Validation.of(value);
+  return Success(value);
 };
 
 // caseOf :: Validation a b ~> { Failure: a -> c, Success: b -> c } -> c
 Validation.prototype.caseOf = function caseOf(cases) {
   return this.cata(cases);
-};
-
-// of :: Validation a b ~> d -> Validation c d
-Success.prototype.of = function of(value) {
-  return Success.of(value);
 };
 
 // of :: Validation a b ~> c -> Validation c d
